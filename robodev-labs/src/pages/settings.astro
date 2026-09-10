@@ -1,0 +1,764 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import Heading from '../components/ui/Heading.astro';
+import Text from '../components/ui/Text.astro';
+import Button from '../components/ui/Button.astro';
+import Icon from '../components/ui/Icon.astro';
+import Divider from '../components/ui/Divider.astro';
+---
+
+<BaseLayout
+  title="Settings & Global Component Customizer — RoboDev Labs"
+  description="Live theme and global component editor for RoboDev Labs. Customize brand colors, typography, container padding, borders, and shadows in real-time."
+>
+  <Section size="lg" bg="secondary" class="settings-page-section">
+    <Container>
+      <!-- Page Header -->
+      <div class="settings-header">
+        <div class="header-badge">
+          <Icon name="sparkles" size={14} />
+          <span>Global Design System Editor</span>
+        </div>
+        <Heading level="h1" size="h1" class="page-title">
+          Website Settings &amp; Global Customizer
+        </Heading>
+        <p class="page-subtitle">
+          Customize brand colors, accent glows, typography, card border radius, and component
+          padding in real-time. Changes are applied live across the entire website and saved
+          to your browser storage.
+        </p>
+      </div>
+
+      <div class="customizer-layout">
+        <!-- Controls Sidebar Panel -->
+        <div class="controls-panel card-glass">
+          <div class="panel-section">
+            <span class="panel-section-title">Color Palette</span>
+            <p class="panel-section-desc">Adjust primary brand tones and radiant highlights.</p>
+
+            <div class="control-group">
+              <label for="primary-color" class="control-label">
+                <span>Primary Brand Color</span>
+                <span class="color-preview-val" id="val-primary">#2563EB</span>
+              </label>
+              <div class="color-input-wrapper">
+                <input type="color" id="primary-color" value="#2563eb" class="color-picker" />
+                <div class="color-presets">
+                  <button type="button" class="preset-pill" data-target="primary-color" data-val="#2563eb" style="background:#2563eb" title="Royal Blue (Default)"></button>
+                  <button type="button" class="preset-pill" data-target="primary-color" data-val="#4f46e5" style="background:#4f46e5" title="Indigo"></button>
+                  <button type="button" class="preset-pill" data-target="primary-color" data-val="#0284c7" style="background:#0284c7" title="Sky Blue"></button>
+                  <button type="button" class="preset-pill" data-target="primary-color" data-val="#059669" style="background:#059669" title="Emerald"></button>
+                  <button type="button" class="preset-pill" data-target="primary-color" data-val="#9333ea" style="background:#9333ea" title="Purple"></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label for="accent-color" class="control-label">
+                <span>Accent &amp; Glow Color</span>
+                <span class="color-preview-val" id="val-accent">#06B6D4</span>
+              </label>
+              <div class="color-input-wrapper">
+                <input type="color" id="accent-color" value="#06b6d4" class="color-picker" />
+                <div class="color-presets">
+                  <button type="button" class="preset-pill" data-target="accent-color" data-val="#06b6d4" style="background:#06b6d4" title="Cyan (Default)"></button>
+                  <button type="button" class="preset-pill" data-target="accent-color" data-val="#38bdf8" style="background:#38bdf8" title="Electric Blue"></button>
+                  <button type="button" class="preset-pill" data-target="accent-color" data-val="#10b981" style="background:#10b981" title="Neon Green"></button>
+                  <button type="button" class="preset-pill" data-target="accent-color" data-val="#f59e0b" style="background:#f59e0b" title="Amber Yellow"></button>
+                  <button type="button" class="preset-pill" data-target="accent-color" data-val="#f43f5e" style="background:#f43f5e" title="Rose"></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label for="bg-color" class="control-label">
+                <span>Background Canvas Tone</span>
+                <span class="color-preview-val" id="val-bg">#0F172A</span>
+              </label>
+              <div class="color-input-wrapper">
+                <input type="color" id="bg-color" value="#0f172a" class="color-picker" />
+                <div class="color-presets">
+                  <button type="button" class="preset-pill" data-target="bg-color" data-val="#0f172a" style="background:#0f172a" title="Dark Slate (Default)"></button>
+                  <button type="button" class="preset-pill" data-target="bg-color" data-val="#030712" style="background:#030712" title="Midnight Deep Black"></button>
+                  <button type="button" class="preset-pill" data-target="bg-color" data-val="#18181b" style="background:#18181b" title="Zinc Dark"></button>
+                  <button type="button" class="preset-pill" data-target="bg-color" data-val="#090d16" style="background:#090d16" title="Obsidian"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <Divider class="my-6" />
+
+          <div class="panel-section">
+            <span class="panel-section-title">Typography &amp; Fonts</span>
+            <p class="panel-section-desc">Select primary font family for titles and UI text.</p>
+
+            <div class="control-group">
+              <label for="font-family-select" class="control-label">Primary Font Family</label>
+              <select id="font-family-select" class="custom-select">
+                <option value="'Inter', system-ui, -apple-system, sans-serif">Inter (Modern Clean Tech - Default)</option>
+                <option value="'Space Grotesk', system-ui, sans-serif">Space Grotesk (Futuristic Geometric)</option>
+                <option value="'Plus Jakarta Sans', system-ui, sans-serif">Plus Jakarta Sans (Refined Modern)</option>
+                <option value="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">Native System UI</option>
+              </select>
+            </div>
+          </div>
+
+          <Divider class="my-6" />
+
+          <div class="panel-section">
+            <span class="panel-section-title">Components Geometry &amp; Padding</span>
+            <p class="panel-section-desc">Tune border radius curves and vertical section rhythm.</p>
+
+            <div class="control-group">
+              <div class="slider-header">
+                <label for="border-radius-slider" class="control-label">Card Border Radius</label>
+                <span class="slider-val" id="val-radius">8px</span>
+              </div>
+              <input
+                type="range"
+                id="border-radius-slider"
+                min="0"
+                max="24"
+                value="8"
+                class="custom-slider"
+              />
+              <div class="slider-range-labels">
+                <span>0px (Sharp)</span>
+                <span>8px (Balanced)</span>
+                <span>24px (Soft)</span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="slider-header">
+                <label for="section-padding-slider" class="control-label">Section Vertical Spacing</label>
+                <span class="slider-val" id="val-padding">80px</span>
+              </div>
+              <input
+                type="range"
+                id="section-padding-slider"
+                min="48"
+                max="128"
+                step="8"
+                value="80"
+                class="custom-slider"
+              />
+              <div class="slider-range-labels">
+                <span>Compact (48px)</span>
+                <span>Normal (80px)</span>
+                <span>Spacious (128px)</span>
+              </div>
+            </div>
+          </div>
+
+          <Divider class="my-6" />
+
+          <!-- Action Buttons -->
+          <div class="panel-actions">
+            <button type="button" id="reset-theme-btn" class="action-btn secondary">
+              Reset to Defaults
+            </button>
+            <a href="/" class="action-btn primary">
+              <Icon name="check" size={16} />
+              <span>Apply &amp; Return to Homepage</span>
+            </a>
+          </div>
+          <div class="status-indicator-box" id="save-status">
+            <span>&bull;</span> Real-time changes saved to local storage
+          </div>
+        </div>
+
+        <!-- Live Component Sandbox Preview -->
+        <div class="preview-panel">
+          <div class="preview-header-bar">
+            <span class="bar-title">Live Global Components Preview</span>
+            <span class="bar-hint">Updates automatically as you drag sliders or change colors</span>
+          </div>
+
+          <div class="sandbox-cards-column">
+            <!-- Sandbox Hero Card Sample -->
+            <div class="sandbox-card card-glass preview-hero-sample">
+              <span class="sample-tag">Hero Element Preview</span>
+              <Heading level="h2" size="h2" class="sample-heading">
+                Practical technology.
+                <br />
+                <span class="text-gradient-brand">Engineered for impact.</span>
+              </Heading>
+              <p class="sample-desc">
+                This live preview reflects your chosen brand colors, typography font, and border radius.
+              </p>
+              <div class="sample-btn-row">
+                <Button variant="primary" size="md" href="#!">
+                  <span>Primary Button</span>
+                  <Icon name="arrow-right" size={16} />
+                </Button>
+                <Button variant="secondary" size="md" href="#!">
+                  Secondary Button
+                </Button>
+              </div>
+            </div>
+
+            <!-- Sandbox Service Card Sample -->
+            <div class="sandbox-card card-glass preview-service-sample">
+              <div class="sample-top">
+                <div class="sample-icon-box">
+                  <Icon name="code" size={20} />
+                </div>
+                <span class="sample-badge">Full-Cycle Development</span>
+              </div>
+              <Heading level="h3" size="h4" class="sample-card-title">
+                Custom Software &amp; Applications
+              </Heading>
+              <p class="sample-accent-text">High-performance web, mobile, and SaaS applications.</p>
+              <ul class="sample-list">
+                <li><Icon name="check" size={14} class="check-icon" /> Web Application &amp; SaaS Development</li>
+                <li><Icon name="check" size={14} class="check-icon" /> Cross-Platform Mobile Apps (iOS &amp; Android)</li>
+                <li><Icon name="check" size={14} class="check-icon" /> High-Throughput REST &amp; GraphQL APIs</li>
+              </ul>
+            </div>
+
+            <!-- Sandbox Product Card Sample -->
+            <div class="sandbox-card card-glass preview-product-sample">
+              <div class="sample-top">
+                <span class="sample-badge cyan">Flagship Mobility Product</span>
+                <span class="sample-pill">In Development</span>
+              </div>
+              <Heading level="h3" size="h3" class="sample-card-title">
+                Busly &mdash; Transit Intelligence
+              </Heading>
+              <p class="sample-desc">
+                Real-time GPS bus tracking and dynamic arrival prediction engine designed for daily commuters.
+              </p>
+              <div class="sample-tags-row">
+                <span class="tech-tag">Transit Tech</span>
+                <span class="tech-tag">Real-Time Telemetry</span>
+                <span class="tech-tag">Smart Mobility</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>
+
+<script>
+  function initCustomizer() {
+    const primaryInput = document.getElementById('primary-color') as HTMLInputElement;
+    const accentInput = document.getElementById('accent-color') as HTMLInputElement;
+    const bgInput = document.getElementById('bg-color') as HTMLInputElement;
+    const fontSelect = document.getElementById('font-family-select') as HTMLSelectElement;
+    const radiusSlider = document.getElementById('border-radius-slider') as HTMLInputElement;
+    const paddingSlider = document.getElementById('section-padding-slider') as HTMLInputElement;
+
+    const valPrimary = document.getElementById('val-primary');
+    const valAccent = document.getElementById('val-accent');
+    const valBg = document.getElementById('val-bg');
+    const valRadius = document.getElementById('val-radius');
+    const valPadding = document.getElementById('val-padding');
+
+    const resetBtn = document.getElementById('reset-theme-btn');
+    const presets = document.querySelectorAll('.preset-pill');
+
+    const defaultTheme = {
+      primaryColor: '#2563eb',
+      accentColor: '#06b6d4',
+      bgColor: '#0f172a',
+      surfaceColor: '#1e293b',
+      fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+      borderRadius: '8',
+      sectionPadding: '80',
+    };
+
+    function applyConfig(config: typeof defaultTheme) {
+      const root = document.documentElement;
+      root.style.setProperty('--color-brand', config.primaryColor);
+      root.style.setProperty('--color-accent', config.accentColor);
+      root.style.setProperty('--color-background', config.bgColor);
+      root.style.setProperty('--font-sans', config.fontFamily);
+      root.style.setProperty('--radius-md', config.borderRadius + 'px');
+      root.style.setProperty('--radius-lg', (parseInt(config.borderRadius) + 4) + 'px');
+      root.style.setProperty('--radius-xl', (parseInt(config.borderRadius) + 8) + 'px');
+      root.style.setProperty('--space-16', (parseInt(config.sectionPadding) * 0.8) + 'px');
+      root.style.setProperty('--space-20', config.sectionPadding + 'px');
+
+      if (valPrimary) valPrimary.textContent = config.primaryColor.toUpperCase();
+      if (valAccent) valAccent.textContent = config.accentColor.toUpperCase();
+      if (valBg) valBg.textContent = config.bgColor.toUpperCase();
+      if (valRadius) valRadius.textContent = config.borderRadius + 'px';
+      if (valPadding) valPadding.textContent = config.sectionPadding + 'px';
+
+      if (primaryInput) primaryInput.value = config.primaryColor;
+      if (accentInput) accentInput.value = config.accentColor;
+      if (bgInput) bgInput.value = config.bgColor;
+      if (fontSelect) fontSelect.value = config.fontFamily;
+      if (radiusSlider) radiusSlider.value = config.borderRadius;
+      if (paddingSlider) paddingSlider.value = config.sectionPadding;
+
+      localStorage.setItem('robodev_theme_customizer', JSON.stringify(config));
+    }
+
+    function readForm(): typeof defaultTheme {
+      return {
+        primaryColor: primaryInput?.value || defaultTheme.primaryColor,
+        accentColor: accentInput?.value || defaultTheme.accentColor,
+        bgColor: bgInput?.value || defaultTheme.bgColor,
+        surfaceColor: defaultTheme.surfaceColor,
+        fontFamily: fontSelect?.value || defaultTheme.fontFamily,
+        borderRadius: radiusSlider?.value || defaultTheme.borderRadius,
+        sectionPadding: paddingSlider?.value || defaultTheme.sectionPadding,
+      };
+    }
+
+    // Load saved settings
+    const saved = localStorage.getItem('robodev_theme_customizer');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        applyConfig({ ...defaultTheme, ...parsed });
+      } catch (e) {
+        applyConfig(defaultTheme);
+      }
+    }
+
+    // Event listeners
+    [primaryInput, accentInput, bgInput, fontSelect, radiusSlider, paddingSlider].forEach((elem) => {
+      if (elem) {
+        elem.addEventListener('input', () => applyConfig(readForm()));
+        elem.addEventListener('change', () => applyConfig(readForm()));
+      }
+    });
+
+    presets.forEach((preset) => {
+      preset.addEventListener('click', (e) => {
+        const target = (e.currentTarget as HTMLElement).getAttribute('data-target');
+        const val = (e.currentTarget as HTMLElement).getAttribute('data-val');
+        if (target && val) {
+          const input = document.getElementById(target) as HTMLInputElement;
+          if (input) {
+            input.value = val;
+            applyConfig(readForm());
+          }
+        }
+      });
+    });
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        localStorage.removeItem('robodev_theme_customizer');
+        applyConfig(defaultTheme);
+      });
+    }
+  }
+
+  initCustomizer();
+  document.addEventListener('astro:page-load', initCustomizer);
+</script>
+
+<style>
+  .settings-page-section {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-20);
+  }
+
+  .settings-header {
+    max-width: 800px;
+    margin-bottom: var(--space-12);
+  }
+
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    color: var(--color-accent);
+    background: rgba(6, 182, 212, 0.1);
+    border: 1px solid rgba(6, 182, 212, 0.25);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-3);
+  }
+
+  .page-title {
+    color: var(--color-text);
+    margin-bottom: var(--space-3);
+  }
+
+  .page-subtitle {
+    font-size: var(--font-size-body-large);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .customizer-layout {
+    display: grid;
+    grid-template-columns: 1.15fr 1.35fr;
+    gap: var(--space-10);
+    align-items: flex-start;
+  }
+
+  /* ------------------------------------------------------------------------
+     Controls Panel
+     ------------------------------------------------------------------------ */
+  .controls-panel {
+    padding: var(--space-8);
+    position: sticky;
+    top: 80px;
+  }
+
+  .panel-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .panel-section-title {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    letter-spacing: var(--letter-spacing-wider);
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .panel-section-desc {
+    font-size: var(--font-size-caption);
+    color: var(--color-text-muted);
+    margin-top: -0.5rem;
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .control-label {
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .color-preview-val,
+  .slider-val {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    color: var(--color-accent);
+  }
+
+  .color-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .color-picker {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 44px;
+    height: 38px;
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    padding: 2px;
+  }
+
+  .color-picker::-webkit-color-swatch {
+    border-radius: 4px;
+    border: none;
+  }
+
+  .color-presets {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .preset-pill {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: transform var(--duration-fast) var(--ease-standard);
+  }
+
+  .preset-pill:hover {
+    transform: scale(1.2);
+  }
+
+  .custom-select {
+    width: 100%;
+    background-color: rgba(15, 23, 42, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.6rem 0.8rem;
+    color: var(--color-text);
+    font-size: var(--font-size-body-small);
+    outline: none;
+    cursor: pointer;
+  }
+
+  .custom-select:focus {
+    border-color: var(--color-accent);
+  }
+
+  .slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .custom-slider {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    outline: none;
+    cursor: pointer;
+    accent-color: var(--color-accent);
+  }
+
+  .slider-range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+  }
+
+  .panel-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.75rem 1.25rem;
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--ease-standard);
+    text-align: center;
+    border: none;
+  }
+
+  .action-btn.primary {
+    background-color: var(--color-brand);
+    color: var(--raw-white);
+  }
+
+  .action-btn.primary:hover {
+    background-color: var(--color-brand-hover);
+  }
+
+  .action-btn.secondary {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+
+  .action-btn.secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .status-indicator-box {
+    margin-top: var(--space-4);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .status-indicator-box span {
+    color: #22c55e;
+    font-size: 1rem;
+  }
+
+  /* ------------------------------------------------------------------------
+     Live Component Preview Sandbox
+     ------------------------------------------------------------------------ */
+  .preview-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .preview-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem var(--space-4);
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .bar-title {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+
+  .bar-hint {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .sandbox-cards-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .sandbox-card {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .sample-tag {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    color: var(--color-accent);
+    text-transform: uppercase;
+  }
+
+  .sample-heading {
+    color: var(--color-text);
+  }
+
+  .sample-desc {
+    font-size: var(--font-size-body);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+  }
+
+  .sample-btn-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .sample-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sample-icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: rgba(37, 99, 235, 0.12);
+    border: 1px solid rgba(37, 99, 235, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+  }
+
+  .sample-badge {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-border);
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-full);
+    color: var(--color-text-secondary);
+  }
+
+  .sample-badge.cyan {
+    color: var(--color-accent);
+    background: rgba(6, 182, 212, 0.1);
+    border-color: rgba(6, 182, 212, 0.25);
+  }
+
+  .sample-card-title {
+    color: var(--color-text);
+  }
+
+  .sample-accent-text {
+    font-size: var(--font-size-body-small);
+    color: var(--color-accent);
+  }
+
+  .sample-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .sample-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: var(--font-size-body-small);
+    color: var(--color-text-secondary);
+  }
+
+  .check-icon {
+    color: var(--color-accent);
+  }
+
+  .sample-pill {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    background: rgba(234, 179, 8, 0.1);
+    color: #eab308;
+    border: 1px solid rgba(234, 179, 8, 0.3);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-full);
+  }
+
+  .sample-tags-row {
+    display: flex;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    margin-top: var(--space-2);
+  }
+
+  .tech-tag {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    color: var(--color-text-secondary);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--color-border-subtle);
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-sm);
+  }
+
+  @media (max-width: 992px) {
+    .customizer-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .controls-panel {
+      position: static;
+    }
+  }
+</style>

@@ -1,0 +1,1114 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import Heading from '../components/ui/Heading.astro';
+import Text from '../components/ui/Text.astro';
+import Button from '../components/ui/Button.astro';
+import Divider from '../components/ui/Divider.astro';
+import DivisionTransition from '../components/ui/DivisionTransition.astro';
+import Icon from '../components/ui/Icon.astro';
+import Logo from '../components/common/Logo.astro';
+
+import ServiceCard from '../components/cards/ServiceCard.astro';
+import ProductCard from '../components/cards/ProductCard.astro';
+import AcademyCard from '../components/cards/AcademyCard.astro';
+import ProcessStep from '../components/cards/ProcessStep.astro';
+import CinematicBridge from '../components/sections/CinematicBridge.astro';
+import ModelAccordionCards from '../components/sections/ModelAccordionCards.astro';
+import CircularArcDivisionsSection from '../components/sections/CircularArcDivisionsSection.astro';
+
+import { servicesData } from '../data/services';
+import { productsData } from '../data/products';
+import { academyData } from '../data/academy';
+import { processData } from '../data/process';
+import { siteConfig } from '../config/site';
+---
+
+<BaseLayout>
+  <!-- =========================================================================
+       HERO SECTION: High-impact proposition, dual CTAs, subtle tech visual
+       ========================================================================= -->
+  <section class="hero-section bg-grid-pattern">
+    <div class="ambient-glow ambient-glow-blue hero-glow-1"></div>
+    <div class="ambient-glow ambient-glow-cyan hero-glow-2"></div>
+
+    <Container class="hero-container">
+      <div class="hero-content">
+        <!-- Eyebrow Badge -->
+        <div class="hero-eyebrow-wrapper">
+          <span class="eyebrow-pill">
+            <span class="pulsing-dot"></span>
+            Engineering Solutions &middot; Talent Academy &middot; Product Studio
+          </span>
+        </div>
+
+        <!-- Main Display Headline -->
+        <Heading level="h1" size="display" class="hero-headline">
+          Practical technology.
+          <br />
+          <span class="text-gradient-brand">Engineered for impact.</span>
+        </Heading>
+
+        <!-- Crisp Supporting Value Proposition -->
+        <p class="hero-description">
+          RoboDev Labs builds enterprise-grade software solutions for clients, mentors and trains
+          the next generation of developers, and engineers our own proprietary technology products.
+        </p>
+
+        <!-- High-Conversion Actions -->
+        <div class="hero-actions">
+          <Button variant="primary" size="lg" href="#contact" class="hero-primary-btn">
+            <span>Start a Project</span>
+            <Icon name="arrow-right" size={18} />
+          </Button>
+          <Button variant="secondary" size="lg" href="#products" class="hero-secondary-btn">
+            <span>Explore Products</span>
+            <Icon name="sparkles" size={18} />
+          </Button>
+        </div>
+
+        <!-- Key Metrics Row -->
+        <div class="hero-metrics">
+          <div class="metric-block">
+            <span class="metric-num">3</span>
+            <span class="metric-label">Integrated Pillars</span>
+          </div>
+          <div class="metric-sep"></div>
+          <div class="metric-block">
+            <span class="metric-num">Busly</span>
+            <span class="metric-label">Flagship Mobility OS</span>
+          </div>
+          <div class="metric-sep"></div>
+          <div class="metric-block">
+            <span class="metric-num">Long-Term</span>
+            <span class="metric-label">Venture Mindset</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual: Clean Technical Live Terminal / System Preview -->
+      <div class="hero-visual">
+        <div class="tech-window">
+          <div class="tech-window-header">
+            <div class="window-controls">
+              <span class="control-dot close"></span>
+              <span class="control-dot min"></span>
+              <span class="control-dot max"></span>
+            </div>
+            <div class="window-title">robodev-labs://ecosystem</div>
+            <div class="window-badge">v2.0 &bull; LIVE</div>
+          </div>
+
+          <div class="tech-window-body">
+            <div class="code-line prompt">
+              <span class="token-prompt">&gt;</span>
+              <span class="token-cmd">robodev.status()</span>
+            </div>
+
+            <div class="terminal-card-item active">
+              <div class="item-header">
+                <Icon name="code" size={16} class="item-icon" />
+                <span class="item-title">Engineering Services</span>
+                <span class="item-tag tag-blue">Active Sprints</span>
+              </div>
+              <p class="item-desc">Web apps, mobile solutions, APIs & custom software delivery.</p>
+            </div>
+
+            <div class="terminal-card-item">
+              <div class="item-header">
+                <Icon name="terminal" size={16} class="item-icon" />
+                <span class="item-title">RoboDev Academy</span>
+                <span class="item-tag tag-purple">Hands-On</span>
+              </div>
+              <p class="item-desc">Intensive workshops, hackathon prep & 1-on-1 mentorship.</p>
+            </div>
+
+            <div class="terminal-card-item highlight">
+              <div class="item-header">
+                <Icon name="zap" size={16} class="item-icon" />
+                <span class="item-title">Product Studio: Busly</span>
+                <span class="item-tag tag-cyan">Incubating</span>
+              </div>
+              <p class="item-desc">Real-time GPS transit tracking & route prediction engine.</p>
+            </div>
+
+            <div class="code-line output">
+              <span class="token-comment">// Architecture: Scalable &middot; Resilient &middot; Modern</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+
+    <!-- INGSKILL-INSPIRED TRUST & ECOSYSTEM TICKER -->
+    <div class="ecosystem-marquee-bar">
+      <div class="marquee-track">
+        <div class="marquee-item"><span class="bullet">&block;</span> Web &amp; Mobile Applications</div>
+        <div class="marquee-item"><span class="bullet">&block;</span> Practical AI &amp; LLM Workflows</div>
+        <div class="marquee-item"><span class="bullet">&block;</span> Busly Transit Platform</div>
+        <div class="marquee-item"><span class="bullet">&block;</span> RoboDev Academy Fellowships</div>
+        <div class="marquee-item"><span class="bullet">&block;</span> High-Throughput APIs &amp; Cloud</div>
+        <div class="marquee-item"><span class="bullet">&block;</span> Hackathon Accelerator Sprints</div>
+        <!-- Duplicated for seamless loop -->
+        <div class="marquee-item"><span class="bullet">&block;</span> Web &amp; Mobile Applications</div>
+        <div class="marquee-item"><span class="bullet">&block;</span> Practical AI &amp; LLM Workflows</div>
+        <div class="marquee-item"><span class="bullet">&block;</span> Busly Transit Platform</div>
+        <div class="marquee-item"><span class="bullet">&block;</span> RoboDev Academy Fellowships</div>
+        <div class="marquee-item"><span class="bullet">&block;</span> High-Throughput APIs &amp; Cloud</div>
+        <div class="marquee-item"><span class="bullet">&block;</span> Hackathon Accelerator Sprints</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       CINEMATIC SCROLL-DRIVEN ARCHITECTURAL BRIDGE TRANSITION
+       Hero -> Approach -> Bridge Towering -> Underneath Passage -> Light Emergence -> Pillars
+       ========================================================================= -->
+  <CinematicBridge />
+
+  <!-- =========================================================================
+       THREE PILLARS OVERVIEW (INGSKILL-Inspired Interactive Horizontal Accordion Cards)
+       ========================================================================= -->
+  <Section id="pillars" size="lg" bg="default" class="pillars-section">
+    <Container>
+      <div class="section-intro text-center model-header-center">
+        <span class="section-eyebrow">The RoboDev Labs Ecosystem</span>
+        <h2 class="model-big-display-title">
+          Built for Businesses,
+          <br />
+          <span class="text-gradient-brand">Institutions, and Learners</span>
+        </h2>
+        <p class="section-subtitle">
+          Select your segment below to see how our engineering divisions, mentorship academy, and venture studio align with your goals.
+        </p>
+      </div>
+
+      <!-- Interactive Horizontal Expanding Cards -->
+      <ModelAccordionCards />
+    </Container>
+  </Section>
+
+  <!-- =========================================================================
+       SIGNATURE CIRCULAR ARC DIVISIONS SHOWCASE (Matching Reference Screenshot)
+       Features: Ultra-thin geometric circle line, mathematical circular rotation,
+       pinned 300vh scroll scrubbing, 3D floating glass IDE & performance card
+       ========================================================================= -->
+  <CircularArcDivisionsSection />
+
+  <!-- Transition: Academy -> Engineering Lifecycle Convergence -->
+  <DivisionTransition 
+    toDivision="process" 
+    badge="Ecosystem Convergence &bull; How We Work" 
+    icon="layers" 
+    accentColor="blue" 
+  />
+
+  <!-- =========================================================================
+       HOW WE WORK (Structured 6-Stage Engineering Process)
+       ========================================================================= -->
+  <Section id="process" size="lg" bg="secondary" class="process-section">
+    <Container>
+      <div class="section-intro text-center">
+        <span class="section-eyebrow">Predictable Delivery</span>
+        <Heading level="h2" size="h1" class="section-title">
+          How We Work: From Discovery to Iteration
+        </Heading>
+        <p class="section-subtitle">
+          Every project follows an engineering-first lifecycle to ensure transparent milestones,
+          zero surprises, and exceptional code quality.
+        </p>
+      </div>
+
+      <div class="process-grid">
+        {processData.map((stage) => <ProcessStep stage={stage} />)}
+      </div>
+    </Container>
+  </Section>
+
+  <Divider />
+
+  <!-- =========================================================================
+       WHY ROBODEV LABS (Engineering Principles & Approach)
+       ========================================================================= -->
+  <Section id="about" size="lg" bg="default" class="about-section">
+    <Container>
+      <div class="about-layout">
+        <div class="about-left">
+          <span class="section-eyebrow">Company Approach</span>
+          <Heading level="h2" size="h1" class="about-headline">
+            Engineering-first thinking. Built for the long haul.
+          </Heading>
+          <p class="about-lead">
+            Founded by <strong>{siteConfig.founder}</strong>, RoboDev Labs is built on systems,
+            documentation, and disciplined execution. We view software not as a disposable asset,
+            but as living infrastructure that compounds over a 5–10 year horizon.
+          </p>
+          <div class="about-callout card-glass">
+            <span class="callout-quote">
+              "We build solutions, develop people, and create products."
+            </span>
+            <span class="callout-author">&mdash; RoboDev Labs Core Philosophy</span>
+          </div>
+        </div>
+
+        <div class="about-principles-grid">
+          <div class="principle-item card-glass">
+            <div class="principle-icon-wrap">
+              <Icon name="code" size={20} class="principle-icon" />
+            </div>
+            <Heading level="h3" size="h4" class="principle-title">
+              Practical Technology
+            </Heading>
+            <p class="principle-desc">
+              We select tools and architectures based on stability, performance, and real business
+              fit—never chasing fleeting buzzwords.
+            </p>
+          </div>
+
+          <div class="principle-item card-glass">
+            <div class="principle-icon-wrap">
+              <Icon name="layers" size={20} class="principle-icon" />
+            </div>
+            <Heading level="h3" size="h4" class="principle-title">
+              Scalable Systems
+            </Heading>
+            <p class="principle-desc">
+              From modular TypeScript architectures to decoupled cloud microservices, our codebases
+              are built to scale seamlessly.
+            </p>
+          </div>
+
+          <div class="principle-item card-glass">
+            <div class="principle-icon-wrap">
+              <Icon name="users" size={20} class="principle-icon" />
+            </div>
+            <Heading level="h3" size="h4" class="principle-title">
+              Talent Multiplication
+            </Heading>
+            <p class="principle-desc">
+              Through RoboDev Academy, our experienced engineers mentor emerging developers,
+              ensuring a continuous pipeline of exceptional talent.
+            </p>
+          </div>
+
+          <div class="principle-item card-glass">
+            <div class="principle-icon-wrap">
+              <Icon name="zap" size={20} class="principle-icon" />
+            </div>
+            <Heading level="h3" size="h4" class="principle-title">
+              Venture Ownership
+            </Heading>
+            <p class="principle-desc">
+              Our Product Studio incubates internal IP like Busly, proving our ability to build,
+              launch, and operate real-world software products.
+            </p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- =========================================================================
+       FINAL CONVERSION CTA SECTION
+       ========================================================================= -->
+  <Section id="contact" size="xl" bg="secondary" class="final-cta-section bg-grid-pattern">
+    <div class="ambient-glow ambient-glow-blue cta-glow"></div>
+    <Container class="cta-container">
+      <div class="cta-box card-glass">
+        <span class="cta-eyebrow">Ready to Build?</span>
+        <Heading level="h2" size="display" class="cta-headline">
+          Have an idea worth building?
+          <br />
+          <span class="text-gradient-brand">Let’s build something useful.</span>
+        </Heading>
+        <p class="cta-desc">
+          Whether you need a full-scale web application, want to co-develop an AI automation system,
+          or are interested in partnering with our Product Studio or Academy—we'd love to talk.
+        </p>
+
+        <div class="cta-buttons">
+          <Button
+            variant="primary"
+            size="lg"
+            href={`mailto:${siteConfig.email}?subject=Project%20Inquiry%20-%20RoboDev%20Labs`}
+            class="cta-email-btn"
+          >
+            <span>Email Our Team</span>
+            <Icon name="arrow-right" size={18} />
+          </Button>
+          <Button variant="secondary" size="lg" href="#services">
+            <span>Review Capabilities</span>
+          </Button>
+        </div>
+
+        <div class="contact-details">
+          <span class="contact-item">
+            <Icon name="info" size={16} class="contact-icon" />
+            <span>Direct Email: <strong>{siteConfig.email}</strong></span>
+          </span>
+          <span class="contact-dot">&bull;</span>
+          <span class="contact-item">Serving clients across Nepal &amp; International markets</span>
+        </div>
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>
+
+<style>
+  /* ------------------------------------------------------------------------
+     Hero Section Styling - Full Viewport Height Coverage
+     ------------------------------------------------------------------------ */
+  .hero-section {
+    position: relative;
+    min-height: calc(100vh - 61px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: var(--space-8);
+    padding-bottom: 0;
+    overflow: hidden;
+  }
+
+  .hero-container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+  }
+
+  /* Ecosystem Marquee Ticker (ingskill inspiration) */
+  .ecosystem-marquee-bar {
+    width: 100%;
+    overflow: hidden;
+    background: rgba(15, 23, 42, 0.95);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    margin-top: auto;
+    padding: var(--space-3) 0;
+    position: relative;
+  }
+
+  .ecosystem-marquee-bar::before,
+  .ecosystem-marquee-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .ecosystem-marquee-bar::before {
+    left: 0;
+    background: linear-gradient(90deg, var(--color-background) 0%, transparent 100%);
+  }
+
+  .ecosystem-marquee-bar::after {
+    right: 0;
+    background: linear-gradient(270deg, var(--color-background) 0%, transparent 100%);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    gap: var(--space-8);
+    animation: marquee 35s linear infinite;
+  }
+
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    letter-spacing: var(--letter-spacing-wide);
+    text-transform: uppercase;
+  }
+
+  .marquee-item .bullet {
+    color: var(--color-accent);
+    font-size: 0.75rem;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .hero-glow-1 {
+    top: -5%;
+    left: 15%;
+    width: 500px;
+    height: 500px;
+  }
+
+  .hero-glow-2 {
+    bottom: 5%;
+    right: 10%;
+    width: 450px;
+    height: 450px;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .hero-eyebrow-wrapper {
+    display: flex;
+  }
+
+  .eyebrow-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    letter-spacing: var(--letter-spacing-wide);
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--color-accent);
+    border: 1px solid rgba(37, 99, 235, 0.3);
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-full);
+  }
+
+  .pulsing-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    box-shadow: 0 0 10px var(--color-accent);
+  }
+
+  .hero-headline {
+    color: var(--color-text);
+    line-height: var(--line-height-tight);
+  }
+
+  .hero-description {
+    font-size: var(--font-size-body-large);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    max-width: 580px;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .hero-primary-btn,
+  .hero-secondary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .hero-metrics {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border-subtle);
+  }
+
+  .metric-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metric-num {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-bold);
+    color: var(--raw-white);
+  }
+
+  .metric-label {
+    font-size: var(--font-size-caption);
+    color: var(--color-text-muted);
+  }
+
+  .metric-sep {
+    width: 1px;
+    height: 32px;
+    background-color: var(--color-border-subtle);
+  }
+
+  /* ------------------------------------------------------------------------
+     Hero Visual: Tech Window Component
+     ------------------------------------------------------------------------ */
+  .tech-window {
+    background: rgba(15, 23, 42, 0.88);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.7), 0 0 40px -10px rgba(37, 99, 235, 0.2);
+    overflow: hidden;
+    backdrop-filter: blur(16px);
+  }
+
+  .tech-window-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: rgba(30, 41, 59, 0.7);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .window-controls {
+    display: flex;
+    gap: 6px;
+  }
+
+  .control-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .control-dot.close {
+    background-color: #ef4444;
+  }
+  .control-dot.min {
+    background-color: #f59e0b;
+  }
+  .control-dot.max {
+    background-color: #10b981;
+  }
+
+  .window-title {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    color: var(--color-text-muted);
+  }
+
+  .window-badge {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--color-accent);
+    background: rgba(6, 182, 212, 0.12);
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(6, 182, 212, 0.25);
+  }
+
+  .tech-window-body {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .code-line {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .token-prompt {
+    color: var(--color-accent);
+    font-weight: bold;
+  }
+
+  .token-cmd {
+    color: var(--raw-white);
+  }
+
+  .token-comment {
+    color: var(--color-text-muted);
+  }
+
+  .terminal-card-item {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    transition: all var(--duration-fast) var(--ease-standard);
+  }
+
+  .terminal-card-item.highlight {
+    border-color: rgba(6, 182, 212, 0.4);
+    background: rgba(6, 182, 212, 0.06);
+  }
+
+  .terminal-card-item:hover {
+    border-color: var(--color-accent);
+  }
+
+  .item-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .item-icon {
+    color: var(--color-accent);
+  }
+
+  .item-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-semibold);
+    color: var(--raw-white);
+    flex: 1;
+  }
+
+  .item-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: var(--radius-full);
+  }
+
+  .tag-blue {
+    background: rgba(37, 99, 235, 0.15);
+    color: #93c5fd;
+    border: 1px solid rgba(37, 99, 235, 0.3);
+  }
+
+  .tag-purple {
+    background: rgba(168, 85, 247, 0.15);
+    color: #d8b4fe;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+  }
+
+  .tag-cyan {
+    background: rgba(6, 182, 212, 0.15);
+    color: #a5f3fc;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+  }
+
+  .item-desc {
+    font-size: var(--font-size-caption);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+  }
+
+  /* ------------------------------------------------------------------------
+     Section Header Primitives
+     ------------------------------------------------------------------------ */
+  .section-intro {
+    max-width: 720px;
+    margin: 0 auto var(--space-12) auto;
+  }
+
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    letter-spacing: var(--letter-spacing-wider);
+    text-transform: uppercase;
+    color: var(--color-accent);
+    display: inline-block;
+    margin-bottom: var(--space-2);
+  }
+
+  .section-title {
+    color: var(--color-text);
+    margin-bottom: var(--space-3);
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-body-large);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .model-header-center {
+    max-width: 860px;
+  }
+
+  .model-big-display-title {
+    font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--raw-white);
+    margin: var(--space-3) 0 var(--space-4) 0;
+  }
+
+  .section-header-split {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--space-8);
+    align-items: flex-end;
+    margin-bottom: var(--space-12);
+  }
+
+  .section-header-desc {
+    font-size: var(--font-size-body);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+
+  /* ------------------------------------------------------------------------
+     Three Pillars Layout
+     ------------------------------------------------------------------------ */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  .pillar-box {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-8);
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    position: relative;
+    transition: all var(--duration-normal) var(--ease-standard);
+  }
+
+  .pillar-box.featured {
+    border-color: rgba(6, 182, 212, 0.35);
+  }
+
+  .pillar-box:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+    box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.5);
+  }
+
+  .pillar-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-4);
+  }
+
+  .pillar-icon-box.blue {
+    background: rgba(37, 99, 235, 0.12);
+    color: #60a5fa;
+    border: 1px solid rgba(37, 99, 235, 0.3);
+  }
+
+  .pillar-icon-box.purple {
+    background: rgba(168, 85, 247, 0.12);
+    color: #c084fc;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+  }
+
+  .pillar-icon-box.cyan {
+    background: rgba(6, 182, 212, 0.12);
+    color: var(--color-accent);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+  }
+
+  .pillar-number {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    color: var(--color-text-muted);
+    letter-spacing: var(--letter-spacing-wide);
+    margin-bottom: var(--space-2);
+  }
+
+  .pillar-name {
+    color: var(--color-text);
+    margin-bottom: var(--space-3);
+  }
+
+  .pillar-desc {
+    font-size: var(--font-size-body-small);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+    flex: 1;
+    margin-bottom: var(--space-6);
+  }
+
+  .pillar-anchor {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+  }
+
+  .pillar-anchor:hover {
+    color: var(--raw-white);
+  }
+
+  /* ------------------------------------------------------------------------
+     Process Grid
+     ------------------------------------------------------------------------ */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  /* ------------------------------------------------------------------------
+     About / Why RoboDev Labs
+     ------------------------------------------------------------------------ */
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.35fr;
+    gap: var(--space-12);
+    align-items: flex-start;
+  }
+
+  .about-left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .about-headline {
+    color: var(--color-text);
+    line-height: var(--line-height-tight);
+  }
+
+  .about-lead {
+    font-size: var(--font-size-body);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .about-callout {
+    padding: var(--space-6);
+    border-left: 3px solid var(--color-brand);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: var(--space-2);
+  }
+
+  .callout-quote {
+    font-size: var(--font-size-body-large);
+    font-weight: var(--font-weight-medium);
+    color: var(--raw-white);
+  }
+
+  .callout-author {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    color: var(--color-text-muted);
+  }
+
+  .about-principles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .principle-item {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .principle-icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: rgba(37, 99, 235, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    margin-bottom: var(--space-1);
+  }
+
+  .principle-title {
+    color: var(--color-text);
+  }
+
+  .principle-desc {
+    font-size: var(--font-size-body-small);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+  }
+
+  /* ------------------------------------------------------------------------
+     Final CTA Section
+     ------------------------------------------------------------------------ */
+  .final-cta-section {
+    position: relative;
+    overflow: hidden;
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-24);
+  }
+
+  .cta-glow {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 650px;
+    height: 650px;
+  }
+
+  .cta-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-box {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+    padding: var(--space-12) var(--space-8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px -10px rgba(37, 99, 235, 0.25);
+  }
+
+  .cta-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    letter-spacing: var(--letter-spacing-wider);
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .cta-headline {
+    color: var(--color-text);
+    line-height: var(--line-height-tight);
+  }
+
+  .cta-desc {
+    font-size: var(--font-size-body-large);
+    color: var(--color-text-secondary);
+    max-width: 640px;
+    line-height: var(--line-height-relaxed);
+  }
+
+  .cta-buttons {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cta-email-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .contact-details {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--font-size-caption);
+    color: var(--color-text-muted);
+    margin-top: var(--space-4);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .contact-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .contact-icon {
+    color: var(--color-accent);
+  }
+
+  .contact-dot {
+    opacity: 0.4;
+  }
+
+  /* ------------------------------------------------------------------------
+     Responsive Breakpoints
+     ------------------------------------------------------------------------ */
+  @media (max-width: 1024px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+    }
+
+    .section-header-split {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .pillars-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .academy-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .process-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-banner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .banner-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .process-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-principles-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-box {
+      padding: var(--space-8) var(--space-4);
+    }
+  }
+</style>

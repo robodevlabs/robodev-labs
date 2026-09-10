@@ -1,0 +1,36 @@
+---
+import { Image } from 'astro:assets';
+import logoImage from '../../assets/images/robodevlabs.png';
+
+export interface Props {
+  height?: number;
+  class?: string;
+}
+
+const { height = 36, class: className } = Astro.props;
+---
+
+<div class:list={['brand-logo-wrapper', className]}>
+  <Image
+    src={logoImage}
+    alt="RoboDev Labs Logo"
+    height={height}
+    class="brand-logo-img"
+    loading="eager"
+  />
+</div>
+
+<style>
+  .brand-logo-wrapper {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+  }
+
+  .brand-logo-img {
+    height: auto;
+    max-height: 44px;
+    width: auto;
+    object-fit: contain;
+  }
+</style>

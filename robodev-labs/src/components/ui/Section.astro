@@ -1,0 +1,65 @@
+---
+import { cn } from '../../lib/utils';
+
+export interface Props {
+  id?: string;
+  class?: string;
+  bg?: 'default' | 'secondary' | 'dark' | 'surface';
+  size?: 'sm' | 'md' | 'lg';
+  as?: string;
+  [key: string]: any;
+}
+
+const {
+  id,
+  class: className,
+  bg = 'default',
+  size = 'md',
+  as: Component = 'section',
+  ...rest
+} = Astro.props;
+
+const Tag = Component as any;
+---
+
+<Tag id={id} class={cn('section-primitive', `bg-${bg}`, `size-${size}`, className)} {...rest}>
+  <slot />
+</Tag>
+
+<style>
+  .section-primitive {
+    width: 100%;
+    position: relative;
+  }
+
+  .size-sm {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+  }
+
+  .size-md {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+  }
+
+  .size-lg {
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-24);
+  }
+
+  .bg-default {
+    background-color: var(--color-background);
+  }
+
+  .bg-secondary {
+    background-color: var(--color-background-secondary);
+  }
+
+  .bg-dark {
+    background-color: var(--color-background-dark);
+  }
+
+  .bg-surface {
+    background-color: var(--color-surface);
+  }
+</style>

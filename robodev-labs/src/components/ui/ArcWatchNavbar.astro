@@ -1,0 +1,432 @@
+---
+/**
+ * ArcWatchNavbar.astro
+ * 
+ * Futuristic "Smart Watch / Apple Watch Dial" inspired curved arc navbar pinned on the left viewport edge.
+ * 
+ * Specifications:
+ * - Pops in smoothly from the left only after scrolling past the hero / model section
+ * - Thick, curved futuristic circular bezel / arc silhouette (`clip-path` or curved border-radius)
+ * - Navigation links:
+ *   1. Client Engineering (#services-anchor)
+ *   2. Product Studio (#products-anchor)
+ *   3. RoboDev Academy (#academy-anchor)
+ * - Dynamic scroll indicator: Active item highlights based on viewport scroll position
+ * - Micro-tick dial marks around the arc reminiscent of luxury smart watches
+ */
+import Icon from '../ui/Icon.astro';
+---
+
+<nav class="arc-watch-navbar" id="arc-watch-navbar" aria-label="Ecosystem Divisions Dial Navigation">
+  <div class="watch-bezel-hull">
+    <!-- Watch Crown / Rotary Dial Accent at Top -->
+    <div class="watch-rotary-crown">
+      <div class="crown-grooves"></div>
+    </div>
+
+    <!-- Curved Arc Navigation Body -->
+    <div class="watch-dial-screen">
+      <!-- Arc Dial Ticks -->
+      <div class="dial-ticks-track">
+        <span class="dial-tick"></span>
+        <span class="dial-tick"></span>
+        <span class="dial-tick active-tick"></span>
+        <span class="dial-tick"></span>
+        <span class="dial-tick"></span>
+        <span class="dial-tick"></span>
+      </div>
+
+      <!-- Dial Header Brand Pill -->
+      <div class="dial-header-pill">
+        <span class="dial-live-dot"></span>
+        <span class="dial-brand-txt">ROBODEV OS</span>
+      </div>
+
+      <!-- The 3 Arc Menu Items -->
+      <div class="dial-menu-list">
+        <!-- Item 1: Client Engineering -->
+        <a href="#services-anchor" class="dial-menu-item active" data-target="services-anchor" id="watch-link-services">
+          <div class="item-bezel-node blue">
+            <Icon name="layers" size={16} />
+          </div>
+          <div class="item-text-group">
+            <span class="item-counter">01 &bull; CLIENT</span>
+            <span class="item-title">Client Engineering</span>
+          </div>
+          <div class="active-indicator-bar"></div>
+        </a>
+
+        <!-- Item 2: Product Studio -->
+        <a href="#products-anchor" class="dial-menu-item" data-target="products-anchor" id="watch-link-products">
+          <div class="item-bezel-node cyan">
+            <Icon name="sparkles" size={16} />
+          </div>
+          <div class="item-text-group">
+            <span class="item-counter">02 &bull; VENTURES</span>
+            <span class="item-title">Product Studio</span>
+          </div>
+          <div class="active-indicator-bar"></div>
+        </a>
+
+        <!-- Item 3: RoboDev Academy -->
+        <a href="#academy-anchor" class="dial-menu-item" data-target="academy-anchor" id="watch-link-academy">
+          <div class="item-bezel-node purple">
+            <Icon name="users" size={16} />
+          </div>
+          <div class="item-text-group">
+            <span class="item-counter">03 &bull; ACADEMY</span>
+            <span class="item-title">RoboDev Academy</span>
+          </div>
+          <div class="active-indicator-bar"></div>
+        </a>
+      </div>
+
+      <!-- Quick Progress Dial Percentage -->
+      <div class="dial-footer-meter">
+        <span class="meter-label">DIVISIONS</span>
+        <div class="meter-bar-track">
+          <div class="meter-bar-fill" id="dial-progress-fill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  function initArcWatchNavbar() {
+    const navbar = document.getElementById('arc-watch-navbar');
+    const links = document.querySelectorAll<HTMLAnchorElement>('.dial-menu-item');
+    const progressFill = document.getElementById('dial-progress-fill');
+    
+    // Anchors to track
+    const targets = [
+      { id: 'services-anchor', link: document.getElementById('watch-link-services') },
+      { id: 'products-anchor', link: document.getElementById('watch-link-products') },
+      { id: 'academy-anchor', link: document.getElementById('watch-link-academy') },
+    ];
+
+    if (!navbar) return;
+
+    function handleScroll() {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      
+      // Reveal navbar only after scrolling down past the first 800px (past hero)
+      const triggerThreshold = 800;
+      if (scrollY > triggerThreshold) {
+        navbar.classList.add('visible');
+      } else {
+        navbar.classList.remove('visible');
+      }
+
+      // Track active section
+      let activeIndex = 0;
+      targets.forEach((target, index) => {
+        const el = document.getElementById(target.id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= windowHeight * 0.45) {
+            activeIndex = index;
+          }
+        }
+      });
+
+      // Update active link state
+      targets.forEach((target, index) => {
+        if (target.link) {
+          target.link.classList.toggle('active', index === activeIndex);
+        }
+      });
+
+      // Update progress fill
+      if (progressFill) {
+        const pct = Math.round(((activeIndex + 1) / targets.length) * 100);
+        progressFill.style.width = `${pct}%`;
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    // Smooth scroll handler
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('data-target');
+        if (targetId) {
+          const targetEl = document.getElementById(targetId);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+  }
+
+  initArcWatchNavbar();
+  document.addEventListener('astro:page-load', initArcWatchNavbar);
+</script>
+
+<style>
+  /* =========================================================================
+     FUTURISTIC ARC WATCH NAVBAR (LEFT PINNED DIAL)
+     ========================================================================= */
+  .arc-watch-navbar {
+    position: fixed;
+    top: 50%;
+    left: -240px; /* Initially hidden offscreen to the left */
+    transform: translateY(-50%);
+    z-index: 990;
+    transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .arc-watch-navbar.visible {
+    left: 0; /* Pops out from the left edge */
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Watch Bezel Hull - Thick Curved Outer Watch Shell */
+  .watch-bezel-hull {
+    position: relative;
+    width: 250px;
+    padding: 1.1rem 1.4rem 1.1rem 1rem;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(8, 14, 26, 0.98) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    border-left: none; /* Clean flush edge against screen border */
+    /* Bold, thick curved arc silhouette */
+    border-radius: 0 45px 45px 0;
+    box-shadow: 
+      0 20px 50px rgba(0, 0, 0, 0.8),
+      0 0 35px rgba(6, 182, 212, 0.18),
+      inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  /* Rotary Crown Accent at the top of the dial */
+  .watch-rotary-crown {
+    position: absolute;
+    top: -12px;
+    left: 45px;
+    width: 38px;
+    height: 12px;
+    background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px 4px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .crown-grooves {
+    width: 20px;
+    height: 4px;
+    background: repeating-linear-gradient(90deg, #64748b 0px, #64748b 2px, transparent 2px, transparent 4px);
+  }
+
+  /* Dial Screen Interface */
+  .watch-dial-screen {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    position: relative;
+  }
+
+  /* Ticks Track along the curvature */
+  .dial-ticks-track {
+    position: absolute;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .dial-tick {
+    width: 5px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 1px;
+    transition: all 0.2s ease;
+  }
+
+  .dial-tick.active-tick {
+    width: 9px;
+    background: #06b6d4;
+    box-shadow: 0 0 8px #06b6d4;
+  }
+
+  /* Header Pill */
+  .dial-header-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.2rem 0.55rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    width: fit-content;
+  }
+
+  .dial-live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #06b6d4;
+    box-shadow: 0 0 6px #06b6d4;
+    animation: pulseWatchDot 2s infinite ease-in-out;
+  }
+
+  @keyframes pulseWatchDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+  }
+
+  .dial-brand-txt {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  /* Dial Menu List */
+  .dial-menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .dial-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 16px;
+    background: transparent;
+    border: 1px solid transparent;
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dial-menu-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .dial-menu-item.active {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(6, 182, 212, 0.35);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  }
+
+  .item-bezel-node {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+  }
+
+  .item-bezel-node.blue { color: #60a5fa; }
+  .item-bezel-node.cyan { color: #38bdf8; }
+  .item-bezel-node.purple { color: #c084fc; }
+
+  .dial-menu-item.active .item-bezel-node.blue { background: rgba(37, 99, 235, 0.25); box-shadow: 0 0 8px rgba(37, 99, 235, 0.5); }
+  .dial-menu-item.active .item-bezel-node.cyan { background: rgba(6, 182, 212, 0.25); box-shadow: 0 0 8px rgba(6, 182, 212, 0.5); }
+  .dial-menu-item.active .item-bezel-node.purple { background: rgba(168, 85, 247, 0.25); box-shadow: 0 0 8px rgba(168, 85, 247, 0.5); }
+
+  .item-text-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    overflow: hidden;
+  }
+
+  .item-counter {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+  }
+
+  .item-title {
+    font-size: 0.78rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+  }
+
+  .dial-menu-item.active .item-title {
+    color: var(--raw-white);
+  }
+
+  .active-indicator-bar {
+    position: absolute;
+    right: 0;
+    top: 25%;
+    bottom: 25%;
+    width: 3px;
+    background: #06b6d4;
+    border-radius: 2px 0 0 2px;
+    box-shadow: 0 0 6px #06b6d4;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .dial-menu-item.active .active-indicator-bar {
+    opacity: 1;
+  }
+
+  /* Dial Footer Progress Bar */
+  .dial-footer-meter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .meter-label {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--color-text-muted);
+  }
+
+  .meter-bar-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+
+  .meter-bar-fill {
+    height: 100%;
+    width: 33%;
+    background: linear-gradient(90deg, #2563eb, #06b6d4);
+    border-radius: var(--radius-full);
+    transition: width 0.3s ease;
+  }
+
+  /* Hide on smaller mobile screens to maintain screen real-estate */
+  @media (max-width: 1024px) {
+    .arc-watch-navbar {
+      display: none;
+    }
+  }
+</style>

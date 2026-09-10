@@ -1,0 +1,272 @@
+---
+import Logo from './Logo.astro';
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+---
+
+<header class="site-header" id="site-header">
+  <Container class="header-inner">
+    <a href="/" class="logo-link" aria-label="RoboDev Labs Home">
+      <Logo height={38} />
+    </a>
+
+    <!-- Desktop Nav: Clean 3-Pillar Architecture -->
+    <nav class="desktop-nav" aria-label="Main Navigation">
+      <a href="/#services" class="nav-link">Services</a>
+      <a href="/#products" class="nav-link">Product Studio</a>
+      <a href="/#academy" class="nav-link">RoboDev Academy</a>
+      <a href="/#process" class="nav-link">How We Work</a>
+      <a href="/settings" class="nav-link settings-nav-link" title="Global Component & Theme Customizer">
+        Settings
+      </a>
+    </nav>
+
+    <div class="header-actions">
+      <Button variant="primary" size="sm" href="#contact" class="discuss-btn">
+        <span>Start a Project</span>
+        <Icon name="arrow-right" size={15} />
+      </Button>
+
+      <!-- Mobile Hamburger Button -->
+      <button
+        id="mobile-menu-toggle"
+        class="mobile-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+      >
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+    </div>
+  </Container>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+    <Container class="mobile-menu-inner">
+      <nav class="mobile-nav" aria-label="Mobile Navigation">
+        <a href="/#services" class="mobile-nav-link">Services</a>
+        <a href="/#products" class="mobile-nav-link">Product Studio</a>
+        <a href="/#academy" class="mobile-nav-link">RoboDev Academy</a>
+        <a href="/#process" class="mobile-nav-link">How We Work</a>
+        <a href="/settings" class="mobile-nav-link">Settings &amp; Theme Customizer</a>
+      </nav>
+      <div class="mobile-cta-box">
+        <Button variant="primary" size="md" href="#contact" class="mobile-action-btn">
+          Start a Project
+        </Button>
+      </div>
+    </Container>
+  </div>
+</header>
+
+<script>
+  function setupMobileMenu() {
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const links = document.querySelectorAll('.mobile-nav-link, .mobile-action-btn');
+
+    if (!toggle || !menu) return;
+
+    function toggleMenu() {
+      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', (!isExpanded).toString());
+      menu.setAttribute('aria-hidden', isExpanded.toString());
+      toggle.classList.toggle('is-active', !isExpanded);
+      menu.classList.toggle('is-open', !isExpanded);
+      document.body.style.overflow = !isExpanded ? 'hidden' : '';
+    }
+
+    function closeMenu() {
+      toggle.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+      toggle.classList.remove('is-active');
+      menu.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', toggleMenu);
+    links.forEach((link) => link.addEventListener('click', closeMenu));
+  }
+
+  // Run on first load and page transitions
+  setupMobileMenu();
+  document.addEventListener('astro:page-load', setupMobileMenu);
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    background-color: rgba(15, 23, 42, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--color-border);
+    padding-top: var(--space-3);
+    padding-bottom: var(--space-3);
+    transition: background-color var(--duration-fast) var(--ease-standard);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .nav-link {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    position: relative;
+    padding: 0.25rem 0;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--color-accent);
+    transition: width var(--duration-fast) var(--ease-standard);
+  }
+
+  .nav-link:hover {
+    color: var(--color-text);
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .discuss-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  /* Hamburger Toggle */
+  .mobile-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    padding: 8px;
+    gap: 5px;
+    color: var(--color-text);
+  }
+
+  .hamburger-bar {
+    width: 20px;
+    height: 2px;
+    background-color: currentColor;
+    transition: all var(--duration-fast) var(--ease-standard);
+    border-radius: 2px;
+  }
+
+  .mobile-toggle.is-active .hamburger-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .mobile-toggle.is-active .hamburger-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-toggle.is-active .hamburger-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile Drawer */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 61px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 61px);
+    background-color: rgba(15, 23, 42, 0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--color-border);
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: all var(--duration-normal) var(--ease-standard);
+    overflow-y: auto;
+  }
+
+  .mobile-menu.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .mobile-nav-link {
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .mobile-nav-link:hover {
+    color: var(--color-accent);
+  }
+
+  .mobile-cta-box {
+    margin-top: var(--space-8);
+  }
+
+  .mobile-action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  @media (max-width: 860px) {
+    .desktop-nav {
+      display: none;
+    }
+
+    .discuss-btn {
+      display: none;
+    }
+
+    .mobile-toggle {
+      display: flex;
+    }
+
+    .mobile-menu {
+      display: block;
+    }
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+import { cn } from '../../lib/utils';
+
+export interface Props {
+  class?: string;
+  orientation?: 'horizontal' | 'vertical';
+  [key: string]: any;
+}
+
+const { class: className, orientation = 'horizontal', ...rest } = Astro.props as Props;
+---
+
+<hr
+  class={cn('divider-primitive', `orientation-${orientation}`, className)}
+  aria-orientation={orientation}
+  {...rest}
+/>
+
+<style>
+  .divider-primitive {
+    border: none;
+    background-color: var(--color-border);
+    margin: 0;
+  }
+
+  .orientation-horizontal {
+    width: 100%;
+    height: 1px;
+  }
+
+  .orientation-vertical {
+    height: 100%;
+    width: 1px;
+    display: inline-block;
+  }
+</style>

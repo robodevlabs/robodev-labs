@@ -1,0 +1,190 @@
+---
+import type { AcademyProgram } from '../../data/academy';
+import Heading from '../ui/Heading.astro';
+import Text from '../ui/Text.astro';
+import Icon from '../ui/Icon.astro';
+import Divider from '../ui/Divider.astro';
+
+export interface Props {
+  program: AcademyProgram;
+}
+
+const { program } = Astro.props;
+---
+
+<div class="academy-card">
+  <div class="card-header">
+    <span class="program-badge">{program.badge}</span>
+    <span class="target-pill">
+      <Icon name="users" size={13} class="users-icon" />
+      {program.targetAudience}
+    </span>
+  </div>
+
+  <div class="card-content">
+    <Heading level="h3" size="h4" class="program-title">
+      {program.title}
+    </Heading>
+    <Text variant="small" class="program-desc">
+      {program.description}
+    </Text>
+  </div>
+
+  <Divider class="my-4" />
+
+  <div class="curriculum-preview">
+    <span class="preview-label">Curriculum & Hands-on Focus</span>
+    <ul class="preview-list">
+      {
+        program.focusAreas.map((area) => (
+          <li>
+            <Icon name="check" size={14} class="check-icon" />
+            <span>{area}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="program-meta-footer">
+    <div class="meta-row">
+      <span class="meta-key">Format:</span>
+      <span class="meta-val">{program.format}</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-key">Outcome:</span>
+      <span class="meta-val highlight">{program.keyTakeaway}</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .academy-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: all var(--duration-normal) var(--ease-standard);
+    height: 100%;
+  }
+
+  .academy-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(37, 99, 235, 0.45);
+    box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.5), 0 0 20px -4px rgba(37, 99, 235, 0.15);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .program-badge {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    letter-spacing: var(--letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--color-brand);
+    background: rgba(37, 99, 235, 0.12);
+    border: 1px solid rgba(37, 99, 235, 0.25);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+  }
+
+  .target-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: var(--font-size-caption);
+    color: var(--color-text-muted);
+  }
+
+  .users-icon {
+    color: var(--color-accent);
+  }
+
+  .card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .program-title {
+    color: var(--color-text);
+  }
+
+  .program-desc {
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+  }
+
+  .curriculum-preview {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .preview-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+  }
+
+  .preview-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .preview-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    font-size: var(--font-size-body-small);
+    color: var(--color-text-secondary);
+  }
+
+  .check-icon {
+    color: var(--color-brand);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .program-meta-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-border-subtle);
+    font-size: var(--font-size-caption);
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .meta-key {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .meta-val {
+    color: var(--color-text-secondary);
+  }
+
+  .meta-val.highlight {
+    color: var(--color-accent);
+    font-weight: var(--font-weight-medium);
+  }
+</style>

@@ -1,0 +1,1053 @@
+---
+/**
+ * ModelAccordionCards.astro
+ * 
+ * Interactive Horizontal Accordion Showcase inspired by INGSKILL.
+ * Displays RoboDev Labs' divisions tailored for distinct audiences:
+ * - "Built for Businesses, Institutions, and Learners"
+ * 
+ * Divisions:
+ * 1. For Businesses -> Engineering Services (Software Solutions, AI, Cloud)
+ * 2. For Students & Learners -> RoboDev Academy (Workshops, Mentorship, Fellowships)
+ * 3. For Public & Users -> Product Studio (Flagship: Busly Smart Transit)
+ * 4. For Media & Growth -> Media & Creative Division (Brand Strategy, Growth, Production)
+ * 
+ * Features:
+ * - STRICT horizontal-only expansion (locked height on desktop, zero vertical jitter or page stretching)
+ * - Big display typography matching INGSKILL reference
+ * - Segmented top tabs with icons
+ * - Complete verified links to all social channels (Facebook, Instagram, YouTube, GitHub, LinkedIn, X, TikTok)
+ */
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+import { siteConfig } from '../../config/site';
+
+const socialsList = [
+  { name: 'GitHub', icon: 'github', url: siteConfig.socials.github },
+  { name: 'LinkedIn', icon: 'linkedin', url: siteConfig.socials.linkedin },
+  { name: 'X', icon: 'twitter', url: siteConfig.socials.x },
+  { name: 'Instagram', icon: 'instagram', url: siteConfig.socials.instagram },
+  { name: 'YouTube', icon: 'youtube', url: siteConfig.socials.youtube },
+  { name: 'Facebook', icon: 'facebook', url: siteConfig.socials.facebook },
+  { name: 'TikTok', icon: 'tiktok', url: siteConfig.socials.tiktok },
+];
+---
+
+<div class="model-showcase-wrapper" id="model-showcase-wrapper">
+  
+  <!-- Segment Navigation Header (INGSKILL 4-Tab Style) -->
+  <div class="model-segment-nav" role="tablist" aria-label="Target Audiences and Divisions">
+    
+    <!-- Tab 1: For Businesses -->
+    <button 
+      class="segment-nav-btn active" 
+      role="tab" 
+      aria-selected="true" 
+      aria-controls="pane-business" 
+      id="tab-business" 
+      data-tab="0"
+    >
+      <div class="nav-icon-wrap blue">
+        <Icon name="layers" size={20} />
+      </div>
+      <div class="nav-text-wrap">
+        <span class="nav-category">For Businesses</span>
+        <span class="nav-title">Engineering Services</span>
+      </div>
+    </button>
+
+    <div class="segment-divider"></div>
+
+    <!-- Tab 2: For Students & Learners -->
+    <button 
+      class="segment-nav-btn" 
+      role="tab" 
+      aria-selected="false" 
+      aria-controls="pane-learners" 
+      id="tab-learners" 
+      data-tab="1"
+    >
+      <div class="nav-icon-wrap purple">
+        <Icon name="users" size={20} />
+      </div>
+      <div class="nav-text-wrap">
+        <span class="nav-category">For Students &amp; Learners</span>
+        <span class="nav-title">RoboDev Academy</span>
+      </div>
+    </button>
+
+    <div class="segment-divider"></div>
+
+    <!-- Tab 3: For Public & Commuters -->
+    <button 
+      class="segment-nav-btn" 
+      role="tab" 
+      aria-selected="false" 
+      aria-controls="pane-products" 
+      id="tab-products" 
+      data-tab="2"
+    >
+      <div class="nav-icon-wrap cyan">
+        <Icon name="sparkles" size={20} />
+      </div>
+      <div class="nav-text-wrap">
+        <span class="nav-category">For Everyday People</span>
+        <span class="nav-title">Product Studio: Busly</span>
+      </div>
+    </button>
+
+    <div class="segment-divider"></div>
+
+    <!-- Tab 4: Media & Growth Division -->
+    <button 
+      class="segment-nav-btn" 
+      role="tab" 
+      aria-selected="false" 
+      aria-controls="pane-media" 
+      id="tab-media" 
+      data-tab="3"
+    >
+      <div class="nav-icon-wrap amber">
+        <Icon name="zap" size={20} />
+      </div>
+      <div class="nav-text-wrap">
+        <span class="nav-category">For Brand &amp; Reach</span>
+        <span class="nav-title">Media &amp; Growth Studio</span>
+      </div>
+    </button>
+
+  </div>
+
+  <!-- Horizontal Expanding Accordion Container (LOCKED HEIGHT, HORIZONTAL-ONLY EXPANSION) -->
+  <div class="model-accordion-stage" id="model-accordion-stage">
+    
+    <!-- PANE 1: FOR BUSINESSES -> ENGINEERING SERVICES -->
+    <div 
+      class="accordion-pane active" 
+      id="pane-business" 
+      role="tabpanel" 
+      aria-labelledby="tab-business"
+      data-pane="0"
+      tabindex="0"
+    >
+      <!-- Collapsed Pillar Strip (Desktop) -->
+      <div class="collapsed-strip">
+        <div class="strip-icon-box blue">
+          <Icon name="layers" size={20} />
+        </div>
+        <span class="strip-number">01</span>
+        <span class="strip-vertical-label">For Businesses</span>
+      </div>
+
+      <!-- Expanded Detailed Card View -->
+      <div class="expanded-card-content">
+        <div class="card-left-narrative">
+          <div class="pane-badge blue">
+            <span class="badge-dot blue"></span>
+            Division 01 &bull; Client Engineering
+          </div>
+
+          <h3 class="pane-headline text-gradient-blue">
+            Scale Systems, Modern Web/Mobile &amp; Practical AI
+          </h3>
+
+          <p class="pane-summary">
+            Accelerate business operations with full-cycle software delivery, high-throughput backend APIs, and custom AI agent workflows built to eliminate production bottlenecks.
+          </p>
+
+          <ul class="pane-features-list">
+            <li>
+              <Icon name="check" size={16} class="feature-check blue" />
+              <span><strong>Custom Software &amp; SaaS:</strong> High-performance web applications with resilient architecture.</span>
+            </li>
+            <li>
+              <Icon name="check" size={16} class="feature-check blue" />
+              <span><strong>Practical AI Workflows:</strong> Custom LLM integrations, document retrieval (RAG), and data automation.</span>
+            </li>
+            <li>
+              <Icon name="check" size={16} class="feature-check blue" />
+              <span><strong>Cloud &amp; DevOps:</strong> Automated CI/CD pipelines, scalable cloud infrastructure, and security hardening.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-right-interactive">
+          <div class="subdivision-card">
+            <span class="subdivision-header-label">Capabilities for Enterprises</span>
+            <div class="capabilities-tags-cloud">
+              <span class="cap-tag">Web Platforms</span>
+              <span class="cap-tag">Mobile Apps (iOS/Android)</span>
+              <span class="cap-tag">Agentic LLMs</span>
+              <span class="cap-tag">Cloud Backends</span>
+              <span class="cap-tag">High-Throughput APIs</span>
+            </div>
+
+            <div class="division-metric-box">
+              <div class="metric-item">
+                <span class="metric-num">100%</span>
+                <span class="metric-lbl">Production Ready</span>
+              </div>
+              <div class="metric-sep"></div>
+              <div class="metric-item">
+                <span class="metric-num">SLA</span>
+                <span class="metric-lbl">High Concurrency</span>
+              </div>
+            </div>
+
+            <div class="action-wrap">
+              <Button variant="primary" size="md" href="#services" class="pane-cta-btn blue">
+                <span>Explore Engineering Services</span>
+                <Icon name="arrow-right" size={16} />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANE 2: FOR STUDENTS & LEARNERS -> ROBODEV ACADEMY -->
+    <div 
+      class="accordion-pane" 
+      id="pane-learners" 
+      role="tabpanel" 
+      aria-labelledby="tab-learners"
+      data-pane="1"
+      tabindex="0"
+    >
+      <!-- Collapsed Pillar Strip -->
+      <div class="collapsed-strip">
+        <div class="strip-icon-box purple">
+          <Icon name="users" size={20} />
+        </div>
+        <span class="strip-number">02</span>
+        <span class="strip-vertical-label">For Students</span>
+      </div>
+
+      <!-- Expanded Detailed Card View -->
+      <div class="expanded-card-content">
+        <div class="card-left-narrative">
+          <div class="pane-badge purple">
+            <span class="badge-dot purple"></span>
+            Division 02 &bull; RoboDev Academy
+          </div>
+
+          <h3 class="pane-headline text-gradient-purple">
+            Unlock Fellowships, Careers &amp; Hands-On Code
+          </h3>
+
+          <p class="pane-summary">
+            Ditch dry theory. Build and ship real applications alongside practicing engineers. We bridge textbook academia into industry-ready software talent through intensive mentorship and hackathon sprints.
+          </p>
+
+          <ul class="pane-features-list">
+            <li>
+              <Icon name="check" size={16} class="feature-check purple" />
+              <span><strong>Hands-On Workshops:</strong> Code-along immersions deploying production applications.</span>
+            </li>
+            <li>
+              <Icon name="check" size={16} class="feature-check purple" />
+              <span><strong>1-on-1 Mentorship:</strong> Direct code reviews, system design critiques, and career coaching.</span>
+            </li>
+            <li>
+              <Icon name="check" size={16} class="feature-check purple" />
+              <span><strong>Hackathons &amp; Fellowships:</strong> Team engineering sprints that build standout portfolios.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-right-interactive">
+          <div class="subdivision-card">
+            <span class="subdivision-header-label">Learning Modules &amp; Growth</span>
+            <div class="capabilities-tags-cloud">
+              <span class="cap-tag">Full-Stack Immersions</span>
+              <span class="cap-tag">Git &amp; PR Culture</span>
+              <span class="cap-tag">System Architecture</span>
+              <span class="cap-tag">Career Placement</span>
+              <span class="cap-tag">Open Source Prep</span>
+            </div>
+
+            <div class="division-metric-box">
+              <div class="metric-item">
+                <span class="metric-num">Practical</span>
+                <span class="metric-lbl">Project-First</span>
+              </div>
+              <div class="metric-sep"></div>
+              <div class="metric-item">
+                <span class="metric-num">1-on-1</span>
+                <span class="metric-lbl">Mentor Access</span>
+              </div>
+            </div>
+
+            <div class="action-wrap">
+              <Button variant="secondary" size="md" href="#academy" class="pane-cta-btn purple">
+                <span>Explore Academy Programs</span>
+                <Icon name="arrow-right" size={16} />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANE 3: FOR EVERYDAY PEOPLE -> PRODUCT STUDIO (BUSLY) -->
+    <div 
+      class="accordion-pane" 
+      id="pane-products" 
+      role="tabpanel" 
+      aria-labelledby="tab-products"
+      data-pane="2"
+      tabindex="0"
+    >
+      <!-- Collapsed Pillar Strip -->
+      <div class="collapsed-strip">
+        <div class="strip-icon-box cyan">
+          <Icon name="sparkles" size={20} />
+        </div>
+        <span class="strip-number">03</span>
+        <span class="strip-vertical-label">For Commuters</span>
+      </div>
+
+      <!-- Expanded Detailed Card View -->
+      <div class="expanded-card-content">
+        <div class="card-left-narrative">
+          <div class="pane-badge cyan">
+            <span class="badge-dot cyan"></span>
+            Division 03 &bull; Proprietary Products
+          </div>
+
+          <h3 class="pane-headline text-gradient-cyan">
+            Smart Transit Route-Finding for Everyday Commuters
+          </h3>
+
+          <p class="pane-summary">
+            Our Product Studio invents proprietary software products. Our flagship incubation, <strong>Busly</strong>, transforms unpredictable public transit with live GPS vehicle telemetry and arrival prediction.
+          </p>
+
+          <ul class="pane-features-list">
+            <li>
+              <Icon name="check" size={16} class="feature-check cyan" />
+              <span><strong>Real-Time Transit Tracking:</strong> Live bus GPS telemetry and accurate route ETAs.</span>
+            </li>
+            <li>
+              <Icon name="check" size={16} class="feature-check cyan" />
+              <span><strong>Commuter First Experience:</strong> Eliminates waiting chaos with effortless route navigation.</span>
+            </li>
+            <li>
+              <Icon name="check" size={16} class="feature-check cyan" />
+              <span><strong>Offline-First Reliability:</strong> Engineered to function even with intermittent mobile connectivity.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-right-interactive">
+          <div class="subdivision-card">
+            <span class="subdivision-header-label">Featured Product Studio Vertical</span>
+            <div class="featured-sub-brand">
+              <div class="brand-logo-pill">
+                <Icon name="zap" size={22} class="brand-zap-icon" />
+                <span class="brand-name">BUSLY</span>
+                <span class="brand-sub">Mobility OS</span>
+              </div>
+              <p class="brand-desc">Real-time urban transit intelligence &amp; route navigation platform.</p>
+            </div>
+
+            <div class="capabilities-tags-cloud">
+              <span class="cap-tag">Live GPS Telemetry</span>
+              <span class="cap-tag">Route Prediction</span>
+              <span class="cap-tag">Mobile Client</span>
+              <span class="cap-tag">Commuter OS</span>
+            </div>
+
+            <div class="action-wrap">
+              <Button variant="primary" size="md" href="#products" class="pane-cta-btn cyan">
+                <span>Discover Busly Platform</span>
+                <Icon name="arrow-right" size={16} />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANE 4: FOR BRAND & REACH -> MEDIA & GROWTH STUDIO -->
+    <div 
+      class="accordion-pane" 
+      id="pane-media" 
+      role="tabpanel" 
+      aria-labelledby="tab-media"
+      data-pane="3"
+      tabindex="0"
+    >
+      <!-- Collapsed Pillar Strip -->
+      <div class="collapsed-strip">
+        <div class="strip-icon-box amber">
+          <Icon name="zap" size={20} />
+        </div>
+        <span class="strip-number">04</span>
+        <span class="strip-vertical-label">Media &amp; Growth</span>
+      </div>
+
+      <!-- Expanded Detailed Card View -->
+      <div class="expanded-card-content">
+        <div class="card-left-narrative">
+          <div class="pane-badge amber">
+            <span class="badge-dot amber"></span>
+            Division 04 &bull; Media, Growth &amp; Content
+          </div>
+
+          <h3 class="pane-headline text-gradient-amber">
+            High-Impact Tech Storytelling, Branding &amp; Growth
+          </h3>
+
+          <p class="pane-summary">
+            Our internal media, branding, and growth engine. We produce high-fidelity engineering media, run developer outreach, create digital content, and amplify innovative tech products across global channels.
+          </p>
+
+          <ul class="pane-features-list">
+            <li>
+              <Icon name="check" size={16} class="feature-check amber" />
+              <span><strong>Brand Design &amp; UI/UX:</strong> World-class visual identities and modern product design systems.</span>
+            </li>
+            <li>
+              <Icon name="check" size={16} class="feature-check amber" />
+              <span><strong>Technical Content &amp; Media:</strong> Engineering podcasts, tutorials, hackathon event broadcasts, and showcases.</span>
+            </li>
+            <li>
+              <Icon name="check" size={16} class="feature-check amber" />
+              <span><strong>Community &amp; Growth Distribution:</strong> Amplifying digital products to engaged users worldwide.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-right-interactive">
+          <div class="subdivision-card">
+            <span class="subdivision-header-label">Connect Across Our Ecosystem</span>
+            
+            <!-- Complete Social Media Links Grid -->
+            <div class="socials-interactive-grid">
+              {socialsList.map((item) => (
+                <a 
+                  href={item.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="social-connect-pill"
+                  title={`Follow RoboDev Labs on ${item.name}`}
+                >
+                  <Icon name={item.icon as any} size={16} />
+                  <span>{item.name}</span>
+                </a>
+              ))}
+            </div>
+
+            <div class="action-wrap">
+              <Button variant="primary" size="md" href="#contact" class="pane-cta-btn amber">
+                <span>Partner with Media Studio</span>
+                <Icon name="arrow-right" size={16} />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function initModelAccordion() {
+    const navButtons = document.querySelectorAll<HTMLButtonElement>('.segment-nav-btn');
+    const panes = document.querySelectorAll<HTMLElement>('.accordion-pane');
+    const wrapper = document.getElementById('model-showcase-wrapper');
+
+    if (!navButtons.length || !panes.length) return;
+
+    function activatePane(index: number) {
+      // Update nav buttons
+      navButtons.forEach((btn, i) => {
+        const isActive = i === index;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      // Update accordion panes
+      panes.forEach((pane, i) => {
+        const isActive = i === index;
+        pane.classList.toggle('active', isActive);
+      });
+
+      // Ambient background shift on the wrapper
+      if (wrapper) {
+        wrapper.setAttribute('data-active-theme', index.toString());
+      }
+    }
+
+    // Top Segment Button clicks
+    navButtons.forEach((btn, index) => {
+      btn.addEventListener('click', () => activatePane(index));
+    });
+
+    // Clicking collapsed pane strip directly opens it
+    panes.forEach((pane, index) => {
+      pane.addEventListener('click', () => {
+        if (!pane.classList.contains('active')) {
+          activatePane(index);
+        }
+      });
+
+      // Keyboard accessibility
+      pane.addEventListener('keydown', (e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && !pane.classList.contains('active')) {
+          e.preventDefault();
+          activatePane(index);
+        }
+      });
+    });
+  }
+
+  // Initialize immediately & on Astro page transitions
+  initModelAccordion();
+  document.addEventListener('astro:page-load', initModelAccordion);
+</script>
+
+<style>
+  /* =========================================================================
+     MODEL ACCORDION SHOWCASE (STRICT HORIZONTAL-ONLY EXPANSION)
+     ========================================================================= */
+  .model-showcase-wrapper {
+    position: relative;
+    width: 100%;
+    margin-top: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  /* -------------------------------------------------------------------------
+     Top Segmented Navigation Bar
+     ------------------------------------------------------------------------- */
+  .model-segment-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(16px);
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .segment-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.6rem 1.1rem;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--color-text-secondary);
+    text-align: left;
+    flex: 1;
+  }
+
+  .segment-nav-btn:hover {
+    color: var(--color-text);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .segment-nav-btn.active {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--raw-white);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-icon-wrap {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .nav-icon-wrap.blue { color: #60a5fa; }
+  .nav-icon-wrap.purple { color: #c084fc; }
+  .nav-icon-wrap.cyan { color: #38bdf8; }
+  .nav-icon-wrap.amber { color: #fbbf24; }
+
+  .segment-nav-btn.active .nav-icon-wrap.blue { background: rgba(37, 99, 235, 0.2); box-shadow: 0 0 10px rgba(37, 99, 235, 0.4); }
+  .segment-nav-btn.active .nav-icon-wrap.purple { background: rgba(168, 85, 247, 0.2); box-shadow: 0 0 10px rgba(168, 85, 247, 0.4); }
+  .segment-nav-btn.active .nav-icon-wrap.cyan { background: rgba(6, 182, 212, 0.2); box-shadow: 0 0 10px rgba(6, 182, 212, 0.4); }
+  .segment-nav-btn.active .nav-icon-wrap.amber { background: rgba(245, 158, 11, 0.2); box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
+
+  .nav-text-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    overflow: hidden;
+  }
+
+  .nav-category {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: var(--letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  .nav-title {
+    font-size: 0.84rem;
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+  }
+
+  .segment-divider {
+    width: 1px;
+    height: 28px;
+    background: var(--color-border-subtle);
+    flex-shrink: 0;
+  }
+
+  /* -------------------------------------------------------------------------
+     Horizontal Accordion Stage (LOCKED CONSTANT HEIGHT ON DESKTOP)
+     ------------------------------------------------------------------------- */
+  .model-accordion-stage {
+    display: flex;
+    gap: 1.1rem;
+    width: 100%;
+    height: 520px; /* STRICT FIXED HEIGHT: No vertical bouncing or stretching */
+    min-height: 520px;
+    max-height: 520px;
+    perspective: 1000px;
+    overflow: hidden;
+  }
+
+  .accordion-pane {
+    position: relative;
+    height: 100%; /* Fill the fixed 520px height exactly */
+    border-radius: 28px;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(10, 16, 30, 0.98) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    cursor: pointer;
+    /* ONLY transition flex horizontally */
+    transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    flex: 0 0 68px; /* Collapsed width on desktop */
+    display: flex;
+  }
+
+  .accordion-pane:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .accordion-pane.active {
+    flex: 1 1 0%; /* Expands HORIZONTALLY to occupy all available space */
+    cursor: default;
+    border-color: rgba(6, 182, 212, 0.45);
+    box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.8), 0 0 35px -10px rgba(6, 182, 212, 0.15);
+  }
+
+  /* Collapsed Pillar Strip */
+  .collapsed-strip {
+    width: 68px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-6) 0;
+    transition: opacity 0.3s ease;
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  .accordion-pane.active .collapsed-strip {
+    display: none;
+  }
+
+  .strip-icon-box {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .strip-icon-box.blue { color: #60a5fa; border-color: rgba(37, 99, 235, 0.3); }
+  .strip-icon-box.purple { color: #c084fc; border-color: rgba(168, 85, 247, 0.3); }
+  .strip-icon-box.cyan { color: #38bdf8; border-color: rgba(6, 182, 212, 0.3); }
+  .strip-icon-box.amber { color: #fbbf24; border-color: rgba(245, 158, 11, 0.3); }
+
+  .strip-number {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .strip-vertical-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    letter-spacing: var(--letter-spacing-wide);
+    white-space: nowrap;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  /* Expanded Card Layout */
+  .expanded-card-content {
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: 2.25rem 2.5rem;
+    grid-template-columns: 1.35fr 1fr;
+    gap: var(--space-8);
+    align-items: center;
+    overflow: hidden;
+    animation: fadeInHorizontal 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .accordion-pane.active .expanded-card-content {
+    display: grid;
+  }
+
+  @keyframes fadeInHorizontal {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Left Narrative */
+  .card-left-narrative {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    overflow: hidden;
+  }
+
+  .pane-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: var(--letter-spacing-wider);
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-full);
+    width: fit-content;
+  }
+
+  .pane-badge.blue { background: rgba(37, 99, 235, 0.12); color: #93c5fd; border: 1px solid rgba(37, 99, 235, 0.3); }
+  .pane-badge.purple { background: rgba(168, 85, 247, 0.12); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.3); }
+  .pane-badge.cyan { background: rgba(6, 182, 212, 0.12); color: #a5f3fc; border: 1px solid rgba(6, 182, 212, 0.3); }
+  .pane-badge.amber { background: rgba(245, 158, 11, 0.12); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.3); }
+
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .badge-dot.blue { background: #60a5fa; }
+  .badge-dot.purple { background: #c084fc; }
+  .badge-dot.cyan { background: #38bdf8; }
+  .badge-dot.amber { background: #fbbf24; }
+
+  .pane-headline {
+    font-size: clamp(1.4rem, 2vw, 1.95rem);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  .text-gradient-blue {
+    background: linear-gradient(135deg, #ffffff 40%, #60a5fa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-purple {
+    background: linear-gradient(135deg, #ffffff 40%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #ffffff 40%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-amber {
+    background: linear-gradient(135deg, #ffffff 40%, #fbbf24 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .pane-summary {
+    font-size: 0.92rem;
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+  }
+
+  .pane-features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.35rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .pane-features-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+  }
+
+  .pane-features-list li strong { color: var(--raw-white); }
+
+  .feature-check { flex-shrink: 0; margin-top: 0.2rem; }
+  .feature-check.blue { color: #60a5fa; }
+  .feature-check.purple { color: #c084fc; }
+  .feature-check.cyan { color: #38bdf8; }
+  .feature-check.amber { color: #fbbf24; }
+
+  /* Right Interactive Sub-Card */
+  .card-right-interactive {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+  }
+
+  .subdivision-card {
+    width: 100%;
+    background: rgba(30, 41, 59, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    backdrop-filter: blur(12px);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  }
+
+  .subdivision-header-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: var(--letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .featured-sub-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.75rem 0.9rem;
+    background: rgba(6, 182, 212, 0.08);
+    border: 1px solid rgba(6, 182, 212, 0.25);
+    border-radius: var(--radius-md);
+  }
+
+  .brand-logo-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .brand-zap-icon { color: #38bdf8; }
+
+  .brand-name {
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1em;
+    color: var(--raw-white);
+  }
+
+  .brand-sub {
+    font-size: 0.68rem;
+    font-family: var(--font-mono);
+    color: #38bdf8;
+    background: rgba(6, 182, 212, 0.18);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+  }
+
+  .brand-desc {
+    font-size: 0.78rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .capabilities-tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .cap-tag {
+    font-size: 0.72rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .division-metric-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0.65rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .metric-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .metric-num {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--raw-white);
+  }
+
+  .metric-lbl {
+    font-size: 0.68rem;
+    color: var(--color-text-muted);
+  }
+
+  .metric-sep {
+    width: 1px;
+    height: 22px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Social Interactive Grid inside Media Pane */
+  .socials-interactive-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.45rem;
+  }
+
+  .social-connect-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.65rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    font-size: 0.76rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .social-connect-pill:hover {
+    color: var(--raw-white);
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.35);
+  }
+
+  .action-wrap {
+    margin-top: auto;
+  }
+
+  .pane-cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pane-cta-btn.blue { background: #2563eb; box-shadow: 0 4px 18px rgba(37, 99, 235, 0.35); }
+  .pane-cta-btn.purple { background: #9333ea; box-shadow: 0 4px 18px rgba(147, 51, 234, 0.35); }
+  .pane-cta-btn.cyan { background: #0891b2; box-shadow: 0 4px 18px rgba(8, 145, 178, 0.35); }
+  .pane-cta-btn.amber { background: #d97706; box-shadow: 0 4px 18px rgba(217, 119, 6, 0.35); }
+
+  /* -------------------------------------------------------------------------
+     Mobile / Responsive Styles
+     ------------------------------------------------------------------------- */
+  @media (max-width: 960px) {
+    .model-segment-nav {
+      flex-direction: column;
+      gap: 0.4rem;
+      padding: 0.65rem;
+    }
+
+    .segment-divider {
+      display: none;
+    }
+
+    .segment-nav-btn {
+      width: 100%;
+    }
+
+    .model-accordion-stage {
+      flex-direction: column;
+      height: auto;
+      min-height: auto;
+      max-height: none;
+    }
+
+    .accordion-pane {
+      flex: none;
+      width: 100%;
+      height: auto;
+      min-height: 72px;
+    }
+
+    .collapsed-strip {
+      width: 100%;
+      height: 72px;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 1rem;
+      padding: 0 var(--space-6);
+    }
+
+    .strip-vertical-label {
+      writing-mode: horizontal-tb;
+      transform: none;
+      margin: 0;
+    }
+
+    .expanded-card-content {
+      grid-template-columns: 1fr;
+      padding: var(--space-6);
+      height: auto;
+    }
+  }
+</style>

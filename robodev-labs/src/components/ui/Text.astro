@@ -1,0 +1,81 @@
+---
+import type { TextVariant } from '../../types';
+import { cn } from '../../lib/utils';
+
+export interface Props {
+  variant?: TextVariant;
+  as?: string;
+  class?: string;
+  [key: string]: any;
+}
+
+const { variant = 'body', as, class: className, ...rest } = Astro.props;
+
+const defaultElementMap: Record<TextVariant, string> = {
+  body: 'p',
+  large: 'p',
+  small: 'small',
+  muted: 'p',
+  eyebrow: 'span',
+  caption: 'span',
+  label: 'label',
+};
+
+const targetTag = as || defaultElementMap[variant as TextVariant] || 'p';
+const Tag = targetTag as any;
+---
+
+<Tag class={cn('text-primitive', `variant-${variant}`, className)} {...rest}>
+  <slot />
+</Tag>
+
+<style>
+  .text-primitive {
+    font-family: var(--font-sans);
+  }
+
+  .variant-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-normal);
+    color: var(--color-text-secondary);
+  }
+
+  .variant-large {
+    font-size: var(--font-size-body-large);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+  }
+
+  .variant-small {
+    font-size: var(--font-size-body-small);
+    line-height: var(--line-height-snug);
+    color: var(--color-text-muted);
+  }
+
+  .variant-muted {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-normal);
+    color: var(--color-text-muted);
+  }
+
+  .variant-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-eyebrow);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--letter-spacing-wider);
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .variant-caption {
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-snug);
+    color: var(--color-text-muted);
+  }
+
+  .variant-label {
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+  }
+</style>
