@@ -2,6 +2,7 @@
 import Container from '../ui/Container.astro';
 import Logo from '../common/Logo.astro';
 import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
 import { siteConfig } from '../../config/site';
 
 const currentYear = new Date().getFullYear();
@@ -48,23 +49,18 @@ const socialsList = [
 
           <!-- Dual Action Buttons -->
           <div class="cta-button-group">
-            <a 
+            <Button
+              variant="primary"
+              size="md"
               href={`mailto:${siteConfig.email}?subject=Project%20Inquiry%20-%20RoboDev%20Labs`}
-              class="cta-primary-btn"
             >
               <span>Start a conversation</span>
-              <svg class="btn-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
+              <span aria-hidden="true">&rarr;</span>
+            </Button>
 
-            <a href="#services" class="cta-secondary-btn">
+            <Button variant="secondary" size="md" href="#services">
               <span>Explore capabilities</span>
-              <svg class="btn-arrow-icon secondary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </a>
+            </Button>
           </div>
 
           <!-- Trust & Response Time Micro-Pills -->
@@ -501,76 +497,7 @@ const socialsList = [
     margin-top: 0.5rem;
   }
 
-  .cta-primary-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.65rem;
-    background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
-    color: #ffffff;
-    font-family: var(--font-sans);
-    font-size: 0.92rem;
-    font-weight: 600;
-    padding: 0.85rem 1.85rem;
-    border-radius: 9999px;
-    text-decoration: none;
-    box-shadow: 0 0 24px rgba(6, 182, 212, 0.35);
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    min-height: 48px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-  }
 
-  .cta-primary-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 32px rgba(6, 182, 212, 0.55);
-    background: linear-gradient(135deg, #0369a1 0%, #0891b2 100%);
-    color: #ffffff;
-  }
-
-  .btn-arrow-icon {
-    width: 16px;
-    height: 16px;
-    transition: transform 0.25s ease;
-  }
-
-  .cta-primary-btn:hover .btn-arrow-icon {
-    transform: translateX(4px);
-  }
-
-  .cta-secondary-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.04);
-    color: #cbd5e1;
-    font-family: var(--font-sans);
-    font-size: 0.92rem;
-    font-weight: 500;
-    padding: 0.85rem 1.6rem;
-    border-radius: 9999px;
-    text-decoration: none;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    transition: all 0.25s ease;
-    min-height: 48px;
-  }
-
-  .cta-secondary-btn:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(56, 189, 248, 0.4);
-    transform: translateY(-2px);
-  }
-
-  .secondary-icon {
-    width: 14px;
-    height: 14px;
-    transition: transform 0.25s ease;
-  }
-
-  .cta-secondary-btn:hover .secondary-icon {
-    transform: translateX(3px);
-  }
 
   /* Trust Indicators Strip */
   .cta-trust-strip {

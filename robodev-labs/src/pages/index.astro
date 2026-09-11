@@ -47,16 +47,11 @@ import { siteConfig } from '../config/site';
           Software engineering and digital products for teams turning ambitious ideas into reality.
         </p>
 
-        <!-- Primary Actions Row -->
+        <!-- Primary CTA -->
         <div class="hero-action-row">
           <Button variant="primary" size="md" href="#contact" class="hero-primary-pill">
             <span>Start a project</span>
             <span class="cta-arrow-symbol" aria-hidden="true">&rarr;</span>
-          </Button>
-
-          <Button variant="secondary" size="md" href="#products" class="hero-secondary-pill">
-            <span class="pill-indicator-dot" aria-hidden="true"></span>
-            <span>See What We're Building</span>
           </Button>
         </div>
       </div>
@@ -246,44 +241,42 @@ import { siteConfig } from '../config/site';
   }
 
   .hero-primary-pill {
-    background-color: #0b1120 !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
-    padding: 0.8rem 1.75rem !important;
+    padding: 0.85rem 2rem !important;
     font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em !important;
+    /* Refined obsidian base with a cool-blue accent edge */
+    background: linear-gradient(160deg, #0e1628 0%, #0a1020 100%) !important;
+    border-color: rgba(120, 160, 255, 0.28) !important;
+    box-shadow:
+      0 0 0 1px rgba(80, 120, 220, 0.12),
+      0 2px 6px rgba(0, 0, 0, 0.5),
+      0 8px 28px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+    color: #e8edf8 !important;
   }
 
   .hero-primary-pill:hover {
-    background-color: #162238 !important;
-    border-color: rgba(255, 255, 255, 0.35) !important;
-  }
-
-  .hero-secondary-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.8rem 1.75rem !important;
-    font-size: 0.95rem !important;
-    background-color: rgba(255, 255, 255, 0.08) !important;
-    border-color: rgba(255, 255, 255, 0.15) !important;
-  }
-
-  .pill-indicator-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #818cf8;
-    box-shadow: 0 0 10px #818cf8;
-    display: inline-block;
+    background: linear-gradient(160deg, #132040 0%, #0d1830 100%) !important;
+    border-color: rgba(140, 180, 255, 0.45) !important;
+    box-shadow:
+      0 0 0 1px rgba(100, 150, 255, 0.22),
+      0 4px 12px rgba(0, 0, 0, 0.55),
+      0 12px 36px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+    color: #ffffff !important;
   }
 
   .cta-arrow-symbol {
-    font-size: 1.1rem;
+    font-size: 1rem;
     display: inline-block;
+    color: rgba(160, 200, 255, 0.85);
     transition: transform var(--duration-fast) var(--ease-standard);
   }
 
   .hero-primary-pill:hover .cta-arrow-symbol {
-    transform: translateX(3px);
+    transform: translateX(4px);
+    color: rgba(180, 215, 255, 1);
   }
 
   /* ------------------------------------------------------------------------
