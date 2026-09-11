@@ -30,12 +30,6 @@ const socialsList = [
       <div class="cta-main-layout">
         <!-- Left / Primary Content Column -->
         <div class="cta-content-col">
-          <!-- Status Pill Badge -->
-          <div class="cta-status-badge">
-            <span class="status-indicator-dot"></span>
-            <span class="status-badge-text">READY TO BUILD</span>
-          </div>
-
           <!-- Display Title -->
           <h2 id="cta-heading" class="cta-headline">
             Have an idea worth <br class="title-break" />
@@ -424,38 +418,13 @@ const socialsList = [
     gap: clamp(1rem, 2vw, 1.4rem);
   }
 
-  .cta-status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.35rem 0.85rem;
-    background: rgba(6, 182, 212, 0.08);
-    border: 1px solid rgba(6, 182, 212, 0.25);
-    border-radius: 9999px;
-    width: fit-content;
-  }
-
-  .status-indicator-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background-color: #38bdf8;
-    box-shadow: 0 0 10px #38bdf8;
-    animation: statusPulse 2s infinite ease-in-out;
-  }
-
-  @keyframes statusPulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.85); }
-  }
-
-  .status-badge-text {
+  .cta-eyebrow {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
+    font-size: var(--font-size-caption);
+    letter-spacing: var(--letter-spacing-wider);
     text-transform: uppercase;
-    color: #38bdf8;
-    font-weight: 600;
+    color: var(--color-accent);
+    margin-bottom: 0.2rem;
   }
 
   .cta-headline {
