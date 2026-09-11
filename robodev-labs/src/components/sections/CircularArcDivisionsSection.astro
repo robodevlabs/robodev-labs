@@ -587,6 +587,10 @@ import Icon from '../ui/Icon.astro';
     const X_MAX = 240;        // Apex X coordinate in pixels from left edge
     const NODE_SPACING = 340; // Generously spread out menu node spacing along arc
 
+    function isMobileView(): boolean {
+      return window.innerWidth <= 768;
+    }
+
     // Mathematical Parabolic/Circle Curve Function
     function getArcX(y: number, H: number): number {
       const u = (y - H / 2) / (H / 2);
@@ -596,6 +600,11 @@ import Icon from '../ui/Icon.astro';
 
     // Update positions and active visual states based on scroll progress (0.0 to 1.0)
     function updateArcGeometry(progress: number) {
+      if (isMobileView()) {
+        // On mobile, nodes are in a clean top horizontal segment bar. Do NOT apply 3D transforms.
+        return;
+      }
+
       const H = stage?.clientHeight || window.innerHeight;
       const centerY = H / 2;
 
@@ -641,10 +650,7 @@ import Icon from '../ui/Icon.astro';
         node.setAttribute('aria-selected', isActive ? 'true' : 'false');
       });
 
-      // Update Editorial Content Panels with CURVED Arc Transitions:
-      // i < newIndex: 'past' (curved UP to top)
-      // i === newIndex: 'active' (locked center)
-      // i > newIndex: 'future' (curved BELOW)
+      // Update Editorial Content Panels
       panels.forEach((panel, i) => {
         panel.classList.remove('past', 'active', 'future');
         if (i < newIndex) {
@@ -669,9 +675,18 @@ import Icon from '../ui/Icon.astro';
       });
     }
 
-    // Scroll listener for sticky 300vh runway
+    // Scroll listener for sticky 300vh runway (Desktop only)
     function handleScroll() {
       if (!realm) return;
+      if (isMobileView()) {
+        // On mobile, reset inline styles on nodes so CSS takes full control
+        nodes.forEach((node) => {
+          node.style.transform = '';
+          node.style.opacity = '';
+        });
+        return;
+      }
+
       const rect = realm.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       const scrollableDist = realm.offsetHeight - windowHeight;
@@ -684,15 +699,33 @@ import Icon from '../ui/Icon.astro';
       updateArcGeometry(progress);
     }
 
+    function handleResize() {
+      if (isMobileView()) {
+        nodes.forEach((node) => {
+          node.style.transform = '';
+          node.style.opacity = '';
+        });
+      } else {
+        handleScroll();
+      }
+    }
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
 
     // Initial setup
     handleScroll();
 
-    // Node click handlers: smoothly scroll to that division's stage
+    // Node click handlers:
+    // On mobile: instantly switch active panel
+    // On desktop: smoothly scroll through the 300vh pinned stage
     nodes.forEach((node, index) => {
       node.addEventListener('click', () => {
+        if (isMobileView()) {
+          setActiveDivision(index);
+          return;
+        }
+
         if (!realm) return;
         const scrollableDist = realm.offsetHeight - window.innerHeight;
         const targetProgress = index === 0 ? 0.05 : index === 1 ? 0.50 : 0.95;
@@ -704,7 +737,7 @@ import Icon from '../ui/Icon.astro';
       });
     });
 
-    // "SCROLL TO NEXT" button handler
+    // "SCROLL TO NEXT" button handler (Desktop only)
     if (scrollNextBtn) {
       scrollNextBtn.addEventListener('click', () => {
         if (!realm) return;
@@ -1566,58 +1599,218 @@ import Icon from '../ui/Icon.astro';
   @media (max-width: 768px) {
     .circular-arc-scroll-realm {
       height: auto;
+      background-color: #070a12;
     }
+
     .circular-arc-sticky-stage {
       position: relative;
       height: auto;
       min-height: auto;
-      padding: 4rem 1.5rem;
+      padding: 3.5rem 1.25rem 3rem 1.25rem;
     }
+
+    /* Hide desktop-only scroll to next prompt on mobile devices */
+    .scroll-to-next-anchor {
+      display: none !important;
+    }
+
+    /* Hide full height SVG arc line on mobile */
+    .arc-full-svg {
+      display: none !important;
+    }
+
+    /* Top Arch/Segment Navigation Bar for Mobile */
     .arc-navigation-system {
       position: static;
       width: 100%;
       height: auto;
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
+      pointer-events: auto;
+      z-index: 10;
     }
-    .arc-full-svg {
-      display: none;
-    }
+
     .arc-nodes-orbit {
       display: flex;
-      justify-content: space-around;
+      align-items: center;
+      justify-content: space-between;
       width: 100%;
-      gap: 1rem;
+      gap: 0.5rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-full);
+      padding: 0.35rem 0.5rem;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.5);
     }
+
     .arc-node-element {
       position: static !important;
       transform: none !important;
       opacity: 1 !important;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.65rem;
+      border-radius: var(--radius-full);
+      background: transparent;
+      border: 1px solid transparent;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
     }
+
+    .arc-node-element:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .arc-node-element.active {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: rgba(6, 182, 212, 0.35);
+      box-shadow: 0 2px 10px rgba(6, 182, 212, 0.25);
+    }
+
+    .node-bullet-target {
+      width: 14px;
+      height: 14px;
+    }
+
+    .outer-glow-ring {
+      display: none; /* Keep clean and minimal inside pill */
+    }
+
+    .center-core-dot {
+      width: 6px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .arc-node-element.active .center-core-dot {
+      width: 7px;
+      height: 7px;
+      background: #38bdf8;
+      box-shadow: 0 0 8px #38bdf8;
+    }
+
+    .node-text-lockup {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .node-seq {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .arc-node-element.active .node-seq {
+      color: #38bdf8;
+    }
+
+    .node-title {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    .arc-node-element.active .node-title {
+      font-size: 0.84rem;
+      color: #ffffff;
+      text-shadow: none;
+    }
+
+    /* Content Stage: Clean Card View */
     .division-narrative-stage {
       position: static;
       transform: none;
       width: 100%;
       max-width: 100%;
+      left: auto;
+      top: auto;
     }
+
     .editorial-clock-track {
       height: auto;
+      position: static;
     }
+
     .division-editorial-panel {
       position: static;
       display: none;
       transform: none !important;
       opacity: 1 !important;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 1.5rem 1.25rem;
+      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.5);
     }
+
     .division-editorial-panel.active {
       display: flex;
+      animation: mobileFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-    .scroll-to-next-anchor {
-      position: static;
-      margin-top: 2rem;
+
+    @keyframes mobileFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
+
+    .editorial-header {
+      margin-bottom: 1.25rem;
+    }
+
+    .editorial-main-title {
+      font-size: 1.75rem;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .editorial-lead {
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
     .capabilities-dual-grid {
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: 0.65rem;
+    }
+
+    .cap-item {
+      padding: 0.55rem 0.85rem;
+      font-size: 0.85rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .circular-arc-sticky-stage {
+      padding: 3rem 1rem 2.5rem 1rem;
+    }
+
+    .node-seq {
+      display: none; /* More breathing room on small phone screens */
+    }
+
+    .node-title {
+      font-size: 0.78rem;
+    }
+
+    .arc-node-element {
+      padding: 0.45rem 0.5rem;
+    }
+
+    .editorial-main-title {
+      font-size: 1.5rem;
     }
   }
 </style>
