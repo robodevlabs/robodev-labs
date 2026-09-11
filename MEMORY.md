@@ -55,10 +55,19 @@
    - **Connecting Guide Path**: An SVG spline curve connects the flow from above, guiding the user's eye directly toward the primary action ("Start a conversation →").
    - **Oversized Background Typography**: Editorial watermark (`BUILD` / `LEARN` / `CREATE`) rendered at `clamp(5rem, 15vw, 13rem)` in ultra-low contrast (`0.025` to `0.06`), revealing sequentially as the footer ascends.
    - **Editorial 3-Column Footer Grid**: Brand & mission with social channels on the left; Explore navigation in the center; Build With Us direct actions on the right; and bottom legal/geographic scope.
+6. `src/components/common/Header.astro` (Floating Dynamic Island Navigation)
+   - **Architecture**: Single, continuous floating obsidian capsule (`rgba(10, 15, 29, 0.82)` with `backdrop-filter: blur(24px) saturate(190%)`, hairline border, and specular top edge).
+   - **Interaction Philosophy**: Inspired by Apple Dynamic Island and Samsung floating UI without visual copying; behaves like one continuous physical object.
+   - **Scroll-Aware Morphing**: Subtly compresses while scrolling downward, smoothly expands on upward scroll or hover, and settles cleanly when scroll halts.
+   - **Integrated Progress Line**: Precision 2px line tracking 0% to 100% scroll depth along the bottom rim of the capsule.
+   - **Contextual Awareness**: Real-time section detection updates the optical active micro-dot and active label (`Overview`, `Ecosystem`, `Services`, `Product Studio`, `RoboDev Academy`, `How We Work`, `Leadership`, `Start a Project`).
+   - **Dedicated Mobile Morphing**: Sits as a compact pill on mobile; tap smoothly expands the capsule downward into a tactile card revealing all links and CTA, avoiding generic full-screen overlays.
+   - **Structure Preserved**: Exactly preserves existing links (`Services`, `Product Studio`, `RoboDev Academy`, `How We Work`, `Settings`) and CTA (`Start a Project`).
 
 ## Current Status
 - Static build (`npm run build`) passing with 0 errors.
 - Dev server running on `localhost:4321`.
+
 
 ---
 

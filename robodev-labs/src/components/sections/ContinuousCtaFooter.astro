@@ -15,133 +15,144 @@ const socialsList = [
 ];
 ---
 
-<div id="contact" class="continuous-scene">
-  <!-- Dynamic Glowing Horizon Boundary SVG (Spline curve with beacon dot & horizon crest) -->
-  <div class="horizon-svg-wrapper" aria-hidden="true">
-    <svg 
-      class="horizon-svg" 
-      viewBox="0 0 1440 760" 
-      fill="none" 
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="none"
-    >
-      <defs>
-        <!-- Horizon Line Gradient -->
-        <linearGradient id="horizonGlowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#0284c7" stop-opacity="0.25" />
-          <stop offset="35%" stop-color="#06b6d4" stop-opacity="0.6" />
-          <stop offset="65%" stop-color="#38bdf8" stop-opacity="0.9" />
-          <stop offset="85%" stop-color="#2563eb" stop-opacity="0.7" />
-          <stop offset="100%" stop-color="#0284c7" stop-opacity="0.3" />
-        </linearGradient>
-
-        <!-- Horizon Under-Glow Fill -->
-        <linearGradient id="surfaceGlowArea" x1="50%" y1="0%" x2="50%" y2="100%">
-          <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.12" />
-          <stop offset="40%" stop-color="#1d4ed8" stop-opacity="0.04" />
-          <stop offset="100%" stop-color="#070a13" stop-opacity="0" />
-        </linearGradient>
-
-        <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="5" result="blur" />
-          <feComposite in="SourceGraphic" in2="blur" operator="over" />
-        </filter>
-      </defs>
-
-      <!-- Ambient Glow under the Horizon Crest -->
-      <path
-        d="M 0 510 C 220 480, 480 500, 720 450 C 960 400, 1180 430, 1440 435 L 1440 760 L 0 760 Z"
-        fill="url(#surfaceGlowArea)"
-      />
-
-      <!-- Lower Horizon Wave Line (Subtle blurred glow) -->
-      <path
-        d="M 0 510 C 220 480, 480 500, 720 450 C 960 400, 1180 430, 1440 435"
-        stroke="url(#horizonGlowGradient)"
-        stroke-width="5"
-        opacity="0.35"
-        class="horizon-path-blur"
-      />
-
-      <!-- Lower Horizon Wave Line (Crisp) -->
-      <path
-        d="M 0 510 C 220 480, 480 500, 720 450 C 960 400, 1180 430, 1440 435"
-        stroke="url(#horizonGlowGradient)"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        class="horizon-path-main"
-      />
-
-      <!-- Upper Descending Arc (From top center-right swooping down to horizon) -->
-      <path
-        d="M 760 -10 C 760 110, 840 230, 905 275 C 970 320, 1100 425, 1440 435"
-        stroke="url(#horizonGlowGradient)"
-        stroke-width="4"
-        opacity="0.3"
-        class="horizon-path-blur"
-      />
-      <path
-        d="M 760 -10 C 760 110, 840 230, 905 275 C 970 320, 1100 425, 1440 435"
-        stroke="url(#horizonGlowGradient)"
-        stroke-width="1.6"
-        stroke-linecap="round"
-        class="horizon-path-main"
-      />
-
-      <!-- Beacon Dot on the descending arc -->
-      <circle cx="905" cy="275" r="4.5" fill="#38bdf8" />
-      <circle cx="905" cy="275" r="10" stroke="#06b6d4" stroke-width="1" opacity="0.6" class="beacon-pulse" />
-    </svg>
+<div id="contact" class="continuous-footer-wrapper">
+  <!-- Ambient Atmospheric Back-Glow -->
+  <div class="ambient-glow-layer" aria-hidden="true">
+    <div class="glow-radial-orb"></div>
   </div>
 
   <!-- =========================================================================
-       UPPER CTA STAGE: Matches Screenshot Exactly
+       1. HIGH-IMPACT PREMIUM CTA SECTION
        ========================================================================= -->
-  <section class="cta-stage">
-    <Container class="cta-container">
-      <div class="cta-split-layout">
-        <!-- Left: Eyebrow, Display Headline, Paragraph, Dual Buttons -->
-        <div class="cta-left-col">
-          <div class="eyebrow-row">
-            <span class="eyebrow-dash"></span>
-            <span class="eyebrow-text">READY TO BUILD?</span>
+  <section class="cta-section" aria-labelledby="cta-heading">
+    <Container class="cta-inner-container">
+      <div class="cta-main-layout">
+        <!-- Left / Primary Content Column -->
+        <div class="cta-content-col">
+          <!-- Status Pill Badge -->
+          <div class="cta-status-badge">
+            <span class="status-indicator-dot"></span>
+            <span class="status-badge-text">READY TO BUILD</span>
           </div>
 
-          <h2 class="cta-display-title">
-            Have an idea worth <br />
-            <span class="title-cyan-gradient">building?</span>
+          <!-- Display Title -->
+          <h2 id="cta-heading" class="cta-headline">
+            Have an idea worth <br class="title-break" />
+            <span class="cta-highlight-gradient">building into reality?</span>
           </h2>
 
-          <p class="cta-description">
-            Let's turn your ideas into real solutions. Whether you need a custom product, technical support, or want to learn — we’re here to help.
+          <!-- Descriptive Subtitle -->
+          <p class="cta-subtext">
+            Let's turn your vision into high-impact software. Whether you require custom engineering, proprietary product acceleration, or technical education — we are here to build.
           </p>
 
-          <div class="cta-actions-group">
+          <!-- Dual Action Buttons -->
+          <div class="cta-button-group">
             <a 
               href={`mailto:${siteConfig.email}?subject=Project%20Inquiry%20-%20RoboDev%20Labs`}
-              class="cta-pill-button"
+              class="cta-primary-btn"
             >
               <span>Start a conversation</span>
-              <svg class="pill-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <svg class="btn-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
             </a>
 
-            <a href="#pillars" class="cta-underline-link">
-              <span>See what we build</span>
+            <a href="#services" class="cta-secondary-btn">
+              <span>Explore capabilities</span>
+              <svg class="btn-arrow-icon secondary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
             </a>
+          </div>
+
+          <!-- Trust & Response Time Micro-Pills -->
+          <div class="cta-trust-strip">
+            <div class="trust-item">
+              <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>Response within 24 hours</span>
+            </div>
+            <span class="trust-dot-sep">&bull;</span>
+            <div class="trust-item">
+              <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+              <span>Direct engineer access</span>
+            </div>
+            <span class="trust-dot-sep">&bull;</span>
+            <div class="trust-item">
+              <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span>Production-grade engineering</span>
+            </div>
           </div>
         </div>
 
-        <!-- Right: Vertical Keyword Matrix -->
-        <div class="cta-right-col" aria-hidden="true">
-          <div class="keyword-vertical-stack">
-            <span class="keyword-item">IDEAS</span>
-            <span class="keyword-sep"></span>
-            <span class="keyword-item">PRODUCTS</span>
-            <span class="keyword-sep"></span>
-            <span class="keyword-item">IMPACT</span>
+        <!-- Right / Highlight Cards Column -->
+        <div class="cta-card-col">
+          <div class="cta-preview-card">
+            <div class="card-glow-edge"></div>
+            <div class="preview-header">
+              <span class="preview-tag">ROBODEV ECOSYSTEM</span>
+              <span class="preview-status">Active Operations</span>
+            </div>
+
+            <div class="preview-items-list">
+              <a href="#services" class="preview-item">
+                <div class="item-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                  </svg>
+                </div>
+                <div class="item-details">
+                  <span class="item-title">Engineering Services</span>
+                  <span class="item-desc">Custom web, mobile, cloud & AI systems</span>
+                </div>
+                <span class="item-action-arrow">&rarr;</span>
+              </a>
+
+              <a href="#products" class="preview-item">
+                <div class="item-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                  </svg>
+                </div>
+                <div class="item-details">
+                  <span class="item-title">Busly Transit Engine</span>
+                  <span class="item-desc">Live public transit tracking platform</span>
+                </div>
+                <span class="item-action-arrow">&rarr;</span>
+              </a>
+
+              <a href="#academy" class="preview-item">
+                <div class="item-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
+                </div>
+                <div class="item-details">
+                  <span class="item-title">RoboDev Academy</span>
+                  <span class="item-desc">High-impact engineering fellowships</span>
+                </div>
+                <span class="item-action-arrow">&rarr;</span>
+              </a>
+            </div>
+
+            <div class="preview-footer-contact">
+              <span class="direct-label">Direct Reach:</span>
+              <a href={`mailto:${siteConfig.email}`} class="direct-email-link">
+                {siteConfig.email}
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -149,26 +160,94 @@ const socialsList = [
   </section>
 
   <!-- =========================================================================
-       LOWER FOOTER STAGE: Matches Screenshot Layout Pixel-for-Pixel
+       HORIZON TRANSITION SEAM (Luminous Boundary with Beacon Pulse)
        ========================================================================= -->
-  <footer class="footer-stage" role="contentinfo">
-    <Container class="footer-container">
-      <div class="footer-columns-grid">
-        <!-- Col 1: Brand Logo, Mission, Socials -->
-        <div class="footer-col brand-col">
-          <div class="footer-brand-logo">
-            <Logo height={34} />
+  <div class="horizon-seam-container" aria-hidden="true">
+    <svg 
+      class="horizon-seam-svg" 
+      viewBox="0 0 1440 90" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="none"
+    >
+      <defs>
+        <linearGradient id="seamHorizonGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#0284c7" stop-opacity="0.05" />
+          <stop offset="25%" stop-color="#06b6d4" stop-opacity="0.5" />
+          <stop offset="65%" stop-color="#38bdf8" stop-opacity="0.95" />
+          <stop offset="85%" stop-color="#2563eb" stop-opacity="0.55" />
+          <stop offset="100%" stop-color="#0284c7" stop-opacity="0.05" />
+        </linearGradient>
+        <linearGradient id="seamFillGlow" x1="50%" y1="0%" x2="50%" y2="100%">
+          <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.08" />
+          <stop offset="100%" stop-color="#050811" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+
+      <!-- Soft Area Glow -->
+      <path 
+        d="M 0 52 C 340 32, 680 75, 1020 35 C 1220 12, 1360 30, 1440 32 L 1440 90 L 0 90 Z" 
+        fill="url(#seamFillGlow)" 
+      />
+
+      <!-- Wave Glow (Soft Blur) -->
+      <path 
+        d="M 0 52 C 340 32, 680 75, 1020 35 C 1220 12, 1360 30, 1440 32" 
+        stroke="url(#seamHorizonGlow)" 
+        stroke-width="5" 
+        opacity="0.45" 
+        class="wave-blur"
+      />
+
+      <!-- Wave Line (Crisp) -->
+      <path 
+        d="M 0 52 C 340 32, 680 75, 1020 35 C 1220 12, 1360 30, 1440 32" 
+        stroke="url(#seamHorizonGlow)" 
+        stroke-width="1.8" 
+        stroke-linecap="round"
+      />
+
+      <!-- Subtle Dashed Accent Arc -->
+      <path 
+        d="M 760 0 C 820 15, 920 28, 1020 35 C 1140 42, 1300 55, 1440 32" 
+        stroke="url(#seamHorizonGlow)" 
+        stroke-width="1.2" 
+        stroke-dasharray="3 3"
+        opacity="0.35"
+      />
+    </svg>
+  </div>
+
+  <!-- =========================================================================
+       2. STRUCTURED PROFESSIONAL FOOTER SECTION
+       ========================================================================= -->
+  <footer class="footer-main" role="contentinfo">
+    <Container class="footer-inner-container">
+      <!-- Top Grid: 4 Clean, Well-Organized Columns -->
+      <div class="footer-structured-grid">
+        <!-- Col 1: Brand & Identity -->
+        <div class="footer-block brand-block">
+          <div class="brand-logo-wrap">
+            <Logo height={32} />
           </div>
-          <p class="footer-mission-text">
-            Building practical technology for real-world problems.
+          <p class="brand-mission-summary">
+            A premier engineering lab and developer academy based in Nepal. We architect enduring software, develop proprietary ventures, and mentor top-tier engineering talent.
           </p>
-          <div class="footer-social-icons">
+
+          <!-- Active Presence Indicator -->
+          <div class="location-status-badge">
+            <span class="live-dot"></span>
+            <span class="badge-label">Kathmandu, Nepal &bull; Global Delivery</span>
+          </div>
+
+          <!-- Social Links Row -->
+          <div class="footer-social-row">
             {socialsList.map((item) => (
               <a 
                 href={item.url} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                class="social-icon-btn"
+                class="social-pill-btn"
                 title={`RoboDev Labs on ${item.name}`}
                 aria-label={item.name}
               >
@@ -178,63 +257,83 @@ const socialsList = [
           </div>
         </div>
 
-        <!-- Col 2: EXPLORE Navigation -->
-        <div class="footer-col nav-col">
-          <span class="col-super-title">EXPLORE</span>
-          <ul class="col-links-list">
-            <li><a href="#services" class="nav-item-link">Services</a></li>
-            <li><a href="#products" class="nav-item-link">Product Studio</a></li>
-            <li><a href="#academy" class="nav-item-link">RoboDev Academy</a></li>
-            <li><a href="#process" class="nav-item-link">How We Work</a></li>
+        <!-- Col 2: Ecosystem & Solutions -->
+        <div class="footer-block">
+          <h3 class="footer-col-heading">ECOSYSTEM</h3>
+          <ul class="footer-link-list">
+            <li><a href="#services" class="footer-nav-link">Custom Software & Cloud</a></li>
+            <li><a href="#services" class="footer-nav-link">AI & Intelligent Systems</a></li>
+            <li><a href="#products" class="footer-nav-link">Product Studio</a></li>
+            <li><a href="#products" class="footer-nav-link">Busly Transit Platform</a></li>
+            <li><a href="#academy" class="footer-nav-link">RoboDev Academy</a></li>
+            <li><a href="#process" class="footer-nav-link">Engineering Lifecycle</a></li>
           </ul>
         </div>
 
-        <!-- Col 3: BUILD WITH US Action Links -->
-        <div class="footer-col build-col">
-          <span class="col-super-title">BUILD WITH US</span>
-          <ul class="col-action-list">
-            <li>
-              <a href={`mailto:${siteConfig.email}?subject=Start%20a%20Project`} class="action-highlight-link">
-                <span>Start a Project</span>
-                <span class="link-arrow">&rarr;</span>
-              </a>
-            </li>
-            <li>
-              <a href="#academy" class="action-item-link">
-                <span>Learn with Us</span>
-                <span class="link-arrow">&rarr;</span>
-              </a>
-            </li>
-            <li>
-              <a href={`mailto:${siteConfig.email}?subject=Partner%20With%20Us`} class="action-item-link">
-                <span>Partner with Us</span>
-                <span class="link-arrow">&rarr;</span>
-              </a>
-            </li>
+        <!-- Col 3: Company & Culture -->
+        <div class="footer-block">
+          <h3 class="footer-col-heading">COMPANY</h3>
+          <ul class="footer-link-list">
+            <li><a href="#leadership" class="footer-nav-link">Founders & Leadership</a></li>
+            <li><a href="#pillars" class="footer-nav-link">Company Ecosystem</a></li>
+            <li><a href="#process" class="footer-nav-link">How We Work</a></li>
+            <li><a href={`mailto:${siteConfig.email}?subject=Career%20Inquiry%20-%20RoboDev%20Labs`} class="footer-nav-link">Careers & Fellowships</a></li>
+            <li><a href={`mailto:${siteConfig.email}?subject=Media%20Inquiry`} class="footer-nav-link">Press & Media</a></li>
           </ul>
         </div>
 
-        <!-- Col 4: Oversized "Build Learn Create" Typography + Right Subtext -->
-        <div class="footer-col editorial-watermark-col">
-          <div class="watermark-type-stack" aria-hidden="true">
-            <span class="watermark-word">Build</span>
-            <span class="watermark-word">Learn</span>
-            <span class="watermark-word">Create</span>
-          </div>
-
-          <div class="watermark-separator"></div>
-
-          <div class="watermark-narrative">
-            <p class="narrative-line">Practical technology.</p>
-            <p class="narrative-line">Built for what’s next.</p>
+        <!-- Col 4: Action & Direct Connection -->
+        <div class="footer-block contact-block">
+          <h3 class="footer-col-heading">CONNECT</h3>
+          <p class="connect-helper-text">
+            Ready to partner on a mission-critical project or join our academy cohort?
+          </p>
+          <ul class="footer-action-list">
+            <li>
+              <a href={`mailto:${siteConfig.email}?subject=Start%20a%20Project`} class="action-card-link primary-action">
+                <div class="action-info">
+                  <span class="action-title">Start a Project</span>
+                  <span class="action-sub">Scope your build with us</span>
+                </div>
+                <span class="action-arrow">&rarr;</span>
+              </a>
+            </li>
+            <li>
+              <a href="#academy" class="action-card-link">
+                <div class="action-info">
+                  <span class="action-title">Learn with Us</span>
+                  <span class="action-sub">Explore Academy programs</span>
+                </div>
+                <span class="action-arrow">&rarr;</span>
+              </a>
+            </li>
+          </ul>
+          <div class="quick-email-display">
+            <span class="email-caption">General Inquiries</span>
+            <a href={`mailto:${siteConfig.email}`} class="direct-email-text">
+              {siteConfig.email}
+            </a>
           </div>
         </div>
       </div>
 
-      <!-- Bottom Bar: Copyright & Location -->
-      <div class="footer-bottom-bar">
-        <span class="legal-copy">&copy; {currentYear} {siteConfig.name}</span>
-        <span class="region-tag">Nepal &nbsp;/&nbsp; Global</span>
+      <!-- Bottom Bar: Legal, Rights, & Security -->
+      <div class="footer-bottom-strip">
+        <div class="bottom-left-legal">
+          <span class="copyright-text">&copy; {currentYear} {siteConfig.name}. All rights reserved.</span>
+        </div>
+
+        <div class="bottom-center-links">
+          <a href="#" class="legal-nav-link">Privacy Policy</a>
+          <span class="legal-sep">&bull;</span>
+          <a href="#" class="legal-nav-link">Terms of Service</a>
+          <span class="legal-sep">&bull;</span>
+          <a href="#" class="legal-nav-link">Security</a>
+        </div>
+
+        <div class="bottom-right-meta">
+          <span class="craft-badge">Crafted with engineering discipline</span>
+        </div>
       </div>
     </Container>
   </footer>
@@ -242,473 +341,807 @@ const socialsList = [
 
 <style>
   /* ==========================================================================
-     CONTINUOUS CTA + FOOTER SCENE
-     Direct reproduction of the reference screenshot with glowing horizon curve,
-     asymmetric CTA with keyword matrix, and editorial 4-column footer.
+     CONTINUOUS CTA & FOOTER WRAPPER
+     Professional, calm, technologically sophisticated, 100% responsive.
      ========================================================================== */
-  .continuous-scene {
+  .continuous-footer-wrapper {
     position: relative;
-    background-color: #060912;
-    overflow: clip;
+    background-color: #050811;
+    overflow-x: hidden;
     isolation: isolate;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   /* --------------------------------------------------------------------------
-     Glowing Horizon SVG Spline
+     Ambient Atmosphere
      -------------------------------------------------------------------------- */
-  .horizon-svg-wrapper {
+  .ambient-glow-layer {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
     pointer-events: none;
     z-index: 1;
     overflow: hidden;
   }
 
-  .horizon-svg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .horizon-path-blur {
-    filter: blur(5px);
-  }
-
-  .beacon-pulse {
-    animation: beaconPulseAnim 2.5s infinite ease-out;
-    transform-origin: 905px 275px;
-  }
-
-  @keyframes beaconPulseAnim {
-    0% { transform: scale(0.8); opacity: 0.8; }
-    70% { transform: scale(1.6); opacity: 0; }
-    100% { transform: scale(1.6); opacity: 0; }
+  .glow-radial-orb {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(350px, 70vw, 900px);
+    height: clamp(200px, 30vw, 400px);
+    background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.12) 0%, rgba(30, 64, 175, 0.05) 50%, transparent 80%);
+    filter: blur(60px);
+    pointer-events: none;
   }
 
   /* --------------------------------------------------------------------------
-     Upper CTA Stage
+     Horizon Seam Separator
      -------------------------------------------------------------------------- */
-  .cta-stage {
+  .horizon-seam-container {
+    position: relative;
+    width: 100%;
+    height: clamp(50px, 6vw, 85px);
+    margin-top: -10px;
+    z-index: 2;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .horizon-seam-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .wave-blur {
+    filter: blur(4px);
+  }
+
+  /* --------------------------------------------------------------------------
+     1. CTA Stage
+     -------------------------------------------------------------------------- */
+  .cta-section {
     position: relative;
     z-index: 2;
-    padding-top: clamp(4rem, 9vw, 7.5rem);
-    padding-bottom: clamp(6rem, 12vw, 11rem);
+    padding-top: clamp(4rem, 7.5vw, 6.5rem);
+    padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
   }
 
-  .cta-container {
-    max-width: 1300px;
+  .cta-inner-container {
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 0 var(--space-6);
+    padding: 0 clamp(1.25rem, 3.5vw, 2.5rem);
   }
 
-  .cta-split-layout {
+  .cta-main-layout {
     display: grid;
-    grid-template-columns: 1fr auto;
-    justify-content: space-between;
+    grid-template-columns: 1.18fr 0.82fr;
+    gap: clamp(2.5rem, 5vw, 5rem);
     align-items: center;
-    gap: var(--space-12);
   }
 
-  .cta-left-col {
-    max-width: 640px;
+  /* Left Column */
+  .cta-content-col {
     display: flex;
     flex-direction: column;
-    gap: var(--space-6);
+    gap: clamp(1rem, 2vw, 1.4rem);
   }
 
-  .eyebrow-row {
-    display: flex;
+  .cta-status-badge {
+    display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.6rem;
+    padding: 0.35rem 0.85rem;
+    background: rgba(6, 182, 212, 0.08);
+    border: 1px solid rgba(6, 182, 212, 0.25);
+    border-radius: 9999px;
+    width: fit-content;
   }
 
-  .eyebrow-dash {
-    width: 32px;
-    height: 1.5px;
-    background-color: #64748b;
+  .status-indicator-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #38bdf8;
+    box-shadow: 0 0 10px #38bdf8;
+    animation: statusPulse 2s infinite ease-in-out;
   }
 
-  .eyebrow-text {
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+
+  .status-badge-text {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #94a3b8;
-    font-weight: 500;
+    color: #38bdf8;
+    font-weight: 600;
   }
 
-  .cta-display-title {
+  .cta-headline {
     font-family: var(--font-sans);
-    font-size: clamp(2.8rem, 5.2vw, 4.4rem);
+    font-size: clamp(2.2rem, 4.2vw, 3.6rem);
     font-weight: 700;
-    line-height: 1.08;
+    line-height: 1.12;
     letter-spacing: -0.035em;
-    color: #ffffff;
+    color: #f8fafc;
     margin: 0;
   }
 
-  .title-cyan-gradient {
+  .title-break {
+    display: block;
+  }
+
+  .cta-highlight-gradient {
     color: #38bdf8;
-    background: linear-gradient(135deg, #38bdf8 0%, #06b6d4 100%);
+    background: linear-gradient(135deg, #38bdf8 0%, #06b6d4 50%, #60a5fa 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
-  .cta-description {
+  .cta-subtext {
     font-family: var(--font-sans);
-    font-size: clamp(0.95rem, 1.25vw, 1.05rem);
+    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
     color: #94a3b8;
     line-height: 1.65;
     margin: 0;
-    max-width: 480px;
+    max-width: 580px;
   }
 
-  /* Actions Group */
-  .cta-actions-group {
+  /* Dual Action Buttons */
+  .cta-button-group {
     display: flex;
     align-items: center;
-    gap: var(--space-6);
-    margin-top: var(--space-2);
+    gap: 1rem;
     flex-wrap: wrap;
+    margin-top: 0.5rem;
   }
 
-  .cta-pill-button {
+  .cta-primary-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.65rem;
-    background: #0284c7;
     background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
     color: #ffffff;
     font-family: var(--font-sans);
-    font-size: var(--font-size-body-small);
+    font-size: 0.92rem;
     font-weight: 600;
-    padding: 0.82rem 1.85rem;
+    padding: 0.85rem 1.85rem;
     border-radius: 9999px;
     text-decoration: none;
     box-shadow: 0 0 24px rgba(6, 182, 212, 0.35);
-    transition: all 0.25s ease;
-    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    min-height: 48px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
-  .cta-pill-button:hover {
+  .cta-primary-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 0 32px rgba(6, 182, 212, 0.55);
     background: linear-gradient(135deg, #0369a1 0%, #0891b2 100%);
     color: #ffffff;
   }
 
-  .pill-arrow-icon {
+  .btn-arrow-icon {
     width: 16px;
     height: 16px;
     transition: transform 0.25s ease;
   }
 
-  .cta-pill-button:hover .pill-arrow-icon {
+  .cta-primary-btn:hover .btn-arrow-icon {
     transform: translateX(4px);
   }
 
-  .cta-underline-link {
-    font-family: var(--font-sans);
-    font-size: var(--font-size-body-small);
+  .cta-secondary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.04);
     color: #cbd5e1;
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    font-weight: 500;
+    padding: 0.85rem 1.6rem;
+    border-radius: 9999px;
     text-decoration: none;
-    border-bottom: 1.5px solid #0284c7;
-    padding-bottom: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.25s ease;
+    min-height: 48px;
+  }
+
+  .cta-secondary-btn:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(56, 189, 248, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .secondary-icon {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.25s ease;
+  }
+
+  .cta-secondary-btn:hover .secondary-icon {
+    transform: translateX(3px);
+  }
+
+  /* Trust Indicators Strip */
+  .cta-trust-strip {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    padding-top: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+
+  .trust-icon {
+    width: 13px;
+    height: 13px;
+    color: #06b6d4;
+  }
+
+  .trust-dot-sep {
+    color: #334155;
+    font-size: 0.75rem;
+  }
+
+  /* Right Column: Interactive Ecosystem Card */
+  .cta-card-col {
+    display: flex;
+    justify-content: center;
+  }
+
+  .cta-preview-card {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.7) 0%, rgba(10, 15, 29, 0.85) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .card-glow-edge {
+    position: absolute;
+    top: 0;
+    left: 20%;
+    right: 20%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+  }
+
+  .preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .preview-tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: #94a3b8;
+    text-transform: uppercase;
+  }
+
+  .preview-status {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: #06b6d4;
+  }
+
+  .preview-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .preview-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.75rem 0.9rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    text-decoration: none;
     transition: all 0.2s ease;
   }
 
-  .cta-underline-link:hover {
-    color: #ffffff;
-    border-bottom-color: #38bdf8;
+  .preview-item:hover {
+    background: rgba(6, 182, 212, 0.06);
+    border-color: rgba(6, 182, 212, 0.2);
+    transform: translateX(3px);
   }
 
-  /* Right Column: Keyword Matrix */
-  .cta-right-col {
+  .item-icon-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(56, 189, 248, 0.1);
+    color: #38bdf8;
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: center;
   }
 
-  .keyword-vertical-stack {
+  .item-icon-box svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .item-details {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.85rem;
+    gap: 0.15rem;
   }
 
-  .keyword-item {
+  .item-title {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+
+  .item-desc {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: #64748b;
+  }
+
+  .item-action-arrow {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    color: #94a3b8;
-    text-transform: uppercase;
-    font-weight: 500;
+    font-size: 0.85rem;
+    color: #475569;
+    transition: all 0.2s ease;
   }
 
-  .keyword-sep {
-    width: 1px;
-    height: 16px;
-    background-color: rgba(255, 255, 255, 0.18);
-    margin-left: 2px;
+  .preview-item:hover .item-action-arrow {
+    color: #38bdf8;
+    transform: translateX(2px);
+  }
+
+  .preview-footer-contact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 0.76rem;
+  }
+
+  .direct-label {
+    font-family: var(--font-sans);
+    color: #64748b;
+  }
+
+  .direct-email-link {
+    font-family: var(--font-mono);
+    color: #38bdf8;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .direct-email-link:hover {
+    color: #06b6d4;
+    text-decoration: underline;
   }
 
   /* --------------------------------------------------------------------------
-     Lower Footer Stage
+     2. Structured Professional Footer
      -------------------------------------------------------------------------- */
-  .footer-stage {
+  .footer-main {
     position: relative;
     z-index: 2;
-    padding-top: clamp(3rem, 6vw, 5rem);
-    padding-bottom: var(--space-8);
+    padding-top: clamp(2rem, 4vw, 3.5rem);
+    padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    background: rgba(5, 8, 17, 0.95);
   }
 
-  .footer-container {
-    max-width: 1300px;
+  .footer-inner-container {
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 0 var(--space-6);
+    padding: 0 clamp(1.25rem, 3.5vw, 2.5rem);
   }
 
-  .footer-columns-grid {
+  /* 4-Column Structured Grid */
+  .footer-structured-grid {
     display: grid;
-    grid-template-columns: 1.25fr 0.9fr 1fr 1.65fr;
-    gap: clamp(2rem, 4vw, 4.5rem);
-    align-items: flex-start;
-    padding-bottom: var(--space-16);
+    grid-template-columns: 1.35fr 0.9fr 0.95fr 1.15fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
   }
 
-  .footer-col {
+  .footer-block {
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
+    gap: 1rem;
   }
 
-  /* Brand Column */
-  .footer-brand-logo {
+  /* Brand Block */
+  .brand-logo-wrap {
     display: flex;
     align-items: center;
   }
 
-  .footer-mission-text {
+  .brand-mission-summary {
     font-family: var(--font-sans);
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     color: #94a3b8;
-    line-height: 1.55;
-    max-width: 260px;
+    line-height: 1.6;
     margin: 0;
+    max-width: 320px;
   }
 
-  .footer-social-icons {
+  .location-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: #64748b;
+    margin-top: 0.25rem;
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #10b981;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+  }
+
+  .footer-social-row {
     display: flex;
     align-items: center;
-    gap: 0.65rem;
-    margin-top: var(--space-2);
+    gap: 0.6rem;
+    margin-top: 0.5rem;
   }
 
-  .social-icon-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+  .social-pill-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #94a3b8;
-    transition: color 0.2s ease, transform 0.2s ease;
     text-decoration: none;
+    transition: all 0.2s ease;
   }
 
-  .social-icon-btn:hover {
+  .social-pill-btn:hover {
     color: #ffffff;
+    background: rgba(56, 189, 248, 0.15);
+    border-color: rgba(56, 189, 248, 0.35);
     transform: translateY(-2px);
   }
 
-  /* Navigation & Action Titles */
-  .col-super-title {
+  /* Nav Columns */
+  .footer-col-heading {
     font-family: var(--font-mono);
     font-size: 0.72rem;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: #64748b;
     font-weight: 600;
-    margin-bottom: var(--space-1);
-    display: block;
+    margin: 0;
   }
 
-  .col-links-list,
-  .col-action-list {
+  .footer-link-list {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.65rem;
   }
 
-  .nav-item-link {
+  .footer-nav-link {
     font-family: var(--font-sans);
-    font-size: 0.875rem;
+    font-size: 0.86rem;
     color: #cbd5e1;
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
+    display: inline-block;
+    width: fit-content;
   }
 
-  .nav-item-link:hover {
-    color: #ffffff;
-  }
-
-  /* Action Highlight Links */
-  .action-highlight-link {
-    font-family: var(--font-sans);
-    font-size: 0.875rem;
+  .footer-nav-link:hover {
     color: #38bdf8;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    transition: all 0.2s ease;
-    font-weight: 500;
+    transform: translateX(2px);
   }
 
-  .action-highlight-link:hover {
-    color: #06b6d4;
-    transform: translateX(3px);
-  }
-
-  .action-item-link {
+  /* Action & Connect Column */
+  .connect-helper-text {
     font-family: var(--font-sans);
-    font-size: 0.875rem;
-    color: #cbd5e1;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    transition: all 0.2s ease;
-  }
-
-  .action-item-link:hover {
-    color: #ffffff;
-    transform: translateX(3px);
-  }
-
-  .link-arrow {
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-  }
-
-  /* Col 4: Editorial Watermark & Narrative */
-  .editorial-watermark-col {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: clamp(1.5rem, 3vw, 2.75rem);
-  }
-
-  .watermark-type-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    line-height: 0.92;
-    user-select: none;
-  }
-
-  .watermark-word {
-    font-family: var(--font-sans);
-    font-size: clamp(2.4rem, 4vw, 3.8rem);
-    font-weight: 800;
-    letter-spacing: -0.035em;
-    color: rgba(30, 64, 175, 0.45);
-    display: block;
+    font-size: 0.82rem;
+    color: #64748b;
+    line-height: 1.5;
     margin: 0;
   }
 
-  .watermark-separator {
-    width: 1px;
-    height: 90px;
-    background-color: rgba(255, 255, 255, 0.12);
-  }
-
-  .watermark-narrative {
+  .footer-action-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.65rem;
   }
 
-  .narrative-line {
-    font-family: var(--font-sans);
-    font-size: 0.88rem;
-    color: #94a3b8;
-    line-height: 1.45;
-    margin: 0;
-    white-space: nowrap;
-  }
-
-  /* Footer Bottom Bar */
-  .footer-bottom-bar {
+  .action-card-link {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: var(--space-8);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    flex-wrap: wrap;
-    gap: var(--space-4);
+    padding: 0.65rem 0.85rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
   }
 
-  .legal-copy {
+  .action-card-link.primary-action {
+    background: rgba(6, 182, 212, 0.06);
+    border-color: rgba(6, 182, 212, 0.25);
+  }
+
+  .action-card-link:hover {
+    background: rgba(6, 182, 212, 0.12);
+    border-color: rgba(6, 182, 212, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .action-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .action-title {
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  .action-sub {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    color: #94a3b8;
+  }
+
+  .action-arrow {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: #38bdf8;
+    transition: transform 0.2s ease;
+  }
+
+  .action-card-link:hover .action-arrow {
+    transform: translateX(3px);
+  }
+
+  .quick-email-display {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .email-caption {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: #64748b;
+    text-transform: uppercase;
+  }
+
+  .direct-email-text {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: #cbd5e1;
+    text-decoration: none;
+    word-break: break-all;
+    transition: color 0.2s ease;
+  }
+
+  .direct-email-text:hover {
+    color: #38bdf8;
+  }
+
+  /* --------------------------------------------------------------------------
+     Bottom Legal & Copyright Bar
+     -------------------------------------------------------------------------- */
+  .footer-bottom-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .copyright-text {
     font-family: var(--font-sans);
     font-size: 0.78rem;
     color: #64748b;
   }
 
-  .region-tag {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
+  .bottom-center-links {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .legal-nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
     color: #64748b;
-    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .legal-nav-link:hover {
+    color: #94a3b8;
+  }
+
+  .legal-sep {
+    color: #334155;
+    font-size: 0.65rem;
+  }
+
+  .craft-badge {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: #475569;
+    letter-spacing: 0.02em;
   }
 
   /* --------------------------------------------------------------------------
-     Responsive Breakpoints
+     RESPONSIVE BREAKPOINTS (Mobile-First Polish)
      -------------------------------------------------------------------------- */
-  @media (max-width: 1100px) {
-    .footer-columns-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-10);
+  @media (max-width: 1024px) {
+    .cta-main-layout {
+      grid-template-columns: 1fr;
+      gap: 3rem;
     }
 
-    .editorial-watermark-col {
+    .cta-card-col {
+      justify-content: flex-start;
+    }
+
+    .cta-preview-card {
+      max-width: 100%;
+    }
+
+    .footer-structured-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem 2rem;
+    }
+
+    .brand-block {
       grid-column: span 2;
+    }
+
+    .brand-mission-summary {
+      max-width: 100%;
     }
   }
 
-  @media (max-width: 768px) {
-    .cta-split-layout {
-      grid-template-columns: 1fr;
+  @media (max-width: 640px) {
+    .cta-section {
+      padding-top: 3.25rem;
+      padding-bottom: 2.5rem;
     }
 
-    .cta-right-col {
+    .cta-headline {
+      font-size: clamp(1.85rem, 7.5vw, 2.5rem);
+      line-height: 1.15;
+    }
+
+    .title-break {
+      display: inline;
+    }
+
+    .cta-button-group {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .cta-primary-btn,
+    .cta-secondary-btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    .cta-trust-strip {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.45rem;
+    }
+
+    .trust-dot-sep {
       display: none;
     }
 
-    .footer-columns-grid {
-      grid-template-columns: 1fr;
-      gap: var(--space-8);
+    /* Compact Mobile Footer */
+    .footer-main {
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
     }
 
-    .editorial-watermark-col {
+    .footer-structured-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    /* Hide non-brand columns on mobile */
+    .footer-structured-grid > .footer-block:not(.brand-block) {
+      display: none;
+    }
+
+    .brand-block {
       grid-column: span 1;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-4);
+      align-items: center;
+      text-align: center;
+      gap: 0.75rem;
     }
 
-    .watermark-separator {
+    /* Hide extra narrative and location badges on mobile to keep footer small */
+    .brand-mission-summary,
+    .location-status-badge {
       display: none;
     }
 
-    .cta-actions-group {
+    .footer-social-row {
+      justify-content: center;
+      margin-top: 0.15rem;
+    }
+
+    .footer-bottom-strip {
       flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-4);
+      align-items: center;
+      text-align: center;
+      padding-top: 0.85rem;
+      gap: 0.5rem;
+    }
+
+    /* Hide extra legal & craft meta links on mobile */
+    .bottom-center-links,
+    .bottom-right-meta {
+      display: none;
     }
   }
 </style>
