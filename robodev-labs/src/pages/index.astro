@@ -19,6 +19,7 @@ import ModelAccordionCards from '../components/sections/ModelAccordionCards.astr
 import CircularArcDivisionsSection from '../components/sections/CircularArcDivisionsSection.astro';
 import ProcessEngineSection from '../components/sections/ProcessEngineSection.astro';
 import FoundersLeadershipSection from '../components/sections/FoundersLeadershipSection.astro';
+import ContinuousCtaFooter from '../components/sections/ContinuousCtaFooter.astro';
 
 import { servicesData } from '../data/services';
 import { productsData } from '../data/products';
@@ -27,7 +28,7 @@ import { processData } from '../data/process';
 import { siteConfig } from '../config/site';
 ---
 
-<BaseLayout>
+<BaseLayout hideFooter={true}>
   <!-- =========================================================================
        HERO SECTION: High-impact proposition, dual CTAs, subtle tech visual
        ========================================================================= -->
@@ -222,52 +223,12 @@ import { siteConfig } from '../config/site';
        ========================================================================= -->
   <FoundersLeadershipSection />
 
-  <Divider />
-
   <!-- =========================================================================
-       FINAL CONVERSION CTA SECTION
+       CONTINUOUS CTA + RISING FOOTER SCENE (#contact)
+       Unifies final conversion CTA and the rising footer surface into one continuous scene
+       with scroll parallax, connecting spline path, and oversized background typography.
        ========================================================================= -->
-  <Section id="contact" size="xl" bg="secondary" class="final-cta-section bg-grid-pattern">
-    <div class="ambient-glow ambient-glow-blue cta-glow"></div>
-    <Container class="cta-container">
-      <div class="cta-box card-glass">
-        <span class="cta-eyebrow">Ready to Build?</span>
-        <Heading level="h2" size="display" class="cta-headline">
-          Have an idea worth building?
-          <br />
-          <span class="text-gradient-brand">Let’s build something useful.</span>
-        </Heading>
-        <p class="cta-desc">
-          Whether you need a full-scale web application, want to co-develop an AI automation system,
-          or are interested in partnering with our Product Studio or Academy—we'd love to talk.
-        </p>
-
-        <div class="cta-buttons">
-          <Button
-            variant="primary"
-            size="lg"
-            href={`mailto:${siteConfig.email}?subject=Project%20Inquiry%20-%20RoboDev%20Labs`}
-            class="cta-email-btn"
-          >
-            <span>Email Our Team</span>
-            <Icon name="arrow-right" size={18} />
-          </Button>
-          <Button variant="secondary" size="lg" href="#services">
-            <span>Review Capabilities</span>
-          </Button>
-        </div>
-
-        <div class="contact-details">
-          <span class="contact-item">
-            <Icon name="info" size={16} class="contact-icon" />
-            <span>Direct Email: <strong>{siteConfig.email}</strong></span>
-          </span>
-          <span class="contact-dot">&bull;</span>
-          <span class="contact-item">Serving clients across Nepal &amp; International markets</span>
-        </div>
-      </div>
-    </Container>
-  </Section>
+  <ContinuousCtaFooter />
 </BaseLayout>
 
 <style>

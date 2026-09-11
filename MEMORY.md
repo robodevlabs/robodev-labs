@@ -49,6 +49,12 @@
    - **Subtle Sophisticated Interaction**: Non-intrusive scale (`1.025`) and grayscale contrast shift on portrait frames with zero heavy glow/neon gimmicks.
    - **Restrained Department Leadership Layer**: 4-column typography-first grid for the 4 Heads of Department (Engineering, Academy, Product Studio, Media & Growth).
    - **Data-Driven Architecture**: Decoupled in `src/data/team.ts`, enabling real team photographs and names to be swapped with zero markup refactoring.
+5. `src/components/sections/ContinuousCtaFooter.astro`
+   - **Continuous CTA + Rising Footer Scene**: Unifies the final conversion CTA and the footer into one continuous physical scene.
+   - **Scroll-Driven Surface Emergence**: The dark footer surface emerges from underneath the CTA, rising with subtle vertical parallax offset without artificial scroll-jacking.
+   - **Connecting Guide Path**: An SVG spline curve connects the flow from above, guiding the user's eye directly toward the primary action ("Start a conversation →").
+   - **Oversized Background Typography**: Editorial watermark (`BUILD` / `LEARN` / `CREATE`) rendered at `clamp(5rem, 15vw, 13rem)` in ultra-low contrast (`0.025` to `0.06`), revealing sequentially as the footer ascends.
+   - **Editorial 3-Column Footer Grid**: Brand & mission with social channels on the left; Explore navigation in the center; Build With Us direct actions on the right; and bottom legal/geographic scope.
 
 ## Current Status
 - Static build (`npm run build`) passing with 0 errors.

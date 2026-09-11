@@ -109,3 +109,14 @@ This file is our project execution roadmap. It tracks what needs to be completed
 - [x] Mobile and tablet responsive optimization with zero generic card/avatar patterns
 - [x] Static build verification passing with 0 errors
 
+## Phase 10 — Continuous CTA + Rising Footer Experience (Completed)
+- [x] Re-architected the final conversion CTA and footer into a single unified scene (`ContinuousCtaFooter.astro`)
+- [x] Implemented scroll-driven "rising footer" parallax with physical surface emergence from underneath the CTA
+- [x] Continuous connecting spline guide curve directing the visitor's eye toward "Start a conversation →"
+- [x] Oversized low-contrast background editorial watermark (`BUILD` / `LEARN` / `CREATE`) that reveals sequentially during scroll
+- [x] Editorial 3-column footer grid (Brand & Socials, Explore Navigation, Build With Us Actions)
+- [x] Enhanced `BaseLayout.astro` with `hideFooter` prop for seamless layout transitions
+- [x] Preserved 100% natural browser scrolling with zero scroll-jacking or artificial traps
+- [x] Full `prefers-reduced-motion` compliance and responsive mobile optimization
+- [x] Static build verified passing with 0 errors
+

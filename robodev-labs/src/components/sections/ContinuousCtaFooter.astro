@@ -1,0 +1,714 @@
+---
+import Container from '../ui/Container.astro';
+import Logo from '../common/Logo.astro';
+import Icon from '../ui/Icon.astro';
+import { siteConfig } from '../../config/site';
+
+const currentYear = new Date().getFullYear();
+
+const socialsList = [
+  { name: 'GitHub', icon: 'github', url: siteConfig.socials.github },
+  { name: 'LinkedIn', icon: 'linkedin', url: siteConfig.socials.linkedin },
+  { name: 'Instagram', icon: 'instagram', url: siteConfig.socials.instagram },
+  { name: 'YouTube', icon: 'youtube', url: siteConfig.socials.youtube },
+  { name: 'X', icon: 'twitter', url: siteConfig.socials.x },
+];
+---
+
+<div id="contact" class="continuous-scene">
+  <!-- Dynamic Glowing Horizon Boundary SVG (Spline curve with beacon dot & horizon crest) -->
+  <div class="horizon-svg-wrapper" aria-hidden="true">
+    <svg 
+      class="horizon-svg" 
+      viewBox="0 0 1440 760" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="none"
+    >
+      <defs>
+        <!-- Horizon Line Gradient -->
+        <linearGradient id="horizonGlowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#0284c7" stop-opacity="0.25" />
+          <stop offset="35%" stop-color="#06b6d4" stop-opacity="0.6" />
+          <stop offset="65%" stop-color="#38bdf8" stop-opacity="0.9" />
+          <stop offset="85%" stop-color="#2563eb" stop-opacity="0.7" />
+          <stop offset="100%" stop-color="#0284c7" stop-opacity="0.3" />
+        </linearGradient>
+
+        <!-- Horizon Under-Glow Fill -->
+        <linearGradient id="surfaceGlowArea" x1="50%" y1="0%" x2="50%" y2="100%">
+          <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.12" />
+          <stop offset="40%" stop-color="#1d4ed8" stop-opacity="0.04" />
+          <stop offset="100%" stop-color="#070a13" stop-opacity="0" />
+        </linearGradient>
+
+        <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="5" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+
+      <!-- Ambient Glow under the Horizon Crest -->
+      <path
+        d="M 0 510 C 220 480, 480 500, 720 450 C 960 400, 1180 430, 1440 435 L 1440 760 L 0 760 Z"
+        fill="url(#surfaceGlowArea)"
+      />
+
+      <!-- Lower Horizon Wave Line (Subtle blurred glow) -->
+      <path
+        d="M 0 510 C 220 480, 480 500, 720 450 C 960 400, 1180 430, 1440 435"
+        stroke="url(#horizonGlowGradient)"
+        stroke-width="5"
+        opacity="0.35"
+        class="horizon-path-blur"
+      />
+
+      <!-- Lower Horizon Wave Line (Crisp) -->
+      <path
+        d="M 0 510 C 220 480, 480 500, 720 450 C 960 400, 1180 430, 1440 435"
+        stroke="url(#horizonGlowGradient)"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        class="horizon-path-main"
+      />
+
+      <!-- Upper Descending Arc (From top center-right swooping down to horizon) -->
+      <path
+        d="M 760 -10 C 760 110, 840 230, 905 275 C 970 320, 1100 425, 1440 435"
+        stroke="url(#horizonGlowGradient)"
+        stroke-width="4"
+        opacity="0.3"
+        class="horizon-path-blur"
+      />
+      <path
+        d="M 760 -10 C 760 110, 840 230, 905 275 C 970 320, 1100 425, 1440 435"
+        stroke="url(#horizonGlowGradient)"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        class="horizon-path-main"
+      />
+
+      <!-- Beacon Dot on the descending arc -->
+      <circle cx="905" cy="275" r="4.5" fill="#38bdf8" />
+      <circle cx="905" cy="275" r="10" stroke="#06b6d4" stroke-width="1" opacity="0.6" class="beacon-pulse" />
+    </svg>
+  </div>
+
+  <!-- =========================================================================
+       UPPER CTA STAGE: Matches Screenshot Exactly
+       ========================================================================= -->
+  <section class="cta-stage">
+    <Container class="cta-container">
+      <div class="cta-split-layout">
+        <!-- Left: Eyebrow, Display Headline, Paragraph, Dual Buttons -->
+        <div class="cta-left-col">
+          <div class="eyebrow-row">
+            <span class="eyebrow-dash"></span>
+            <span class="eyebrow-text">READY TO BUILD?</span>
+          </div>
+
+          <h2 class="cta-display-title">
+            Have an idea worth <br />
+            <span class="title-cyan-gradient">building?</span>
+          </h2>
+
+          <p class="cta-description">
+            Let's turn your ideas into real solutions. Whether you need a custom product, technical support, or want to learn — we’re here to help.
+          </p>
+
+          <div class="cta-actions-group">
+            <a 
+              href={`mailto:${siteConfig.email}?subject=Project%20Inquiry%20-%20RoboDev%20Labs`}
+              class="cta-pill-button"
+            >
+              <span>Start a conversation</span>
+              <svg class="pill-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+
+            <a href="#pillars" class="cta-underline-link">
+              <span>See what we build</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Vertical Keyword Matrix -->
+        <div class="cta-right-col" aria-hidden="true">
+          <div class="keyword-vertical-stack">
+            <span class="keyword-item">IDEAS</span>
+            <span class="keyword-sep"></span>
+            <span class="keyword-item">PRODUCTS</span>
+            <span class="keyword-sep"></span>
+            <span class="keyword-item">IMPACT</span>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- =========================================================================
+       LOWER FOOTER STAGE: Matches Screenshot Layout Pixel-for-Pixel
+       ========================================================================= -->
+  <footer class="footer-stage" role="contentinfo">
+    <Container class="footer-container">
+      <div class="footer-columns-grid">
+        <!-- Col 1: Brand Logo, Mission, Socials -->
+        <div class="footer-col brand-col">
+          <div class="footer-brand-logo">
+            <Logo height={34} />
+          </div>
+          <p class="footer-mission-text">
+            Building practical technology for real-world problems.
+          </p>
+          <div class="footer-social-icons">
+            {socialsList.map((item) => (
+              <a 
+                href={item.url} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="social-icon-btn"
+                title={`RoboDev Labs on ${item.name}`}
+                aria-label={item.name}
+              >
+                <Icon name={item.icon as any} size={15} />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Col 2: EXPLORE Navigation -->
+        <div class="footer-col nav-col">
+          <span class="col-super-title">EXPLORE</span>
+          <ul class="col-links-list">
+            <li><a href="#services" class="nav-item-link">Services</a></li>
+            <li><a href="#products" class="nav-item-link">Product Studio</a></li>
+            <li><a href="#academy" class="nav-item-link">RoboDev Academy</a></li>
+            <li><a href="#process" class="nav-item-link">How We Work</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: BUILD WITH US Action Links -->
+        <div class="footer-col build-col">
+          <span class="col-super-title">BUILD WITH US</span>
+          <ul class="col-action-list">
+            <li>
+              <a href={`mailto:${siteConfig.email}?subject=Start%20a%20Project`} class="action-highlight-link">
+                <span>Start a Project</span>
+                <span class="link-arrow">&rarr;</span>
+              </a>
+            </li>
+            <li>
+              <a href="#academy" class="action-item-link">
+                <span>Learn with Us</span>
+                <span class="link-arrow">&rarr;</span>
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${siteConfig.email}?subject=Partner%20With%20Us`} class="action-item-link">
+                <span>Partner with Us</span>
+                <span class="link-arrow">&rarr;</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Oversized "Build Learn Create" Typography + Right Subtext -->
+        <div class="footer-col editorial-watermark-col">
+          <div class="watermark-type-stack" aria-hidden="true">
+            <span class="watermark-word">Build</span>
+            <span class="watermark-word">Learn</span>
+            <span class="watermark-word">Create</span>
+          </div>
+
+          <div class="watermark-separator"></div>
+
+          <div class="watermark-narrative">
+            <p class="narrative-line">Practical technology.</p>
+            <p class="narrative-line">Built for what’s next.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar: Copyright & Location -->
+      <div class="footer-bottom-bar">
+        <span class="legal-copy">&copy; {currentYear} {siteConfig.name}</span>
+        <span class="region-tag">Nepal &nbsp;/&nbsp; Global</span>
+      </div>
+    </Container>
+  </footer>
+</div>
+
+<style>
+  /* ==========================================================================
+     CONTINUOUS CTA + FOOTER SCENE
+     Direct reproduction of the reference screenshot with glowing horizon curve,
+     asymmetric CTA with keyword matrix, and editorial 4-column footer.
+     ========================================================================== */
+  .continuous-scene {
+    position: relative;
+    background-color: #060912;
+    overflow: clip;
+    isolation: isolate;
+  }
+
+  /* --------------------------------------------------------------------------
+     Glowing Horizon SVG Spline
+     -------------------------------------------------------------------------- */
+  .horizon-svg-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .horizon-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .horizon-path-blur {
+    filter: blur(5px);
+  }
+
+  .beacon-pulse {
+    animation: beaconPulseAnim 2.5s infinite ease-out;
+    transform-origin: 905px 275px;
+  }
+
+  @keyframes beaconPulseAnim {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    70% { transform: scale(1.6); opacity: 0; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  /* --------------------------------------------------------------------------
+     Upper CTA Stage
+     -------------------------------------------------------------------------- */
+  .cta-stage {
+    position: relative;
+    z-index: 2;
+    padding-top: clamp(4rem, 9vw, 7.5rem);
+    padding-bottom: clamp(6rem, 12vw, 11rem);
+  }
+
+  .cta-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+  }
+
+  .cta-split-layout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-12);
+  }
+
+  .cta-left-col {
+    max-width: 640px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .eyebrow-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .eyebrow-dash {
+    width: 32px;
+    height: 1.5px;
+    background-color: #64748b;
+  }
+
+  .eyebrow-text {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    font-weight: 500;
+  }
+
+  .cta-display-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.8rem, 5.2vw, 4.4rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .title-cyan-gradient {
+    color: #38bdf8;
+    background: linear-gradient(135deg, #38bdf8 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .cta-description {
+    font-family: var(--font-sans);
+    font-size: clamp(0.95rem, 1.25vw, 1.05rem);
+    color: #94a3b8;
+    line-height: 1.65;
+    margin: 0;
+    max-width: 480px;
+  }
+
+  /* Actions Group */
+  .cta-actions-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    margin-top: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .cta-pill-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    background: #0284c7;
+    background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
+    color: #ffffff;
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body-small);
+    font-weight: 600;
+    padding: 0.82rem 1.85rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    box-shadow: 0 0 24px rgba(6, 182, 212, 0.35);
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+
+  .cta-pill-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 32px rgba(6, 182, 212, 0.55);
+    background: linear-gradient(135deg, #0369a1 0%, #0891b2 100%);
+    color: #ffffff;
+  }
+
+  .pill-arrow-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.25s ease;
+  }
+
+  .cta-pill-button:hover .pill-arrow-icon {
+    transform: translateX(4px);
+  }
+
+  .cta-underline-link {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body-small);
+    color: #cbd5e1;
+    text-decoration: none;
+    border-bottom: 1.5px solid #0284c7;
+    padding-bottom: 2px;
+    transition: all 0.2s ease;
+  }
+
+  .cta-underline-link:hover {
+    color: #ffffff;
+    border-bottom-color: #38bdf8;
+  }
+
+  /* Right Column: Keyword Matrix */
+  .cta-right-col {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .keyword-vertical-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .keyword-item {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .keyword-sep {
+    width: 1px;
+    height: 16px;
+    background-color: rgba(255, 255, 255, 0.18);
+    margin-left: 2px;
+  }
+
+  /* --------------------------------------------------------------------------
+     Lower Footer Stage
+     -------------------------------------------------------------------------- */
+  .footer-stage {
+    position: relative;
+    z-index: 2;
+    padding-top: clamp(3rem, 6vw, 5rem);
+    padding-bottom: var(--space-8);
+  }
+
+  .footer-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+  }
+
+  .footer-columns-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.9fr 1fr 1.65fr;
+    gap: clamp(2rem, 4vw, 4.5rem);
+    align-items: flex-start;
+    padding-bottom: var(--space-16);
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  /* Brand Column */
+  .footer-brand-logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .footer-mission-text {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: #94a3b8;
+    line-height: 1.55;
+    max-width: 260px;
+    margin: 0;
+  }
+
+  .footer-social-icons {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-top: var(--space-2);
+  }
+
+  .social-icon-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    transition: color 0.2s ease, transform 0.2s ease;
+    text-decoration: none;
+  }
+
+  .social-icon-btn:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  /* Navigation & Action Titles */
+  .col-super-title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: var(--space-1);
+    display: block;
+  }
+
+  .col-links-list,
+  .col-action-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .nav-item-link {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .nav-item-link:hover {
+    color: #ffffff;
+  }
+
+  /* Action Highlight Links */
+  .action-highlight-link {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: #38bdf8;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all 0.2s ease;
+    font-weight: 500;
+  }
+
+  .action-highlight-link:hover {
+    color: #06b6d4;
+    transform: translateX(3px);
+  }
+
+  .action-item-link {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: #cbd5e1;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all 0.2s ease;
+  }
+
+  .action-item-link:hover {
+    color: #ffffff;
+    transform: translateX(3px);
+  }
+
+  .link-arrow {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+  }
+
+  /* Col 4: Editorial Watermark & Narrative */
+  .editorial-watermark-col {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: clamp(1.5rem, 3vw, 2.75rem);
+  }
+
+  .watermark-type-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    line-height: 0.92;
+    user-select: none;
+  }
+
+  .watermark-word {
+    font-family: var(--font-sans);
+    font-size: clamp(2.4rem, 4vw, 3.8rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    color: rgba(30, 64, 175, 0.45);
+    display: block;
+    margin: 0;
+  }
+
+  .watermark-separator {
+    width: 1px;
+    height: 90px;
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .watermark-narrative {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .narrative-line {
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    color: #94a3b8;
+    line-height: 1.45;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  /* Footer Bottom Bar */
+  .footer-bottom-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--space-8);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .legal-copy {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    color: #64748b;
+  }
+
+  .region-tag {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #64748b;
+    letter-spacing: 0.04em;
+  }
+
+  /* --------------------------------------------------------------------------
+     Responsive Breakpoints
+     -------------------------------------------------------------------------- */
+  @media (max-width: 1100px) {
+    .footer-columns-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-10);
+    }
+
+    .editorial-watermark-col {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cta-split-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-right-col {
+      display: none;
+    }
+
+    .footer-columns-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+
+    .editorial-watermark-col {
+      grid-column: span 1;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+
+    .watermark-separator {
+      display: none;
+    }
+
+    .cta-actions-group {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+  }
+</style>
