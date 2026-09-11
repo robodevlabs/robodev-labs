@@ -99,3 +99,13 @@ This file is our project execution roadmap. It tracks what needs to be completed
 - [x] Bottom-right "SCROLL TO NEXT ——————— (↓)" action
 - [x] Responsive adaptation: full circular spatial navigation on desktop, clean horizontal/vertical layout on mobile
 
+## Phase 9 — Editorial Founders & Leadership Showcase (Completed)
+- [x] Replaced Company Approach with an Awwwards-inspired "Founders & Leadership" section
+- [x] High-impact display typography ("Built by people who build.") and generous editorial whitespace
+- [x] Primary visual story: Asymmetric 2-column founder showcase with large monochrome portraits
+- [x] Subdued, expensive-feeling micro-interactions (scale, contrast shift, reduced-motion compliance)
+- [x] Leadership layer beneath: Restrained 4-column architectural grid for the 4 Heads of Department
+- [x] Fully decoupled content layer (`src/data/team.ts`) allowing seamless image and text swaps without markup adjustments
+- [x] Mobile and tablet responsive optimization with zero generic card/avatar patterns
+- [x] Static build verification passing with 0 errors
+

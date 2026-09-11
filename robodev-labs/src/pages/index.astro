@@ -17,6 +17,8 @@ import ProcessStep from '../components/cards/ProcessStep.astro';
 import CinematicBridge from '../components/sections/CinematicBridge.astro';
 import ModelAccordionCards from '../components/sections/ModelAccordionCards.astro';
 import CircularArcDivisionsSection from '../components/sections/CircularArcDivisionsSection.astro';
+import ProcessEngineSection from '../components/sections/ProcessEngineSection.astro';
+import FoundersLeadershipSection from '../components/sections/FoundersLeadershipSection.astro';
 
 import { servicesData } from '../data/services';
 import { productsData } from '../data/products';
@@ -205,109 +207,22 @@ import { siteConfig } from '../config/site';
   />
 
   <!-- =========================================================================
-       HOW WE WORK (Structured 6-Stage Engineering Process)
+       HOW WE WORK: FROM DISCOVERY TO ITERATION (#process)
+       Screen-height 100vh section with 6 engineering stages, sweeping wave path,
+       directional arrows, and dual pill CTAs.
        ========================================================================= -->
-  <Section id="process" size="lg" bg="secondary" class="process-section">
-    <Container>
-      <div class="section-intro text-center">
-        <span class="section-eyebrow">Predictable Delivery</span>
-        <Heading level="h2" size="h1" class="section-title">
-          How We Work: From Discovery to Iteration
-        </Heading>
-        <p class="section-subtitle">
-          Every project follows an engineering-first lifecycle to ensure transparent milestones,
-          zero surprises, and exceptional code quality.
-        </p>
-      </div>
-
-      <div class="process-grid">
-        {processData.map((stage) => <ProcessStep stage={stage} />)}
-      </div>
-    </Container>
-  </Section>
+  <ProcessEngineSection />
 
   <Divider />
 
   <!-- =========================================================================
-       WHY ROBODEV LABS (Engineering Principles & Approach)
+       FOUNDERS & LEADERSHIP SECTION (#leadership)
+       Awwwards-inspired editorial composition: Asymmetric 2-column founder showcase
+       and restrained 4-column department leadership layer.
        ========================================================================= -->
-  <Section id="about" size="lg" bg="default" class="about-section">
-    <Container>
-      <div class="about-layout">
-        <div class="about-left">
-          <span class="section-eyebrow">Company Approach</span>
-          <Heading level="h2" size="h1" class="about-headline">
-            Engineering-first thinking. Built for the long haul.
-          </Heading>
-          <p class="about-lead">
-            Founded by <strong>{siteConfig.founder}</strong>, RoboDev Labs is built on systems,
-            documentation, and disciplined execution. We view software not as a disposable asset,
-            but as living infrastructure that compounds over a 5–10 year horizon.
-          </p>
-          <div class="about-callout card-glass">
-            <span class="callout-quote">
-              "We build solutions, develop people, and create products."
-            </span>
-            <span class="callout-author">&mdash; RoboDev Labs Core Philosophy</span>
-          </div>
-        </div>
+  <FoundersLeadershipSection />
 
-        <div class="about-principles-grid">
-          <div class="principle-item card-glass">
-            <div class="principle-icon-wrap">
-              <Icon name="code" size={20} class="principle-icon" />
-            </div>
-            <Heading level="h3" size="h4" class="principle-title">
-              Practical Technology
-            </Heading>
-            <p class="principle-desc">
-              We select tools and architectures based on stability, performance, and real business
-              fit—never chasing fleeting buzzwords.
-            </p>
-          </div>
-
-          <div class="principle-item card-glass">
-            <div class="principle-icon-wrap">
-              <Icon name="layers" size={20} class="principle-icon" />
-            </div>
-            <Heading level="h3" size="h4" class="principle-title">
-              Scalable Systems
-            </Heading>
-            <p class="principle-desc">
-              From modular TypeScript architectures to decoupled cloud microservices, our codebases
-              are built to scale seamlessly.
-            </p>
-          </div>
-
-          <div class="principle-item card-glass">
-            <div class="principle-icon-wrap">
-              <Icon name="users" size={20} class="principle-icon" />
-            </div>
-            <Heading level="h3" size="h4" class="principle-title">
-              Talent Multiplication
-            </Heading>
-            <p class="principle-desc">
-              Through RoboDev Academy, our experienced engineers mentor emerging developers,
-              ensuring a continuous pipeline of exceptional talent.
-            </p>
-          </div>
-
-          <div class="principle-item card-glass">
-            <div class="principle-icon-wrap">
-              <Icon name="zap" size={20} class="principle-icon" />
-            </div>
-            <Heading level="h3" size="h4" class="principle-title">
-              Venture Ownership
-            </Heading>
-            <p class="principle-desc">
-              Our Product Studio incubates internal IP like Busly, proving our ability to build,
-              launch, and operate real-world software products.
-            </p>
-          </div>
-        </div>
-      </div>
-    </Container>
-  </Section>
+  <Divider />
 
   <!-- =========================================================================
        FINAL CONVERSION CTA SECTION

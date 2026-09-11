@@ -43,7 +43,12 @@
    - Reversible scroll rotation: 01 Engineering &harr; 02 Products &harr; 03 Academy.
    - Isometric 3D floating glass tech composition: angled IDE editor, performance spline graph card, deployed cloud badge, and constellation micro-nodes.
    - Clean 2-column capabilities list with fine SVG icons.
-   - Bottom-right "SCROLL TO NEXT &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; (&darr;)" action.
+4. `src/components/sections/FoundersLeadershipSection.astro`
+   - **Editorial Leadership Architecture**: Replaces the former Company Approach section with an Awwwards-inspired presentation.
+   - **Asymmetric Grid Layout**: Founder 01 (Safal Bhattarai) and Founder 02 staged in an intentional staggered layout with large rectangular aspect-ratio photography (3:4 and 4:5).
+   - **Subtle Sophisticated Interaction**: Non-intrusive scale (`1.025`) and grayscale contrast shift on portrait frames with zero heavy glow/neon gimmicks.
+   - **Restrained Department Leadership Layer**: 4-column typography-first grid for the 4 Heads of Department (Engineering, Academy, Product Studio, Media & Growth).
+   - **Data-Driven Architecture**: Decoupled in `src/data/team.ts`, enabling real team photographs and names to be swapped with zero markup refactoring.
 
 ## Current Status
 - Static build (`npm run build`) passing with 0 errors.

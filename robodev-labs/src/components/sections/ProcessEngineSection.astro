@@ -1,0 +1,452 @@
+---
+import Container from '../ui/Container.astro';
+import Icon from '../ui/Icon.astro';
+
+const processStages = [
+  {
+    title: 'Discover',
+    tag: 'Scoping & Strategy',
+    description: 'We audit your objectives, map technical constraints, and define precise engineering specifications before writing any code.',
+    deliverable: 'Architecture Blueprint & Roadmap'
+  },
+  {
+    title: 'Plan',
+    tag: 'System Architecture & UI',
+    description: 'We construct scalable database schemas, contract-first API specs, and interactive high-fidelity user experience prototypes.',
+    deliverable: 'Design Specs & Data Models'
+  },
+  {
+    title: 'Build',
+    tag: 'Sprint Delivery',
+    description: 'Disciplined agile engineering delivering modular TypeScript codebases, clean documentation, and weekly working demos.',
+    deliverable: 'Production-Ready Codebase'
+  },
+  {
+    title: 'Test',
+    tag: 'Quality & Security',
+    description: 'Automated test suites, cross-platform performance audits, and vulnerability reviews to guarantee stability under load.',
+    deliverable: 'Zero-Regression Test Suite'
+  },
+  {
+    title: 'Launch',
+    tag: 'Cloud Deployment',
+    description: 'Production cloud provisioning, automated CI/CD deployment pipelines, SSL certificates, and zero-downtime DNS routing.',
+    deliverable: 'Live Cloud Infrastructure'
+  },
+  {
+    title: 'Improve',
+    tag: 'Telemetry & Evolution',
+    description: 'Real-time error tracking, latency telemetry analysis, and continuous feature sprints to scale your system sustainably.',
+    deliverable: 'Telemetry Ops & Ongoing Sprints'
+  }
+];
+---
+
+<section id="process" class="process-engine-section">
+  <!-- Subtle Ambient Glows -->
+  <div class="ambient-glow glow-cyan"></div>
+  <div class="ambient-glow glow-orange"></div>
+
+  <!-- Dynamic Multi-Color Sweeping Background Spline (Curving gracefully behind cards, clear of headers) -->
+  <div class="spline-background-wrapper" aria-hidden="true">
+    <svg 
+      class="spline-svg" 
+      viewBox="0 0 1400 700" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="none"
+    >
+      <defs>
+        <linearGradient id="processSplineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#10b981" />
+          <stop offset="25%" stop-color="#06b6d4" />
+          <stop offset="50%" stop-color="#38bdf8" />
+          <stop offset="75%" stop-color="#f59e0b" />
+          <stop offset="100%" stop-color="#f97316" />
+        </linearGradient>
+
+        <marker 
+          id="processArrowhead" 
+          viewBox="0 0 10 10" 
+          refX="6" 
+          refY="5" 
+          markerWidth="7" 
+          markerHeight="7" 
+          orient="auto-start-reverse"
+        >
+          <path d="M 0 1 L 9 5 L 0 9 z" fill="#f97316" />
+        </marker>
+      </defs>
+
+      <!-- Ambient Glow Path (Offset and Soft) -->
+      <path
+        d="M -30 460 C 160 300, 320 520, 540 470 C 760 420, 840 280, 1060 340 C 1220 390, 1320 520, 1430 440"
+        stroke="url(#processSplineGradient)"
+        stroke-width="5"
+        stroke-linecap="round"
+        stroke-dasharray="14 10"
+        opacity="0.16"
+        class="spline-path-glow"
+      />
+
+      <!-- Main Crisp Dashed Animated Spline Curve -->
+      <path
+        d="M -30 460 C 160 300, 320 520, 540 470 C 760 420, 840 280, 1060 340 C 1220 390, 1320 520, 1430 440"
+        stroke="url(#processSplineGradient)"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-dasharray="11 8"
+        marker-end="url(#processArrowhead)"
+        class="spline-path-main"
+      />
+    </svg>
+  </div>
+
+  <Container class="process-engine-container">
+    <!-- Header Section (Clean, uncluttered, elevated above spline line) -->
+    <div class="process-header text-center">
+      <span class="process-eyebrow">Predictable Delivery</span>
+      <h2 class="process-headline">
+        How We Work: <span class="text-gradient-brand">From Discovery to Iteration</span>
+      </h2>
+      <p class="process-subtitle">
+        A disciplined engineering lifecycle focused on transparency, architectural rigor, and continuous software evolution.
+      </p>
+    </div>
+
+    <!-- Intentional, Balanced 6 Process Cards Grid -->
+    <div class="process-steps-grid">
+      {processStages.map((stage) => (
+        <div class="process-card-step">
+          <div class="card-header-row">
+            <h3 class="step-title">{stage.title}</h3>
+            <span class="step-tag">{stage.tag}</span>
+          </div>
+
+          <p class="step-description">{stage.description}</p>
+
+          <div class="step-card-footer">
+            <span class="deliverable-tag">
+              <span class="deliverable-bullet"></span>
+              {stage.deliverable}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Clean Dual Pill Action Buttons -->
+    <div class="process-cta-bar">
+      <a href="#contact" class="process-pill-btn pill-primary">
+        <span>Start Your Discovery Sprint</span>
+      </a>
+
+      <a href="#pillars" class="process-pill-btn pill-secondary">
+        <span>Explore Our Ecosystem</span>
+      </a>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ==========================================================================
+     PROCESS ENGINE SECTION (Screen-height, Intentional, Polished Hierarchy)
+     ========================================================================== */
+  .process-engine-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-12) 0;
+    background-color: var(--color-background);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* Ambient Glow Spotlights */
+  .ambient-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(140px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.18;
+  }
+
+  .glow-cyan {
+    top: 20%;
+    left: 8%;
+    width: 500px;
+    height: 400px;
+    background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+  }
+
+  .glow-orange {
+    bottom: 12%;
+    right: 10%;
+    width: 480px;
+    height: 420px;
+    background: radial-gradient(circle, #f97316 0%, transparent 70%);
+  }
+
+  /* --------------------------------------------------------------------------
+     Spline SVG Wave Background & Animation
+     -------------------------------------------------------------------------- */
+  .spline-background-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .spline-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .spline-path-main {
+    animation: processDashFlow 35s linear infinite;
+  }
+
+  .spline-path-glow {
+    animation: processDashFlow 35s linear infinite;
+    filter: blur(3px);
+  }
+
+  @keyframes processDashFlow {
+    from {
+      stroke-dashoffset: 500;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+     Container & Header
+     -------------------------------------------------------------------------- */
+  .process-engine-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  .process-header {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    position: relative;
+    z-index: 5;
+  }
+
+  .process-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    letter-spacing: var(--letter-spacing-wider);
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.2rem;
+  }
+
+  .process-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--raw-white);
+    margin: 0;
+  }
+
+  .process-subtitle {
+    font-family: var(--font-sans);
+    font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 650px;
+  }
+
+  /* --------------------------------------------------------------------------
+     Intentional, Balanced 6 Process Cards Grid (3 Cols x 2 Rows)
+     -------------------------------------------------------------------------- */
+  .process-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    margin: var(--space-2) 0;
+  }
+
+  .process-card-step {
+    background: rgba(13, 20, 36, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-3);
+    backdrop-filter: blur(18px);
+    transition: border-color 0.25s ease, background-color 0.25s ease;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Clean, Subtle Hover Treatment */
+  .process-card-step:hover {
+    border-color: rgba(6, 182, 212, 0.4);
+    background: rgba(15, 23, 42, 0.95);
+  }
+
+  .card-header-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-bottom: 0.2rem;
+  }
+
+  .step-title {
+    font-family: var(--font-sans);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--raw-white);
+    margin: 0;
+    letter-spacing: -0.015em;
+  }
+
+  .step-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-accent);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .step-description {
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .step-card-footer {
+    padding-top: var(--space-3);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+  }
+
+  .deliverable-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: #94a3b8;
+    letter-spacing: 0.01em;
+  }
+
+  .deliverable-bullet {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    opacity: 0.8;
+  }
+
+  /* --------------------------------------------------------------------------
+     Clean Dual Pill Action Buttons Bar
+     -------------------------------------------------------------------------- */
+  .process-cta-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
+  }
+
+  .process-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.85rem 2.2rem;
+    border-radius: 9999px;
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body-small);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .pill-primary {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: #ffffff;
+    border: 1px solid rgba(249, 115, 22, 0.8);
+    box-shadow: 0 4px 14px rgba(249, 115, 22, 0.3);
+  }
+
+  .pill-primary:hover {
+    background: linear-gradient(135deg, #ff8427 0%, #f97316 100%);
+    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.45);
+    color: #ffffff;
+  }
+
+  .pill-secondary {
+    background: rgba(15, 23, 42, 0.6);
+    color: #ffffff;
+    border: 1px solid var(--color-border);
+    backdrop-filter: blur(12px);
+  }
+
+  .pill-secondary:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--color-text-muted);
+    color: #ffffff;
+  }
+
+  /* Responsive Adaptation */
+  @media (max-width: 1024px) {
+    .process-steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .process-engine-section {
+      min-height: auto;
+      padding: var(--space-12) 0;
+    }
+
+    .process-steps-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .process-cta-bar {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .process-pill-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

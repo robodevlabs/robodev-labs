@@ -2,13 +2,13 @@
 /**
  * CircularArcDivisionsSection.astro
  * 
- * Signature Circular Arc Division Showcase matching the reference screenshot design:
- * - FULL continuous architectural circle arc line from very top to very bottom of viewport.
+ * Signature Circular Arc Division Showcase matching the reference design:
+ * - SINGLE, continuous, full-height architectural circle arc glowing in rich cyan/blue gradient.
  * - Starts from the VERY LEFT edge of the screen (viewport left: 0).
- * - Mathematical parabolic/circle trigonometry for node movement along the arc.
- * - NO OVERLAP: Content stage strictly positioned with ample gutter (left: clamp(440px, 30vw, 540px)).
- * - REAL CLOCK MOTION: On scroll, active component texts literally slide UP and out, while new component texts roll up from below!
- * - Right-side isometric 3D floating glass tech composition also rolls vertically like a clock.
+ * - Nodes positioned via true circular trigonometry along the single arc line.
+ * - Strictly 3 menu nodes (01 Engineering, 02 Products, 03 Academy) spread generously apart.
+ * - ZERO OVERLAP: Content stage strictly positioned with ample clear gutter.
+ * - CURVED CLOCK MOTION: Editorial component texts move along a curved arc trajectory matching the circular arch!
  * - Reversible in both scroll directions.
  * - Bottom-right "SCROLL TO NEXT ——————— (↓)" action.
  */
@@ -27,41 +27,32 @@ import Icon from '../ui/Icon.astro';
     </div>
 
     <!-- =========================================================================
-         LEFT: FULL-HEIGHT ARCHITECTURAL CIRCLE ARC & CLOCK-ORBITING NODES
-         Starts at very top-left (0,0), curves outwards to apex (250px), and finishes at (0, 100% height)
+         LEFT: SINGLE FULL-HEIGHT ARCHITECTURAL CIRCLE ARC & ORBITING NODES
+         Starts at very top-left (0,0), curves outwards to apex (240px), and finishes at (0, 100% height)
          ========================================================================= -->
     <aside class="arc-navigation-system" id="arc-nav-system" aria-label="Division Arc Dial">
-      <!-- Full-Height SVG Vector Canvas -->
+      <!-- Full-Height SVG Vector Canvas with Single Glowing Arc -->
       <svg class="arc-full-svg" id="arc-full-svg" viewBox="0 0 360 1000" preserveAspectRatio="none" aria-hidden="true">
-        <!-- Complete Continuous Line from Very Top to Very Bottom -->
+        <!-- Single Continuous Arc Line with Vibrant Cyan/Blue Gradient and Neon Glow -->
         <path 
           id="base-full-arc" 
-          d="M 0,0 C 330,220 330,780 0,1000" 
-          fill="none" 
-          stroke="rgba(255, 255, 255, 0.14)" 
-          stroke-width="1.5"
-        />
-        
-        <!-- Active Glowing Cyan Highlight Segment on the Arc -->
-        <path 
-          id="active-glow-arc" 
-          d="M 120,260 C 270,370 270,630 120,740" 
+          d="M 0,0 C 340,240 340,760 0,1000" 
           fill="none" 
           stroke="url(#cyanGlowGrad)" 
-          stroke-width="2.6" 
-          stroke-linecap="round"
+          stroke-width="2.2"
           filter="url(#neonFilter)"
         />
         
         <defs>
           <linearGradient id="cyanGlowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#2563eb" stop-opacity="0.2" />
-            <stop offset="30%" stop-color="#06b6d4" stop-opacity="1" />
-            <stop offset="70%" stop-color="#06b6d4" stop-opacity="1" />
-            <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.2" />
+            <stop offset="0%" stop-color="#2563eb" stop-opacity="0.25" />
+            <stop offset="25%" stop-color="#06b6d4" stop-opacity="0.9" />
+            <stop offset="50%" stop-color="#38bdf8" stop-opacity="1" />
+            <stop offset="75%" stop-color="#06b6d4" stop-opacity="0.9" />
+            <stop offset="100%" stop-color="#2563eb" stop-opacity="0.25" />
           </linearGradient>
           <filter id="neonFilter" x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feGaussianBlur stdDeviation="3.5" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -70,7 +61,7 @@ import Icon from '../ui/Icon.astro';
         </defs>
       </svg>
 
-      <!-- Mathematically Positioned Nodes Along the Arc Line -->
+      <!-- Mathematically Positioned Nodes Along the Arc Line (Strictly 3 Menu Items) -->
       <div class="arc-nodes-orbit" id="arc-nodes-orbit">
         
         <!-- Node 01: Engineering -->
@@ -130,18 +121,13 @@ import Icon from '../ui/Icon.astro';
           </div>
         </button>
 
-        <!-- Lower Subtle Orbit Node -->
-        <div class="arc-ghost-node" id="arc-ghost-node" aria-hidden="true">
-          <span class="ghost-ring"></span>
-        </div>
-
       </div>
     </aside>
 
     <!-- =========================================================================
          CENTER: EDITORIAL CONTENT CLOCK-VIEWPORT
-         Safe horizontal clearance (left: clamp(440px, 30vw, 540px)) guarantees ZERO overlap!
-         Texts literally slide UP like a mechanical clock barrel when scrolling.
+         Safe horizontal clearance (left: clamp(450px, 31vw, 550px)) guarantees ZERO overlap!
+         Texts slide along a curved arc trajectory matching the circular arch.
          ========================================================================= -->
     <div class="division-narrative-stage">
       <div class="editorial-clock-track">
@@ -362,7 +348,7 @@ import Icon from '../ui/Icon.astro';
 
     <!-- =========================================================================
          RIGHT: ISOMETRIC 3D FLOATING GLASS TECH COMPOSITION
-         Also transitions with clock-like vertical slide
+         Transitions with matching curved vertical motion
          ========================================================================= -->
     <div class="isometric-visual-stage" aria-hidden="true">
       <div class="iso-visual-clock-track">
@@ -589,12 +575,13 @@ import Icon from '../ui/Icon.astro';
 
 <script>
   /**
-   * Signature Circular Arc Geometry & Clock-Motion Controller
-   * - Arc starts at (x: 0, y: 0) and finishes at (x: 0, y: H)
+   * Signature Circular Arc Geometry & Curved Motion Clock Controller
+   * - SINGLE Arc path: starts at (x: 0, y: 0) and finishes at (x: 0, y: H)
    * - Peak apex of arc is at x = X_MAX (approx 240px) at vertical center (y = H/2)
    * - Nodes move along the parabolic curve: x(y) = X_MAX * (1 - ((y - H/2)/(H/2))^2)
-   * - Scrolling physically moves nodes upwards on the arc like clock numbers.
-   * - Active content and 3D scenes roll UP when advancing and roll DOWN when reversing.
+   * - Generously spread out node spacing (NODE_SPACING = 340px)
+   * - Strictly 3 menu nodes (01 Engineering, 02 Products, 03 Academy)
+   * - Editorial content slides along a CURVED trajectory matching the circular arc!
    */
   function initCircularArcSection() {
     const realm = document.getElementById('circular-arc-scroll-realm');
@@ -602,17 +589,15 @@ import Icon from '../ui/Icon.astro';
     const nodes = document.querySelectorAll<HTMLButtonElement>('.arc-node-element');
     const panels = document.querySelectorAll<HTMLElement>('.division-editorial-panel');
     const scenes = document.querySelectorAll<HTMLElement>('.iso-composition-scene');
-    const ghostNode = document.getElementById('arc-ghost-node');
     const scrollNextBtn = document.getElementById('scroll-next-trigger');
 
     if (!realm || !stage || !nodes.length || !panels.length) return;
 
     let activeIndex = 0;
-    const X_MAX = 240;      // Apex X coordinate in pixels from left edge
-    const NODE_SPACING = 210; // Vertical pixel distance between nodes at rest
+    const X_MAX = 240;        // Apex X coordinate in pixels from left edge
+    const NODE_SPACING = 340; // Generously spread out menu node spacing along arc
 
     // Mathematical Parabolic/Circle Curve Function
-    // Maps a vertical y coordinate to an x position along the arc
     function getArcX(y: number, H: number): number {
       const u = (y - H / 2) / (H / 2);
       const clampedU = Math.max(-1, Math.min(1, u));
@@ -624,32 +609,20 @@ import Icon from '../ui/Icon.astro';
       const H = stage?.clientHeight || window.innerHeight;
       const centerY = H / 2;
 
-      // As progress goes from 0 to 1, nodes move upwards by totalTravel
-      // 0.0 => Index 0 is at centerY
-      // 0.5 => Index 1 is at centerY
-      // 1.0 => Index 2 is at centerY
-      const totalStages = 2; // from 0 to 2
+      // Scroll offset moves nodes along the arc curve
+      const totalStages = 2; // 0 to 2
       const scrollOffset = progress * totalStages * NODE_SPACING;
 
       nodes.forEach((node, i) => {
-        // Compute current Y position on the clock dial
         const nodeY = centerY + (i * NODE_SPACING) - scrollOffset;
         const nodeX = getArcX(nodeY, H);
 
         node.style.transform = `translate3d(${nodeX}px, ${nodeY - 20}px, 0)`;
 
-        // Distance from center focal line
         const distFromCenter = Math.abs(nodeY - centerY);
         const nodeOpacity = Math.max(0.2, 1 - (distFromCenter / (H * 0.45)));
         node.style.opacity = `${nodeOpacity}`;
       });
-
-      // Position decorative ghost ring below the last node
-      if (ghostNode) {
-        const ghostY = centerY + (3 * NODE_SPACING) - scrollOffset;
-        const ghostX = getArcX(ghostY, H);
-        ghostNode.style.transform = `translate3d(${ghostX}px, ${ghostY - 5}px, 0)`;
-      }
 
       // Determine active index based on scroll progress:
       // 0.00 - 0.33 => 0 (Engineering)
@@ -667,21 +640,21 @@ import Icon from '../ui/Icon.astro';
       }
     }
 
-    // Mechanical Clock Roll: Old items roll UP and out; new items roll UP from below!
+    // Curved Motion Clock Roll: Content slides along a curved arc trajectory!
     function setActiveDivision(newIndex: number) {
       activeIndex = newIndex;
 
-      // Update node styles
+      // Update node active state
       nodes.forEach((node, i) => {
         const isActive = i === newIndex;
         node.classList.toggle('active', isActive);
         node.setAttribute('aria-selected', isActive ? 'true' : 'false');
       });
 
-      // Update Editorial Content Panels with Real Clock Rolling States:
-      // i < newIndex: 'past' (rolled UP to top)
-      // i === newIndex: 'active' (centered)
-      // i > newIndex: 'future' (waiting BELOW)
+      // Update Editorial Content Panels with CURVED Arc Transitions:
+      // i < newIndex: 'past' (curved UP to top)
+      // i === newIndex: 'active' (locked center)
+      // i > newIndex: 'future' (curved BELOW)
       panels.forEach((panel, i) => {
         panel.classList.remove('past', 'active', 'future');
         if (i < newIndex) {
@@ -773,8 +746,6 @@ import Icon from '../ui/Icon.astro';
 <style>
   /* =========================================================================
      CIRCULAR ARC PINNED SCROLL REALM
-     300vh height track allows generous scroll scrubbing while sticky stage
-     remains locked at 100vh viewport height.
      ========================================================================= */
   .circular-arc-scroll-realm {
     position: relative;
@@ -834,7 +805,7 @@ import Icon from '../ui/Icon.astro';
   }
 
   /* -------------------------------------------------------------------------
-     LEFT: FULL-HEIGHT ARCHITECTURAL CIRCLE ARC & ORBITING NODES
+     LEFT: SINGLE FULL-HEIGHT ARCHITECTURAL CIRCLE ARC & ORBITING NODES
      Starts at very left of screen (left: 0, top: 0, bottom: 0)
      ------------------------------------------------------------------------- */
   .arc-navigation-system {
@@ -847,7 +818,7 @@ import Icon from '../ui/Icon.astro';
     z-index: 20;
   }
 
-  /* Full continuous SVG vector line */
+  /* Single continuous SVG vector line */
   .arc-full-svg {
     position: absolute;
     left: 0;
@@ -908,7 +879,7 @@ import Icon from '../ui/Icon.astro';
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Active Node State (Matching Screenshot) */
+  /* Active Node State */
   .arc-node-element.active .outer-glow-ring {
     border-color: #06b6d4;
     box-shadow: 0 0 16px rgba(6, 182, 212, 0.7), inset 0 0 8px rgba(6, 182, 212, 0.4);
@@ -969,30 +940,14 @@ import Icon from '../ui/Icon.astro';
     color: #ffffff;
   }
 
-  /* Decorative Ghost Node */
-  .arc-ghost-node {
-    position: absolute;
-    left: 0;
-    top: 0;
-    pointer-events: none;
-    will-change: transform;
-  }
-
-  .ghost-ring {
-    display: block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
   /* -------------------------------------------------------------------------
      CENTER: EDITORIAL CONTENT CLOCK TRACK (ZERO OVERLAP!)
-     Positioned at left: clamp(440px, 30vw, 540px) leaving ample clear space from arc
+     Safe clearance at left: clamp(450px, 31vw, 550px)
+     Curved transitions match the sweeping circular arc!
      ------------------------------------------------------------------------- */
   .division-narrative-stage {
     position: absolute;
-    left: clamp(440px, 30vw, 540px);
+    left: clamp(450px, 31vw, 550px);
     top: 50%;
     transform: translateY(-50%);
     width: 500px;
@@ -1006,7 +961,7 @@ import Icon from '../ui/Icon.astro';
     height: 480px;
   }
 
-  /* Physical Clock Barrel Roll Transitions */
+  /* CURVED Clock Motion Transitions */
   .division-editorial-panel {
     position: absolute;
     top: 0;
@@ -1018,23 +973,23 @@ import Icon from '../ui/Icon.astro';
     will-change: transform, opacity;
   }
 
-  /* Past panel: rolled UP like a clock drum */
+  /* Past panel: curves UP and to the left following arc trajectory */
   .division-editorial-panel.past {
-    transform: translateY(-110%) scale(0.96);
+    transform: translate3d(-60px, -110%, 0) rotate(-5deg) scale(0.94);
     opacity: 0;
     pointer-events: none;
   }
 
   /* Active panel: locked in center */
   .division-editorial-panel.active {
-    transform: translateY(0) scale(1);
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
     opacity: 1;
     pointer-events: auto;
   }
 
-  /* Future panel: waiting BELOW to roll up */
+  /* Future panel: curves BELOW and to the left waiting to roll up */
   .division-editorial-panel.future {
-    transform: translateY(110%) scale(0.96);
+    transform: translate3d(-60px, 110%, 0) rotate(5deg) scale(0.94);
     opacity: 0;
     pointer-events: none;
   }
@@ -1154,19 +1109,19 @@ import Icon from '../ui/Icon.astro';
   }
 
   .iso-composition-scene.past {
-    transform: translateY(-90px) scale(0.94);
+    transform: translate3d(40px, -90px, 0) scale(0.94) rotate(-3deg);
     opacity: 0;
     pointer-events: none;
   }
 
   .iso-composition-scene.active {
-    transform: translateY(0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
     opacity: 1;
     pointer-events: auto;
   }
 
   .iso-composition-scene.future {
-    transform: translateY(90px) scale(0.94);
+    transform: translate3d(40px, 90px, 0) scale(0.94) rotate(3deg);
     opacity: 0;
     pointer-events: none;
   }
