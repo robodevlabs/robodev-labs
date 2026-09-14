@@ -1,5 +1,6 @@
 ---
 import Container from '../ui/Container.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
 import { foundersData, departmentLeadsData } from '../../data/team';
 
 const [founderOne, founderTwo] = foundersData;
@@ -15,7 +16,7 @@ const [founderOne, founderTwo] = foundersData;
          ======================================================================= -->
     <header class="editorial-header">
       <div class="eyebrow-wrapper">
-        <span class="editorial-eyebrow">The People Behind RoboDev Labs</span>
+        <Eyebrow class="editorial-eyebrow">The People Behind RoboDev Labs</Eyebrow>
       </div>
       <div class="header-main-row">
         <h2 class="editorial-headline">
@@ -179,11 +180,6 @@ const [founderOne, founderTwo] = foundersData;
   }
 
   .editorial-eyebrow {
-    font-family: var(--font-mono);
-    font-size: var(--font-size-caption);
-    letter-spacing: var(--letter-spacing-wider);
-    text-transform: uppercase;
-    color: var(--color-accent);
     display: inline-block;
   }
 

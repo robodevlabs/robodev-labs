@@ -1,0 +1,29 @@
+---
+import { cn } from '../../lib/utils';
+
+export interface Props {
+  as?: 'p' | 'span' | 'div';
+  class?: string;
+  [key: string]: any;
+}
+
+const { as: Component = 'p', class: className, ...rest } = Astro.props;
+---
+
+<Component class={cn('global-eyebrow', className)} {...rest}>
+  <slot />
+</Component>
+
+<style>
+  .global-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-brand, #2563eb);
+    margin: 0;
+    display: inline-block;
+    line-height: 1.4;
+  }
+</style>

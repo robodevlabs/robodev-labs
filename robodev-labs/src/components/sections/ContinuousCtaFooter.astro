@@ -3,6 +3,7 @@ import Container from '../ui/Container.astro';
 import Logo from '../common/Logo.astro';
 import Icon from '../ui/Icon.astro';
 import Button from '../ui/Button.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
 import { siteConfig } from '../../config/site';
 
 const currentYear = new Date().getFullYear();
@@ -31,7 +32,7 @@ const socialsList = [
         <div class="cta-card-glass-glow" aria-hidden="true"></div>
         <div class="cta-card-content">
           <!-- Clean Eyebrow -->
-          <span class="cta-eyebrow">READY TO BUILD</span>
+          <Eyebrow class="cta-eyebrow">READY TO BUILD</Eyebrow>
 
           <!-- High Impact Minimalist Headline -->
           <h2 id="cta-heading" class="cta-headline">
@@ -245,12 +246,7 @@ const socialsList = [
   }
 
   .cta-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
     letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-accent, #06b6d4);
-    font-weight: 600;
   }
 
   .cta-headline {

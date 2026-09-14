@@ -2,411 +2,479 @@
 import Container from '../ui/Container.astro';
 import Icon from '../ui/Icon.astro';
 import Button from '../ui/Button.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
 
-const processStages = [
+const timelineWeeks = ['W1', 'W2', 'W3-4', 'W5-6', 'W7', 'W8+'];
+
+const ganttStages = [
   {
-    title: 'Discover',
-    tag: 'Scoping & Strategy',
-    description: 'We audit your objectives, map technical constraints, and define precise engineering specifications before writing any code.',
-    deliverable: 'Architecture Blueprint & Roadmap'
+    title: 'Discovery & Goals',
+    description: 'Understanding your vision, business objectives, and project success criteria.',
+    deliverable: 'Project Plan & Roadmap',
+    startCol: 1,
+    spanCol: 1,
+    status: 'Alignment & Planning'
   },
   {
-    title: 'Plan',
-    tag: 'System Architecture & UI',
-    description: 'We construct scalable database schemas, contract-first API specs, and interactive high-fidelity user experience prototypes.',
-    deliverable: 'Design Specs & Data Models'
+    title: 'Design & Solution Plan',
+    description: 'User journeys, visual prototypes, and structured blueprint before building.',
+    deliverable: 'UI Concepts & System Blueprint',
+    startCol: 2,
+    spanCol: 1,
+    status: 'Design Approval'
   },
   {
-    title: 'Build',
-    tag: 'Sprint Delivery',
-    description: 'Disciplined agile engineering delivering modular TypeScript codebases, clean documentation, and weekly working demos.',
-    deliverable: 'Production-Ready Codebase'
+    title: 'Development & Build',
+    description: 'Active development with regular progress updates and working preview demos.',
+    deliverable: 'Functional Working Product',
+    startCol: 3,
+    spanCol: 2,
+    status: 'Core Development'
   },
   {
-    title: 'Test',
-    tag: 'Quality & Security',
-    description: 'Automated test suites, cross-platform performance audits, and vulnerability reviews to guarantee stability under load.',
-    deliverable: 'Zero-Regression Test Suite'
+    title: 'Testing & Quality Check',
+    description: 'Comprehensive reviews across devices, speed optimization, and security checks.',
+    deliverable: 'Tested & Polished System',
+    startCol: 4,
+    spanCol: 2,
+    status: 'Quality Assurance'
   },
   {
-    title: 'Launch',
-    tag: 'Cloud Deployment',
-    description: 'Production cloud provisioning, automated CI/CD deployment pipelines, SSL certificates, and zero-downtime DNS routing.',
-    deliverable: 'Live Cloud Infrastructure'
+    title: 'Launch & Go-Live',
+    description: 'Smooth rollout, domain setup, and live environment launch.',
+    deliverable: 'Live Production Setup',
+    startCol: 5,
+    spanCol: 1,
+    status: 'Official Launch'
   },
   {
-    title: 'Improve',
-    tag: 'Telemetry & Evolution',
-    description: 'Real-time error tracking, latency telemetry analysis, and continuous feature sprints to scale your system sustainably.',
-    deliverable: 'Telemetry Ops & Ongoing Sprints'
+    title: 'Growth & Ongoing Support',
+    description: 'Performance monitoring, continuous improvements, and feature updates.',
+    deliverable: 'Ongoing Support & Optimization',
+    startCol: 6,
+    spanCol: 1,
+    status: 'Continuous Support'
   }
 ];
 ---
 
-<section id="process" class="process-engine-section">
-  <!-- Subtle Ambient Glows (brand tokens only) -->
-  <div class="ambient-glow glow-cyan"></div>
-  <div class="ambient-glow glow-brand"></div>
-
-  <!-- Dynamic Multi-Color Sweeping Background Spline (Curving gracefully behind cards, clear of headers) -->
-  <div class="spline-background-wrapper" aria-hidden="true">
-    <svg 
-      class="spline-svg" 
-      viewBox="0 0 1400 700" 
-      fill="none" 
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="none"
-    >
-      <defs>
-        <linearGradient id="processSplineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"   stop-color="#2563eb" />
-          <stop offset="50%"  stop-color="#06b6d4" />
-          <stop offset="100%" stop-color="#2563eb" />
-        </linearGradient>
-
-        <marker 
-          id="processArrowhead" 
-          viewBox="0 0 10 10" 
-          refX="6" 
-          refY="5" 
-          markerWidth="7" 
-          markerHeight="7" 
-          orient="auto-start-reverse"
-        >
-          <path d="M 0 1 L 9 5 L 0 9 z" fill="#2563eb" />
-        </marker>
-      </defs>
-
-      <!-- Ambient Glow Path (Offset and Soft) -->
-      <path
-        d="M -30 460 C 160 300, 320 520, 540 470 C 760 420, 840 280, 1060 340 C 1220 390, 1320 520, 1430 440"
-        stroke="url(#processSplineGradient)"
-        stroke-width="5"
-        stroke-linecap="round"
-        stroke-dasharray="14 10"
-        opacity="0.16"
-        class="spline-path-glow"
-      />
-
-      <!-- Main Crisp Dashed Animated Spline Curve -->
-      <path
-        d="M -30 460 C 160 300, 320 520, 540 470 C 760 420, 840 280, 1060 340 C 1220 390, 1320 520, 1430 440"
-        stroke="url(#processSplineGradient)"
-        stroke-width="2.2"
-        stroke-linecap="round"
-        stroke-dasharray="11 8"
-        marker-end="url(#processArrowhead)"
-        class="spline-path-main"
-      />
-    </svg>
-  </div>
-
-  <Container class="process-engine-container">
-    <!-- Header Section (Clean, uncluttered, elevated above spline line) -->
-    <div class="process-header text-center">
-      <span class="process-eyebrow">Predictable Delivery</span>
-      <h2 class="process-headline">
-        How We Work: <span class="text-gradient-brand">From Discovery to Iteration</span>
-      </h2>
-      <p class="process-subtitle">
-        A disciplined engineering lifecycle focused on transparency, architectural rigor, and continuous software evolution.
+<section id="process" class="process-gantt-section" aria-label="Engineering Process Lifecycle">
+  <Container class="process-container">
+    <!-- Header Section -->
+    <div class="process-header">
+      <div class="header-left">
+        <Eyebrow class="process-eyebrow">Predictable Delivery</Eyebrow>
+        <h2 class="process-headline">
+          How we work: <span class="headline-dim">from discovery to continuous scale.</span>
+        </h2>
+      </div>
+      <p class="process-lead">
+        A structured, milestone-driven approach designed for clear communication, steady progress, and reliable delivery.
       </p>
     </div>
 
-    <!-- Intentional, Balanced 6 Process Cards Grid -->
-    <div class="process-steps-grid">
-      {processStages.map((stage) => (
-        <div class="process-card-step">
-          <div class="card-header-row">
-            <h3 class="step-title">{stage.title}</h3>
-            <span class="step-tag">{stage.tag}</span>
-          </div>
-
-          <p class="step-description">{stage.description}</p>
-
-          <div class="step-card-footer">
-            <span class="deliverable-tag">
-              <span class="deliverable-bullet"></span>
-              {stage.deliverable}
-            </span>
+    <!-- Clean Editorial Gantt Timeline Board -->
+    <div class="gantt-board-wrapper">
+      <div class="gantt-board">
+        <!-- Gantt Header Row: Phase Names / Time Intervals -->
+        <div class="gantt-header-row">
+          <div class="gantt-col-header info-col-header">Stage &amp; Deliverables</div>
+          <div class="gantt-timeline-header">
+            {timelineWeeks.map((week) => (
+              <div class="timeline-header-cell">
+                <span class="week-label">{week}</span>
+              </div>
+            ))}
           </div>
         </div>
-      ))}
+
+        <!-- Gantt Rows -->
+        <div class="gantt-rows-container">
+          {ganttStages.map((stage) => (
+            <div class="gantt-row">
+              <!-- Left Info Column -->
+              <div class="stage-info-col">
+                <h3 class="stage-title">{stage.title}</h3>
+                <p class="stage-description">{stage.description}</p>
+                <div class="stage-deliverable-wrap">
+                  <span class="deliverable-label">Deliverable:</span>
+                  <span class="deliverable-value">{stage.deliverable}</span>
+                </div>
+              </div>
+
+              <!-- Right Gantt Bar Grid Column -->
+              <div class="stage-timeline-track">
+                <!-- Background Grid Lines -->
+                <div class="timeline-grid-guides" aria-hidden="true">
+                  <div class="guide-line"></div>
+                  <div class="guide-line"></div>
+                  <div class="guide-line"></div>
+                  <div class="guide-line"></div>
+                  <div class="guide-line"></div>
+                  <div class="guide-line"></div>
+                </div>
+
+                <!-- Active Gantt Bar -->
+                <div 
+                  class="gantt-bar"
+                  style={`grid-column: ${stage.startCol} / span ${stage.spanCol};`}
+                >
+                  <div class="bar-fill">
+                    <span class="bar-status-text">{stage.status}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
 
-    <!-- Clean Dual Pill Action Buttons -->
-    <div class="process-cta-bar">
-      <Button variant="primary" size="md" href="#contact">
-        <span>Start Your Discovery Sprint</span>
-        <span aria-hidden="true">&rarr;</span>
-      </Button>
-
-      <Button variant="secondary" size="md" href="#pillars">
-        <span>Explore Our Ecosystem</span>
-      </Button>
+    <!-- Bottom Action Bar -->
+    <div class="process-bottom-action">
+      <div class="action-caption">
+        <span>Ready to scope your engineering roadmap?</span>
+      </div>
+      <div class="action-buttons">
+        <Button variant="primary" size="md" href="#contact">
+          <span>Start Your Discovery Sprint</span>
+          <span aria-hidden="true">&rarr;</span>
+        </Button>
+        <Button variant="secondary" size="md" href="#pillars">
+          <span>Explore Ecosystem</span>
+        </Button>
+      </div>
     </div>
   </Container>
 </section>
 
 <style>
   /* ==========================================================================
-     PROCESS ENGINE SECTION (Screen-height, Intentional, Polished Hierarchy)
+     CLEAN MINIMAL EDITORIAL GANTT PROCESS ENGINE SECTION
      ========================================================================== */
-  .process-engine-section {
+  .process-gantt-section {
     position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: var(--space-12) 0;
+    padding: clamp(5rem, 8vw, 8rem) 0;
     background-color: var(--color-background);
-    overflow: hidden;
-    isolation: isolate;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  /* Ambient Glow Spotlights */
-  .ambient-glow {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(140px);
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.18;
-  }
-
-  .glow-cyan {
-    top: 20%;
-    left: 8%;
-    width: 500px;
-    height: 400px;
-    background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
-  }
-
-  .glow-brand {
-    bottom: 12%;
-    right: 10%;
-    width: 480px;
-    height: 420px;
-    background: radial-gradient(circle, var(--color-brand) 0%, transparent 70%);
-  }
-
-  /* --------------------------------------------------------------------------
-     Spline SVG Wave Background & Animation
-     -------------------------------------------------------------------------- */
-  .spline-background-wrapper {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .spline-svg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .spline-path-main {
-    animation: processDashFlow 35s linear infinite;
-  }
-
-  .spline-path-glow {
-    animation: processDashFlow 35s linear infinite;
-    filter: blur(3px);
-  }
-
-  @keyframes processDashFlow {
-    from {
-      stroke-dashoffset: 500;
-    }
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  /* --------------------------------------------------------------------------
-     Container & Header
-     -------------------------------------------------------------------------- */
-  .process-engine-container {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-8);
-    height: 100%;
-    justify-content: space-between;
-  }
-
-  .process-header {
-    max-width: 800px;
+  .process-container {
+    max-width: 1240px;
     margin: 0 auto;
+    padding: 0 clamp(1.25rem, 3.5vw, 2.5rem);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: var(--space-2);
-    position: relative;
-    z-index: 5;
+    gap: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  /* --------------------------------------------------------------------------
+     1. Editorial Section Header
+     -------------------------------------------------------------------------- */
+  .process-header {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: flex-end;
+  }
+
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
   .process-eyebrow {
-    font-family: var(--font-mono);
-    font-size: var(--font-size-caption);
-    letter-spacing: var(--letter-spacing-wider);
-    text-transform: uppercase;
-    color: var(--color-accent);
     margin-bottom: 0.2rem;
   }
 
   .process-headline {
     font-family: var(--font-sans);
-    font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+    font-size: clamp(2rem, 3.8vw, 3.2rem);
     font-weight: 700;
     line-height: 1.15;
-    letter-spacing: -0.025em;
-    color: var(--color-text);
+    letter-spacing: -0.03em;
+    color: #ffffff;
     margin: 0;
   }
 
-  .process-subtitle {
-    font-family: var(--font-sans);
-    font-size: clamp(0.95rem, 1.3vw, 1.05rem);
-    color: var(--color-text-secondary);
-    line-height: 1.6;
-    margin: 0;
-    max-width: 650px;
-  }
-
-  /* --------------------------------------------------------------------------
-     Intentional, Balanced 6 Process Cards Grid (3 Cols x 2 Rows)
-     -------------------------------------------------------------------------- */
-  .process-steps-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-5);
-    margin: var(--space-2) 0;
-  }
-
-  .process-card-step {
-    background: var(--color-background-dark);
-    border: 1px solid var(--color-border-subtle);
-    border-radius: var(--radius-lg);
-    padding: var(--space-5) var(--space-6);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: var(--space-3);
-    backdrop-filter: blur(18px);
-    transition: border-color 0.25s ease, background-color 0.25s ease;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Clean, Subtle Hover Treatment */
-  .process-card-step:hover {
-    border-color: var(--color-border-bright);
-    background: var(--color-background);
-  }
-
-  .card-header-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-3);
-    padding-bottom: 0.2rem;
-  }
-
-  .step-title {
-    font-family: var(--font-sans);
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--color-text);
-    margin: 0;
-    letter-spacing: -0.015em;
-  }
-
-  .step-tag {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--color-accent);
-    letter-spacing: 0.02em;
-    white-space: nowrap;
-  }
-
-  .step-description {
-    font-family: var(--font-sans);
-    font-size: 0.88rem;
-    color: var(--color-text-secondary);
-    line-height: 1.55;
-    margin: 0;
+  .headline-dim {
+    color: #94a3b8;
     font-weight: 400;
   }
 
-  .step-card-footer {
-    padding-top: var(--space-3);
-    border-top: 1px solid var(--color-border-subtle);
-    display: flex;
-    align-items: center;
-  }
-
-  .deliverable-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--color-text-secondary);
-    letter-spacing: 0.01em;
-  }
-
-  .deliverable-bullet {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background-color: var(--color-accent);
-    opacity: 0.8;
+  .process-lead {
+    font-family: var(--font-sans);
+    font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+    color: #94a3b8;
+    line-height: 1.65;
+    margin: 0;
   }
 
   /* --------------------------------------------------------------------------
-     Clean Dual Pill Action Buttons Bar
+     2. Gantt Chart Board Layout
      -------------------------------------------------------------------------- */
-  .process-cta-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-4);
-    margin-top: var(--space-2);
+  .gantt-board-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    background-color: #070c18;
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
-  /* Responsive Adaptation */
-  @media (max-width: 1024px) {
-    .process-steps-grid {
-      grid-template-columns: repeat(2, 1fr);
+  .gantt-board {
+    min-width: 860px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Gantt Header Row */
+  .gantt-header-row {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    background-color: #0d1527;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .info-col-header {
+    padding: 1.1rem 1.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+  }
+
+  .gantt-timeline-header {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .timeline-header-cell {
+    padding: 1.1rem 0.5rem;
+    text-align: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.015);
+  }
+
+  .timeline-header-cell:last-child {
+    border-right: none;
+  }
+
+  .week-label {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #cbd5e1;
+  }
+
+  /* Gantt Rows */
+  .gantt-rows-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gantt-row {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    transition: background-color 0.15s ease;
+  }
+
+  .gantt-row:last-child {
+    border-bottom: none;
+  }
+
+  .gantt-row:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+
+  /* Stage Info Column */
+  .stage-info-col {
+    padding: 1.35rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #090e1c;
+    justify-content: center;
+  }
+
+  .stage-title {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .stage-description {
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    color: #94a3b8;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .stage-deliverable-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.2rem;
+    font-size: 0.78rem;
+  }
+
+  .deliverable-label {
+    font-family: var(--font-mono);
+    color: #64748b;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .deliverable-value {
+    font-family: var(--font-sans);
+    color: #cbd5e1;
+    font-weight: 500;
+  }
+
+  /* Right Timeline Track */
+  .stage-timeline-track {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    align-items: center;
+    padding: 1.1rem 0;
+    background-color: #070c18;
+  }
+
+  .timeline-grid-guides {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    pointer-events: none;
+    height: 100%;
+  }
+
+  .guide-line {
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    height: 100%;
+  }
+
+  .guide-line:last-child {
+    border-right: none;
+  }
+
+  /* Gantt Bar */
+  .gantt-bar {
+    position: relative;
+    z-index: 2;
+    padding: 0 0.6rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .bar-fill {
+    width: 100%;
+    padding: 0.65rem 1.1rem;
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-left: 3px solid var(--color-brand, #2563eb);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .gantt-row:hover .bar-fill {
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, rgba(37, 52, 75, 0.9) 0%, rgba(20, 30, 50, 0.98) 100%);
+    border-color: rgba(255, 255, 255, 0.22);
+    border-left-color: var(--color-brand, #2563eb);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  }
+
+  .bar-status-text {
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #f1f5f9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #f1f5f9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* --------------------------------------------------------------------------
+     3. Bottom Action Bar
+     -------------------------------------------------------------------------- */
+  .process-bottom-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.25rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .action-caption {
+    font-family: var(--font-sans);
+    font-size: 0.98rem;
+    color: #94a3b8;
+    font-weight: 500;
+  }
+
+  .action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* --------------------------------------------------------------------------
+     Responsive Media Queries
+     -------------------------------------------------------------------------- */
+  @media (max-width: 960px) {
+    .process-header {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
     }
   }
 
   @media (max-width: 640px) {
-    .process-engine-section {
-      min-height: auto;
-      padding: var(--space-12) 0;
-    }
-
-    .process-steps-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .process-cta-bar {
+    .process-bottom-action {
       flex-direction: column;
-      width: 100%;
+      align-items: flex-start;
+      gap: 1rem;
     }
 
-    .process-pill-btn {
+    .action-buttons {
       width: 100%;
-      justify-content: center;
+      flex-direction: column;
+    }
+
+    .action-buttons a {
+      width: 100%;
+      text-align: center;
     }
   }
 </style>

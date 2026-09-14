@@ -132,8 +132,8 @@ const socialsList = [
     >
       <!-- Collapsed Pillar Strip (Desktop) -->
       <div class="collapsed-strip">
-        <div class="strip-icon-box blue">
-          <Icon name="layers" size={20} />
+        <div class="strip-icon-box">
+          <Icon name="layers" size={18} />
         </div>
         <span class="strip-number">01</span>
         <span class="strip-vertical-label">For Businesses</span>
@@ -142,12 +142,13 @@ const socialsList = [
       <!-- Expanded Detailed Card View -->
       <div class="expanded-card-content">
         <div class="card-left-narrative">
-          <div class="pane-badge blue">
-            <span class="badge-dot blue"></span>
-            Division 01 &bull; Client Engineering
+          <div class="pane-eyebrow">
+            <span class="eyebrow-index">01</span>
+            <span class="eyebrow-divider">/</span>
+            <span class="eyebrow-text">Client Engineering &amp; Architecture</span>
           </div>
 
-          <h3 class="pane-headline text-gradient-blue">
+          <h3 class="pane-headline">
             Scale Systems, Modern Web/Mobile &amp; Practical AI
           </h3>
 
@@ -157,15 +158,15 @@ const socialsList = [
 
           <ul class="pane-features-list">
             <li>
-              <Icon name="check" size={16} class="feature-check blue" />
+              <span class="feature-bullet">&bull;</span>
               <span><strong>Custom Software &amp; SaaS:</strong> High-performance web applications with resilient architecture.</span>
             </li>
             <li>
-              <Icon name="check" size={16} class="feature-check blue" />
+              <span class="feature-bullet">&bull;</span>
               <span><strong>Practical AI Workflows:</strong> Custom LLM integrations, document retrieval (RAG), and data automation.</span>
             </li>
             <li>
-              <Icon name="check" size={16} class="feature-check blue" />
+              <span class="feature-bullet">&bull;</span>
               <span><strong>Cloud &amp; DevOps:</strong> Automated CI/CD pipelines, scalable cloud infrastructure, and security hardening.</span>
             </li>
           </ul>
@@ -173,7 +174,11 @@ const socialsList = [
 
         <div class="card-right-interactive">
           <div class="subdivision-card">
-            <span class="subdivision-header-label">Capabilities for Enterprises</span>
+            <div class="subdivision-header-row">
+              <span class="subdivision-header-label">Capabilities</span>
+              <span class="subdivision-status-tag">Production Ready</span>
+            </div>
+
             <div class="capabilities-tags-cloud">
               <span class="cap-tag">Web Platforms</span>
               <span class="cap-tag">Mobile Apps (iOS/Android)</span>
@@ -185,19 +190,19 @@ const socialsList = [
             <div class="division-metric-box">
               <div class="metric-item">
                 <span class="metric-num">100%</span>
-                <span class="metric-lbl">Production Ready</span>
+                <span class="metric-lbl">Direct Engineer Code</span>
               </div>
               <div class="metric-sep"></div>
               <div class="metric-item">
                 <span class="metric-num">SLA</span>
-                <span class="metric-lbl">High Concurrency</span>
+                <span class="metric-lbl">Enterprise Reliability</span>
               </div>
             </div>
 
             <div class="action-wrap">
-              <Button variant="primary" size="md" href="#services" class="pane-cta-btn blue">
+              <Button variant="primary" size="md" href="#services" class="pane-cta-btn">
                 <span>Explore Engineering Services</span>
-                <Icon name="arrow-right" size={16} />
+                <Icon name="arrow-right" size={15} />
               </Button>
             </div>
           </div>
@@ -216,8 +221,8 @@ const socialsList = [
     >
       <!-- Collapsed Pillar Strip -->
       <div class="collapsed-strip">
-        <div class="strip-icon-box purple">
-          <Icon name="users" size={20} />
+        <div class="strip-icon-box">
+          <Icon name="users" size={18} />
         </div>
         <span class="strip-number">02</span>
         <span class="strip-vertical-label">For Students</span>
@@ -226,12 +231,13 @@ const socialsList = [
       <!-- Expanded Detailed Card View -->
       <div class="expanded-card-content">
         <div class="card-left-narrative">
-          <div class="pane-badge purple">
-            <span class="badge-dot purple"></span>
-            Division 02 &bull; RoboDev Academy
+          <div class="pane-eyebrow">
+            <span class="eyebrow-index">02</span>
+            <span class="eyebrow-divider">/</span>
+            <span class="eyebrow-text">RoboDev Academy</span>
           </div>
 
-          <h3 class="pane-headline text-gradient-purple">
+          <h3 class="pane-headline">
             Unlock Fellowships, Careers &amp; Hands-On Code
           </h3>
 
@@ -241,15 +247,15 @@ const socialsList = [
 
           <ul class="pane-features-list">
             <li>
-              <Icon name="check" size={16} class="feature-check purple" />
+              <span class="feature-bullet">&bull;</span>
               <span><strong>Hands-On Workshops:</strong> Code-along immersions deploying production applications.</span>
             </li>
             <li>
-              <Icon name="check" size={16} class="feature-check purple" />
+              <span class="feature-bullet">&bull;</span>
               <span><strong>1-on-1 Mentorship:</strong> Direct code reviews, system design critiques, and career coaching.</span>
             </li>
             <li>
-              <Icon name="check" size={16} class="feature-check purple" />
+              <span class="feature-bullet">&bull;</span>
               <span><strong>Hackathons &amp; Fellowships:</strong> Team engineering sprints that build standout portfolios.</span>
             </li>
           </ul>
@@ -257,7 +263,11 @@ const socialsList = [
 
         <div class="card-right-interactive">
           <div class="subdivision-card">
-            <span class="subdivision-header-label">Learning Modules &amp; Growth</span>
+            <div class="subdivision-header-row">
+              <span class="subdivision-header-label">Learning Modules</span>
+              <span class="subdivision-status-tag">Cohort Active</span>
+            </div>
+
             <div class="capabilities-tags-cloud">
               <span class="cap-tag">Full-Stack Immersions</span>
               <span class="cap-tag">Git &amp; PR Culture</span>
@@ -269,19 +279,19 @@ const socialsList = [
             <div class="division-metric-box">
               <div class="metric-item">
                 <span class="metric-num">Practical</span>
-                <span class="metric-lbl">Project-First</span>
+                <span class="metric-lbl">Project-First Method</span>
               </div>
               <div class="metric-sep"></div>
               <div class="metric-item">
                 <span class="metric-num">1-on-1</span>
-                <span class="metric-lbl">Mentor Access</span>
+                <span class="metric-lbl">Senior Engineer Access</span>
               </div>
             </div>
 
             <div class="action-wrap">
-              <Button variant="secondary" size="md" href="#academy" class="pane-cta-btn purple">
+              <Button variant="primary" size="md" href="#academy" class="pane-cta-btn">
                 <span>Explore Academy Programs</span>
-                <Icon name="arrow-right" size={16} />
+                <Icon name="arrow-right" size={15} />
               </Button>
             </div>
           </div>
@@ -300,8 +310,8 @@ const socialsList = [
     >
       <!-- Collapsed Pillar Strip -->
       <div class="collapsed-strip">
-        <div class="strip-icon-box cyan">
-          <Icon name="sparkles" size={20} />
+        <div class="strip-icon-box">
+          <Icon name="sparkles" size={18} />
         </div>
         <span class="strip-number">03</span>
         <span class="strip-vertical-label">For Commuters</span>
@@ -310,12 +320,13 @@ const socialsList = [
       <!-- Expanded Detailed Card View -->
       <div class="expanded-card-content">
         <div class="card-left-narrative">
-          <div class="pane-badge cyan">
-            <span class="badge-dot cyan"></span>
-            Division 03 &bull; Proprietary Products
+          <div class="pane-eyebrow">
+            <span class="eyebrow-index">03</span>
+            <span class="eyebrow-divider">/</span>
+            <span class="eyebrow-text">Proprietary Product Studio</span>
           </div>
 
-          <h3 class="pane-headline text-gradient-cyan">
+          <h3 class="pane-headline">
             Smart Transit Route-Finding for Everyday Commuters
           </h3>
 
@@ -325,15 +336,15 @@ const socialsList = [
 
           <ul class="pane-features-list">
             <li>
-              <Icon name="check" size={16} class="feature-check cyan" />
+              <span class="feature-bullet">&bull;</span>
               <span><strong>Real-Time Transit Tracking:</strong> Live bus GPS telemetry and accurate route ETAs.</span>
             </li>
             <li>
-              <Icon name="check" size={16} class="feature-check cyan" />
+              <span class="feature-bullet">&bull;</span>
               <span><strong>Commuter First Experience:</strong> Eliminates waiting chaos with effortless route navigation.</span>
             </li>
             <li>
-              <Icon name="check" size={16} class="feature-check cyan" />
+              <span class="feature-bullet">&bull;</span>
               <span><strong>Offline-First Reliability:</strong> Engineered to function even with intermittent mobile connectivity.</span>
             </li>
           </ul>
@@ -341,10 +352,13 @@ const socialsList = [
 
         <div class="card-right-interactive">
           <div class="subdivision-card">
-            <span class="subdivision-header-label">Featured Product Studio Vertical</span>
+            <div class="subdivision-header-row">
+              <span class="subdivision-header-label">Incubation Vertical</span>
+              <span class="subdivision-status-tag">In Operation</span>
+            </div>
+
             <div class="featured-sub-brand">
               <div class="brand-logo-pill">
-                <Icon name="zap" size={22} class="brand-zap-icon" />
                 <span class="brand-name">BUSLY</span>
                 <span class="brand-sub">Mobility OS</span>
               </div>
@@ -359,9 +373,9 @@ const socialsList = [
             </div>
 
             <div class="action-wrap">
-              <Button variant="primary" size="md" href="#products" class="pane-cta-btn cyan">
+              <Button variant="primary" size="md" href="#products" class="pane-cta-btn">
                 <span>Discover Busly Platform</span>
-                <Icon name="arrow-right" size={16} />
+                <Icon name="arrow-right" size={15} />
               </Button>
             </div>
           </div>
@@ -380,8 +394,8 @@ const socialsList = [
     >
       <!-- Collapsed Pillar Strip -->
       <div class="collapsed-strip">
-        <div class="strip-icon-box amber">
-          <Icon name="zap" size={20} />
+        <div class="strip-icon-box">
+          <Icon name="zap" size={18} />
         </div>
         <span class="strip-number">04</span>
         <span class="strip-vertical-label">Media &amp; Growth</span>
@@ -390,12 +404,13 @@ const socialsList = [
       <!-- Expanded Detailed Card View -->
       <div class="expanded-card-content">
         <div class="card-left-narrative">
-          <div class="pane-badge amber">
-            <span class="badge-dot amber"></span>
-            Division 04 &bull; Media, Growth &amp; Content
+          <div class="pane-eyebrow">
+            <span class="eyebrow-index">04</span>
+            <span class="eyebrow-divider">/</span>
+            <span class="eyebrow-text">Media, Growth &amp; Content</span>
           </div>
 
-          <h3 class="pane-headline text-gradient-amber">
+          <h3 class="pane-headline">
             High-Impact Tech Storytelling, Branding &amp; Growth
           </h3>
 
@@ -405,15 +420,15 @@ const socialsList = [
 
           <ul class="pane-features-list">
             <li>
-              <Icon name="check" size={16} class="feature-check amber" />
+              <span class="feature-bullet">&bull;</span>
               <span><strong>Brand Design &amp; UI/UX:</strong> World-class visual identities and modern product design systems.</span>
             </li>
             <li>
-              <Icon name="check" size={16} class="feature-check amber" />
+              <span class="feature-bullet">&bull;</span>
               <span><strong>Technical Content &amp; Media:</strong> Engineering podcasts, tutorials, hackathon event broadcasts, and showcases.</span>
             </li>
             <li>
-              <Icon name="check" size={16} class="feature-check amber" />
+              <span class="feature-bullet">&bull;</span>
               <span><strong>Community &amp; Growth Distribution:</strong> Amplifying digital products to engaged users worldwide.</span>
             </li>
           </ul>
@@ -421,7 +436,10 @@ const socialsList = [
 
         <div class="card-right-interactive">
           <div class="subdivision-card">
-            <span class="subdivision-header-label">Connect Across Our Ecosystem</span>
+            <div class="subdivision-header-row">
+              <span class="subdivision-header-label">Media Network</span>
+              <span class="subdivision-status-tag">Global Channels</span>
+            </div>
             
             <!-- Complete Social Media Links Grid -->
             <div class="socials-interactive-grid">
@@ -433,16 +451,16 @@ const socialsList = [
                   class="social-connect-pill"
                   title={`Follow RoboDev Labs on ${item.name}`}
                 >
-                  <Icon name={item.icon as any} size={16} />
+                  <Icon name={item.icon as any} size={14} />
                   <span>{item.name}</span>
                 </a>
               ))}
             </div>
 
             <div class="action-wrap">
-              <Button variant="primary" size="md" href="#contact" class="pane-cta-btn amber">
+              <Button variant="primary" size="md" href="#contact" class="pane-cta-btn">
                 <span>Partner with Media Studio</span>
-                <Icon name="arrow-right" size={16} />
+                <Icon name="arrow-right" size={15} />
               </Button>
             </div>
           </div>
@@ -512,7 +530,7 @@ const socialsList = [
 
 <style>
   /* =========================================================================
-     MODEL ACCORDION SHOWCASE (STRICT HORIZONTAL-ONLY EXPANSION)
+     MODEL ACCORDION SHOWCASE (CLEAN, MINIMAL & EDITORIAL)
      ========================================================================= */
   .model-showcase-wrapper {
     position: relative;
@@ -520,24 +538,23 @@ const socialsList = [
     margin-top: var(--space-8);
     display: flex;
     flex-direction: column;
-    gap: var(--space-8);
+    gap: var(--space-6);
   }
 
   /* -------------------------------------------------------------------------
-     Top Editorial Navigation — Open, Full-Width, No Container
+     Top Minimalist Segmented Tabs
      ------------------------------------------------------------------------- */
   .model-segment-nav {
     display: flex;
     align-items: stretch;
     width: 100%;
-    border-bottom: 1px solid var(--color-border-subtle);
-    margin-bottom: var(--space-2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .segment-nav-btn {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.85rem;
     padding: 1.1rem 1.5rem 1.1rem 0;
     background: transparent;
     border: none;
@@ -545,117 +562,108 @@ const socialsList = [
     border-radius: 0;
     cursor: pointer;
     transition: color 0.2s ease, border-color 0.2s ease;
-    color: var(--color-text-muted);
+    color: var(--color-text-muted, #64748b);
     text-align: left;
     flex: 1;
-    margin-bottom: -1px; /* overlap the nav border-bottom */
+    margin-bottom: -1px;
   }
 
   .segment-nav-btn:hover {
-    color: var(--color-text-secondary);
+    color: var(--color-text-secondary, #94a3b8);
   }
 
   .segment-nav-btn.active {
-    color: var(--color-text);
-    border-bottom-color: var(--color-accent);
+    color: #ffffff;
+    border-bottom-color: var(--color-brand, #2563eb);
   }
 
   .nav-icon-wrap {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-text-muted);
-    transition: color 0.2s ease;
+    color: currentColor;
     flex-shrink: 0;
-  }
-
-  .segment-nav-btn.active .nav-icon-wrap,
-  .segment-nav-btn:hover .nav-icon-wrap {
-    color: var(--color-accent);
   }
 
   .nav-text-wrap {
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
+    gap: 0.15rem;
     overflow: hidden;
   }
 
   .nav-category {
     font-family: var(--font-mono);
     font-size: 0.68rem;
-    letter-spacing: var(--letter-spacing-wide);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-text-muted);
+    color: var(--color-text-muted, #64748b);
     white-space: nowrap;
   }
 
   .nav-title {
-    font-size: 0.84rem;
-    font-weight: var(--font-weight-semibold);
+    font-size: 0.88rem;
+    font-weight: 500;
     white-space: nowrap;
   }
 
   .segment-divider {
     width: 1px;
     align-self: stretch;
-    background: var(--color-border-subtle);
+    background: rgba(255, 255, 255, 0.06);
     flex-shrink: 0;
-    margin: 0.5rem 0;
+    margin: 0.75rem 0;
   }
 
   /* -------------------------------------------------------------------------
-     Horizontal Accordion Stage (LOCKED CONSTANT HEIGHT ON DESKTOP)
+     Horizontal Accordion Stage (Strict Locked Constant Height)
      ------------------------------------------------------------------------- */
   .model-accordion-stage {
     display: flex;
-    gap: 1.1rem;
+    gap: 0.75rem;
     width: 100%;
-    height: 520px; /* STRICT FIXED HEIGHT: No vertical bouncing or stretching */
-    min-height: 520px;
-    max-height: 520px;
-    perspective: 1000px;
+    height: 480px;
+    min-height: 480px;
+    max-height: 480px;
     overflow: hidden;
   }
 
   .accordion-pane {
     position: relative;
-    height: 100%; /* Fill the fixed 520px height exactly */
-    border-radius: 28px;
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(10, 16, 30, 0.98) 100%);
+    height: 100%;
+    border-radius: 12px;
+    background-color: #0b1120;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
     overflow: hidden;
     cursor: pointer;
-    /* ONLY transition flex horizontally */
-    transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
-    flex: 0 0 68px; /* Collapsed width on desktop */
+    transition: flex 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, background-color 0.2s ease;
+    flex: 0 0 60px;
     display: flex;
   }
 
-  .accordion-pane:hover {
-    border-color: rgba(255, 255, 255, 0.2);
+  .accordion-pane:hover:not(.active) {
+    border-color: rgba(255, 255, 255, 0.18);
+    background-color: #0e1628;
   }
 
   .accordion-pane.active {
-    flex: 1 1 0%; /* Expands HORIZONTALLY to occupy all available space */
+    flex: 1 1 0%;
     cursor: default;
-    border-color: rgba(6, 182, 212, 0.45);
-    box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.8), 0 0 35px -10px rgba(6, 182, 212, 0.15);
+    border-color: rgba(255, 255, 255, 0.15);
+    background-color: #0b1120;
   }
 
   /* Collapsed Pillar Strip */
   .collapsed-strip {
-    width: 68px;
+    width: 60px;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-6) 0;
-    transition: opacity 0.3s ease;
+    padding: 1.5rem 0;
     flex-shrink: 0;
     user-select: none;
   }
@@ -665,35 +673,28 @@ const socialsList = [
   }
 
   .strip-icon-box {
-    width: 42px;
-    height: 42px;
-    border-radius: var(--radius-full);
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-text-muted, #64748b);
   }
-
-  .strip-icon-box.blue { color: #60a5fa; border-color: rgba(37, 99, 235, 0.3); }
-  .strip-icon-box.purple { color: #c084fc; border-color: rgba(168, 85, 247, 0.3); }
-  .strip-icon-box.cyan { color: #38bdf8; border-color: rgba(6, 182, 212, 0.3); }
-  .strip-icon-box.amber { color: #fbbf24; border-color: rgba(245, 158, 11, 0.3); }
 
   .strip-number {
     font-family: var(--font-mono);
-    font-size: 0.82rem;
-    color: var(--color-text-muted);
-    font-weight: var(--font-weight-bold);
+    font-size: 0.75rem;
+    color: var(--color-text-muted, #64748b);
+    font-weight: 500;
   }
 
   .strip-vertical-label {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
-    font-size: var(--font-size-body-small);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text-secondary);
-    letter-spacing: var(--letter-spacing-wide);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-secondary, #94a3b8);
+    letter-spacing: 0.04em;
     white-space: nowrap;
     margin-top: auto;
     margin-bottom: auto;
@@ -704,26 +705,24 @@ const socialsList = [
     display: none;
     width: 100%;
     height: 100%;
-    padding: 2.25rem 2.5rem;
+    padding: 2.5rem 2.75rem;
     grid-template-columns: 1.35fr 1fr;
-    gap: var(--space-8);
+    gap: 2.75rem;
     align-items: center;
     overflow: hidden;
-    animation: fadeInHorizontal 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   .accordion-pane.active .expanded-card-content {
     display: grid;
+    animation: fadeInQuick 0.3s ease forwards;
   }
 
-  @keyframes fadeInHorizontal {
+  @keyframes fadeInQuick {
     from {
       opacity: 0;
-      transform: translateX(20px);
     }
     to {
       opacity: 1;
-      transform: translateX(0);
     }
   }
 
@@ -731,79 +730,54 @@ const socialsList = [
   .card-left-narrative {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
+    gap: 1.1rem;
     overflow: hidden;
   }
 
-  .pane-badge {
-    display: inline-flex;
+  .pane-eyebrow {
+    display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.45rem;
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: var(--letter-spacing-wider);
+    font-size: 0.75rem;
+    color: var(--color-accent, #06b6d4);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 0.3rem 0.8rem;
-    border-radius: var(--radius-full);
-    width: fit-content;
   }
 
-  .pane-badge.blue { background: rgba(37, 99, 235, 0.12); color: #93c5fd; border: 1px solid rgba(37, 99, 235, 0.3); }
-  .pane-badge.purple { background: rgba(168, 85, 247, 0.12); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.3); }
-  .pane-badge.cyan { background: rgba(6, 182, 212, 0.12); color: #a5f3fc; border: 1px solid rgba(6, 182, 212, 0.3); }
-  .pane-badge.amber { background: rgba(245, 158, 11, 0.12); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.3); }
+  .eyebrow-index {
+    font-weight: 600;
+  }
 
-  .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
-  .badge-dot.blue { background: #60a5fa; }
-  .badge-dot.purple { background: #c084fc; }
-  .badge-dot.cyan { background: #38bdf8; }
-  .badge-dot.amber { background: #fbbf24; }
+  .eyebrow-divider {
+    color: rgba(255, 255, 255, 0.2);
+  }
 
   .pane-headline {
-    font-size: clamp(1.4rem, 2vw, 1.95rem);
-    font-weight: var(--font-weight-bold);
+    font-family: var(--font-sans);
+    font-size: clamp(1.45rem, 2.1vw, 1.85rem);
+    font-weight: 600;
     line-height: 1.25;
+    letter-spacing: -0.025em;
+    color: #ffffff;
     margin: 0;
   }
 
-  .text-gradient-blue {
-    background: linear-gradient(135deg, #ffffff 40%, #60a5fa 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .text-gradient-purple {
-    background: linear-gradient(135deg, #ffffff 40%, #c084fc 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .text-gradient-cyan {
-    background: linear-gradient(135deg, #ffffff 40%, #38bdf8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .text-gradient-amber {
-    background: linear-gradient(135deg, #ffffff 40%, #fbbf24 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
   .pane-summary {
+    font-family: var(--font-sans);
     font-size: 0.92rem;
-    color: var(--color-text-secondary);
-    line-height: var(--line-height-relaxed);
+    color: #94a3b8;
+    line-height: 1.6;
     margin: 0;
   }
 
   .pane-features-list {
     list-style: none;
     padding: 0;
-    margin: 0.35rem 0 0 0;
+    margin: 0.25rem 0 0 0;
     display: flex;
     flex-direction: column;
-    gap: 0.55rem;
+    gap: 0.6rem;
   }
 
   .pane-features-list li {
@@ -811,19 +785,24 @@ const socialsList = [
     align-items: flex-start;
     gap: 0.65rem;
     font-size: 0.85rem;
-    color: var(--color-text-secondary);
-    line-height: var(--line-height-normal);
+    color: #94a3b8;
+    line-height: 1.45;
   }
 
-  .pane-features-list li strong { color: var(--raw-white); }
+  .pane-features-list li strong {
+    color: #e2e8f0;
+    font-weight: 500;
+  }
 
-  .feature-check { flex-shrink: 0; margin-top: 0.2rem; }
-  .feature-check.blue { color: #60a5fa; }
-  .feature-check.purple { color: #c084fc; }
-  .feature-check.cyan { color: #38bdf8; }
-  .feature-check.amber { color: #fbbf24; }
+  .feature-bullet {
+    color: var(--color-brand, #2563eb);
+    font-size: 1rem;
+    line-height: 1;
+    margin-top: 0.1rem;
+    flex-shrink: 0;
+  }
 
-  /* Right Interactive Sub-Card */
+  /* Right Sub-Card */
   .card-right-interactive {
     display: flex;
     justify-content: center;
@@ -833,33 +812,45 @@ const socialsList = [
 
   .subdivision-card {
     width: 100%;
-    background: rgba(30, 41, 59, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 1.4rem;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    backdrop-filter: blur(12px);
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    gap: 1.2rem;
+  }
+
+  .subdivision-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .subdivision-header-label {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: var(--letter-spacing-wide);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-text-muted);
+    color: #94a3b8;
+  }
+
+  .subdivision-status-tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--color-accent, #06b6d4);
   }
 
   .featured-sub-brand {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
-    padding: 0.75rem 0.9rem;
-    background: rgba(6, 182, 212, 0.08);
-    border: 1px solid rgba(6, 182, 212, 0.25);
-    border-radius: var(--radius-md);
+    gap: 0.35rem;
+    padding: 0.8rem 0.9rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
   }
 
   .brand-logo-pill {
@@ -868,28 +859,23 @@ const socialsList = [
     gap: 0.5rem;
   }
 
-  .brand-zap-icon { color: #38bdf8; }
-
   .brand-name {
     font-family: var(--font-mono);
-    font-size: 1.05rem;
-    font-weight: var(--font-weight-bold);
-    letter-spacing: 0.1em;
-    color: var(--raw-white);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #ffffff;
   }
 
   .brand-sub {
     font-size: 0.68rem;
     font-family: var(--font-mono);
-    color: #38bdf8;
-    background: rgba(6, 182, 212, 0.18);
-    padding: 0.1rem 0.4rem;
-    border-radius: 4px;
+    color: var(--color-accent, #06b6d4);
   }
 
   .brand-desc {
     font-size: 0.78rem;
-    color: var(--color-text-secondary);
+    color: #94a3b8;
     margin: 0;
   }
 
@@ -900,21 +886,21 @@ const socialsList = [
   }
 
   .cap-tag {
-    font-size: 0.72rem;
-    padding: 0.25rem 0.65rem;
-    border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--color-text-secondary);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.03);
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .division-metric-box {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: 0.65rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.75rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .metric-item {
@@ -926,20 +912,20 @@ const socialsList = [
 
   .metric-num {
     font-family: var(--font-mono);
-    font-size: 1.1rem;
-    font-weight: var(--font-weight-bold);
-    color: var(--raw-white);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #ffffff;
   }
 
   .metric-lbl {
     font-size: 0.68rem;
-    color: var(--color-text-muted);
+    color: #64748b;
   }
 
   .metric-sep {
     width: 1px;
     height: 22px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
   }
 
   /* Social Interactive Grid inside Media Pane */
@@ -953,20 +939,20 @@ const socialsList = [
     display: flex;
     align-items: center;
     gap: 0.45rem;
-    padding: 0.35rem 0.65rem;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius-md);
-    color: var(--color-text-secondary);
+    padding: 0.4rem 0.65rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    color: #94a3b8;
     font-size: 0.76rem;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
   }
 
   .social-connect-pill:hover {
-    color: var(--raw-white);
-    background: rgba(245, 158, 11, 0.15);
-    border-color: rgba(245, 158, 11, 0.35);
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
   }
 
   .action-wrap {
@@ -978,36 +964,28 @@ const socialsList = [
     justify-content: center;
   }
 
-  .pane-cta-btn.blue { background: #2563eb; box-shadow: 0 4px 18px rgba(37, 99, 235, 0.35); }
-  .pane-cta-btn.purple { background: #9333ea; box-shadow: 0 4px 18px rgba(147, 51, 234, 0.35); }
-  .pane-cta-btn.cyan { background: #0891b2; box-shadow: 0 4px 18px rgba(8, 145, 178, 0.35); }
-  .pane-cta-btn.amber { background: #d97706; box-shadow: 0 4px 18px rgba(217, 119, 6, 0.35); }
-
   /* -------------------------------------------------------------------------
      Mobile / Responsive Styles
      ------------------------------------------------------------------------- */
   @media (max-width: 960px) {
     .model-showcase-wrapper {
       margin-top: var(--space-4);
-      gap: var(--space-5);
+      gap: var(--space-4);
     }
 
-    /* Horizontal scrollable pill bar on mobile instead of stacked blocks */
     .model-segment-nav {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
-      gap: 0.5rem;
-      padding: 0.4rem;
+      gap: 0.4rem;
+      padding: 0 0 0.5rem 0;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; /* Firefox */
-      border-radius: var(--radius-full);
-      max-width: 100%;
+      scrollbar-width: none;
     }
 
     .model-segment-nav::-webkit-scrollbar {
-      display: none; /* Chrome, Safari */
+      display: none;
     }
 
     .segment-divider {
@@ -1017,22 +995,27 @@ const socialsList = [
     .segment-nav-btn {
       flex: 0 0 auto;
       width: auto;
-      padding: 0.45rem 0.85rem;
-      border-radius: var(--radius-full);
-      gap: 0.5rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      gap: 0.45rem;
+      border-bottom: none;
+    }
+
+    .segment-nav-btn.active {
+      background: rgba(255, 255, 255, 0.06);
     }
 
     .nav-icon-wrap {
-      width: 28px;
-      height: 28px;
+      width: 20px;
+      height: 20px;
     }
 
     .nav-category {
-      display: none; /* Hide category subtitle to keep tabs compact and scannable */
+      display: none;
     }
 
     .nav-title {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
     }
 
     .model-accordion-stage {
@@ -1040,7 +1023,7 @@ const socialsList = [
       height: auto;
       min-height: auto;
       max-height: none;
-      gap: 0.75rem;
+      gap: 0.6rem;
       overflow: visible;
     }
 
@@ -1048,13 +1031,13 @@ const socialsList = [
       flex: none;
       width: 100%;
       height: auto;
-      min-height: 58px;
-      border-radius: 18px;
+      min-height: 52px;
+      border-radius: 8px;
     }
 
     .collapsed-strip {
       width: 100%;
-      height: 58px;
+      height: 52px;
       flex-direction: row;
       align-items: center;
       justify-content: flex-start;
@@ -1063,8 +1046,8 @@ const socialsList = [
     }
 
     .strip-icon-box {
-      width: 32px;
-      height: 32px;
+      width: 24px;
+      height: 24px;
     }
 
     .strip-number {
@@ -1080,14 +1063,14 @@ const socialsList = [
 
     .expanded-card-content {
       grid-template-columns: 1fr;
-      padding: 1.25rem 1.1rem;
+      padding: 1.25rem 1rem;
       gap: 1.25rem;
       height: auto;
       overflow: visible;
     }
 
     .pane-headline {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       line-height: 1.25;
     }
 
@@ -1108,8 +1091,8 @@ const socialsList = [
     }
 
     .subdivision-card {
-      padding: 1.1rem 1rem;
-      border-radius: 14px;
+      padding: 1rem;
+      border-radius: 8px;
       gap: 0.85rem;
     }
 
@@ -1118,7 +1101,7 @@ const socialsList = [
     }
 
     .cap-tag {
-      font-size: 0.68rem;
+      font-size: 0.7rem;
       padding: 0.2rem 0.5rem;
     }
 
@@ -1141,12 +1124,7 @@ const socialsList = [
 
     .social-connect-pill {
       font-size: 0.72rem;
-      padding: 0.3rem 0.5rem;
-    }
-
-    .pane-cta-btn {
-      font-size: 0.85rem;
-      padding: 0.65rem 1rem;
+      padding: 0.35rem 0.5rem;
     }
   }
 
@@ -1157,7 +1135,7 @@ const socialsList = [
     }
 
     .pane-headline {
-      font-size: 1.2rem;
+      font-size: 1.18rem;
     }
 
     .socials-interactive-grid {
