@@ -374,7 +374,7 @@ const navItems = [
     align-items: center;
     justify-content: center;
     gap: 0.55rem;
-    background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
+    background-color: var(--color-brand, #2563eb);
     color: #ffffff;
     font-family: var(--font-sans);
     font-size: 0.85rem;
@@ -382,20 +382,22 @@ const navItems = [
     padding: 0.65rem 1.35rem;
     border-radius: 9999px;
     text-decoration: none;
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.35), 0 4px 14px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     white-space: nowrap;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .corner-cta-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 28px rgba(6, 182, 212, 0.55), 0 6px 18px rgba(0, 0, 0, 0.45);
-    background: linear-gradient(135deg, #0369a1 0%, #0891b2 100%);
+    background-color: var(--color-brand-hover, #1d4ed8);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.35);
   }
 
   .corner-cta-button:active {
     transform: scale(0.97);
+    background-color: var(--color-brand-active, #1e40af);
   }
 
   .cta-arrow-icon {
@@ -649,14 +651,21 @@ const navItems = [
     gap: 0.6rem;
     width: 100%;
     padding: 0.8rem;
-    background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
+    background-color: var(--color-brand, #2563eb);
     color: #ffffff;
     font-family: var(--font-sans);
     font-size: 0.9rem;
     font-weight: 600;
     border-radius: 9999px;
     text-decoration: none;
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .mobile-expanded-cta:hover,
+  .mobile-expanded-cta:active {
+    background-color: var(--color-brand-hover, #1d4ed8);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.55);
   }
 
   /* --------------------------------------------------------------------------
