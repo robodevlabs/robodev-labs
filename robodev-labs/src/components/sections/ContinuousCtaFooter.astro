@@ -52,12 +52,12 @@ const socialsList = [
               href={`mailto:${siteConfig.email}?subject=Project%20Inquiry%20-%20RoboDev%20Labs`}
             >
               <span>Start a conversation</span>
-              <span aria-hidden="true">&rarr;</span>
             </Button>
 
-            <Button variant="secondary" size="md" href="#services">
+            <a href="#services" class="cta-text-link">
               <span>Explore capabilities</span>
-            </Button>
+              <span class="cta-text-arrow" aria-hidden="true">→</span>
+            </a>
           </div>
         </div>
       </div>
@@ -282,6 +282,32 @@ const socialsList = [
     gap: 1rem;
     flex-wrap: wrap;
     margin-top: 0.75rem;
+  }
+
+  .cta-text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-medium);
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 200ms ease;
+    cursor: pointer;
+  }
+
+  .cta-text-link:hover {
+    color: #e2e8f0;
+  }
+
+  .cta-text-arrow {
+    display: inline-block;
+    transition: transform 200ms ease;
+  }
+
+  .cta-text-link:hover .cta-text-arrow {
+    transform: translateX(4px);
   }
 
   /* --------------------------------------------------------------------------
