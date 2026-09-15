@@ -2,6 +2,8 @@
 import Container from '../ui/Container.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
 import { foundersData, departmentLeadsData } from '../../data/team';
+import ceoPhoto from '../../assets/images/CEO Photo.png';
+import coFounderPhoto from '../../assets/images/Co Founder Photo.jpeg';
 
 const [founderOne, founderTwo] = foundersData;
 ---
@@ -38,7 +40,7 @@ const [founderOne, founderTwo] = foundersData;
         <div class="portrait-frame frame-primary">
           <div class="portrait-inner">
             <img 
-              src={founderOne.image} 
+              src={ceoPhoto.src} 
               alt={founderOne.imageAlt}
               class="portrait-img"
               loading="lazy"
@@ -63,7 +65,7 @@ const [founderOne, founderTwo] = foundersData;
         <div class="portrait-frame frame-secondary">
           <div class="portrait-inner">
             <img 
-              src={founderTwo.image} 
+              src={coFounderPhoto.src} 
               alt={founderTwo.imageAlt}
               class="portrait-img"
               loading="lazy"
@@ -107,7 +109,7 @@ const [founderOne, founderTwo] = foundersData;
             {lead.image && (
               <div class="dept-portrait-frame">
                 <img 
-                  src={lead.image} 
+                  src={ceoPhoto.src} 
                   alt={lead.imageAlt || lead.name}
                   class="dept-portrait-img"
                   loading="lazy"
