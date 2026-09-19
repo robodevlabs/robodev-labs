@@ -1,6 +1,8 @@
 ---
-import Logo from './Logo.astro';
+import { Image } from 'astro:assets';
+import logoImage from '../../assets/images/robodevlabs.png';
 import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
 
 // Canonical navigation items including all sections
 const navItems = [
@@ -25,7 +27,13 @@ const navItems = [
     <!-- Top-Left: Logo -->
     <div class="corner-logo-anchor">
       <a href="/" class="brand-logo-link" aria-label="RoboDev Labs Home">
-        <Logo height={34} class="brand-logo-img" />
+        <Image
+          src={logoImage}
+          alt="RoboDev Labs Logo"
+          height={36}
+          class="brand-logo-img"
+          loading="eager"
+        />
       </a>
     </div>
 
@@ -89,9 +97,9 @@ const navItems = [
         </nav>
 
         <div class="mobile-bottom-action">
-          <a href="#contact" class="mobile-expanded-cta" id="mobile-expanded-cta">
+          <Button href="#contact" variant="primary" size="md" class="mobile-expanded-cta-btn" id="mobile-expanded-cta">
             <span>Start a Project</span>
-          </a>
+          </Button>
         </div>
       </div>
 
@@ -103,9 +111,9 @@ const navItems = [
 
     <!-- Top-Right: Standalone "Start a Project" CTA Action -->
     <div class="corner-cta-anchor">
-      <a href="#contact" class="corner-cta-button" id="corner-cta-button">
+      <Button href="#contact" variant="primary" size="sm" class="corner-cta-btn" id="corner-cta-button">
         <span class="cta-text">Start a Project</span>
-      </a>
+      </Button>
     </div>
   </div>
 
@@ -334,19 +342,22 @@ const navItems = [
     align-items: center;
     text-decoration: none;
     transition: transform 0.22s ease, opacity 0.22s ease;
-    padding: 6px 12px;
-    background: rgba(10, 15, 29, 0.7);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 9999px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .brand-logo-img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+    display: block;
   }
 
   .brand-logo-link:hover {
-    opacity: 0.95;
-    transform: scale(1.02);
-    border-color: rgba(56, 189, 248, 0.35);
+    opacity: 0.85;
+    transform: scale(1.03);
   }
 
   .brand-logo-link:active {
@@ -364,45 +375,9 @@ const navItems = [
     z-index: 10;
   }
 
-  .corner-cta-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.55rem;
-    background-color: var(--color-brand, #2563eb);
-    color: #ffffff;
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 0.65rem 1.35rem;
-    border-radius: 9999px;
-    text-decoration: none;
-    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    white-space: nowrap;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .corner-cta-button:hover {
-    transform: translateY(-2px);
-    background-color: var(--color-brand-hover, #1d4ed8);
-    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-    border-color: rgba(255, 255, 255, 0.35);
-  }
-
-  .corner-cta-button:active {
-    transform: scale(0.97);
-    background-color: var(--color-brand-active, #1e40af);
-  }
-
-  .cta-arrow-icon {
-    width: 14px;
-    height: 14px;
-    transition: transform 0.25s ease;
-  }
-
-  .corner-cta-button:hover .cta-arrow-icon {
-    transform: translateX(3px);
+  .corner-cta-btn {
+    font-size: 0.85rem !important;
+    padding: 0.6rem 1.35rem !important;
   }
 
   /* --------------------------------------------------------------------------
@@ -414,10 +389,10 @@ const navItems = [
     justify-self: center;
     position: relative;
     width: auto;
-    background: rgba(10, 15, 29, 0.82);
+    background: var(--color-pepper-alpha-85, rgba(43, 43, 43, 0.85));
     backdrop-filter: blur(24px) saturate(190%);
     -webkit-backdrop-filter: blur(24px) saturate(190%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--color-border);
     border-radius: 9999px;
     box-shadow: 
       0 12px 36px -4px rgba(0, 0, 0, 0.55),
@@ -436,17 +411,17 @@ const navItems = [
 
   /* Micro-glow on hover */
   .dynamic-island-capsule:hover {
-    border-color: rgba(56, 189, 248, 0.35);
+    border-color: var(--color-salt-light);
     box-shadow: 
       0 16px 42px -4px rgba(0, 0, 0, 0.65),
-      0 0 24px rgba(6, 182, 212, 0.14),
+      0 0 24px rgba(255, 255, 255, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
   /* Scroll-Aware States */
   .dynamic-island-capsule.is-floating {
-    background: rgba(8, 12, 24, 0.92);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: var(--color-pepper-alpha-95, rgba(35, 35, 35, 0.95));
+    border-color: var(--color-border);
   }
 
   .dynamic-island-capsule.is-scrolling-down {
@@ -456,7 +431,7 @@ const navItems = [
 
   .dynamic-island-capsule.is-scrolling-up {
     transform: translateY(0) scale(1);
-    border-color: rgba(56, 189, 248, 0.4);
+    border-color: var(--color-salt-light);
   }
 
   /* --------------------------------------------------------------------------
@@ -487,8 +462,8 @@ const navItems = [
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: #38bdf8;
-    box-shadow: 0 0 8px #38bdf8;
+    background-color: var(--color-salt-white);
+    box-shadow: 0 0 8px var(--color-salt-white);
   }
 
   /* Desktop Nav Deck */
@@ -506,18 +481,21 @@ const navItems = [
     font-family: var(--font-sans);
     font-size: 0.84rem;
     font-weight: 500;
-    color: #94a3b8;
+    color: var(--color-salt-white);
     text-decoration: none;
     padding: 6px 6px;
     display: inline-flex;
     align-items: center;
     flex-direction: column;
-    transition: color 0.2s ease, transform 0.2s ease;
+    transition: color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
     white-space: nowrap;
+    opacity: 0.88;
   }
 
   .island-nav-link:hover {
-    color: #f8fafc;
+    color: #ffffff;
+    opacity: 1;
+    transform: translateY(-1px);
   }
 
   .island-nav-link:active {
@@ -533,14 +511,15 @@ const navItems = [
     width: 3px;
     height: 3px;
     border-radius: 50%;
-    background-color: #38bdf8;
-    box-shadow: 0 0 6px #38bdf8;
+    background-color: var(--color-salt-white);
+    box-shadow: 0 0 6px var(--color-salt-white);
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .island-nav-link.is-active {
     color: #ffffff;
     font-weight: 600;
+    opacity: 1;
   }
 
   .island-nav-link.is-active .active-indicator-dot {
@@ -560,14 +539,14 @@ const navItems = [
     border: 1px solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
     gap: 4px;
-    color: #cbd5e1;
+    color: var(--color-text-secondary);
     padding: 0;
     transition: all 0.2s ease;
   }
 
   .island-morph-trigger:hover {
     background: rgba(255, 255, 255, 0.12);
-    color: #ffffff;
+    color: var(--color-salt-white);
   }
 
   .morph-bar {
@@ -612,9 +591,9 @@ const navItems = [
     justify-content: space-between;
     padding: 0.75rem 0.9rem;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    color: #e2e8f0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-salt-white);
     text-decoration: none;
     font-family: var(--font-sans);
     font-size: 0.92rem;
@@ -624,13 +603,13 @@ const navItems = [
 
   .mobile-island-link:hover,
   .mobile-island-link:active {
-    background: rgba(6, 182, 212, 0.1);
-    border-color: rgba(6, 182, 212, 0.25);
-    color: #38bdf8;
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
   }
 
   .mobile-item-arrow {
-    color: #64748b;
+    color: var(--color-salt-light);
     font-family: var(--font-mono);
   }
 
@@ -639,28 +618,9 @@ const navItems = [
     padding-bottom: 16px;
   }
 
-  .mobile-expanded-cta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    width: 100%;
-    padding: 0.8rem;
-    background-color: var(--color-brand, #2563eb);
-    color: #ffffff;
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
-    font-weight: 600;
-    border-radius: 9999px;
-    text-decoration: none;
-    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .mobile-expanded-cta:hover,
-  .mobile-expanded-cta:active {
-    background-color: var(--color-brand-hover, #1d4ed8);
-    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.55);
+  .mobile-expanded-cta-btn {
+    width: 100% !important;
+    padding: 0.8rem !important;
   }
 
   /* --------------------------------------------------------------------------
@@ -679,8 +639,8 @@ const navItems = [
   .island-progress-bar {
     width: 0%;
     height: 100%;
-    background: linear-gradient(90deg, #0284c7 0%, #06b6d4 50%, #38bdf8 100%);
-    box-shadow: 0 0 6px #38bdf8;
+    background: linear-gradient(90deg, var(--color-pepper-medium) 0%, var(--color-salt-light) 50%, var(--color-salt-white) 100%);
+    box-shadow: 0 0 6px var(--color-salt-white);
     transition: width 0.08s linear;
   }
 
@@ -704,7 +664,7 @@ const navItems = [
      RESPONSIVE BREAKPOINTS
      -------------------------------------------------------------------------- */
   @media (max-width: 960px) {
-    .corner-cta-button {
+    .corner-cta-anchor {
       display: none; /* Relocates into mobile expanded deck */
     }
 
@@ -737,7 +697,7 @@ const navItems = [
     .dynamic-island-capsule.is-expanded {
       border-radius: 24px;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
-      border-color: rgba(56, 189, 248, 0.3);
+      border-color: var(--color-salt-light);
       position: absolute;
       top: 0;
       left: 0;
@@ -763,10 +723,6 @@ const navItems = [
     .island-header-viewport {
       padding-left: 0.75rem;
       padding-right: 0.75rem;
-    }
-
-    .brand-logo-link {
-      padding: 4px 8px;
     }
   }
 

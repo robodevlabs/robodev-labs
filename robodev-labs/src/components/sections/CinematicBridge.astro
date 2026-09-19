@@ -20,42 +20,56 @@
         <div class="sky-gradient"></div>
         <div class="horizon-glow"></div>
         
-        <!-- Distant Mountain Peaks Layer (Deep Atmospheric Blue/Indigo) -->
+        <!-- Distant Mountain Peaks Layer (Snowy White Peaks) -->
         <svg class="distant-mountains-back" viewBox="0 0 1920 600" preserveAspectRatio="none">
           <defs>
             <linearGradient id="mtnBackGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#14284b" stop-opacity="0.9"/>
-              <stop offset="60%" stop-color="#0e1d37" stop-opacity="0.95"/>
-              <stop offset="100%" stop-color="#081020" stop-opacity="1"/>
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+              <stop offset="35%" stop-color="#e8eef2" stop-opacity="0.9"/>
+              <stop offset="75%" stop-color="#c8d5dc" stop-opacity="0.85"/>
+              <stop offset="100%" stop-color="#a0b5be" stop-opacity="1"/>
             </linearGradient>
           </defs>
           <path d="M0,600 L0,320 L180,210 L340,310 L520,150 L680,260 L850,90 L980,220 L1140,110 L1320,270 L1500,160 L1680,280 L1820,190 L1920,250 L1920,600 Z" fill="url(#mtnBackGrad)"/>
         </svg>
 
-        <!-- Mid-Distance Mountain Ridges with Chiseled Facets & Misty Valleys -->
+        <!-- Mid-Distance Mountain Ridges with Snow Caps & Green Hill Transition -->
         <svg class="distant-mountains-front" viewBox="0 0 1920 600" preserveAspectRatio="none">
           <defs>
             <linearGradient id="mtnFrontGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#1a345e" stop-opacity="0.85"/>
-              <stop offset="50%" stop-color="#0f203c" stop-opacity="0.95"/>
-              <stop offset="100%" stop-color="#070e1a" stop-opacity="1"/>
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+              <stop offset="25%" stop-color="#d8e4e8" stop-opacity="0.95"/>
+              <stop offset="55%" stop-color="#5a8a4a" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#3d6b2e" stop-opacity="1"/>
             </linearGradient>
-            <linearGradient id="facetHighlight" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.25"/>
-              <stop offset="100%" stop-color="#1e3a8a" stop-opacity="0"/>
+            <linearGradient id="snowCapHighlight" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#e0eef5" stop-opacity="0"/>
             </linearGradient>
           </defs>
-          <!-- Dark mountain mass -->
+          <!-- Mountain mass with green-to-snow gradient -->
           <path d="M0,600 L0,410 L140,330 L280,390 L440,260 L580,340 L720,220 L840,310 L940,190 L1080,320 L1220,230 L1380,350 L1540,240 L1700,340 L1840,270 L1920,330 L1920,600 Z" fill="url(#mtnFrontGrad)"/>
-          <!-- Light edge highlights on peak ridges -->
-          <path d="M440,260 L510,300 L580,340 L720,220 L780,265 L840,310 L940,190 L1010,255 L1080,320" stroke="url(#facetHighlight)" stroke-width="2" fill="none"/>
-          <path d="M1220,230 L1300,290 L1380,350 L1540,240 L1620,290 L1700,340" stroke="url(#facetHighlight)" stroke-width="2" fill="none"/>
+          <!-- Snow cap highlights on peak ridges -->
+          <path d="M440,260 L510,300 L580,340 L720,220 L780,265 L840,310 L940,190 L1010,255 L1080,320" stroke="url(#snowCapHighlight)" stroke-width="3" fill="none"/>
+          <path d="M1220,230 L1300,290 L1380,350 L1540,240 L1620,290 L1700,340" stroke="url(#snowCapHighlight)" stroke-width="3" fill="none"/>
         </svg>
 
-        <!-- Distant Architectural Monoliths blending seamlessly into the mountain valleys -->
+        <!-- Rolling Green Hills in the valleys -->
         <svg class="distant-megastructures" viewBox="0 0 1600 500" preserveAspectRatio="none">
-          <path d="M0,500 L0,380 L120,380 L120,320 L160,320 L160,380 L280,380 L310,260 L350,260 L380,380 L520,380 L540,210 L590,210 L610,380 L760,380 L800,180 L840,180 L880,380 L1040,380 L1070,240 L1120,240 L1150,380 L1300,380 L1320,310 L1370,310 L1390,380 L1600,380 L1600,500 Z" fill="#08101e" opacity="0.7"/>
-          <path d="M0,500 L0,420 L240,420 L270,340 L330,340 L360,420 L680,420 L710,280 L770,280 L800,420 L1180,420 L1210,320 L1260,320 L1290,420 L1600,420 L1600,500 Z" fill="#050a14" opacity="0.9"/>
+          <defs>
+            <linearGradient id="hillGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#4a7c35" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#2d5a1e" stop-opacity="1"/>
+            </linearGradient>
+            <linearGradient id="hillGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#3d6b2e" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#1e4012" stop-opacity="1"/>
+            </linearGradient>
+          </defs>
+          <!-- Back rolling hills -->
+          <path d="M0,500 L0,380 Q200,300 400,350 Q600,290 800,340 Q1000,290 1200,330 Q1400,280 1600,340 L1600,500 Z" fill="url(#hillGrad1)" opacity="0.85"/>
+          <!-- Front rolling hills -->
+          <path d="M0,500 L0,430 Q250,360 500,400 Q750,350 1000,390 Q1250,345 1600,400 L1600,500 Z" fill="url(#hillGrad2)" opacity="0.95"/>
         </svg>
 
         <!-- Valley Fog & Low Atmospheric Mist -->
@@ -79,46 +93,48 @@
 
         <!-- Monumental Rocky Cliffs & Fjord Promontories Flanking the Water -->
         <div class="fjord-cliffs-system">
-          <!-- Left Rocky Cliff Complex -->
+          <!-- Left Rocky Cliff Complex (Earthy/Sandstone Colors) -->
           <svg class="cliff-svg cliff-left" viewBox="0 0 600 700" preserveAspectRatio="none">
             <defs>
               <linearGradient id="cliffRockGradL" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#142036"/>
-                <stop offset="40%" stop-color="#0c1524"/>
-                <stop offset="100%" stop-color="#050910"/>
+                <stop offset="0%" stop-color="#c8956a" stop-opacity="0.9"/>
+                <stop offset="35%" stop-color="#a0714a" stop-opacity="0.95"/>
+                <stop offset="70%" stop-color="#7a5535" stop-opacity="1"/>
+                <stop offset="100%" stop-color="#5c3d20"/>
               </linearGradient>
               <linearGradient id="cliffHighlightL" x1="0%" y1="0%" x2="80%" y2="80%">
-                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/>
-                <stop offset="100%" stop-color="#0284c7" stop-opacity="0"/>
+                <stop offset="0%" stop-color="#e8b888" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#c8956a" stop-opacity="0"/>
               </linearGradient>
             </defs>
-            <!-- Craggy cliff contours -->
+            <!-- Craggy earthy cliff contours -->
             <polygon points="0,0 240,160 380,290 320,380 460,490 390,570 540,700 0,700" fill="url(#cliffRockGradL)"/>
-            <polygon points="0,180 180,260 220,380 340,460 270,550 420,700 0,700" fill="#090f1a" opacity="0.7"/>
-            <!-- Chiseled Edge Highlights -->
+            <polygon points="0,180 180,260 220,380 340,460 270,550 420,700 0,700" fill="#6b4426" opacity="0.75"/>
+            <!-- Chiseled sandstone edge highlights -->
             <polyline points="0,0 240,160 380,290 320,380 460,490 390,570 540,700" stroke="url(#cliffHighlightL)" stroke-width="2.5" fill="none"/>
-            <polyline points="180,260 220,380 340,460" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" fill="none"/>
+            <polyline points="180,260 220,380 340,460" stroke="rgba(220,160,100,0.25)" stroke-width="1.5" fill="none"/>
           </svg>
 
-          <!-- Right Rocky Cliff Complex -->
+          <!-- Right Rocky Cliff Complex (Earthy/Sandstone Colors) -->
           <svg class="cliff-svg cliff-right" viewBox="0 0 600 700" preserveAspectRatio="none">
             <defs>
               <linearGradient id="cliffRockGradR" x1="100%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#142036"/>
-                <stop offset="40%" stop-color="#0c1524"/>
-                <stop offset="100%" stop-color="#050910"/>
+                <stop offset="0%" stop-color="#c8956a" stop-opacity="0.9"/>
+                <stop offset="35%" stop-color="#a0714a" stop-opacity="0.95"/>
+                <stop offset="70%" stop-color="#7a5535" stop-opacity="1"/>
+                <stop offset="100%" stop-color="#5c3d20"/>
               </linearGradient>
               <linearGradient id="cliffHighlightR" x1="100%" y1="0%" x2="20%" y2="80%">
-                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/>
-                <stop offset="100%" stop-color="#0284c7" stop-opacity="0"/>
+                <stop offset="0%" stop-color="#e8b888" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#c8956a" stop-opacity="0"/>
               </linearGradient>
             </defs>
-            <!-- Craggy cliff contours -->
+            <!-- Craggy earthy cliff contours -->
             <polygon points="600,0 360,160 220,290 280,380 140,490 210,570 60,700 600,700" fill="url(#cliffRockGradR)"/>
-            <polygon points="600,180 420,260 380,380 260,460 330,550 180,700 600,700" fill="#090f1a" opacity="0.7"/>
-            <!-- Chiseled Edge Highlights -->
+            <polygon points="600,180 420,260 380,380 260,460 330,550 180,700 600,700" fill="#6b4426" opacity="0.75"/>
+            <!-- Chiseled sandstone edge highlights -->
             <polyline points="600,0 360,160 220,290 280,380 140,490 210,570 60,700" stroke="url(#cliffHighlightR)" stroke-width="2.5" fill="none"/>
-            <polyline points="420,260 380,380 260,460" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" fill="none"/>
+            <polyline points="420,260 380,380 260,460" stroke="rgba(220,160,100,0.25)" stroke-width="1.5" fill="none"/>
           </svg>
         </div>
       </div>
@@ -131,12 +147,12 @@
           <!-- Architectural Suspension Arches & Crown Cables -->
           <div class="bridge-suspension-arches">
             <svg class="arch-cable-svg" viewBox="0 0 1400 300" preserveAspectRatio="none">
-              <!-- Left catenary parabolic suspension cable -->
-              <path d="M0,280 Q320,60 620,280" fill="none" stroke="rgba(56, 189, 248, 0.55)" stroke-width="3" filter="drop-shadow(0 0 8px rgba(56,189,248,0.4))"/>
-              <!-- Right catenary parabolic suspension cable -->
-              <path d="M780,280 Q1080,60 1400,280" fill="none" stroke="rgba(56, 189, 248, 0.55)" stroke-width="3" filter="drop-shadow(0 0 8px rgba(56,189,248,0.4))"/>
-              <!-- Center sweeping tension arch bridging the gap -->
-              <path d="M300,280 Q700,-20 1100,280" fill="none" stroke="rgba(37, 99, 235, 0.45)" stroke-width="2"/>
+              <!-- Left catenary parabolic suspension cable (black wire) -->
+              <path d="M0,280 Q320,60 620,280" fill="none" stroke="rgba(20, 15, 10, 0.9)" stroke-width="3.5" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.8))"/>
+              <!-- Right catenary parabolic suspension cable (black wire) -->
+              <path d="M780,280 Q1080,60 1400,280" fill="none" stroke="rgba(20, 15, 10, 0.9)" stroke-width="3.5" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.8))"/>
+              <!-- Center sweeping tension arch (dark wire) -->
+              <path d="M300,280 Q700,-20 1100,280" fill="none" stroke="rgba(30, 20, 10, 0.7)" stroke-width="2.5"/>
             </svg>
           </div>
 
@@ -443,7 +459,7 @@
   .cinematic-portal-section {
     position: relative;
     height: 450vh;
-    background-color: #070d18;
+    background-color: var(--color-background-secondary);
     margin: 0;
     padding: 0;
     border: none;
@@ -462,7 +478,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #060b14;
+    background: var(--color-background);
   }
 
   /* 3D Viewport Frustum */
@@ -496,7 +512,8 @@
   .sky-gradient {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 50% 48%, #0d1e38 0%, #081224 45%, #050a14 100%);
+    /* Natural blue sky gradient */
+    background: linear-gradient(180deg, #1a4a8a 0%, #2e6db8 25%, #5b9fd4 50%, #8dc3e8 70%, #c2dff2 85%, #daeefa 100%);
   }
 
   .horizon-glow {
@@ -506,7 +523,7 @@
     transform: translate(-50%, -50%);
     width: 80vw;
     height: 140px;
-    background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.28) 0%, rgba(37, 99, 235, 0.12) 55%, transparent 75%);
+    background: radial-gradient(ellipse at center, rgba(220, 180, 120, 0.35) 0%, rgba(255, 200, 100, 0.1) 55%, transparent 75%);
     filter: blur(45px);
   }
 
@@ -548,7 +565,8 @@
     left: 0;
     right: 0;
     height: 28vh;
-    background: linear-gradient(180deg, transparent 0%, rgba(8, 18, 36, 0.75) 45%, rgba(6, 11, 20, 0.96) 100%);
+    /* Mist transitioning from sky to ground */
+    background: linear-gradient(180deg, transparent 0%, rgba(180, 210, 230, 0.5) 35%, rgba(140, 185, 210, 0.75) 70%, rgba(100, 155, 185, 0.9) 100%);
   }
 
   /* -------------------------------------------------------------------------
@@ -566,7 +584,8 @@
     left: 0;
     right: 0;
     height: 42vh;
-    background: linear-gradient(180deg, #061122 0%, #030914 45%, #01040a 100%);
+    /* Deep river/fjord water — blue reflecting the sky */
+    background: linear-gradient(180deg, #2a6090 0%, #1a4d78 45%, #0d3358 100%);
     overflow: hidden;
   }
 
@@ -577,8 +596,8 @@
     transform: translateX(-50%);
     width: 70vw;
     height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.7), rgba(56, 189, 248, 0.85), transparent);
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+    background: linear-gradient(90deg, transparent, var(--color-salt-light), var(--color-salt-white), transparent);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
   }
 
   .water-specular-shimmer {
@@ -587,7 +606,7 @@
     left: 30%;
     right: 30%;
     height: 35px;
-    background: radial-gradient(ellipse at top, rgba(6, 182, 212, 0.25) 0%, transparent 80%);
+    background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.15) 0%, transparent 80%);
     filter: blur(8px);
     pointer-events: none;
   }
@@ -604,13 +623,13 @@
     left: 50%;
     transform: translateX(-50%);
     border-radius: 50%;
-    border-top: 1px solid rgba(56, 189, 248, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
     border-bottom: 1px solid transparent;
   }
 
   .ripple.r-1 { top: 12%; width: 55vw; height: 18px; }
-  .ripple.r-2 { top: 32%; width: 75vw; height: 26px; border-top-color: rgba(6, 182, 212, 0.22); }
-  .ripple.r-3 { top: 56%; width: 90vw; height: 36px; border-top-color: rgba(37, 99, 235, 0.18); }
+  .ripple.r-2 { top: 32%; width: 75vw; height: 26px; border-top-color: rgba(255, 255, 255, 0.2); }
+  .ripple.r-3 { top: 56%; width: 90vw; height: 36px; border-top-color: rgba(212, 212, 212, 0.15); }
   .ripple.r-4 { top: 78%; width: 110vw; height: 48px; border-top-color: rgba(255, 255, 255, 0.08); }
 
   /* Rocky Fjord Cliff Complex */
@@ -702,10 +721,11 @@
   .deck-main-beam {
     width: 100%;
     height: 26px;
-    background: linear-gradient(180deg, #1e2f47 0%, #0d1726 100%);
-    border-top: 2px solid #38bdf8;
-    border-bottom: 2px solid #08101c;
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.9), 0 0 30px rgba(56, 189, 248, 0.25);
+    /* Orange bridge deck/beam */
+    background: linear-gradient(180deg, #d46020 0%, #b84a10 100%);
+    border-top: 2px solid #e8721e;
+    border-bottom: 2px solid #8a3808;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(200, 80, 20, 0.3);
     position: relative;
   }
 
@@ -715,7 +735,7 @@
     left: 8%;
     right: 8%;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #06b6d4, #2563eb, #38bdf8, transparent);
+    background: linear-gradient(90deg, transparent, #f0a060, #ffcc88, #f0a060, transparent);
   }
 
   .deck-luminescent-edge {
@@ -724,7 +744,7 @@
     left: 15%;
     right: 15%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(200, 100, 30, 0.5), transparent);
   }
 
   .truss-cables-row {
@@ -739,9 +759,9 @@
   }
 
   .truss-cables-row .cable {
-    width: 1px;
+    width: 1.5px;
     height: 100%;
-    background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.5) 100%);
+    background: linear-gradient(180deg, rgba(15, 10, 5, 0.3) 0%, rgba(10, 6, 2, 0.9) 100%);
   }
 
   .cable.c1, .cable.c12 { transform: rotate(26deg); }
@@ -751,14 +771,14 @@
   .cable.c5, .cable.c8  { transform: rotate(4deg); }
   .cable.c6, .cable.c7  { transform: rotate(0deg); }
 
-  /* Monolithic Architectural Pylon Piers */
+  /* Monolithic Architectural Pylon Piers (Orange Bridge Color) */
   .monolithic-pylon {
     position: absolute;
     bottom: 0;
     top: 5%;
     width: 36px;
-    background: linear-gradient(90deg, #132033 0%, #223756 40%, #0d1522 100%);
-    box-shadow: 0 0 35px rgba(0, 0, 0, 0.95);
+    background: linear-gradient(90deg, #b84a10 0%, #d4621a 40%, #c25515 100%);
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(200, 80, 20, 0.4);
     z-index: 4;
   }
 
@@ -778,8 +798,8 @@
     bottom: 0;
     left: 50%;
     width: 2px;
-    background: rgba(6, 182, 212, 0.7);
-    box-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
+    background: #e8721e;
+    box-shadow: 0 0 8px rgba(232, 114, 30, 0.6);
   }
 
   .pylon-bracket {
@@ -787,8 +807,8 @@
     left: -12px;
     right: -12px;
     height: 4px;
-    background: #2563eb;
-    box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
+    background: #c85d15;
+    box-shadow: 0 0 10px rgba(200, 93, 21, 0.5);
   }
   .pylon-bracket.top-br { top: 35%; }
   .pylon-bracket.bot-br { top: 65%; }
@@ -809,7 +829,7 @@
     bottom: 0;
     width: 44px;
     height: 100%;
-    background: linear-gradient(180deg, #0f1c2e 0%, #070d17 100%);
+    background: linear-gradient(180deg, #c85515 0%, #a04010 100%);
     box-shadow: 0 10px 20px rgba(0,0,0,0.9);
   }
   .pier-left { left: calc(22% - 4px); }
@@ -821,7 +841,7 @@
     left: 0;
     width: 100%;
     height: 30px;
-    background: linear-gradient(180deg, rgba(6, 182, 212, 0.25) 0%, transparent 100%);
+    background: linear-gradient(180deg, var(--color-salt-alpha-20) 0%, transparent 100%);
     filter: blur(4px);
   }
 
@@ -832,12 +852,13 @@
     left: 5%;
     right: 5%;
     height: 140px;
-    background: #091220;
+    /* Dark underside of the orange bridge */
+    background: #7a3008;
     transform: rotateX(75deg);
     transform-origin: 50% 0%;
-    border-left: 2px solid #1e293b;
-    border-right: 2px solid #1e293b;
-    border-bottom: 2px solid #0f172a;
+    border-left: 2px solid #5a2205;
+    border-right: 2px solid #5a2205;
+    border-bottom: 2px solid #3a1502;
     box-shadow: inset 0 0 60px #000000;
     opacity: 0.1;
     transition: opacity 0.2s ease-out;
@@ -854,9 +875,9 @@
   .transverse-rib {
     width: 100%;
     height: 6px;
-    background: #132238;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    border-bottom: 1px solid #050a12;
+    background: #6b2a06;
+    border-top: 1px solid rgba(200, 100, 30, 0.15);
+    border-bottom: 1px solid #3a1502;
   }
 
   .soffit-conduits {
@@ -869,8 +890,8 @@
   .conduit {
     width: 2px;
     height: 100%;
-    background: rgba(6, 182, 212, 0.4);
-    box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+    background: var(--color-salt-alpha-40);
+    box-shadow: 0 0 10px var(--color-salt-alpha-20);
   }
 
   /* -------------------------------------------------------------------------
@@ -883,7 +904,7 @@
   .tunnel-occlusion {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(4, 7, 14, 0.98) 0%, #03060c 100%);
+    background: radial-gradient(circle at 50% 50%, var(--color-pepper-alpha-95) 0%, var(--color-background) 100%);
     opacity: 0;
     pointer-events: none;
     will-change: opacity;
@@ -905,7 +926,7 @@
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: radial-gradient(circle, #ffffff 0%, rgba(56, 189, 248, 0.9) 30%, rgba(37, 99, 235, 0.5) 60%, transparent 80%);
+    background: radial-gradient(circle, var(--color-salt-white) 0%, var(--color-salt-alpha-40) 35%, var(--color-salt-alpha-15) 65%, transparent 80%);
     filter: blur(18px);
   }
 
@@ -915,7 +936,7 @@
     left: -150%;
     right: -150%;
     height: 3px;
-    background: linear-gradient(90deg, transparent 0%, rgba(6, 182, 212, 0.8) 40%, #ffffff 50%, rgba(6, 182, 212, 0.8) 60%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, var(--color-salt-light) 40%, var(--color-salt-white) 50%, var(--color-salt-light) 60%, transparent 100%);
     transform: translateY(-50%);
     filter: blur(1px);
   }
@@ -932,8 +953,9 @@
     bottom: -10vh;
     width: 14vw;
     height: 65vh;
-    background: linear-gradient(180deg, #091322 0%, #040810 100%);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    /* Earthy cliff color for foreground framing edges */
+    background: linear-gradient(180deg, #8a5a30 0%, #5c3a18 100%);
+    border: 1px solid rgba(140, 90, 50, 0.3);
     filter: blur(4px); /* extreme foreground cinematic depth blur */
     will-change: transform, opacity;
   }
@@ -953,7 +975,7 @@
      ------------------------------------------------------------------------- */
   .layer-revealed-world {
     z-index: 8;
-    background: #0f172a;
+    background: var(--color-background);
     opacity: 0;
     will-change: opacity;
   }
@@ -965,7 +987,7 @@
     transform: translate(-50%, -50%);
     width: 65vw;
     height: 350px;
-    background: radial-gradient(circle, rgba(37, 99, 235, 0.25) 0%, rgba(6, 182, 212, 0.15) 50%, transparent 75%);
+    background: radial-gradient(circle, var(--color-salt-alpha-20) 0%, var(--color-salt-alpha-5) 50%, transparent 75%);
     filter: blur(70px);
   }
 
@@ -1005,12 +1027,12 @@
     font-size: var(--font-size-caption);
     letter-spacing: var(--letter-spacing-wider);
     text-transform: uppercase;
-    color: var(--color-accent);
+    color: var(--color-salt-white);
     margin-bottom: var(--space-2);
-    background: rgba(15, 23, 42, 0.7);
+    background: var(--color-pepper-alpha-85);
     padding: 0.25rem 0.75rem;
     border-radius: var(--radius-full);
-    border: 1px solid rgba(6, 182, 212, 0.25);
+    border: 1px solid var(--color-border);
     backdrop-filter: blur(8px);
   }
 

@@ -45,7 +45,7 @@ const {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(180deg, #0f172a 0%, #090d18 50%, #060912 100%);
+    background: linear-gradient(180deg, var(--color-background-dark) 0%, var(--color-background) 50%, var(--color-background-dark) 100%);
     overflow: hidden;
     margin: 0;
     isolation: isolate;
@@ -55,7 +55,7 @@ const {
   .gradient-veil {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 50% 50%, rgba(37, 99, 235, 0.08) 0%, transparent 75%);
+    background: radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.04) 0%, transparent 75%);
     pointer-events: none;
   }
 
@@ -67,7 +67,7 @@ const {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.25) 0%, rgba(37, 99, 235, 0.12) 45%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.12) 0%, rgba(212, 212, 212, 0.05) 45%, transparent 70%);
     filter: blur(20px);
     pointer-events: none;
   }
@@ -88,7 +88,7 @@ const {
     left: 15%;
     right: 15%;
     height: 5px;
-    background: linear-gradient(90deg, transparent 0%, rgba(6, 182, 212, 0.4) 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.25) 50%, transparent 100%);
     filter: blur(4px);
   }
 
@@ -101,9 +101,9 @@ const {
     background: linear-gradient(90deg, 
       transparent 0%, 
       rgba(255, 255, 255, 0.04) 15%, 
-      rgba(6, 182, 212, 0.35) 45%, 
-      rgba(56, 189, 248, 0.6) 50%, 
-      rgba(6, 182, 212, 0.35) 55%, 
+      rgba(212, 212, 212, 0.35) 45%, 
+      var(--color-salt-white) 50%, 
+      rgba(212, 212, 212, 0.35) 55%, 
       rgba(255, 255, 255, 0.04) 85%, 
       transparent 100%
     );
@@ -122,7 +122,7 @@ const {
     position: absolute;
     inset: -4px;
     border-radius: 9999px;
-    background: radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, transparent 75%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 75%);
     animation: ringGlow 3s infinite ease-in-out;
   }
 
@@ -136,10 +136,10 @@ const {
     align-items: center;
     gap: 0.6rem;
     padding: 0.42rem 1.25rem;
-    background: rgba(10, 15, 29, 0.95);
-    border: 1px solid rgba(6, 182, 212, 0.35);
+    background: var(--color-background-dark);
+    border: 1px solid var(--color-border);
     border-radius: 9999px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(6, 182, 212, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(12px);
   }
 
@@ -147,8 +147,8 @@ const {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: #38bdf8;
-    box-shadow: 0 0 8px #38bdf8;
+    background-color: var(--color-salt-white);
+    box-shadow: 0 0 8px var(--color-salt-white);
     animation: dotBlink 2s infinite ease-in-out;
   }
 
@@ -162,7 +162,7 @@ const {
     font-size: 0.72rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #93c5fd;
+    color: var(--color-salt-light);
     font-weight: 500;
   }
 

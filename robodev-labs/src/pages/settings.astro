@@ -41,33 +41,31 @@ import Divider from '../components/ui/Divider.astro';
             <div class="control-group">
               <label for="primary-color" class="control-label">
                 <span>Primary Brand Color</span>
-                <span class="color-preview-val" id="val-primary">#2563EB</span>
+                <span class="color-preview-val" id="val-primary">#FFFFFF</span>
               </label>
               <div class="color-input-wrapper">
-                <input type="color" id="primary-color" value="#2563eb" class="color-picker" />
+                <input type="color" id="primary-color" value="#ffffff" class="color-picker" />
                 <div class="color-presets">
-                  <button type="button" class="preset-pill" data-target="primary-color" data-val="#2563eb" style="background:#2563eb" title="Royal Blue (Default)"></button>
-                  <button type="button" class="preset-pill" data-target="primary-color" data-val="#4f46e5" style="background:#4f46e5" title="Indigo"></button>
-                  <button type="button" class="preset-pill" data-target="primary-color" data-val="#0284c7" style="background:#0284c7" title="Sky Blue"></button>
-                  <button type="button" class="preset-pill" data-target="primary-color" data-val="#059669" style="background:#059669" title="Emerald"></button>
-                  <button type="button" class="preset-pill" data-target="primary-color" data-val="#9333ea" style="background:#9333ea" title="Purple"></button>
+                  <button type="button" class="preset-pill" data-target="primary-color" data-val="#ffffff" style="background:#ffffff; border:1px solid #d4d4d4" title="Salt White (Combination 56)"></button>
+                  <button type="button" class="preset-pill" data-target="primary-color" data-val="#d4d4d4" style="background:#d4d4d4" title="Salt Light"></button>
+                  <button type="button" class="preset-pill" data-target="primary-color" data-val="#b3b3b3" style="background:#b3b3b3" title="Pepper Medium"></button>
+                  <button type="button" class="preset-pill" data-target="primary-color" data-val="#2b2b2b" style="background:#2b2b2b; border:1px solid #b3b3b3" title="Pepper Dark"></button>
                 </div>
               </div>
             </div>
 
             <div class="control-group">
               <label for="accent-color" class="control-label">
-                <span>Accent &amp; Glow Color</span>
-                <span class="color-preview-val" id="val-accent">#06B6D4</span>
+                <span>Accent &amp; Highlight Color</span>
+                <span class="color-preview-val" id="val-accent">#D4D4D4</span>
               </label>
               <div class="color-input-wrapper">
-                <input type="color" id="accent-color" value="#06b6d4" class="color-picker" />
+                <input type="color" id="accent-color" value="#d4d4d4" class="color-picker" />
                 <div class="color-presets">
-                  <button type="button" class="preset-pill" data-target="accent-color" data-val="#06b6d4" style="background:#06b6d4" title="Cyan (Default)"></button>
-                  <button type="button" class="preset-pill" data-target="accent-color" data-val="#38bdf8" style="background:#38bdf8" title="Electric Blue"></button>
-                  <button type="button" class="preset-pill" data-target="accent-color" data-val="#10b981" style="background:#10b981" title="Neon Green"></button>
-                  <button type="button" class="preset-pill" data-target="accent-color" data-val="#f59e0b" style="background:#f59e0b" title="Amber Yellow"></button>
-                  <button type="button" class="preset-pill" data-target="accent-color" data-val="#f43f5e" style="background:#f43f5e" title="Rose"></button>
+                  <button type="button" class="preset-pill" data-target="accent-color" data-val="#d4d4d4" style="background:#d4d4d4" title="Salt Light (Combination 56)"></button>
+                  <button type="button" class="preset-pill" data-target="accent-color" data-val="#ffffff" style="background:#ffffff; border:1px solid #d4d4d4" title="Salt White"></button>
+                  <button type="button" class="preset-pill" data-target="accent-color" data-val="#b3b3b3" style="background:#b3b3b3" title="Pepper Medium"></button>
+                  <button type="button" class="preset-pill" data-target="accent-color" data-val="#2b2b2b" style="background:#2b2b2b; border:1px solid #b3b3b3" title="Pepper Dark"></button>
                 </div>
               </div>
             </div>
@@ -75,15 +73,15 @@ import Divider from '../components/ui/Divider.astro';
             <div class="control-group">
               <label for="bg-color" class="control-label">
                 <span>Background Canvas Tone</span>
-                <span class="color-preview-val" id="val-bg">#0F172A</span>
+                <span class="color-preview-val" id="val-bg">#2B2B2B</span>
               </label>
               <div class="color-input-wrapper">
-                <input type="color" id="bg-color" value="#0f172a" class="color-picker" />
+                <input type="color" id="bg-color" value="#2b2b2b" class="color-picker" />
                 <div class="color-presets">
-                  <button type="button" class="preset-pill" data-target="bg-color" data-val="#0f172a" style="background:#0f172a" title="Dark Slate (Default)"></button>
-                  <button type="button" class="preset-pill" data-target="bg-color" data-val="#030712" style="background:#030712" title="Midnight Deep Black"></button>
-                  <button type="button" class="preset-pill" data-target="bg-color" data-val="#18181b" style="background:#18181b" title="Zinc Dark"></button>
-                  <button type="button" class="preset-pill" data-target="bg-color" data-val="#090d16" style="background:#090d16" title="Obsidian"></button>
+                  <button type="button" class="preset-pill" data-target="bg-color" data-val="#2b2b2b" style="background:#2b2b2b; border:1px solid #b3b3b3" title="Pepper Dark (Combination 56 Default)"></button>
+                  <button type="button" class="preset-pill" data-target="bg-color" data-val="#b3b3b3" style="background:#b3b3b3" title="Pepper Medium"></button>
+                  <button type="button" class="preset-pill" data-target="bg-color" data-val="#d4d4d4" style="background:#d4d4d4" title="Salt Light"></button>
+                  <button type="button" class="preset-pill" data-target="bg-color" data-val="#ffffff" style="background:#ffffff; border:1px solid #d4d4d4" title="Salt White"></button>
                 </div>
               </div>
             </div>
@@ -264,10 +262,10 @@ import Divider from '../components/ui/Divider.astro';
     const presets = document.querySelectorAll('.preset-pill');
 
     const defaultTheme = {
-      primaryColor: '#2563eb',
-      accentColor: '#06b6d4',
-      bgColor: '#0f172a',
-      surfaceColor: '#1e293b',
+      primaryColor: '#ffffff',
+      accentColor: '#d4d4d4',
+      bgColor: '#2b2b2b',
+      surfaceColor: 'rgba(255, 255, 255, 0.05)',
       fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
       borderRadius: '8',
       sectionPadding: '80',
@@ -278,6 +276,9 @@ import Divider from '../components/ui/Divider.astro';
       root.style.setProperty('--color-brand', config.primaryColor);
       root.style.setProperty('--color-accent', config.accentColor);
       root.style.setProperty('--color-background', config.bgColor);
+      root.style.setProperty('--color-background-primary', config.bgColor);
+      root.style.setProperty('--color-background-secondary', config.bgColor);
+      root.style.setProperty('--color-background-dark', config.bgColor);
       root.style.setProperty('--font-sans', config.fontFamily);
       root.style.setProperty('--radius-md', config.borderRadius + 'px');
       root.style.setProperty('--radius-lg', (parseInt(config.borderRadius) + 4) + 'px');
@@ -558,7 +559,7 @@ import Divider from '../components/ui/Divider.astro';
 
   .action-btn.primary {
     background-color: var(--color-brand);
-    color: var(--raw-white);
+    color: var(--color-text-inverse, #2b2b2b);
   }
 
   .action-btn.primary:hover {
@@ -587,7 +588,7 @@ import Divider from '../components/ui/Divider.astro';
   }
 
   .status-indicator-box span {
-    color: #22c55e;
+    color: var(--color-salt-light);
     font-size: 1rem;
   }
 
@@ -605,7 +606,7 @@ import Divider from '../components/ui/Divider.astro';
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem var(--space-4);
-    background: rgba(15, 23, 42, 0.8);
+    background: var(--color-pepper-dark);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     flex-wrap: wrap;
@@ -672,19 +673,19 @@ import Divider from '../components/ui/Divider.astro';
     width: 40px;
     height: 40px;
     border-radius: var(--radius-md);
-    background: rgba(37, 99, 235, 0.12);
-    border: 1px solid rgba(37, 99, 235, 0.25);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-accent);
+    color: var(--color-salt-white);
   }
 
   .sample-badge {
     font-family: var(--font-mono);
     font-size: var(--font-size-caption);
     text-transform: uppercase;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
     padding: 0.2rem 0.55rem;
     border-radius: var(--radius-full);
@@ -692,9 +693,9 @@ import Divider from '../components/ui/Divider.astro';
   }
 
   .sample-badge.cyan {
-    color: var(--color-accent);
-    background: rgba(6, 182, 212, 0.1);
-    border-color: rgba(6, 182, 212, 0.25);
+    color: var(--color-salt-white);
+    background: var(--color-surface);
+    border-color: var(--color-salt-light);
   }
 
   .sample-card-title {
@@ -728,9 +729,9 @@ import Divider from '../components/ui/Divider.astro';
   .sample-pill {
     font-family: var(--font-mono);
     font-size: var(--font-size-caption);
-    background: rgba(234, 179, 8, 0.1);
-    color: #eab308;
-    border: 1px solid rgba(234, 179, 8, 0.3);
+    background: var(--color-salt-alpha-10);
+    color: var(--color-salt-light);
+    border: 1px solid var(--color-border);
     padding: 0.15rem 0.5rem;
     border-radius: var(--radius-full);
   }

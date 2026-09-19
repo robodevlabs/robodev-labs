@@ -562,19 +562,20 @@ const socialsList = [
     border-radius: 0;
     cursor: pointer;
     transition: color 0.2s ease, border-color 0.2s ease;
-    color: var(--color-text-muted, #64748b);
+    /* visible on medium green bg */
+    color: var(--color-salt-light);
     text-align: left;
     flex: 1;
     margin-bottom: -1px;
   }
 
   .segment-nav-btn:hover {
-    color: var(--color-text-secondary, #94a3b8);
+    color: var(--color-salt-white);
   }
 
   .segment-nav-btn.active {
-    color: #ffffff;
-    border-bottom-color: var(--color-brand, #2563eb);
+    color: var(--color-salt-white);
+    border-bottom-color: var(--color-salt-white);
   }
 
   .nav-icon-wrap {
@@ -599,7 +600,8 @@ const socialsList = [
     font-size: 0.68rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-text-muted, #64748b);
+    /* visible on medium green bg */
+    color: var(--color-salt-light);
     white-space: nowrap;
   }
 
@@ -634,8 +636,9 @@ const socialsList = [
     position: relative;
     height: 100%;
     border-radius: 12px;
-    background-color: #0b1120;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* 30% dark green accordion panes */
+    background-color: var(--color-pepper-medium);
+    border: 1px solid var(--color-border);
     overflow: hidden;
     cursor: pointer;
     transition: flex 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, background-color 0.2s ease;
@@ -644,15 +647,16 @@ const socialsList = [
   }
 
   .accordion-pane:hover:not(.active) {
-    border-color: rgba(255, 255, 255, 0.18);
-    background-color: #0e1628;
+    border-color: var(--color-salt-light);
+    background-color: var(--color-pepper-medium);
+    filter: brightness(1.1);
   }
 
   .accordion-pane.active {
     flex: 1 1 0%;
     cursor: default;
-    border-color: rgba(255, 255, 255, 0.15);
-    background-color: #0b1120;
+    border-color: var(--color-salt-light);
+    background-color: var(--color-pepper-medium);
   }
 
   /* Collapsed Pillar Strip */
@@ -678,13 +682,14 @@ const socialsList = [
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-text-muted, #64748b);
+    /* visible on dark green */
+    color: var(--color-salt-light);
   }
 
   .strip-number {
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    color: var(--color-text-muted, #64748b);
+    color: var(--color-salt-light);
     font-weight: 500;
   }
 
@@ -693,7 +698,7 @@ const socialsList = [
     transform: rotate(180deg);
     font-size: 0.8rem;
     font-weight: 500;
-    color: var(--color-text-secondary, #94a3b8);
+    color: var(--color-salt-white);
     letter-spacing: 0.04em;
     white-space: nowrap;
     margin-top: auto;
@@ -740,7 +745,7 @@ const socialsList = [
     gap: 0.45rem;
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    color: var(--color-accent, #06b6d4);
+    color: var(--color-accent);
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
@@ -759,14 +764,14 @@ const socialsList = [
     font-weight: 600;
     line-height: 1.25;
     letter-spacing: -0.025em;
-    color: #ffffff;
+    color: var(--color-text);
     margin: 0;
   }
 
   .pane-summary {
     font-family: var(--font-sans);
     font-size: 0.92rem;
-    color: #94a3b8;
+    color: var(--color-text-secondary);
     line-height: 1.6;
     margin: 0;
   }
@@ -785,17 +790,17 @@ const socialsList = [
     align-items: flex-start;
     gap: 0.65rem;
     font-size: 0.85rem;
-    color: #94a3b8;
+    color: var(--color-text-primary);
     line-height: 1.45;
   }
 
   .pane-features-list li strong {
-    color: #e2e8f0;
+    color: var(--color-salt-white);
     font-weight: 500;
   }
 
   .feature-bullet {
-    color: var(--color-brand, #2563eb);
+    color: var(--color-salt-white);
     font-size: 1rem;
     line-height: 1;
     margin-top: 0.1rem;
@@ -812,8 +817,9 @@ const socialsList = [
 
   .subdivision-card {
     width: 100%;
-    background: #0f172a;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* 30% secondary — dark green nested card inside dark green pane (slight depth shift) */
+    background: #1e3328;
+    border: 1px solid rgba(237, 244, 242, 0.15);
     border-radius: 8px;
     padding: 1.5rem;
     display: flex;
@@ -826,7 +832,7 @@ const socialsList = [
     align-items: center;
     justify-content: space-between;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid var(--color-border-subtle);
   }
 
   .subdivision-header-label {
@@ -834,13 +840,13 @@ const socialsList = [
     font-size: 0.72rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: var(--color-salt-light);
   }
 
   .subdivision-status-tag {
     font-family: var(--font-mono);
     font-size: 0.68rem;
-    color: var(--color-accent, #06b6d4);
+    color: var(--color-salt-white);
   }
 
   .featured-sub-brand {
@@ -848,8 +854,9 @@ const socialsList = [
     flex-direction: column;
     gap: 0.35rem;
     padding: 0.8rem 0.9rem;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    /* slightly deeper than subdivision-card for layering depth */
+    background: var(--color-pepper-medium);
+    border: 1px solid rgba(237, 244, 242, 0.12);
     border-radius: 6px;
   }
 
@@ -864,18 +871,18 @@ const socialsList = [
     font-size: 0.95rem;
     font-weight: 700;
     letter-spacing: 0.06em;
-    color: #ffffff;
+    color: var(--color-salt-white);
   }
 
   .brand-sub {
     font-size: 0.68rem;
     font-family: var(--font-mono);
-    color: var(--color-accent, #06b6d4);
+    color: var(--color-accent);
   }
 
   .brand-desc {
     font-size: 0.78rem;
-    color: #94a3b8;
+    color: var(--color-salt-light);
     margin: 0;
   }
 
@@ -889,9 +896,10 @@ const socialsList = [
     font-size: 0.75rem;
     padding: 0.25rem 0.6rem;
     border-radius: 4px;
-    background: rgba(255, 255, 255, 0.03);
-    color: #cbd5e1;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    /* 10% accent - small highlight chips */
+    background: var(--color-surface);
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border-subtle);
   }
 
   .division-metric-box {
@@ -914,18 +922,18 @@ const socialsList = [
     font-family: var(--font-mono);
     font-size: 1.05rem;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--color-salt-white);
   }
 
   .metric-lbl {
     font-size: 0.68rem;
-    color: #64748b;
+    color: var(--color-text-muted);
   }
 
   .metric-sep {
     width: 1px;
     height: 22px;
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--color-border-subtle);
   }
 
   /* Social Interactive Grid inside Media Pane */
@@ -940,19 +948,34 @@ const socialsList = [
     align-items: center;
     gap: 0.45rem;
     padding: 0.4rem 0.65rem;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 6px;
-    color: #94a3b8;
+    color: var(--color-salt-white);
     font-size: 0.76rem;
     text-decoration: none;
     transition: all 0.15s ease;
   }
 
+  .social-connect-pill :global(svg) {
+    color: var(--color-salt-white);
+    flex-shrink: 0;
+  }
+
+  .social-connect-pill span {
+    color: var(--color-salt-white);
+    font-weight: 500;
+  }
+
   .social-connect-pill:hover {
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  .social-connect-pill:hover :global(svg),
+  .social-connect-pill:hover span {
+    color: #ffffff;
   }
 
   .action-wrap {

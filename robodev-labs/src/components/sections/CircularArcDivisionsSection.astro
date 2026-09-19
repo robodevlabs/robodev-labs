@@ -50,11 +50,11 @@ import Icon from '../ui/Icon.astro';
         
         <defs>
           <linearGradient id="cyanGlowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#2563eb" stop-opacity="0.25" />
-            <stop offset="25%" stop-color="#06b6d4" stop-opacity="0.9" />
-            <stop offset="50%" stop-color="#38bdf8" stop-opacity="1" />
-            <stop offset="75%" stop-color="#06b6d4" stop-opacity="0.9" />
-            <stop offset="100%" stop-color="#2563eb" stop-opacity="0.25" />
+            <stop offset="0%" stop-color="#2B2B2B" stop-opacity="0.3" />
+            <stop offset="25%" stop-color="#D4D4D4" stop-opacity="0.9" />
+            <stop offset="50%" stop-color="#FFFFFF" stop-opacity="1" />
+            <stop offset="75%" stop-color="#D4D4D4" stop-opacity="0.9" />
+            <stop offset="100%" stop-color="#2B2B2B" stop-opacity="0.3" />
           </linearGradient>
           <filter id="neonFilter" x="-40%" y="-40%" width="180%" height="180%">
             <feGaussianBlur stdDeviation="3.5" result="blur" />
@@ -394,18 +394,18 @@ import Icon from '../ui/Icon.astro';
                 <svg viewBox="0 0 200 70" class="perf-spline-svg" preserveAspectRatio="none">
                   <defs>
                     <linearGradient id="chartLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="#2563eb" />
-                      <stop offset="50%" stop-color="#06b6d4" />
-                      <stop offset="100%" stop-color="#38bdf8" />
+                      <stop offset="0%" stop-color="#B3B3B3" />
+                      <stop offset="50%" stop-color="#D4D4D4" />
+                      <stop offset="100%" stop-color="#FFFFFF" />
                     </linearGradient>
                     <linearGradient id="chartAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stop-color="rgba(6, 182, 212, 0.25)" />
-                      <stop offset="100%" stop-color="rgba(6, 182, 212, 0)" />
+                      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.2)" />
+                      <stop offset="100%" stop-color="rgba(255, 255, 255, 0)" />
                     </linearGradient>
                   </defs>
                   <path d="M 0 50 Q 40 55, 70 30 T 140 20 T 200 10 L 200 70 L 0 70 Z" fill="url(#chartAreaGrad)" />
                   <path d="M 0 50 Q 40 55, 70 30 T 140 20 T 200 10" fill="none" stroke="url(#chartLineGrad)" stroke-width="2.5" />
-                  <circle cx="200" cy="10" r="3.5" fill="#38bdf8" filter="drop-shadow(0 0 6px #06b6d4)" />
+                  <circle cx="200" cy="10" r="3.5" fill="#FFFFFF" filter="drop-shadow(0 0 6px rgba(255, 255, 255, 0.8))" />
                 </svg>
               </div>
             </div>
@@ -451,10 +451,10 @@ import Icon from '../ui/Icon.astro';
               <div class="transit-radar-viewport">
                 <div class="radar-grid-lines"></div>
                 <svg class="transit-track-svg" viewBox="0 0 320 180">
-                  <path d="M 20 150 Q 80 120, 140 70 T 260 40 T 300 30" fill="none" stroke="rgba(6, 182, 212, 0.4)" stroke-width="2" stroke-dasharray="4 4" />
-                  <path d="M 20 150 Q 80 120, 140 70" fill="none" stroke="#06b6d4" stroke-width="3" filter="drop-shadow(0 0 6px #06b6d4)" />
-                  <circle cx="140" cy="70" r="5" fill="#38bdf8" />
-                  <circle cx="140" cy="70" r="10" fill="none" stroke="#06b6d4" opacity="0.6" />
+                  <path d="M 20 150 Q 80 120, 140 70 T 260 40 T 300 30" fill="none" stroke="rgba(255, 255, 255, 0.3)" stroke-width="2" stroke-dasharray="4 4" />
+                  <path d="M 20 150 Q 80 120, 140 70" fill="none" stroke="#D4D4D4" stroke-width="3" filter="drop-shadow(0 0 6px rgba(255, 255, 255, 0.5))" />
+                  <circle cx="140" cy="70" r="5" fill="#FFFFFF" />
+                  <circle cx="140" cy="70" r="10" fill="none" stroke="#D4D4D4" opacity="0.6" />
                 </svg>
                 <div class="bus-beacon-ping">
                   <span class="ping-ring"></span>
@@ -774,7 +774,8 @@ import Icon from '../ui/Icon.astro';
     position: relative;
     width: 100%;
     height: 300vh; /* Pinned interaction runway */
-    background-color: #070a12; /* Deep cinematic slate-black */
+    /* Dark green background */
+    background-color: var(--color-pepper-medium);
     margin: 0;
     padding: 0;
   }
@@ -786,7 +787,8 @@ import Icon from '../ui/Icon.astro';
     height: 100vh;
     min-height: 100vh;
     overflow: hidden;
-    background-color: #070a12;
+    /* Dark green background */
+    background-color: var(--color-pepper-medium);
   }
 
   /* Atmospheric Background Ambient Glows */
@@ -809,7 +811,7 @@ import Icon from '../ui/Icon.astro';
     left: 20%;
     width: 600px;
     height: 600px;
-    background: #2563eb;
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .glow-cyan {
@@ -817,7 +819,7 @@ import Icon from '../ui/Icon.astro';
     right: 15%;
     width: 550px;
     height: 550px;
-    background: #06b6d4;
+    background: rgba(212, 212, 212, 0.06);
   }
 
   .grid-dust-overlay {
@@ -890,7 +892,7 @@ import Icon from '../ui/Icon.astro';
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    border: 1.5px solid rgba(6, 182, 212, 0);
+    border: 1.5px solid transparent;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
@@ -904,8 +906,8 @@ import Icon from '../ui/Icon.astro';
 
   /* Active Node State */
   .arc-node-element.active .outer-glow-ring {
-    border-color: #06b6d4;
-    box-shadow: 0 0 16px rgba(6, 182, 212, 0.7), inset 0 0 8px rgba(6, 182, 212, 0.4);
+    border-color: var(--color-salt-white);
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.5), inset 0 0 8px rgba(255, 255, 255, 0.3);
     animation: ringPulse 2.5s infinite ease-in-out;
   }
 
@@ -917,8 +919,8 @@ import Icon from '../ui/Icon.astro';
   .arc-node-element.active .center-core-dot {
     width: 8px;
     height: 8px;
-    background: #ffffff;
-    box-shadow: 0 0 10px #06b6d4;
+    background: var(--color-salt-white);
+    box-shadow: 0 0 10px var(--color-salt-white);
   }
 
   /* Node Label Text Lockup */
@@ -940,7 +942,7 @@ import Icon from '../ui/Icon.astro';
   }
 
   .arc-node-element.active .node-seq {
-    color: #06b6d4;
+    color: var(--color-salt-white);
   }
 
   .node-title {
@@ -1033,7 +1035,7 @@ import Icon from '../ui/Icon.astro';
     font-family: var(--font-mono, monospace);
     font-size: 0.78rem;
     font-weight: 600;
-    color: #06b6d4;
+    color: var(--color-salt-white);
   }
 
   .eyebrow-slug {
@@ -1041,13 +1043,13 @@ import Icon from '../ui/Icon.astro';
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.16em;
-    color: #06b6d4;
+    color: var(--color-accent);
   }
 
   .eyebrow-dash {
     width: 32px;
     height: 1.5px;
-    background: #06b6d4;
+    background: var(--color-accent);
     opacity: 0.7;
   }
 
@@ -1056,13 +1058,13 @@ import Icon from '../ui/Icon.astro';
     font-weight: 700;
     line-height: 1.08;
     letter-spacing: -0.03em;
-    color: #ffffff;
+    color: var(--color-text);
     margin: 0 0 1.2rem 0;
   }
 
   .editorial-lead {
     font-size: 1.02rem;
-    color: #94a3b8;
+    color: var(--color-text-secondary);
     line-height: 1.58;
     max-width: 480px;
     margin: 0;
@@ -1088,7 +1090,7 @@ import Icon from '../ui/Icon.astro';
   }
 
   .cap-ico {
-    color: #06b6d4;
+    color: var(--color-salt-white);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1098,7 +1100,7 @@ import Icon from '../ui/Icon.astro';
   .cap-txt {
     font-size: 0.92rem;
     font-weight: 500;
-    color: #cbd5e1;
+    color: var(--color-text-secondary);
     letter-spacing: -0.01em;
   }
 
@@ -1217,8 +1219,12 @@ import Icon from '../ui/Icon.astro';
     border: 1px solid rgba(37, 99, 235, 0.35);
   }
 
-  .ide-tag-badge.cyan { background: rgba(6, 182, 212, 0.2); color: #a5f3fc; border-color: rgba(6, 182, 212, 0.35); }
-  .ide-tag-badge.purple { background: rgba(168, 85, 247, 0.2); color: #d8b4fe; border-color: rgba(168, 85, 247, 0.35); }
+  .ide-tag-badge.cyan,
+  .ide-tag-badge.purple { 
+    background: var(--color-surface); 
+    color: var(--color-salt-white); 
+    border-color: var(--color-border); 
+  }
 
   .ide-window-body {
     display: flex;
@@ -1241,8 +1247,8 @@ import Icon from '../ui/Icon.astro';
   }
 
   .tree-line.active {
-    background: #06b6d4;
-    box-shadow: 0 0 6px #06b6d4;
+    background: var(--color-salt-white);
+    box-shadow: 0 0 6px var(--color-salt-white);
   }
 
   .ide-code-lines {
@@ -1256,17 +1262,17 @@ import Icon from '../ui/Icon.astro';
     overflow: hidden;
   }
 
-  .code-row { color: #cbd5e1; white-space: nowrap; }
+  .code-row { color: var(--color-text-secondary); white-space: nowrap; }
   .ind-1 { padding-left: 1.2rem; }
   .ind-2 { padding-left: 2.2rem; }
 
-  .syn-k { color: #a855f7; }
-  .syn-v { color: #38bdf8; }
-  .syn-f { color: #60a5fa; }
-  .syn-s { color: #34d399; }
-  .syn-n { color: #f59e0b; }
-  .syn-b { color: #f43f5e; }
-  .syn-c { color: #64748b; font-style: italic; }
+  .syn-k { color: var(--color-salt-white); font-weight: 600; }
+  .syn-v { color: var(--color-salt-light); }
+  .syn-f { color: var(--color-salt-white); }
+  .syn-s { color: var(--color-pepper-medium); }
+  .syn-n { color: var(--color-salt-light); }
+  .syn-b { color: var(--color-salt-white); }
+  .syn-c { color: var(--color-pepper-medium); font-style: italic; }
 
   /* Floating Card: Performance Graph */
   .iso-floating-card.performance-card {
@@ -1302,8 +1308,8 @@ import Icon from '../ui/Icon.astro';
     box-shadow: 0 0 8px #10b981;
   }
 
-  .perf-status-beacon.cyan { background: #06b6d4; box-shadow: 0 0 8px #06b6d4; }
-  .perf-status-beacon.purple { background: #a855f7; box-shadow: 0 0 8px #a855f7; }
+  .perf-status-beacon.cyan { background: var(--color-salt-white); box-shadow: 0 0 8px var(--color-salt-white); }
+  .perf-status-beacon.purple { background: var(--color-salt-light); box-shadow: 0 0 8px var(--color-salt-light); }
 
   .perf-label {
     font-family: var(--font-mono, monospace);
@@ -1331,27 +1337,27 @@ import Icon from '../ui/Icon.astro';
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(8, 14, 26, 0.95) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: linear-gradient(135deg, var(--color-pepper-alpha-85, rgba(43, 43, 43, 0.85)) 0%, var(--color-background-dark) 100%);
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 0.65rem 1rem;
     backdrop-filter: blur(20px);
     box-shadow: 
       0 16px 35px rgba(0, 0, 0, 0.7),
-      0 0 20px rgba(6, 182, 212, 0.12);
+      0 0 20px rgba(255, 255, 255, 0.08);
     transform: rotateY(-10deg) translateZ(55px);
     z-index: 12;
   }
 
   .badge-icon-cloud {
-    color: #38bdf8;
+    color: var(--color-salt-light);
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .badge-icon-cloud.cyan { color: #06b6d4; }
-  .badge-icon-cloud.purple { color: #c084fc; }
+  .badge-icon-cloud.cyan { color: var(--color-salt-white); }
+  .badge-icon-cloud.purple { color: var(--color-salt-light); }
 
   .badge-status-line {
     display: flex;
@@ -1366,18 +1372,18 @@ import Icon from '../ui/Icon.astro';
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: #06b6d4;
-    box-shadow: 0 0 6px #06b6d4;
+    background: var(--color-salt-white);
+    box-shadow: 0 0 6px var(--color-salt-white);
   }
 
-  .badge-live-dot.purple { background: #a855f7; box-shadow: 0 0 6px #a855f7; }
+  .badge-live-dot.purple { background: var(--color-salt-light); box-shadow: 0 0 6px var(--color-salt-light); }
 
   /* Transit Radar Viewport (Products Scene) */
   .transit-radar-viewport {
     position: relative;
     width: 100%;
     height: calc(100% - 36px);
-    background: radial-gradient(circle at 60% 40%, rgba(6, 182, 212, 0.1) 0%, transparent 65%);
+    background: radial-gradient(circle at 60% 40%, rgba(255, 255, 255, 0.06) 0%, transparent 65%);
     overflow: hidden;
   }
 
@@ -1410,18 +1416,18 @@ import Icon from '../ui/Icon.astro';
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #38bdf8;
-    box-shadow: 0 0 10px #06b6d4;
+    background: var(--color-salt-white);
+    box-shadow: 0 0 10px var(--color-salt-light);
   }
 
   .ping-label {
     font-family: var(--font-mono, monospace);
     font-size: 0.68rem;
-    color: #a5f3fc;
-    background: rgba(15, 23, 42, 0.85);
+    color: var(--color-salt-white);
+    background: var(--color-pepper-alpha-85, rgba(43, 43, 43, 0.85));
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
-    border: 1px solid rgba(6, 182, 212, 0.3);
+    border: 1px solid var(--color-border);
   }
 
   .telemetry-stat-row {
@@ -1498,8 +1504,8 @@ import Icon from '../ui/Icon.astro';
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: #06b6d4;
-    box-shadow: 0 0 6px #06b6d4;
+    background: var(--color-salt-white);
+    box-shadow: 0 0 6px var(--color-salt-white);
   }
 
   .c-1 { top: 30px; left: 10px; }
@@ -1555,7 +1561,7 @@ import Icon from '../ui/Icon.astro';
     height: 28px;
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.25);
-    background: rgba(15, 23, 42, 0.6);
+    background: var(--color-surface);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1564,9 +1570,9 @@ import Icon from '../ui/Icon.astro';
   }
 
   .scroll-next-btn:hover .scroll-arrow-circle {
-    border-color: #06b6d4;
+    border-color: var(--color-salt-white);
     color: #ffffff;
-    box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   }
 
   /* -------------------------------------------------------------------------
@@ -1599,7 +1605,8 @@ import Icon from '../ui/Icon.astro';
   @media (max-width: 768px) {
     .circular-arc-scroll-realm {
       height: auto;
-      background-color: #070a12;
+      /* Predefined dark green background on mobile */
+      background-color: var(--color-pepper-medium);
     }
 
     .circular-arc-sticky-stage {
@@ -1635,8 +1642,9 @@ import Icon from '../ui/Icon.astro';
       justify-content: space-between;
       width: 100%;
       gap: 0.5rem;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      /* Predefined dark green container */
+      background: #1e3328;
+      border: 1px solid var(--color-border);
       border-radius: var(--radius-full);
       padding: 0.35rem 0.5rem;
       backdrop-filter: blur(16px);
@@ -1661,13 +1669,14 @@ import Icon from '../ui/Icon.astro';
     }
 
     .arc-node-element:hover {
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .arc-node-element.active {
-      background: rgba(6, 182, 212, 0.15);
-      border-color: rgba(6, 182, 212, 0.35);
-      box-shadow: 0 2px 10px rgba(6, 182, 212, 0.25);
+      /* Predefined active pill style using salt white contrast */
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
     }
 
     .node-bullet-target {
@@ -1682,14 +1691,16 @@ import Icon from '../ui/Icon.astro';
     .center-core-dot {
       width: 6px;
       height: 6px;
-      background: rgba(255, 255, 255, 0.3);
+      background: var(--color-salt-light);
+      opacity: 0.75;
     }
 
     .arc-node-element.active .center-core-dot {
       width: 7px;
       height: 7px;
-      background: #38bdf8;
-      box-shadow: 0 0 8px #38bdf8;
+      background: var(--color-salt-white);
+      box-shadow: 0 0 8px var(--color-salt-white);
+      opacity: 1;
     }
 
     .node-text-lockup {
@@ -1702,22 +1713,26 @@ import Icon from '../ui/Icon.astro';
     .node-seq {
       font-size: 0.68rem;
       font-weight: 700;
-      color: rgba(255, 255, 255, 0.4);
+      color: var(--color-salt-light);
+      opacity: 0.75;
     }
 
     .arc-node-element.active .node-seq {
-      color: #38bdf8;
+      color: var(--color-salt-white);
+      opacity: 1;
     }
 
     .node-title {
       font-size: 0.84rem;
       font-weight: 600;
-      color: rgba(255, 255, 255, 0.65);
+      color: var(--color-salt-white);
+      opacity: 0.82;
     }
 
     .arc-node-element.active .node-title {
       font-size: 0.84rem;
       color: #ffffff;
+      opacity: 1;
       text-shadow: none;
     }
 
@@ -1741,8 +1756,9 @@ import Icon from '../ui/Icon.astro';
       display: none;
       transform: none !important;
       opacity: 1 !important;
-      background: rgba(15, 23, 42, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      /* Predefined dark green card palette */
+      background: #1e3328;
+      border: 1px solid rgba(237, 244, 242, 0.15);
       border-radius: 20px;
       padding: 1.5rem 1.25rem;
       box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.5);
@@ -1772,11 +1788,13 @@ import Icon from '../ui/Icon.astro';
       font-size: 1.75rem;
       line-height: 1.2;
       margin-bottom: 0.75rem;
+      color: var(--color-salt-white);
     }
 
     .editorial-lead {
       font-size: 0.92rem;
       line-height: 1.6;
+      color: var(--color-salt-light);
     }
 
     .capabilities-dual-grid {
@@ -1787,7 +1805,8 @@ import Icon from '../ui/Icon.astro';
     .cap-item {
       padding: 0.55rem 0.85rem;
       font-size: 0.85rem;
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 8px;
     }
   }

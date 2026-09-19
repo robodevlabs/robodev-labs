@@ -18,7 +18,7 @@ import { academyData } from '../../data/academy';
 ---
 
 <section class="single-screen-divisions-realm" id="ecosystem-divisions" aria-label="RoboDev Labs Core Divisions">
-  <!-- Parallax Subtle Mesh & Atmosphere (Seamless with #pillars #0f172a background) -->
+  <!-- Parallax Subtle Mesh & Atmosphere (Seamless with Combination 56 dark canvas background) -->
   <div class="divisions-stage-backdrop" aria-hidden="true">
     <div class="parallax-orb orb-blue"></div>
     <div class="parallax-orb orb-cyan"></div>
@@ -53,7 +53,7 @@ import { academyData } from '../../data/academy';
         <!-- Arc Outer Neon Stroke SVG -->
         <svg class="arc-bezel-svg" viewBox="0 0 140 760" preserveAspectRatio="none" aria-hidden="true">
           <path d="M10,0 Q135,380 10,760" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="4"/>
-          <path d="M10,0 Q135,380 10,760" fill="none" stroke="rgba(6,182,212,0.5)" stroke-width="2" filter="drop-shadow(0 0 8px #06b6d4)"/>
+          <path d="M10,0 Q135,380 10,760" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2" filter="drop-shadow(0 0 6px rgba(255,255,255,0.3))"/>
         </svg>
 
         <!-- Dial Content Column -->
@@ -433,7 +433,7 @@ import { academyData } from '../../data/academy';
     width: 100%;
     min-height: 100vh;
     height: 100vh;
-    background-color: #0f172a; /* Seamless identical background to #pillars */
+    background-color: var(--color-background);
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -456,9 +456,9 @@ import { academyData } from '../../data/academy';
     opacity: 0.16;
   }
 
-  .orb-blue { top: 15%; left: 12%; width: 500px; height: 500px; background: #2563eb; }
-  .orb-cyan { bottom: 10%; right: 10%; width: 550px; height: 550px; background: #06b6d4; }
-  .orb-purple { top: 40%; left: 45%; width: 450px; height: 450px; background: #a855f7; }
+  .orb-blue { top: 15%; left: 12%; width: 500px; height: 500px; background: var(--color-salt-white); }
+  .orb-cyan { bottom: 10%; right: 10%; width: 550px; height: 550px; background: var(--color-salt-light); }
+  .orb-purple { top: 40%; left: 45%; width: 450px; height: 450px; background: var(--color-pepper-medium); }
 
   .circuit-grid-mesh {
     position: absolute;
@@ -514,7 +514,7 @@ import { academyData } from '../../data/academy';
     border-radius: 0 160px 160px 0 / 0 50% 50% 0; /* Sweeping convex arch */
     box-shadow: 
       0 25px 60px rgba(0, 0, 0, 0.9),
-      12px 0 45px rgba(6, 182, 212, 0.22),
+      12px 0 45px rgba(255, 255, 255, 0.08),
       inset 0 1px 2px rgba(255, 255, 255, 0.16);
     backdrop-filter: blur(24px);
     padding: 2.5rem 2.2rem 2.5rem 1.6rem;
@@ -530,7 +530,7 @@ import { academyData } from '../../data/academy';
     right: 28px;
     width: 38px;
     height: 14px;
-    background: linear-gradient(180deg, #475569 0%, #1e293b 100%);
+    background: linear-gradient(180deg, var(--color-pepper-dark) 0%, #1a1a1a 100%);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 4px;
     display: flex;
@@ -542,7 +542,7 @@ import { academyData } from '../../data/academy';
   .crown-notch {
     width: 20px;
     height: 4px;
-    background: repeating-linear-gradient(90deg, #94a3b8 0px, #94a3b8 2px, transparent 2px, transparent 4px);
+    background: repeating-linear-gradient(90deg, var(--color-pepper-medium) 0px, var(--color-pepper-medium) 2px, transparent 2px, transparent 4px);
   }
 
   /* Dial Ticks along the arch edge */
@@ -568,8 +568,8 @@ import { academyData } from '../../data/academy';
   .arc-tick.major {
     width: 12px;
     height: 2px;
-    background: #06b6d4;
-    box-shadow: 0 0 6px #06b6d4;
+    background: var(--color-salt-light);
+    box-shadow: 0 0 6px rgba(212, 212, 212, 0.6);
   }
 
   /* Decorative SVG Arc Line */
@@ -608,8 +608,8 @@ import { academyData } from '../../data/academy';
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #06b6d4;
-    box-shadow: 0 0 8px #06b6d4;
+    background: var(--color-salt-light);
+    box-shadow: 0 0 8px rgba(212, 212, 212, 0.5);
     animation: beaconPulse 2s infinite ease-in-out;
   }
 
@@ -665,13 +665,13 @@ import { academyData } from '../../data/academy';
     transition: all 0.25s ease;
   }
 
-  .item-icon-orb.blue { color: #60a5fa; }
-  .item-icon-orb.cyan { color: #38bdf8; }
-  .item-icon-orb.purple { color: #c084fc; }
+  .item-icon-orb.blue { color: var(--color-salt-white); }
+  .item-icon-orb.cyan { color: var(--color-salt-light); }
+  .item-icon-orb.purple { color: var(--color-pepper-medium); }
 
-  .arc-nav-item.active .item-icon-orb.blue { background: rgba(37, 99, 235, 0.25); box-shadow: 0 0 12px rgba(37, 99, 235, 0.5); }
-  .arc-nav-item.active .item-icon-orb.cyan { background: rgba(6, 182, 212, 0.25); box-shadow: 0 0 12px rgba(6, 182, 212, 0.5); }
-  .arc-nav-item.active .item-icon-orb.purple { background: rgba(168, 85, 247, 0.25); box-shadow: 0 0 12px rgba(168, 85, 247, 0.5); }
+  .arc-nav-item.active .item-icon-orb.blue { background: var(--color-salt-alpha-10); box-shadow: 0 0 12px rgba(255, 255, 255, 0.2); }
+  .arc-nav-item.active .item-icon-orb.cyan { background: var(--color-salt-alpha-10); box-shadow: 0 0 12px rgba(212, 212, 212, 0.2); }
+  .arc-nav-item.active .item-icon-orb.purple { background: var(--color-salt-alpha-10); box-shadow: 0 0 12px rgba(179, 179, 179, 0.2); }
 
   .item-meta {
     display: flex;
@@ -715,9 +715,9 @@ import { academyData } from '../../data/academy';
     transition: opacity 0.2s ease;
   }
 
-  .arc-active-glow.blue { background: #3b82f6; box-shadow: 0 0 8px #3b82f6; }
-  .arc-active-glow.cyan { background: #06b6d4; box-shadow: 0 0 8px #06b6d4; }
-  .arc-active-glow.purple { background: #a855f7; box-shadow: 0 0 8px #a855f7; }
+  .arc-active-glow.blue { background: var(--color-salt-white); box-shadow: 0 0 8px rgba(255, 255, 255, 0.6); }
+  .arc-active-glow.cyan { background: var(--color-salt-light); box-shadow: 0 0 8px rgba(212, 212, 212, 0.6); }
+  .arc-active-glow.purple { background: var(--color-pepper-medium); box-shadow: 0 0 8px rgba(179, 179, 179, 0.6); }
 
   .arc-nav-item.active .arc-active-glow {
     opacity: 1;
@@ -742,7 +742,7 @@ import { academyData } from '../../data/academy';
     font-family: var(--font-mono);
     font-size: 0.75rem;
     font-weight: var(--font-weight-bold);
-    color: #38bdf8;
+    color: var(--color-salt-white);
   }
 
   /* -------------------------------------------------------------------------
@@ -802,18 +802,18 @@ import { academyData } from '../../data/academy';
     margin-bottom: 0.3rem;
   }
 
-  .panel-eyebrow.blue { color: #60a5fa; }
-  .panel-eyebrow.cyan { color: #38bdf8; }
-  .panel-eyebrow.purple { color: #c084fc; }
+  .panel-eyebrow.blue { color: var(--color-salt-white); }
+  .panel-eyebrow.cyan { color: var(--color-salt-light); }
+  .panel-eyebrow.purple { color: var(--color-pepper-medium); }
 
   .indicator-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
   }
-  .indicator-dot.blue { background: #60a5fa; box-shadow: 0 0 8px #60a5fa; }
-  .indicator-dot.cyan { background: #38bdf8; box-shadow: 0 0 8px #38bdf8; }
-  .indicator-dot.purple { background: #c084fc; box-shadow: 0 0 8px #c084fc; }
+  .indicator-dot.blue { background: var(--color-salt-white); box-shadow: 0 0 8px rgba(255,255,255,0.6); }
+  .indicator-dot.cyan { background: var(--color-salt-light); box-shadow: 0 0 8px rgba(212,212,212,0.5); }
+  .indicator-dot.purple { background: var(--color-pepper-medium); box-shadow: 0 0 8px rgba(179,179,179,0.4); }
 
   .panel-title {
     font-size: clamp(2rem, 3.2vw, 2.8rem);
@@ -846,7 +846,7 @@ import { academyData } from '../../data/academy';
   }
 
   .offering-box {
-    background: linear-gradient(145deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.85) 100%);
+    background: linear-gradient(145deg, var(--color-surface) 0%, rgba(26, 26, 26, 0.85) 100%);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     padding: 1.3rem;
@@ -878,8 +878,8 @@ import { academyData } from '../../data/academy';
     justify-content: center;
   }
 
-  .box-icon-wrap.blue { color: #60a5fa; border: 1px solid rgba(37, 99, 235, 0.3); }
-  .box-icon-wrap.purple { color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+  .box-icon-wrap.blue { color: var(--color-salt-white); border: 1px solid var(--color-salt-alpha-20); }
+  .box-icon-wrap.purple { color: var(--color-pepper-medium); border: 1px solid var(--color-salt-alpha-15); }
 
   .box-badge {
     font-family: var(--font-mono);
@@ -890,7 +890,7 @@ import { academyData } from '../../data/academy';
     color: var(--color-text-secondary);
   }
 
-  .box-badge.purple { color: #d8b4fe; background: rgba(168, 85, 247, 0.1); }
+  .box-badge.purple { color: var(--color-pepper-medium); background: var(--color-salt-alpha-5); }
 
   .box-title {
     font-size: 1.05rem;
@@ -902,7 +902,7 @@ import { academyData } from '../../data/academy';
   .target-aud {
     font-size: 0.74rem;
     font-family: var(--font-mono);
-    color: #c084fc;
+    color: var(--color-pepper-medium);
   }
 
   .box-tagline {
@@ -930,9 +930,9 @@ import { academyData } from '../../data/academy';
     color: var(--color-text-secondary);
   }
 
-  .check-blue { color: #60a5fa; flex-shrink: 0; margin-top: 0.15rem; }
-  .check-cyan { color: #38bdf8; flex-shrink: 0; margin-top: 0.15rem; }
-  .check-purple { color: #c084fc; flex-shrink: 0; margin-top: 0.15rem; }
+  .check-blue { color: var(--color-salt-white); flex-shrink: 0; margin-top: 0.15rem; }
+  .check-cyan { color: var(--color-salt-light); flex-shrink: 0; margin-top: 0.15rem; }
+  .check-purple { color: var(--color-pepper-medium); flex-shrink: 0; margin-top: 0.15rem; }
 
   /* Product Studio Showcase */
   .products-studio-display {
@@ -943,14 +943,14 @@ import { academyData } from '../../data/academy';
   }
 
   .busly-flagship-card {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.95) 100%);
-    border: 1px solid rgba(6, 182, 212, 0.35);
+    background: linear-gradient(135deg, var(--color-surface) 0%, rgba(26, 26, 26, 0.95) 100%);
+    border: 1px solid var(--color-border);
     border-radius: 24px;
     padding: 1.8rem;
     display: flex;
     flex-direction: column;
     gap: 0.9rem;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(6, 182, 212, 0.1);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 255, 255, 0.04);
   }
 
   .flagship-badge-row {
@@ -965,9 +965,9 @@ import { academyData } from '../../data/academy';
     gap: 0.4rem;
     font-family: var(--font-mono);
     font-size: 0.7rem;
-    color: #a5f3fc;
-    background: rgba(6, 182, 212, 0.15);
-    border: 1px solid rgba(6, 182, 212, 0.3);
+    color: var(--color-salt-light);
+    background: var(--color-salt-alpha-10);
+    border: 1px solid var(--color-border);
     padding: 0.2rem 0.65rem;
     border-radius: var(--radius-full);
   }
@@ -976,8 +976,8 @@ import { academyData } from '../../data/academy';
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #06b6d4;
-    box-shadow: 0 0 6px #06b6d4;
+    background: var(--color-salt-light);
+    box-shadow: 0 0 6px rgba(212, 212, 212, 0.5);
   }
 
   .category-pill {
@@ -996,12 +996,12 @@ import { academyData } from '../../data/academy';
     width: 42px;
     height: 42px;
     border-radius: var(--radius-md);
-    background: rgba(6, 182, 212, 0.15);
-    border: 1px solid rgba(6, 182, 212, 0.4);
+    background: var(--color-salt-alpha-10);
+    border: 1px solid var(--color-border);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #38bdf8;
+    color: var(--color-salt-light);
   }
 
   .busly-heading {
@@ -1015,7 +1015,7 @@ import { academyData } from '../../data/academy';
 
   .busly-sub {
     font-size: 0.78rem;
-    color: #38bdf8;
+    color: var(--color-salt-light);
   }
 
   .flagship-description {
@@ -1043,7 +1043,7 @@ import { academyData } from '../../data/academy';
 
   /* Pipeline Card */
   .studio-pipeline-card {
-    background: rgba(30, 41, 59, 0.5);
+    background: var(--color-surface);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 24px;
     padding: 1.8rem;

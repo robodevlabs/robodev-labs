@@ -5,47 +5,56 @@
 
 :root {
   /* ------------------------------------------------------------------------
-     1. Brand Raw Palette (Approved from README.md)
-     Royal Blue: #2563EB | Cyan: #06B6D4 | Dark Slate: #0F172A | White: #FFFFFF
+     0. Canonical Raw Palette - Combination 56 (source of truth)
+     Salt White: #FFFFFF | Salt Light: #D4D4D4 | Pepper Medium: #B3B3B3 | Pepper Dark: #2B2B2B
      ------------------------------------------------------------------------ */
-  --raw-royal-blue: #2563eb;
-  --raw-royal-blue-hover: #1d4ed8;
-  --raw-royal-blue-active: #1e40af;
-  --raw-cyan: #06b6d4;
-  --raw-cyan-hover: #0891b2;
-  --raw-dark-slate: #0f172a;
-  --raw-slate-surface: #1e293b;
-  --raw-slate-hover: #334155;
-  --raw-slate-darker: #090d16;
-  --raw-white: #ffffff;
+  --color-salt-white: #ffffff;
+  --color-salt-light: #d4d4d4;
+  --color-pepper-medium: #b3b3b3;
+  --color-pepper-dark: #2b2b2b;
 
   /* ------------------------------------------------------------------------
-     2. Semantic Colors (Default Theme: Dark Interface per README positioning)
+     1. Brand Raw Palette (Combination 56: Salt and Pepper)
+     Salt White: #FFFFFF | Salt Light: #D4D4D4 | Pepper Medium: #B3B3B3 | Pepper Dark: #2B2B2B
      ------------------------------------------------------------------------ */
-  --color-brand: var(--raw-royal-blue);
-  --color-brand-hover: var(--raw-royal-blue-hover);
-  --color-brand-active: var(--raw-royal-blue-active);
+  --raw-salt-white: #ffffff;
+  --raw-salt-light: #d4d4d4;
+  --raw-pepper-medium: #b3b3b3;
+  --raw-pepper-dark: #2b2b2b;
 
-  --color-accent: var(--raw-cyan);
-  --color-accent-hover: var(--raw-cyan-hover);
+  /* ------------------------------------------------------------------------
+     2. Semantic Colors (Salt & Pepper High-Contrast Dark Theme)
+     ------------------------------------------------------------------------ */
+  --color-brand: var(--color-salt-white, #ffffff);
+  --color-brand-hover: var(--color-salt-light, #d4d4d4);
+  --color-brand-active: var(--color-pepper-medium, #b3b3b3);
 
-  --color-background: var(--raw-dark-slate);
-  --color-background-secondary: var(--raw-slate-surface);
-  --color-background-dark: var(--raw-slate-darker);
+  --color-accent: var(--color-salt-light, #d4d4d4);
+  --color-accent-hover: var(--color-salt-white, #ffffff);
 
-  --color-surface: var(--raw-slate-surface);
-  --color-surface-hover: var(--raw-slate-hover);
+  --color-background: var(--color-pepper-dark, #2b2b2b);
+  --color-background-primary: var(--color-pepper-dark, #2b2b2b);
+  --color-background-secondary: var(--color-pepper-medium, #b3b3b3);
+  --color-background-dark: var(--color-pepper-dark, #2b2b2b);
+  --color-bg-primary: var(--color-pepper-dark, #2b2b2b);
+  --color-bg-secondary: var(--color-pepper-medium, #b3b3b3);
 
-  --color-text: #f8fafc;
-  --color-text-secondary: #94a3b8;
-  --color-text-muted: #64748b;
-  --color-text-inverse: #0f172a;
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-surface-hover: rgba(255, 255, 255, 0.09);
 
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-border-subtle: rgba(255, 255, 255, 0.05);
-  --color-border-bright: rgba(37, 99, 235, 0.4);
+  --color-text: var(--color-salt-white, #ffffff);
+  --color-text-secondary: var(--color-salt-light, #d4d4d4);
+  --color-text-muted: var(--color-pepper-medium, #b3b3b3);
+  --color-text-inverse: var(--color-pepper-dark, #2b2b2b);
 
-  --color-focus-ring: var(--raw-cyan);
+  --color-border: rgba(212, 212, 212, 0.2);
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-bright: var(--color-salt-light, #d4d4d4);
+
+  --color-focus-ring: var(--color-salt-white, #ffffff);
+
+  --raw-white: var(--color-salt-white, #ffffff);
+  --raw-slate-surface: var(--color-surface);
 
   /* ------------------------------------------------------------------------
      3. Typography Tokens (Inter as primary default per prompt instructions)
@@ -154,21 +163,24 @@
    Light Theme Prepared Architecture (Toggled via [data-theme="light"])
    ------------------------------------------------------------------------ */
 [data-theme='light'] {
-  --color-background: #ffffff;
-  --color-background-secondary: #f8fafc;
-  --color-background-dark: #f1f5f9;
+  --color-background: var(--raw-salt-white, #ffffff);
+  --color-background-primary: var(--raw-salt-white, #ffffff);
+  --color-background-secondary: var(--raw-salt-light, #d4d4d4);
+  --color-background-dark: var(--raw-pepper-dark, #2b2b2b);
+  --color-bg-primary: var(--raw-salt-white, #ffffff);
+  --color-bg-secondary: var(--raw-salt-light, #d4d4d4);
 
-  --color-surface: #ffffff;
-  --color-surface-hover: #f1f5f9;
+  --color-surface: var(--raw-salt-white, #ffffff);
+  --color-surface-hover: var(--raw-salt-light, #d4d4d4);
 
-  --color-text: #0f172a;
-  --color-text-secondary: #475569;
-  --color-text-muted: #64748b;
-  --color-text-inverse: #ffffff;
+  --color-text: var(--raw-pepper-dark, #2b2b2b);
+  --color-text-secondary: var(--raw-pepper-medium, #b3b3b3);
+  --color-text-muted: var(--raw-pepper-medium, #b3b3b3);
+  --color-text-inverse: var(--raw-salt-white, #ffffff);
 
-  --color-border: rgba(15, 23, 42, 0.1);
-  --color-border-subtle: rgba(15, 23, 42, 0.05);
-  --color-border-bright: rgba(37, 99, 235, 0.3);
+  --color-border: rgba(43, 43, 43, 0.15);
+  --color-border-subtle: rgba(43, 43, 43, 0.08);
+  --color-border-bright: #2b2b2b;
 
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.08);

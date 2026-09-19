@@ -42,24 +42,46 @@ import Icon from '../ui/Icon.astro';
 
     <!-- TALL MULTI-TIER MOUNTAIN RANGES -->
     <div class="mountains-layer">
-      <!-- Tier 1: Distant Sharp Alpine Peaks -->
+      <!-- Tier 1: Distant Sharp Alpine Peaks (White/Snowy) -->
       <svg class="mountain-tier mountain-back" id="mt-back" viewBox="0 0 1440 680" preserveAspectRatio="none">
-        <path d="M0,680 L0,320 L180,120 L320,280 L480,80 L640,260 L800,40 L960,240 L1120,90 L1280,270 L1440,160 L1440,680 Z" fill="#0d1829"/>
-        <path d="M480,80 L560,260 L640,260 L480,80 Z" fill="#13233b" opacity="0.6"/>
-        <path d="M800,40 L880,240 L960,240 L800,40 Z" fill="#13233b" opacity="0.6"/>
-        <path d="M1120,90 L1200,270 L1280,270 L1120,90 Z" fill="#13233b" opacity="0.6"/>
+        <defs>
+          <linearGradient id="mtnBackGradSB" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/>
+            <stop offset="30%" stop-color="#e8eef5" stop-opacity="0.95"/>
+            <stop offset="65%" stop-color="#c0d0d8" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#9ab0bc" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,680 L0,320 L180,120 L320,280 L480,80 L640,260 L800,40 L960,240 L1120,90 L1280,270 L1440,160 L1440,680 Z" fill="url(#mtnBackGradSB)"/>
+        <!-- Snow highlight on peak faces -->
+        <path d="M480,80 L560,260 L640,260 L480,80 Z" fill="#f0f5f8" opacity="0.8"/>
+        <path d="M800,40 L880,240 L960,240 L800,40 Z" fill="#f0f5f8" opacity="0.8"/>
+        <path d="M1120,90 L1200,270 L1280,270 L1120,90 Z" fill="#f0f5f8" opacity="0.8"/>
       </svg>
 
-      <!-- Tier 2: Mid Pine/Forest Slate Ridgeline -->
+      <!-- Tier 2: Mid Pine/Forest Green Ridgeline -->
       <svg class="mountain-tier mountain-mid" id="mt-mid" viewBox="0 0 1440 560" preserveAspectRatio="none">
-        <path d="M0,560 L0,280 Q140,140 280,240 T580,160 T880,220 T1180,140 T1440,210 L1440,560 Z" fill="#132a35"/>
-        <path d="M0,560 L0,340 C200,220 400,380 600,260 C800,160 1050,320 1250,220 C1350,180 1400,240 1440,260 L1440,560 Z" fill="#163442" opacity="0.7"/>
+        <defs>
+          <linearGradient id="mtnMidGradSB" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#4a7c35" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#2d5a1e" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,560 L0,280 Q140,140 280,240 T580,160 T880,220 T1180,140 T1440,210 L1440,560 Z" fill="url(#mtnMidGradSB)"/>
+        <path d="M0,560 L0,340 C200,220 400,380 600,260 C800,160 1050,320 1250,220 C1350,180 1400,240 1440,260 L1440,560 Z" fill="#3d6b2e" opacity="0.7"/>
       </svg>
 
-      <!-- Tier 3: Near Foothills -->
+      <!-- Tier 3: Near Rolling Green Foothills -->
       <svg class="mountain-tier mountain-fore" id="mt-fore" viewBox="0 0 1440 440" preserveAspectRatio="none">
-        <path d="M0,440 L0,200 Q180,110 380,180 T760,130 T1140,170 T1440,120 L1440,440 Z" fill="#0f262e"/>
-        <path d="M120,180 Q130,155 140,180 Q150,150 160,180 Q170,158 180,180 M880,150 Q890,125 900,150 Q910,120 920,150 Q930,130 940,150" stroke="#163842" stroke-width="6" stroke-linecap="round" fill="none"/>
+        <defs>
+          <linearGradient id="mtnForeGradSB" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#3d6b2e" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#1e4012" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,440 L0,200 Q180,110 380,180 T760,130 T1140,170 T1440,120 L1440,440 Z" fill="url(#mtnForeGradSB)"/>
+        <!-- Pine tree silhouettes in dark green -->
+        <path d="M120,180 Q130,155 140,180 Q150,150 160,180 Q170,158 180,180 M880,150 Q890,125 900,150 Q910,120 920,150 Q930,130 940,150" stroke="#1a3d0e" stroke-width="6" stroke-linecap="round" fill="none"/>
       </svg>
     </div>
 
@@ -73,29 +95,29 @@ import Icon from '../ui/Icon.astro';
         </div>
       </div>
 
-      <!-- Left Cliff Rock Shelf (Reaches directly into the bridge hinge) -->
+      <!-- Left Cliff Rock Shelf (Earthy Sandstone - Reaches directly into the bridge hinge) -->
       <div class="cliff cliff-left">
         <svg viewBox="0 0 520 280" preserveAspectRatio="none">
-          <!-- Main cliff body -->
-          <path d="M0,280 L0,0 L480,0 C510,70 470,170 440,220 L400,280 Z" fill="#111c2a"/>
+          <!-- Main cliff body (earthy sandstone) -->
+          <path d="M0,280 L0,0 L480,0 C510,70 470,170 440,220 L400,280 Z" fill="#8a5a30"/>
           <!-- Top cliff shelf rock platform -->
-          <path d="M0,0 L480,0 L450,32 L0,32 Z" fill="#1e2f47"/>
-          <path d="M0,32 L450,32 L430,50 L0,50 Z" fill="#172437"/>
-          <!-- Rock texture lines -->
-          <path d="M220,50 L200,180 M340,50 L310,210 M410,50 L380,240" stroke="#09101a" stroke-width="3" opacity="0.6"/>
+          <path d="M0,0 L480,0 L450,32 L0,32 Z" fill="#a0714a"/>
+          <path d="M0,32 L450,32 L430,50 L0,50 Z" fill="#7a5535"/>
+          <!-- Rock texture lines (dark brown) -->
+          <path d="M220,50 L200,180 M340,50 L310,210 M410,50 L380,240" stroke="#5c3d20" stroke-width="3" opacity="0.7"/>
         </svg>
       </div>
 
-      <!-- Right Cliff Rock Shelf (Reaches directly into the bridge hinge) -->
+      <!-- Right Cliff Rock Shelf (Earthy Sandstone - Reaches directly into the bridge hinge) -->
       <div class="cliff cliff-right">
         <svg viewBox="0 0 520 280" preserveAspectRatio="none">
-          <!-- Main cliff body -->
-          <path d="M520,280 L520,0 L40,0 C10,70 50,170 80,220 L120,280 Z" fill="#111c2a"/>
+          <!-- Main cliff body (earthy sandstone) -->
+          <path d="M520,280 L520,0 L40,0 C10,70 50,170 80,220 L120,280 Z" fill="#8a5a30"/>
           <!-- Top cliff shelf rock platform -->
-          <path d="M520,0 L40,0 L70,32 L520,32 Z" fill="#1e2f47"/>
-          <path d="M520,32 L70,32 L90,50 L520,50 Z" fill="#172437"/>
-          <!-- Rock texture lines -->
-          <path d="M300,50 L320,180 M180,50 L210,210 M110,50 L140,240" stroke="#09101a" stroke-width="3" opacity="0.6"/>
+          <path d="M520,0 L40,0 L70,32 L520,32 Z" fill="#a0714a"/>
+          <path d="M520,32 L70,32 L90,50 L520,50 Z" fill="#7a5535"/>
+          <!-- Rock texture lines (dark brown) -->
+          <path d="M300,50 L320,180 M180,50 L210,210 M110,50 L140,240" stroke="#5c3d20" stroke-width="3" opacity="0.7"/>
         </svg>
       </div>
 
@@ -223,16 +245,16 @@ import Icon from '../ui/Icon.astro';
       if (statusText && statusDot) {
         if (bridgeProgress >= 0.98) {
           statusText.textContent = 'Ecosystem Connected: Solutions ↔ Products ↔ Talent';
-          statusDot.style.backgroundColor = '#22c55e';
-          statusDot.style.boxShadow = '0 0 10px #22c55e';
+          statusDot.style.backgroundColor = '#ffffff';
+          statusDot.style.boxShadow = '0 0 10px rgba(255,255,255,0.8)';
         } else if (bridgeProgress > 0.08) {
           const pct = Math.round(bridgeProgress * 100);
           statusText.textContent = `Aligning Bridge Infrastructure (${pct}% Closed)`;
-          statusDot.style.backgroundColor = '#06b6d4';
-          statusDot.style.boxShadow = '0 0 8px #06b6d4';
+          statusDot.style.backgroundColor = '#d4d4d4';
+          statusDot.style.boxShadow = '0 0 8px rgba(212,212,212,0.6)';
         } else {
           statusText.textContent = 'Scroll down to connect the bridge';
-          statusDot.style.backgroundColor = '#eab308';
+          statusDot.style.backgroundColor = '#b3b3b3';
           statusDot.style.boxShadow = 'none';
         }
       }
@@ -253,10 +275,11 @@ import Icon from '../ui/Icon.astro';
   .story-bridge-section {
     position: relative;
     height: 240vh;
-    background: linear-gradient(180deg, #070c16 0%, #0a1322 45%, #0f172a 100%);
+    /* Natural blue sky background */
+    background: linear-gradient(180deg, #1a4a8a 0%, #2e6db8 25%, #5b9fd4 55%, #8dc3e8 80%, #daeefa 100%);
     overflow: clip;
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
+    border-top: 1px solid rgba(100, 160, 210, 0.3);
+    border-bottom: 1px solid rgba(100, 160, 210, 0.3);
   }
 
   .story-sticky-container {
@@ -288,8 +311,9 @@ import Icon from '../ui/Icon.astro';
     width: 180px;
     height: 180px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(234, 179, 8, 0.4) 0%, rgba(6, 182, 212, 0.25) 45%, transparent 75%);
-    filter: blur(35px);
+    /* Warm golden sun */
+    background: radial-gradient(circle, rgba(255, 240, 150, 0.6) 0%, rgba(255, 200, 80, 0.3) 40%, rgba(255, 180, 50, 0.1) 70%, transparent 85%);
+    filter: blur(20px);
     transition: transform 0.1s linear;
   }
 
@@ -408,9 +432,9 @@ import Icon from '../ui/Icon.astro';
     font-family: var(--font-mono);
     font-size: var(--font-size-caption);
     letter-spacing: var(--letter-spacing-wider);
-    color: var(--color-accent);
-    background: rgba(15, 23, 42, 0.88);
-    border: 1px solid rgba(6, 182, 212, 0.35);
+    color: var(--color-salt-white);
+    background: var(--color-pepper-alpha-85);
+    border: 1px solid var(--color-border);
     padding: 0.35rem 0.95rem;
     border-radius: var(--radius-full);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
@@ -432,14 +456,14 @@ import Icon from '../ui/Icon.astro';
   }
 
   .text-gradient-cyan {
-    background: linear-gradient(135deg, #38bdf8 0%, #06b6d4 50%, #22c55e 100%);
+    background: linear-gradient(135deg, var(--color-salt-white) 0%, var(--color-salt-light) 50%, var(--color-pepper-medium) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .story-body-text {
     font-size: clamp(1rem, 1.8vw, 1.25rem);
-    color: #cbd5e1;
+    color: var(--color-text-secondary);
     line-height: var(--line-height-relaxed);
     max-width: 780px;
     text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95);
@@ -465,7 +489,8 @@ import Icon from '../ui/Icon.astro';
     left: 0;
     right: 0;
     height: 110px;
-    background: linear-gradient(180deg, #0284c7 0%, #0369a1 40%, #082f49 100%);
+    /* Blue river water reflecting the sky */
+    background: linear-gradient(180deg, #2a6090 0%, #1a4d78 40%, #0d3358 100%);
     z-index: 1;
     overflow: hidden;
   }
@@ -632,7 +657,7 @@ import Icon from '../ui/Icon.astro';
     gap: 0.5rem;
     font-family: var(--font-mono);
     font-size: var(--font-size-caption);
-    background: rgba(15, 23, 42, 0.95);
+    background: var(--color-pepper-alpha-95);
     border: 1px solid var(--color-border);
     padding: 0.4rem 1.1rem;
     border-radius: var(--radius-full);
@@ -645,7 +670,7 @@ import Icon from '../ui/Icon.astro';
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: #eab308;
+    background-color: var(--color-pepper-medium);
     transition: all 0.3s ease;
   }
 

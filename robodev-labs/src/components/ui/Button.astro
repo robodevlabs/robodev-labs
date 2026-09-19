@@ -64,7 +64,7 @@ const Component = isLink ? 'a' : 'button';
     isolation: isolate;
   }
 
-  /* Subtle micro-shimmer highlight across top edge */
+  /* Subtle micro-shimmer highlight across top edge — uses Salt White alpha tokens */
   .button-primitive::after {
     content: '';
     position: absolute;
@@ -72,8 +72,8 @@ const Component = isLink ? 'a' : 'button';
     border-radius: inherit;
     background: linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.14) 0%,
-      rgba(255, 255, 255, 0) 60%
+      var(--color-salt-alpha-15) 0%,
+      transparent 60%
     );
     pointer-events: none;
     opacity: 0.8;
@@ -103,70 +103,78 @@ const Component = isLink ? 'a' : 'button';
     letter-spacing: -0.01em;
   }
 
-  /* Variant: Primary (Primary Brand Royal Blue with rich tactile shadow & subtle sheen) */
+  /* Variant: Primary — Strictly Combination 56: Salt and Pepper
+     Default  : #FFFFFF bg (--color-salt-white)  | #2B2B2B text (--color-pepper-dark)
+     Hover    : #D4D4D4 bg (--color-salt-light)   | #2B2B2B text
+     Active   : #B3B3B3 bg (--color-pepper-medium)| #2B2B2B text
+  */
   .variant-primary {
-    background-color: var(--color-brand, #2563eb);
-    color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.2);
+    background-color: var(--color-salt-white);
+    color: var(--color-pepper-dark);
+    border-color: var(--color-salt-white);
+    font-weight: var(--font-weight-semibold);
     box-shadow: 
       0 1px 2px rgba(0, 0, 0, 0.3),
-      0 4px 16px rgba(37, 99, 235, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      0 4px 16px var(--color-salt-alpha-20),
+      inset 0 1px 0 var(--color-salt-alpha-40);
   }
 
   .variant-primary:hover:not(.is-disabled) {
-    background-color: var(--color-brand-hover, #1d4ed8);
-    border-color: rgba(255, 255, 255, 0.35);
+    background-color: var(--color-salt-light);
+    color: var(--color-pepper-dark);
+    border-color: var(--color-salt-light);
     transform: translateY(-1.5px);
     box-shadow: 
       0 4px 12px rgba(0, 0, 0, 0.4),
-      0 8px 24px rgba(37, 99, 235, 0.55),
-      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      0 8px 24px var(--color-salt-alpha-20),
+      inset 0 1px 0 var(--color-salt-alpha-40);
   }
 
   .variant-primary:active:not(.is-disabled) {
-    background-color: var(--color-brand-active, #1e40af);
+    background-color: var(--color-pepper-medium);
+    color: var(--color-pepper-dark);
+    border-color: var(--color-pepper-medium);
     transform: translateY(0.5px);
     box-shadow: 
       0 1px 3px rgba(0, 0, 0, 0.4),
-      0 2px 8px rgba(37, 99, 235, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      0 2px 8px var(--color-salt-alpha-10),
+      inset 0 1px 0 var(--color-salt-alpha-15);
   }
 
-  /* Variant: Secondary (Clean frosted surface with subtle border, like reference screenshot) */
+  /* Variant: Secondary (Pepper frosted glass with Salt border) */
   .variant-secondary {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--color-surface);
     color: var(--color-text);
-    border-color: rgba(255, 255, 255, 0.12);
+    border-color: var(--color-border);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   }
 
   .variant-secondary:hover:not(.is-disabled) {
-    background-color: rgba(255, 255, 255, 0.14);
-    border-color: rgba(255, 255, 255, 0.22);
-    color: var(--raw-white);
+    background-color: var(--color-surface-hover);
+    border-color: var(--color-border-bright);
+    color: var(--color-salt-white);
     transform: translateY(-1.5px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   }
 
   .variant-secondary:active:not(.is-disabled) {
     transform: translateY(0.5px);
-    background-color: rgba(255, 255, 255, 0.09);
+    background-color: var(--color-surface);
   }
 
   /* Variant: Outline (Minimal border with crisp accent highlight) */
   .variant-outline {
     background-color: transparent;
     color: var(--color-text);
-    border-color: rgba(255, 255, 255, 0.16);
+    border-color: var(--color-border);
   }
 
   .variant-outline:hover:not(.is-disabled) {
-    background-color: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.3);
-    color: var(--raw-white);
+    background-color: var(--color-surface);
+    border-color: var(--color-border-bright);
+    color: var(--color-salt-white);
     transform: translateY(-1.5px);
   }
 
@@ -182,7 +190,7 @@ const Component = isLink ? 'a' : 'button';
   }
 
   .variant-ghost:hover:not(.is-disabled) {
-    background-color: rgba(255, 255, 255, 0.06);
+    background-color: var(--color-surface);
     color: var(--color-text);
   }
 

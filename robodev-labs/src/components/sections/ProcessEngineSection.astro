@@ -139,7 +139,8 @@ const ganttStages = [
   .process-gantt-section {
     position: relative;
     padding: clamp(5rem, 8vw, 8rem) 0;
-    background-color: var(--color-background);
+    /* Medium green background */
+    background-color: var(--color-pepper-dark);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
@@ -179,19 +180,20 @@ const ganttStages = [
     font-weight: 700;
     line-height: 1.15;
     letter-spacing: -0.03em;
-    color: #ffffff;
+    /* 10% accent — primary headline */
+    color: var(--color-salt-white);
     margin: 0;
   }
 
   .headline-dim {
-    color: #94a3b8;
+    color: var(--color-salt-light);
     font-weight: 400;
   }
 
   .process-lead {
     font-family: var(--font-sans);
     font-size: clamp(0.95rem, 1.3vw, 1.05rem);
-    color: #94a3b8;
+    color: var(--color-salt-light);
     line-height: 1.65;
     margin: 0;
   }
@@ -203,9 +205,10 @@ const ganttStages = [
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--color-border);
     border-radius: 14px;
-    background-color: #070c18;
+    /* 30% dark green — Gantt board outer shell */
+    background-color: var(--color-pepper-medium);
     box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
@@ -219,8 +222,9 @@ const ganttStages = [
   .gantt-header-row {
     display: grid;
     grid-template-columns: 340px 1fr;
-    background-color: #0d1527;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    /* 30% — slightly deeper dark green for header */
+    background-color: rgba(30, 51, 40, 0.8);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .info-col-header {
@@ -230,8 +234,8 @@ const ganttStages = [
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #94a3b8;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-salt-white);
+    border-right: 1px solid var(--color-border);
     display: flex;
     align-items: center;
   }
@@ -244,8 +248,9 @@ const ganttStages = [
   .timeline-header-cell {
     padding: 1.1rem 0.5rem;
     text-align: center;
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.015);
+    border-right: 1px solid var(--color-border-subtle);
+    /* subtle tint on header cells */
+    background: rgba(255, 255, 255, 0.03);
   }
 
   .timeline-header-cell:last-child {
@@ -257,7 +262,7 @@ const ganttStages = [
     font-size: 0.76rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #cbd5e1;
+    color: var(--color-text-secondary);
   }
 
   /* Gantt Rows */
@@ -269,7 +274,7 @@ const ganttStages = [
   .gantt-row {
     display: grid;
     grid-template-columns: 340px 1fr;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid var(--color-border-subtle);
     transition: background-color 0.15s ease;
   }
 
@@ -278,7 +283,7 @@ const ganttStages = [
   }
 
   .gantt-row:hover {
-    background-color: rgba(255, 255, 255, 0.02);
+    background-color: rgba(255, 255, 255, 0.03);
   }
 
   /* Stage Info Column */
@@ -287,8 +292,9 @@ const ganttStages = [
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-    background-color: #090e1c;
+    border-right: 1px solid var(--color-border);
+    /* 30% — dark green stage info column */
+    background-color: var(--color-pepper-medium);
     justify-content: center;
   }
 
@@ -296,7 +302,7 @@ const ganttStages = [
     font-family: var(--font-sans);
     font-size: 1rem;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--color-salt-white);
     margin: 0;
     line-height: 1.3;
   }
@@ -304,7 +310,7 @@ const ganttStages = [
   .stage-description {
     font-family: var(--font-sans);
     font-size: 0.84rem;
-    color: #94a3b8;
+    color: var(--color-text-secondary);
     line-height: 1.45;
     margin: 0;
   }
@@ -319,7 +325,7 @@ const ganttStages = [
 
   .deliverable-label {
     font-family: var(--font-mono);
-    color: #64748b;
+    color: var(--color-salt-white);
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -327,7 +333,7 @@ const ganttStages = [
 
   .deliverable-value {
     font-family: var(--font-sans);
-    color: #cbd5e1;
+    color: var(--color-text-secondary);
     font-weight: 500;
   }
 
@@ -338,7 +344,8 @@ const ganttStages = [
     grid-template-columns: repeat(6, 1fr);
     align-items: center;
     padding: 1.1rem 0;
-    background-color: #070c18;
+    /* 30% — dark green timeline track */
+    background-color: var(--color-pepper-medium);
   }
 
   .timeline-grid-guides {
@@ -372,9 +379,10 @@ const ganttStages = [
   .bar-fill {
     width: 100%;
     padding: 0.65rem 1.1rem;
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-left: 3px solid var(--color-brand, #2563eb);
+    /* 30% — dark green bar fill, slightly lighter than track */
+    background: linear-gradient(135deg, rgba(49, 71, 58, 0.9) 0%, rgba(30, 51, 40, 0.98) 100%);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-salt-white);
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -384,24 +392,18 @@ const ganttStages = [
 
   .gantt-row:hover .bar-fill {
     transform: translateY(-1px);
-    background: linear-gradient(135deg, rgba(37, 52, 75, 0.9) 0%, rgba(20, 30, 50, 0.98) 100%);
-    border-color: rgba(255, 255, 255, 0.22);
-    border-left-color: var(--color-brand, #2563eb);
+    background: linear-gradient(135deg, rgba(61, 87, 70, 0.95) 0%, rgba(45, 65, 52, 1) 100%);
+    border-color: var(--color-salt-light);
+    border-left-color: var(--color-salt-white);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
   }
 
   .bar-status-text {
     font-family: var(--font-sans);
     font-size: 0.82rem;
-    font-weight: 500;
-    color: #f1f5f9;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-    font-size: 0.8rem;
     font-weight: 600;
-    color: #f1f5f9;
+    /* 10% — salt white for bar label text */
+    color: var(--color-salt-white);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -423,7 +425,8 @@ const ganttStages = [
   .action-caption {
     font-family: var(--font-sans);
     font-size: 0.98rem;
-    color: #94a3b8;
+    /* 10% — salt light for caption text */
+    color: var(--color-salt-light);
     font-weight: 500;
   }
 

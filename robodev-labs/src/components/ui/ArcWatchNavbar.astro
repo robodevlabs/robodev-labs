@@ -215,7 +215,7 @@ import Icon from '../ui/Icon.astro';
     left: 45px;
     width: 38px;
     height: 12px;
-    background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+    background: linear-gradient(180deg, var(--color-pepper-dark) 0%, #1a1a1a 100%);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 4px 4px 0 0;
     display: flex;
@@ -226,7 +226,7 @@ import Icon from '../ui/Icon.astro';
   .crown-grooves {
     width: 20px;
     height: 4px;
-    background: repeating-linear-gradient(90deg, #64748b 0px, #64748b 2px, transparent 2px, transparent 4px);
+    background: repeating-linear-gradient(90deg, var(--color-pepper-medium) 0px, var(--color-pepper-medium) 2px, transparent 2px, transparent 4px);
   }
 
   /* Dial Screen Interface */
@@ -258,8 +258,8 @@ import Icon from '../ui/Icon.astro';
 
   .dial-tick.active-tick {
     width: 9px;
-    background: #06b6d4;
-    box-shadow: 0 0 8px #06b6d4;
+    background: var(--color-salt-white);
+    box-shadow: 0 0 8px var(--color-salt-white);
   }
 
   /* Header Pill */
@@ -278,8 +278,8 @@ import Icon from '../ui/Icon.astro';
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #06b6d4;
-    box-shadow: 0 0 6px #06b6d4;
+    background: var(--color-salt-white);
+    box-shadow: 0 0 6px var(--color-salt-white);
     animation: pulseWatchDot 2s infinite ease-in-out;
   }
 
@@ -340,13 +340,13 @@ import Icon from '../ui/Icon.astro';
     flex-shrink: 0;
   }
 
-  .item-bezel-node.blue { color: #60a5fa; }
-  .item-bezel-node.cyan { color: #38bdf8; }
-  .item-bezel-node.purple { color: #c084fc; }
+  .item-bezel-node.blue,
+  .item-bezel-node.cyan,
+  .item-bezel-node.purple { color: var(--color-salt-white); }
 
-  .dial-menu-item.active .item-bezel-node.blue { background: rgba(37, 99, 235, 0.25); box-shadow: 0 0 8px rgba(37, 99, 235, 0.5); }
-  .dial-menu-item.active .item-bezel-node.cyan { background: rgba(6, 182, 212, 0.25); box-shadow: 0 0 8px rgba(6, 182, 212, 0.5); }
-  .dial-menu-item.active .item-bezel-node.purple { background: rgba(168, 85, 247, 0.25); box-shadow: 0 0 8px rgba(168, 85, 247, 0.5); }
+  .dial-menu-item.active .item-bezel-node.blue,
+  .dial-menu-item.active .item-bezel-node.cyan,
+  .dial-menu-item.active .item-bezel-node.purple { background: rgba(255, 255, 255, 0.15); box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); }
 
   .item-text-group {
     display: flex;
@@ -370,7 +370,7 @@ import Icon from '../ui/Icon.astro';
   }
 
   .dial-menu-item.active .item-title {
-    color: var(--raw-white);
+    color: var(--color-salt-white);
   }
 
   .active-indicator-bar {
@@ -379,9 +379,9 @@ import Icon from '../ui/Icon.astro';
     top: 25%;
     bottom: 25%;
     width: 3px;
-    background: #06b6d4;
+    background: var(--color-salt-white);
     border-radius: 2px 0 0 2px;
-    box-shadow: 0 0 6px #06b6d4;
+    box-shadow: 0 0 6px var(--color-salt-white);
     opacity: 0;
     transition: opacity 0.2s ease;
   }
@@ -418,7 +418,7 @@ import Icon from '../ui/Icon.astro';
   .meter-bar-fill {
     height: 100%;
     width: 33%;
-    background: linear-gradient(90deg, #2563eb, #06b6d4);
+    background: linear-gradient(90deg, var(--color-pepper-medium), var(--color-salt-white));
     border-radius: var(--radius-full);
     transition: width 0.3s ease;
   }
