@@ -13,6 +13,7 @@
  * - Bottom-right "SCROLL TO NEXT ——————— (↓)" action.
  */
 import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
 ---
 
 <div class="circular-arc-scroll-realm" id="circular-arc-scroll-realm">
@@ -330,6 +331,13 @@ import Icon from '../ui/Icon.astro';
                 <span class="cap-txt">Engineering Career Guidance</span>
               </div>
             </div>
+          </div>
+
+          <div class="editorial-action-row">
+            <Button variant="primary" size="md" href="/academy" class="academy-explore-btn">
+              <span>Explore Academy Programs</span>
+              <Icon name="arrow-right" size={15} />
+            </Button>
           </div>
         </article>
 
@@ -1104,6 +1112,25 @@ import Icon from '../ui/Icon.astro';
     letter-spacing: -0.01em;
   }
 
+  .editorial-action-row {
+    margin-top: 1.6rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .academy-explore-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .academy-explore-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  }
+
   /* -------------------------------------------------------------------------
      RIGHT: ISOMETRIC 3D FLOATING GLASS TECH COMPOSITION
      ------------------------------------------------------------------------- */
@@ -1808,6 +1835,16 @@ import Icon from '../ui/Icon.astro';
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 8px;
+    }
+
+    .editorial-action-row {
+      margin-top: 1.25rem;
+      width: 100%;
+    }
+
+    .academy-explore-btn {
+      width: 100%;
+      justify-content: center;
     }
   }
 

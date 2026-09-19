@@ -1,0 +1,1492 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import Heading from '../components/ui/Heading.astro';
+import Text from '../components/ui/Text.astro';
+import Button from '../components/ui/Button.astro';
+import Icon from '../components/ui/Icon.astro';
+import Divider from '../components/ui/Divider.astro';
+import Eyebrow from '../components/ui/Eyebrow.astro';
+import { academyData } from '../data/academy';
+import { siteConfig } from '../config/site';
+
+// Rich, SEO-Engineered Workshop Offerings targeting "online workshops with certificates free"
+const workshopOfferings = [
+  {
+    id: 'ws-fullstack-production',
+    title: 'Full-Stack Web Architecture & Production Engineering',
+    category: 'Free Online Workshop',
+    level: 'Beginner to Advanced',
+    duration: '2 Days • Weekend Intensive (Live Online)',
+    format: 'Live Interactive Code-Along + Free Certificate of Completion',
+    price: 'Free Access / Open Community',
+    prerequisites: 'Basic JavaScript/HTML knowledge or curiosity to build',
+    badge: 'Free Certificate Included',
+    summary:
+      'A hands-on, 100% practical live online workshop engineered around real production stacks (React, Astro, Node.js, PostgreSQL). Students write code, review Pull Requests, and ship live applications to production rather than watching passive slide decks.',
+    curriculum: [
+      'Modular full-stack web architecture, API boundaries & database schema modeling',
+      'Git workflows, production pull request etiquette & code review standards',
+      'Automated CI/CD deployment pipelines to cloud infrastructure',
+      'Production debugging, error telemetry, and web security essentials',
+    ],
+    deliverable: 'A live, publicly deployed multi-tier web application & verifiable digital Certificate of Completion.',
+    certificationDetails: 'Verifiable Digital Certificate issued upon building and pushing live production project code.',
+  },
+  {
+    id: 'ws-ai-integrations',
+    title: 'Applied AI & Practical Workflow Automation for Engineers',
+    category: 'Free Online Workshop',
+    level: 'All Engineering Levels',
+    duration: '1 Day • 6 Hours Intensive (Live Online)',
+    format: 'Live Hands-On Lab + Free Certificate of Mastery',
+    price: 'Free Access / Open Community',
+    prerequisites: 'Basic programming familiarity in any language',
+    badge: 'Free Certificate Included',
+    summary:
+      'Master the practical integration of AI APIs, LLMs, structured JSON outputs, semantic retrieval (RAG), and agentic workflows into production software. Learn how modern engineering teams leverage AI to automate real-world business workflows.',
+    curriculum: [
+      'Deterministic JSON prompt engineering & structured data extraction',
+      'Vector databases, embeddings & Retrieval-Augmented Generation (RAG)',
+      'Autonomous agentic tool-calling execution and API integrations',
+      'Production latency optimization, token budgeting & security guardrails',
+    ],
+    deliverable: 'A functional, automated AI-powered backend service & verifiable Certificate of Completion.',
+    certificationDetails: 'Digital Certificate of Completion issued upon building a working AI pipeline.',
+  },
+  {
+    id: 'ws-git-cicd-systems',
+    title: 'Git Discipline, Professional Code Review & DevOps Foundations',
+    category: 'Free Online Workshop',
+    level: 'Collegiate & Junior Developers',
+    duration: '1 Day • 5 Hours (Live Online)',
+    format: 'Interactive Group Code Review + Certificate',
+    price: 'Free Access / Open Community',
+    prerequisites: 'Familiarity with the command line or terminal',
+    badge: 'Free Certificate Included',
+    summary:
+      'Experience the exact collaborative rhythm of a senior engineering team. Practice trunk-based branching, interactive git rebasing, conflict resolution, writing descriptive commit messages, and configuring automated test/lint pipelines.',
+    curriculum: [
+      'Trunk-based vs GitFlow branching strategies for scaling engineering teams',
+      'Resolving merge conflicts, rebasing, squashing, and cherry-picking with confidence',
+      'Writing constructive code reviews and preparing clean Pull Requests',
+      'Automating GitHub Actions CI/CD workflows and automated quality checks',
+    ],
+    deliverable: 'A battle-tested personal git repository with full automated pipeline enforcement & Certificate.',
+    certificationDetails: 'Issued upon successful merge of a multi-branch production PR under automated CI.',
+  },
+  {
+    id: 'ws-hackathon-sprint',
+    title: '48-Hour Hackathon Acceleration & Rapid MVP Prototyping',
+    category: 'Free Online Accelerator',
+    level: 'Student Teams & Builders',
+    duration: 'Weekend Sprint Simulation (48 Hours)',
+    format: 'Live Mentorship, Team Pitch & Free Hackathon Certificate',
+    price: 'Free Access / Open Community',
+    prerequisites: 'Curiosity and enthusiasm to build in a team',
+    badge: 'Free Certificate Included',
+    summary:
+      'Prepare to compete and win in global hackathons. Learn how to scope a realistic MVP in 2 hours, scaffold full-stack boilerplate in 30 minutes, integrate third-party APIs, and deliver a high-conviction live technical demo to judges.',
+    curriculum: [
+      'Agile MVP scoping: What to build in 48 hours and what to aggressively cut',
+      'Rapid UI prototyping with modern components, layouts & micro-interactions',
+      'Rapid backend mocking and webhook integrations',
+      'The 3-minute technical pitch framework: Demos that win competitions',
+    ],
+    deliverable: 'A working MVP prototype, public demo link, pitch slide deck & Hackathon Certificate of Participation.',
+    certificationDetails: 'Issued upon delivering a live working software demo during the sprint showcase.',
+  },
+];
+
+// Workshop Lifecycle steps directly from README.md
+const workshopLifecycleSteps = [
+  { step: '01', title: 'Idea & Industry Need', desc: 'Curriculum designed around real software engineering market demands.' },
+  { step: '02', title: 'Curriculum Engineering', desc: 'Zero slide decks. 100% hands-on code labs and production repos.' },
+  { step: '03', title: 'Open Promotion', desc: 'Accessible to students, developers, and collegiate clubs across Nepal and globally.' },
+  { step: '04', title: 'Free Registration', desc: 'Fast, open registration with clear prerequisite guides and starter kits.' },
+  { step: '05', title: 'Preparation & Setup', desc: 'Pre-flight setup assistance ensuring everyone is coding on minute one.' },
+  { step: '06', title: 'Live Delivery', desc: 'Interactive code-along sessions guided by experienced senior engineers.' },
+  { step: '07', title: 'Attendance & Labs', desc: 'Live participation, real-time bug squashing, and active peer support.' },
+  { step: '08', title: 'Feedback & Code Review', desc: 'Constructive review of submitted pull requests and design choices.' },
+  { step: '09', title: 'Verifiable Certificate', desc: 'Official digital certificate of completion with unique verification ID.' },
+  { step: '10', title: 'Follow-up & HR Pipeline', desc: 'Top performers evaluated for RoboDev Labs internships and fellowships.' },
+];
+
+// Target audience segments from README.md
+const targetAudiences = [
+  { icon: 'users', title: 'College & University Students', desc: 'Bridge academic theory with real industry-standard software engineering practices.' },
+  { icon: 'code', title: 'Beginner & Self-Taught Developers', desc: 'Gain confidence building and deploying real applications to production cloud infrastructure.' },
+  { icon: 'sparkles', title: 'Professionals Seeking Upskilling', desc: 'Master modern full-stack architectures, AI APIs, and scalable DevOps practices.' },
+  { icon: 'zap', title: 'Hackathon Competitors & Teams', desc: 'Learn rapid 48-hour MVP scoping, team collaboration, and high-impact pitching.' },
+  { icon: 'layers', title: 'Colleges & Organizations', desc: 'Host custom on-campus or virtual workshops tailored to your computer science cohorts.' },
+  { icon: 'check', title: 'Aspiring RoboDev Interns', desc: 'Stand out in our student talent pipeline for engineering internships and fellowships.' },
+];
+
+// FAQ schema for rich search snippets (SEO Schema.org)
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Are the online workshops at RoboDev Academy really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. RoboDev Academy offers free online technical workshops for college students, junior developers, and aspiring engineers. Our mission is to democratize practical engineering education while building an exceptional engineering talent pipeline."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I get a free certificate of completion with the online workshops?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! Every participant who attends our interactive online workshops and completes the practical hands-on project milestone receives an official, verifiable digital Certificate of Completion from RoboDev Labs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does the RoboDev Academy to HR internship pipeline work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Top performers in our workshops and hackathon simulations are evaluated by our engineering leadership. Standout builders who demonstrate strong technical discipline, clean code, and passion are directly prioritized for internship and fellowship opportunities at RoboDev Labs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can universities or student clubs book a workshop?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. We actively collaborate with university computer science departments, developer student clubs, and tech communities to host customized virtual or on-campus technical workshops and bootcamps."
+      }
+    }
+  ]
+};
+
+// Course / Educational Program Schema
+const courseSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": workshopOfferings.map((ws, i) => ({
+    "@type": "Course",
+    "position": i + 1,
+    "name": ws.title,
+    "description": ws.summary,
+    "provider": {
+      "@type": "Organization",
+      "name": "RoboDev Labs Academy",
+      "sameAs": "https://robodevlabs.com"
+    },
+    "educationalCredentialAwarded": "Certificate of Completion",
+    "isAccessibleForFree": true,
+    "hasCourseInstance": {
+      "@type": "CourseInstance",
+      "courseMode": "Online",
+      "courseWorkload": ws.duration
+    }
+  }))
+};
+---
+
+<BaseLayout
+  title="Free Online Workshops with Certificates | RoboDev Academy"
+  description="Looking for online workshops with certificates free? Join RoboDev Academy for hands-on technical workshops, developer mentorship, and hackathon accelerators. Build real code and earn a verified certificate."
+>
+  <!-- Inject Schema.org Structured Data for Google Rich Results -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} />
+
+  <!-- Hero Section -->
+  <Section size="lg" bg="secondary" class="academy-hero-section">
+    <Container>
+      <!-- Breadcrumb Navigation -->
+      <nav class="academy-breadcrumb" aria-label="Breadcrumb">
+        <a href="/" class="breadcrumb-link">
+          <Icon name="arrow-left" size={14} />
+          <span>Back to Home</span>
+        </a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current">RoboDev Academy</span>
+      </nav>
+
+      <div class="hero-editorial-wrap">
+        <div class="hero-eyebrow-badge">
+          <span class="badge-dot"></span>
+          <span class="badge-text">Free Online Workshops with Verified Certificates</span>
+        </div>
+
+        <Heading level="h1" size="h1" class="academy-hero-title">
+          Practical Software Engineering Workshops with Free Certificates
+        </Heading>
+
+        <p class="academy-hero-lead">
+          Bridge the gap between academic theory and real-world technology. Join <strong>free online workshops with certificates</strong> from RoboDev Academy. Master full-stack architectures, practical AI APIs, Git discipline, and hackathon execution—with zero slides, 100% production code, and direct senior engineer mentorship.
+        </p>
+
+        <!-- SEO Keyword Highlights Pills -->
+        <div class="hero-seo-pills-row">
+          <span class="seo-pill"><Icon name="check" size={13} /> 100% Free Workshops</span>
+          <span class="seo-pill"><Icon name="check" size={13} /> Verifiable Digital Certificates</span>
+          <span class="seo-pill"><Icon name="check" size={13} /> Live Interactive Online Code-Alongs</span>
+          <span class="seo-pill"><Icon name="check" size={13} /> Direct Internship &amp; Talent Pipeline</span>
+        </div>
+
+        <!-- Quick Stats Row -->
+        <div class="academy-meta-strip">
+          <div class="meta-card">
+            <span class="meta-val">Free</span>
+            <span class="meta-lbl">Zero Tuition Required</span>
+          </div>
+          <div class="meta-divider"></div>
+          <div class="meta-card">
+            <span class="meta-val">Certificate</span>
+            <span class="meta-lbl">Verified Digital Credential</span>
+          </div>
+          <div class="meta-divider"></div>
+          <div class="meta-card">
+            <span class="meta-val">1-on-1</span>
+            <span class="meta-lbl">Senior Engineer Mentorship</span>
+          </div>
+          <div class="meta-divider"></div>
+          <div class="meta-card">
+            <span class="meta-val">HR Pipeline</span>
+            <span class="meta-lbl">Internships at RoboDev Labs</span>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Divider />
+
+  <!-- Main Editorial Blog & Program Directory Section -->
+  <Section size="lg" bg="default" class="academy-content-section">
+    <Container>
+      <div class="academy-blog-layout">
+        
+        <!-- Left Column: Editorial Articles & Workshop Deep Dives -->
+        <div class="academy-main-feed">
+          
+          <!-- Editorial Overview Post -->
+          <article class="blog-editorial-post">
+            <div class="post-header">
+              <div class="post-meta-row">
+                <span class="post-category">Educational Mission</span>
+                <span class="post-date">RoboDev Labs Academy Directive</span>
+              </div>
+              <h2 class="post-title">
+                Why We Offer Free Online Workshops with Certificates: Practical Skills Over Slide Decks
+              </h2>
+            </div>
+
+            <div class="post-body-prose">
+              <p>
+                If you are searching for <strong>online workshops with certificates free</strong> of charge, you have probably noticed that most free courses offer either basic pre-recorded videos or theoretical slide decks with little practical depth.
+              </p>
+              <p>
+                RoboDev Labs was founded on a different belief: <strong>engineering talent is unlocked by building real software alongside experienced engineers</strong>. As an active technology company building client software, developer tools, and proprietary products like Busly, our Academy division is dedicated to teaching practical skills to college students, beginner developers, and aspiring engineers.
+              </p>
+
+              <div class="philosophy-grid">
+                <div class="phil-card">
+                  <div class="phil-ico">
+                    <Icon name="code" size={18} />
+                  </div>
+                  <h3 class="phil-heading">Zero Slide Decks</h3>
+                  <p class="phil-desc">
+                    We code directly in IDEs, configure production repositories, and debug real terminal errors collaboratively.
+                  </p>
+                </div>
+
+                <div class="phil-card">
+                  <div class="phil-ico">
+                    <Icon name="users" size={18} />
+                  </div>
+                  <h3 class="phil-heading">Active Practitioners</h3>
+                  <p class="phil-desc">
+                    Learn directly from engineers actively building and deploying production systems.
+                  </p>
+                </div>
+
+                <div class="phil-card">
+                  <div class="phil-ico">
+                    <Icon name="check" size={18} />
+                  </div>
+                  <h3 class="phil-heading">Verified Certificates</h3>
+                  <p class="phil-desc">
+                    Earn an authentic, verifiable certificate of completion backed by deployed project deliverables.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Workshops Section Header -->
+          <div class="feed-section-header" id="workshops-list">
+            <div class="feed-title-wrap">
+              <Eyebrow>Available Free Programs</Eyebrow>
+              <h2 class="feed-main-heading">Free Online Workshops with Certificates</h2>
+            </div>
+            <p class="feed-subtext">
+              Explore our current catalog of interactive, live online technical workshops. Every program is free of charge and culminates in an official digital Certificate of Completion.
+            </p>
+          </div>
+
+          <!-- Workshop Program Cards List -->
+          <div class="workshops-feed-grid">
+            {workshopOfferings.map((ws, idx) => (
+              <article class="workshop-item-card" id={ws.id}>
+                <div class="workshop-card-topbar">
+                  <div class="ws-badge-group">
+                    <span class="ws-index">0{idx + 1}</span>
+                    <span class="ws-category-tag">{ws.category}</span>
+                    <span class="ws-free-badge">{ws.badge}</span>
+                  </div>
+                  <span class="ws-level-tag">{ws.level}</span>
+                </div>
+
+                <h3 class="ws-item-title">{ws.title}</h3>
+                
+                <p class="ws-item-summary">{ws.summary}</p>
+
+                <!-- Workshop Key Specs -->
+                <div class="ws-specs-bar">
+                  <div class="spec-col">
+                    <span class="spec-label">Duration</span>
+                    <span class="spec-value">{ws.duration}</span>
+                  </div>
+                  <div class="spec-col">
+                    <span class="spec-label">Tuition / Cost</span>
+                    <span class="spec-value highlight-free">{ws.price}</span>
+                  </div>
+                  <div class="spec-col">
+                    <span class="spec-label">Credential</span>
+                    <span class="spec-value">{ws.badge}</span>
+                  </div>
+                </div>
+
+                <!-- Curriculum Highlights -->
+                <div class="ws-curriculum-wrap">
+                  <span class="curriculum-heading">What You Will Build &amp; Learn</span>
+                  <ul class="curriculum-list">
+                    {ws.curriculum.map((item) => (
+                      <li>
+                        <Icon name="check" size={15} class="check-bullet" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <!-- Deliverable & Certification Box -->
+                <div class="ws-deliverable-box">
+                  <div class="deliv-row">
+                    <span class="deliv-badge">Shipped Outcome:</span>
+                    <span class="deliv-text">{ws.deliverable}</span>
+                  </div>
+                  <div class="deliv-row cert-row">
+                    <span class="deliv-badge cert-badge">Certificate:</span>
+                    <span class="deliv-text">{ws.certificationDetails}</span>
+                  </div>
+                </div>
+
+                <!-- Card Action Row with "Book a Workshop" Button -->
+                <div class="ws-card-action-bar">
+                  <Button 
+                    variant="primary" 
+                    size="md" 
+                    class="book-workshop-btn" 
+                    href={`mailto:${siteConfig.email}?subject=Free%20Workshop%20Registration%20-%20${encodeURIComponent(ws.title)}`}
+                  >
+                    <span>Book a Workshop</span>
+                    <Icon name="arrow-right" size={15} />
+                  </Button>
+                  <span class="booking-caption">100% Free registration • Verified certificate upon completion</span>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <!-- Section: Workshop Lifecycle (From Idea to Certificate) -->
+          <div class="feed-section-header">
+            <Eyebrow>The RoboDev Way</Eyebrow>
+            <h2 class="feed-main-heading">The Complete Workshop Lifecycle</h2>
+            <p class="feed-subtext">
+              How our workshops run from initial idea to live delivery, verifiable certificate issuance, and career progression.
+            </p>
+          </div>
+
+          <div class="lifecycle-timeline-grid">
+            {workshopLifecycleSteps.map((item) => (
+              <div class="lifecycle-step-card">
+                <span class="step-num">{item.step}</span>
+                <h4 class="step-title">{item.title}</h4>
+                <p class="step-desc">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <!-- Section: Target Audience -->
+          <div class="feed-section-header">
+            <Eyebrow>Who This Is For</Eyebrow>
+            <h2 class="feed-main-heading">Target Audience &amp; Community</h2>
+            <p class="feed-subtext">
+              RoboDev Academy programs are designed for learners at different milestones in their engineering journey.
+            </p>
+          </div>
+
+          <div class="audience-grid">
+            {targetAudiences.map((aud) => (
+              <div class="audience-card">
+                <div class="aud-ico">
+                  <Icon name={aud.icon as any} size={18} />
+                </div>
+                <h4 class="aud-title">{aud.title}</h4>
+                <p class="aud-desc">{aud.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <!-- Overview of Core Programs (Workshops, Mentorship, Hackathons) -->
+          <div class="feed-section-header core-programs-header">
+            <Eyebrow>Continuous Pathways</Eyebrow>
+            <h2 class="feed-main-heading">Core Academy Disciplines</h2>
+            <p class="feed-subtext">
+              Beyond standalone workshops, RoboDev Academy offers deep continuous pathways for students and engineers.
+            </p>
+          </div>
+
+          <div class="core-disciplines-list">
+            {academyData.map((prog) => (
+              <div class="discipline-card">
+                <div class="discipline-header">
+                  <span class="prog-badge">{prog.badge}</span>
+                  <span class="prog-target">{prog.targetAudience}</span>
+                </div>
+                <h3 class="prog-title">{prog.title}</h3>
+                <p class="prog-desc">{prog.description}</p>
+                <div class="prog-footer">
+                  <div class="footer-meta-item">
+                    <span class="fm-lbl">Format:</span>
+                    <span class="fm-val">{prog.format}</span>
+                  </div>
+                  <div class="footer-meta-item">
+                    <span class="fm-lbl">Outcome:</span>
+                    <span class="fm-val">{prog.keyTakeaway}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Section: FAQ for SEO -->
+          <div class="feed-section-header">
+            <Eyebrow>Frequently Asked Questions</Eyebrow>
+            <h2 class="feed-main-heading">Online Workshops with Certificates Free — FAQ</h2>
+          </div>
+
+          <div class="faq-list">
+            {faqSchema.mainEntity.map((faq) => (
+              <div class="faq-item">
+                <h3 class="faq-q">{faq.name}</h3>
+                <p class="faq-a">{faq.acceptedAnswer.text}</p>
+              </div>
+            ))}
+          </div>
+
+        </div>
+
+        <!-- Right Column: Academy Sidebar & Inquiry Hub -->
+        <aside class="academy-sidebar" aria-label="Academy Information">
+          
+          <!-- Sticky Inquiry Card -->
+          <div class="sidebar-card host-workshop-card">
+            <div class="card-eyebrow">Institutions &amp; Student Clubs</div>
+            <h3 class="sidebar-card-title">Book a Free Workshop for Your Campus</h3>
+            <p class="sidebar-card-desc">
+              Are you a university club, college department, or developer community looking for <strong>free online workshops with certificates</strong>? We partner with universities to deliver customized virtual or in-person bootcamps.
+            </p>
+
+            <ul class="sidebar-perks-list">
+              <li>
+                <Icon name="check" size={14} />
+                <span>Zero cost to student participants &amp; college clubs</span>
+              </li>
+              <li>
+                <Icon name="check" size={14} />
+                <span>Verified Certificates of Completion for attendees</span>
+              </li>
+              <li>
+                <Icon name="check" size={14} />
+                <span>Hands-on production labs &amp; personalized code reviews</span>
+              </li>
+              <li>
+                <Icon name="check" size={14} />
+                <span>Direct internship pipeline to RoboDev Labs</span>
+              </li>
+            </ul>
+
+            <div class="sidebar-action-wrap">
+              <Button 
+                variant="primary" 
+                size="md" 
+                class="sidebar-book-btn"
+                href={`mailto:${siteConfig.email}?subject=College%20Workshop%20Partnership%20Inquiry`}
+              >
+                <span>Book a Workshop</span>
+                <Icon name="arrow-right" size={14} />
+              </Button>
+            </div>
+          </div>
+
+          <!-- Certificate Verification Notice -->
+          <div class="sidebar-card cert-info-card">
+            <div class="card-eyebrow">Digital Credentials</div>
+            <h3 class="sidebar-card-title">Authentic, Verifiable Certificates</h3>
+            <p class="sidebar-card-desc">
+              Every certificate issued by RoboDev Academy includes a cryptographically unique verification ID and a direct link to the student's deployed code repository. Employers can instantly verify real technical competency.
+            </p>
+          </div>
+
+          <!-- Mentorship Quick Box -->
+          <div class="sidebar-card info-card">
+            <h3 class="sidebar-card-title">1-on-1 Engineering Mentorship</h3>
+            <p class="sidebar-card-desc">
+              Weekly pair programming sessions, resume critiques, mock interview feedback, and architecture coaching directly with Safal Bhattarai and senior developers.
+            </p>
+            <div class="mentor-contact-line">
+              <span class="contact-lbl">Inquire directly:</span>
+              <a href={`mailto:${siteConfig.email}`} class="mentor-email">{siteConfig.email}</a>
+            </div>
+          </div>
+
+          <!-- Academy-to-HR Pipeline Notice -->
+          <div class="sidebar-card talent-card">
+            <div class="talent-badge">Career Opportunity</div>
+            <h4 class="talent-title">The Academy-to-HR Pipeline</h4>
+            <p class="talent-desc">
+              <strong>Academy → Student → Learning → Evaluation → Internship Opportunity → Engineering Talent</strong>
+            </p>
+            <p class="talent-desc sub">
+              Strong students who demonstrate technical discipline and practical execution are evaluated for paid internship and fellowship opportunities at RoboDev Labs.
+            </p>
+          </div>
+
+        </aside>
+
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>
+
+<style>
+  /* ==========================================================================
+     ACADEMY PAGE EDITORIAL STYLING (60:30:10 RULE APPLIED)
+     ========================================================================== */
+
+  /* Breadcrumb */
+  .academy-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: var(--space-6);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .breadcrumb-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--color-salt-light);
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .breadcrumb-link:hover {
+    color: var(--color-salt-white);
+    transform: translateX(-2px);
+  }
+
+  .breadcrumb-sep {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .breadcrumb-current {
+    color: var(--color-salt-white);
+    font-weight: 600;
+  }
+
+  /* Hero Section */
+  .academy-hero-section {
+    position: relative;
+    padding-top: clamp(6.5rem, 11vh, 8.5rem);
+    padding-bottom: clamp(3rem, 6vh, 4.5rem);
+    background-color: var(--color-pepper-medium); /* Dark green backdrop */
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hero-editorial-wrap {
+    max-width: 920px;
+  }
+
+  .hero-eyebrow-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    margin-bottom: var(--space-4);
+  }
+
+  .badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-salt-white);
+    box-shadow: 0 0 8px var(--color-salt-white);
+  }
+
+  .badge-text {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-salt-white);
+    font-weight: 600;
+  }
+
+  .academy-hero-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--color-salt-white);
+    margin-bottom: var(--space-4);
+  }
+
+  .academy-hero-lead {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    line-height: 1.65;
+    color: var(--color-salt-light);
+    max-width: 820px;
+    margin-bottom: var(--space-6);
+  }
+
+  .academy-hero-lead strong {
+    color: var(--color-salt-white);
+  }
+
+  .hero-seo-pills-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-bottom: var(--space-8);
+  }
+
+  .seo-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    padding: 0.3rem 0.75rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-full);
+    color: var(--color-salt-white);
+  }
+
+  /* Meta Strip */
+  .academy-meta-strip {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1.25rem 1.6rem;
+    background: #1e3328; /* Layered deep green card */
+    border: 1px solid rgba(237, 244, 242, 0.15);
+    border-radius: 12px;
+  }
+
+  .meta-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .meta-val {
+    font-family: var(--font-mono);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-salt-white);
+  }
+
+  .meta-lbl {
+    font-size: 0.72rem;
+    color: var(--color-salt-light);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .meta-divider {
+    width: 1px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Content Layout */
+  .academy-content-section {
+    background-color: var(--color-pepper-dark); /* Medium green canvas */
+    padding-top: clamp(3rem, 6vw, 4.5rem);
+    padding-bottom: clamp(4rem, 8vw, 6rem);
+  }
+
+  .academy-blog-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: flex-start;
+  }
+
+  .academy-main-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  /* Editorial Blog Post */
+  .blog-editorial-post {
+    background: #1e3328;
+    border: 1px solid rgba(237, 244, 242, 0.15);
+    border-radius: 14px;
+    padding: clamp(1.75rem, 3vw, 2.75rem);
+  }
+
+  .post-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .post-category {
+    color: var(--color-salt-white);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .post-date {
+    color: var(--color-salt-light);
+  }
+
+  .post-title {
+    font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    color: var(--color-salt-white);
+    margin-bottom: 1.25rem;
+  }
+
+  .post-body-prose p {
+    font-size: 0.98rem;
+    line-height: 1.68;
+    color: var(--color-salt-light);
+    margin-bottom: 1.2rem;
+  }
+
+  .post-body-prose strong {
+    color: var(--color-salt-white);
+    font-weight: 600;
+  }
+
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.75rem;
+  }
+
+  .phil-card {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .phil-ico {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-salt-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .phil-heading {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-salt-white);
+    margin: 0;
+  }
+
+  .phil-desc {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--color-salt-light);
+    margin: 0 !important;
+  }
+
+  /* Feed Section Header */
+  .feed-section-header {
+    margin-top: 1rem;
+    margin-bottom: -1rem;
+  }
+
+  .feed-main-heading {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--color-salt-white);
+    margin-top: 0.4rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .feed-subtext {
+    font-size: 0.96rem;
+    color: var(--color-salt-light);
+    line-height: 1.6;
+    max-width: 680px;
+  }
+
+  /* Workshops Feed Grid */
+  .workshops-feed-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .workshop-item-card {
+    background: #1e3328;
+    border: 1px solid rgba(237, 244, 242, 0.15);
+    border-radius: 14px;
+    padding: clamp(1.5rem, 2.5vw, 2.25rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .workshop-item-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.6);
+  }
+
+  .workshop-card-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .ws-badge-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .ws-index {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-salt-white);
+  }
+
+  .ws-category-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-salt-white);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .ws-free-badge {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    background: rgba(49, 71, 58, 0.7);
+    color: var(--color-salt-white);
+    border: 1px solid rgba(237, 244, 242, 0.25);
+    font-weight: 600;
+  }
+
+  .ws-level-tag {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--color-salt-light);
+  }
+
+  .ws-item-title {
+    font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--color-salt-white);
+    margin: 0;
+  }
+
+  .ws-item-summary {
+    font-size: 0.94rem;
+    line-height: 1.62;
+    color: var(--color-salt-light);
+    margin: 0;
+  }
+
+  /* Specs Bar */
+  .ws-specs-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 0.9rem 1.1rem;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+  }
+
+  .spec-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .spec-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-salt-light);
+    opacity: 0.8;
+  }
+
+  .spec-value {
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: var(--color-salt-white);
+  }
+
+  .spec-value.highlight-free {
+    color: var(--color-salt-white);
+    font-weight: 700;
+  }
+
+  /* Curriculum List */
+  .ws-curriculum-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .curriculum-heading {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-salt-white);
+    font-weight: 600;
+  }
+
+  .curriculum-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .curriculum-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.88rem;
+    color: var(--color-salt-light);
+    line-height: 1.45;
+  }
+
+  .check-bullet {
+    color: var(--color-salt-white);
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+  }
+
+  /* Deliverable Box */
+  .ws-deliverable-box {
+    padding: 0.85rem 1.1rem;
+    background: rgba(255, 255, 255, 0.06);
+    border-left: 3px solid var(--color-salt-white);
+    border-radius: 0 8px 8px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .deliv-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .deliv-badge {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-salt-white);
+    flex-shrink: 0;
+  }
+
+  .deliv-badge.cert-badge {
+    color: var(--color-salt-white);
+    text-decoration: underline;
+  }
+
+  .deliv-text {
+    font-size: 0.85rem;
+    color: var(--color-salt-white);
+    line-height: 1.45;
+  }
+
+  /* Card Action Bar */
+  .ws-card-action-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .book-workshop-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .booking-caption {
+    font-size: 0.78rem;
+    color: var(--color-salt-light);
+  }
+
+  /* Timeline Grid */
+  .lifecycle-timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .lifecycle-step-card {
+    background: #1e3328;
+    border: 1px solid rgba(237, 244, 242, 0.12);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .step-num {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-salt-white);
+  }
+
+  .step-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-salt-white);
+    margin: 0;
+  }
+
+  .step-desc {
+    font-size: 0.82rem;
+    color: var(--color-salt-light);
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  /* Target Audience Grid */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .audience-card {
+    background: #1e3328;
+    border: 1px solid rgba(237, 244, 242, 0.12);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .aud-ico {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-salt-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .aud-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-salt-white);
+    margin: 0;
+  }
+
+  .aud-desc {
+    font-size: 0.84rem;
+    color: var(--color-salt-light);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Core Disciplines */
+  .core-programs-header {
+    margin-top: 1rem;
+  }
+
+  .core-disciplines-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .discipline-card {
+    background: #1e3328;
+    border: 1px solid rgba(237, 244, 242, 0.15);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .discipline-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .prog-badge {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-salt-white);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .prog-target {
+    font-size: 0.72rem;
+    color: var(--color-salt-light);
+  }
+
+  .prog-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-salt-white);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .prog-desc {
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: var(--color-salt-light);
+    margin: 0;
+  }
+
+  .prog-footer {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .footer-meta-item {
+    font-size: 0.76rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .fm-lbl {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    color: var(--color-salt-light);
+    opacity: 0.8;
+  }
+
+  .fm-val {
+    color: var(--color-salt-white);
+    font-weight: 500;
+  }
+
+  /* FAQ List */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .faq-item {
+    background: #1e3328;
+    border: 1px solid rgba(237, 244, 242, 0.12);
+    border-radius: 10px;
+    padding: 1.4rem;
+  }
+
+  .faq-q {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-salt-white);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.35;
+  }
+
+  .faq-a {
+    font-size: 0.88rem;
+    color: var(--color-salt-light);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Sidebar */
+  .academy-sidebar {
+    position: sticky;
+    top: 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .sidebar-card {
+    background: #1e3328;
+    border: 1px solid rgba(237, 244, 242, 0.15);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .card-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-salt-white);
+    font-weight: 600;
+  }
+
+  .sidebar-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--color-salt-white);
+    margin: 0;
+  }
+
+  .sidebar-card-desc {
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: var(--color-salt-light);
+    margin: 0;
+  }
+
+  .sidebar-card-desc strong {
+    color: var(--color-salt-white);
+  }
+
+  .sidebar-perks-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .sidebar-perks-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-size: 0.82rem;
+    color: var(--color-salt-white);
+    line-height: 1.4;
+  }
+
+  .sidebar-perks-list li :global(svg) {
+    color: var(--color-salt-white);
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+  }
+
+  .sidebar-action-wrap {
+    margin-top: 0.5rem;
+  }
+
+  .sidebar-book-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .mentor-contact-line {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .contact-lbl {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    color: var(--color-salt-light);
+  }
+
+  .mentor-email {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--color-salt-white);
+    text-decoration: underline;
+    word-break: break-all;
+  }
+
+  .talent-badge {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-salt-white);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    width: fit-content;
+    font-weight: 600;
+  }
+
+  .talent-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-salt-white);
+    margin: 0;
+  }
+
+  .talent-desc {
+    font-size: 0.84rem;
+    line-height: 1.55;
+    color: var(--color-salt-white);
+    margin: 0;
+  }
+
+  .talent-desc.sub {
+    font-size: 0.8rem;
+    color: var(--color-salt-light);
+  }
+
+  /* Responsive Breakpoints */
+  @media (max-width: 1024px) {
+    .academy-blog-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .academy-sidebar {
+      position: static;
+    }
+
+    .philosophy-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .lifecycle-timeline-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .audience-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .core-disciplines-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ws-specs-bar {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .ws-card-action-bar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .book-workshop-btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .academy-meta-strip {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .meta-divider {
+      display: none;
+    }
+  }
+</style>
