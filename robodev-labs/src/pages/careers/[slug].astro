@@ -1,0 +1,23 @@
+---
+/**
+ * Dynamic Career Route: /careers/[slug]
+ * Generates pages for all careers defined in careers.ts
+ */
+import { careersData, type Career } from '../../data/careers';
+import CareerTemplate from '../../components/careers/CareerTemplate.astro';
+
+export async function getStaticPaths() {
+  return careersData.map((career) => ({
+    params: { slug: career.slug },
+    props: { career },
+  }));
+}
+
+export interface Props {
+  career: Career;
+}
+
+const { career } = Astro.props;
+---
+
+<CareerTemplate career={career} />

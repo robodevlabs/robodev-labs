@@ -52,6 +52,9 @@
 
   --color-focus-ring: var(--color-salt-white);
 
+  /* 3b. Dedicated dark surface for footer (black, independent of theme palette) */
+  --color-dark: #0a0a0a;
+
   /* 3. Predefined Salt & Pepper Alpha Utilities */
   --color-salt-alpha-5: rgba(255, 255, 255, 0.05);
   --color-salt-alpha-10: rgba(255, 255, 255, 0.1);
@@ -101,6 +104,8 @@
   --color-border: var(--color-border);
   --color-border-subtle: var(--color-border-subtle);
   --color-border-bright: var(--color-border-bright);
+
+  --color-dark: var(--color-dark);
 
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);

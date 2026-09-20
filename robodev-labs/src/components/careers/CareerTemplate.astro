@@ -1,0 +1,370 @@
+---
+/**
+ * CareerTemplate — reusable job-detail presentation.
+ * Uses WorkshopCourseTemplate design language:
+ * light editorial surfaces, dark-green hero, white enrollment card,
+ * details strip, sticky nav, single-column content.
+ * Consumes only a `career` object from src/data/careers.ts.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../ui/Container.astro';
+import Icon from '../ui/Icon.astro';
+import Logo from '../common/Logo.astro';
+import type { Career } from '../../data/careers';
+import { siteConfig } from '../../config/site';
+
+export interface Props {
+  career: Career;
+}
+
+const { career } = Astro.props as Props;
+
+const pageUrl = `${siteConfig.url}/careers/${career.slug}`;
+const applyHref = `mailto:${career.applicationEmail}?subject=${encodeURIComponent(career.applicationSubject)}`;
+
+const statusLabel = career.status === 'Open' ? 'Applications Open' : career.status === 'Upcoming' ? 'Opening Soon' : 'Closed';
+const ctaLabel = career.status === 'Open' ? 'Apply via Email' : 'Contact Us';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Careers', item: `${siteConfig.url}/career` },
+      { '@type': 'ListItem', position: 3, name: career.title, item: pageUrl },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'JobPosting',
+    title: career.title,
+    description: `${career.summary}\n\n${career.description}`,
+    identifier: { '@type': 'PropertyValue', name: siteConfig.name, value: career.slug },
+    datePosted: new Date().toISOString().split('T')[0],
+    employmentType: career.employmentType,
+    hiringOrganization: { '@type': 'Organization', name: siteConfig.name, sameAs: siteConfig.url },
+    jobLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: career.location } },
+    jobLocationType: career.workMode.toLowerCase().includes('remote') ? 'TELECOMMUTE' : undefined,
+  },
+];
+---
+
+<BaseLayout title={`${career.title} — Careers at ${siteConfig.name}`} description={career.summary}>
+  {jsonLd.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
+
+  <div class="wt-page">
+    <header class="wt-hero">
+      <Container>
+        <div class="wt-hero-grid">
+          <div class="wt-hero-left">
+            <p class="wt-hero-category">RoboDev Labs · Careers · {career.department}</p>
+            <h1 class="wt-hero-title">{career.title}</h1>
+            <p class="wt-hero-desc">{career.summary}</p>
+            <p class="wt-hero-byline"><a href="/career" class="wt-hero-back">← Back to Careers</a></p>
+            <div class="wt-hero-facts">
+              <span class="wt-fact"><span class="wt-fact-icon" aria-hidden="true">◈</span>{career.employmentType}</span>
+              <span class="wt-fact-sep" aria-hidden="true">·</span>
+              <span class="wt-fact"><span class="wt-fact-icon" aria-hidden="true">◷</span>{career.duration ?? career.experience}</span>
+              <span class="wt-fact-sep" aria-hidden="true">·</span>
+              <span class="wt-fact"><span class="wt-fact-icon" aria-hidden="true">⬡</span>{career.workMode}</span>
+              <span class="wt-fact-sep" aria-hidden="true">·</span>
+              <span class="wt-fact wt-fact-cert"><span class="wt-fact-icon" aria-hidden="true">✦</span>{statusLabel}</span>
+            </div>
+            <p class="wt-hero-seats">{career.location} · {career.department}</p>
+            <div class="wt-hero-mobile-cta">
+              <a href={applyHref} class="wt-btn-primary wt-btn-full">{ctaLabel}</a>
+            </div>
+          </div>
+          <aside class="wt-enroll-card" aria-label="Application card">
+            <div class="wt-card-header">
+              <span class="wt-card-badge">{career.employmentType}</span>
+              <span class="wt-card-status">{statusLabel}</span>
+            </div>
+            <div class="wt-card-price">
+              <span class="wt-price-main">{career.shortTitle ?? career.title}</span>
+              <span class="wt-price-note">{career.department} · {career.location}</span>
+            </div>
+            <a href={applyHref} class="wt-btn-primary wt-btn-full wt-btn-card"><span>{ctaLabel}</span></a>
+            <p class="wt-card-seats-note">{career.applicationEmail}</p>
+            <div class="wt-card-meta">
+              <div class="wt-card-meta-row"><span class="wt-card-meta-key">Location</span><span class="wt-card-meta-val">{career.location}</span></div>
+              <div class="wt-card-meta-row"><span class="wt-card-meta-key">Work mode</span><span class="wt-card-meta-val">{career.workMode}</span></div>
+              <div class="wt-card-meta-row"><span class="wt-card-meta-key">Experience</span><span class="wt-card-meta-val">{career.experience}</span></div>
+              {career.duration && (<div class="wt-card-meta-row"><span class="wt-card-meta-key">Duration</span><span class="wt-card-meta-val">{career.duration}</span></div>)}
+            </div>
+          </aside>
+        </div>
+      </Container>
+    </header>
+
+    <section class="wt-details-strip" aria-label="Role facts at a glance">
+      <Container>
+        <div class="wt-strip-card">
+          <div class="wt-strip-grid">
+            <div class="wt-strip-fact"><span class="wt-strip-label">Department</span><span class="wt-strip-val">{career.department}</span></div>
+            <div class="wt-strip-fact"><span class="wt-strip-label">Type</span><span class="wt-strip-val">{career.employmentType}</span></div>
+            <div class="wt-strip-fact"><span class="wt-strip-label">Location</span><span class="wt-strip-val">{career.location}</span></div>
+            <div class="wt-strip-fact"><span class="wt-strip-label">Work mode</span><span class="wt-strip-val">{career.workMode}</span></div>
+            <div class="wt-strip-fact"><span class="wt-strip-label">Status</span><span class="wt-strip-val">{career.status}</span></div>
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <nav class="wt-section-nav" aria-label="Page sections" id="wt-section-nav">
+      <div class="wt-nav-top-bar" id="wt-nav-top-bar" aria-label="Role quick action bar">
+        <Container>
+          <div class="wt-top-bar-inner">
+            <div class="wt-top-bar-left"><a href="/" class="wt-top-bar-logo" aria-label="RoboDev Labs Home"><Logo height={28} /></a></div>
+            <div class="wt-top-bar-center"><span class="wt-top-bar-title" title={career.title}>{career.title}</span></div>
+            <div class="wt-top-bar-right"><a href={applyHref} class="wt-btn-primary wt-top-bar-btn"><span>{ctaLabel}</span></a></div>
+          </div>
+        </Container>
+      </div>
+      <div class="wt-nav-tabs-bar">
+        <Container>
+          <div class="wt-nav-inner">
+            <a href="#about" class="wt-nav-link wt-nav-link--active">About</a>
+            <a href="#responsibilities" class="wt-nav-link">Responsibilities</a>
+            <a href="#requirements" class="wt-nav-link">Requirements</a>
+            {career.technologies.length > 0 && <a href="#technologies" class="wt-nav-link">Technologies</a>}
+            <a href="#details" class="wt-nav-link">Details</a>
+            {career.learningOutcomes && career.learningOutcomes.length > 0 && <a href="#growth" class="wt-nav-link">Growth</a>}
+            <a href="#apply" class="wt-nav-link">Apply</a>
+          </div>
+        </Container>
+      </div>
+    </nav>
+
+    <main class="wt-main" id="about">
+      <Container>
+        <div class="wt-content-col">
+          <section class="wt-section" aria-labelledby="overview-heading">
+            <h2 id="overview-heading" class="wt-section-title">Role overview</h2>
+            <p class="wt-body-text">{career.description}</p>
+          </section>
+          <hr class="wt-divider" />
+          <section id="responsibilities" class="wt-section" aria-labelledby="resp-heading">
+            <h2 id="resp-heading" class="wt-section-title">Responsibilities</h2>
+            <div class="wt-outcomes-grid">
+              {career.responsibilities.map((item) => (
+                <div class="wt-outcome-row"><span class="wt-outcome-check" aria-hidden="true">✓</span><p class="wt-outcome-text">{item}</p></div>
+              ))}
+            </div>
+          </section>
+          <hr class="wt-divider" />
+          <section id="requirements" class="wt-section" aria-labelledby="req-heading">
+            <h2 id="req-heading" class="wt-section-title">Requirements</h2>
+            <ul class="wt-check-list">
+              {career.requirements.map((item) => (
+                <li><span class="wt-check-icon" aria-hidden="true">✓</span><span>{item}</span></li>
+              ))}
+            </ul>
+            {career.preferred && career.preferred.length > 0 && (
+              <div><h3 class="wt-subhead">Preferred qualifications</h3>
+              <ul class="wt-check-list">
+                {career.preferred.map((item) => (
+                  <li><span class="wt-check-icon" aria-hidden="true">✓</span><span>{item}</span></li>
+                ))}
+              </ul></div>
+            )}
+          </section>
+          <hr class="wt-divider" />
+          <section id="technologies" class="wt-section" aria-labelledby="tech-heading">
+            <h2 id="tech-heading" class="wt-section-title">Technologies</h2>
+            <div class="wt-tools-wrap">
+              {career.technologies.map((t) => (<span class="wt-tool-tag">{t}</span>))}
+            </div>
+          </section>
+          {career.learningOutcomes && career.learningOutcomes.length > 0 && (
+            <>
+              <hr class="wt-divider" />
+              <section id="growth" class="wt-section" aria-labelledby="growth-heading">
+                <h2 id="growth-heading" class="wt-section-title">Learning and growth</h2>
+                <div class="wt-build-list">
+                  {career.learningOutcomes.map((item, idx) => (
+                    <div class="wt-build-item"><span class="wt-build-num">0{idx + 1}</span><p class="wt-build-text">{item}</p></div>
+                  ))}
+                </div>
+              </section>
+            </>
+          )}
+          <hr class="wt-divider" />
+          <section id="details" class="wt-section" aria-labelledby="details-heading">
+            <h2 id="details-heading" class="wt-section-title">Details to know</h2>
+            <div class="wt-details-grid">
+              <div class="wt-detail-block"><span class="wt-detail-label">Department</span><span class="wt-detail-val">{career.department}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Employment</span><span class="wt-detail-val">{career.employmentType}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Experience</span><span class="wt-detail-val">{career.experience}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Location</span><span class="wt-detail-val">{career.location}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Work mode</span><span class="wt-detail-val">{career.workMode}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Status</span><span class="wt-detail-val">{career.status}</span></div>
+            </div>
+            {career.benefits && career.benefits.length > 0 && (
+              <div><h3 class="wt-subhead">Benefits</h3>
+              <ul class="wt-check-list">
+                {career.benefits.map((b) => (<li><span class="wt-check-icon" aria-hidden="true">✓</span><span>{b}</span></li>))}
+              </ul></div>
+            )}
+          </section>
+          <hr class="wt-divider" />
+          <section id="apply" class="wt-section" aria-labelledby="apply-heading">
+            <h2 id="apply-heading" class="wt-section-title">How to apply</h2>
+            <p class="wt-body-text">{career.applicationInstructions}</p>
+            <p class="wt-body-text">Send your application to {career.applicationEmail} with subject “{career.applicationSubject}”.</p>
+          </section>
+          <div class="wt-final-cta">
+            <div class="wt-final-cta-content">
+              <h2 class="wt-final-cta-title">Interested in this role?</h2>
+              <p class="wt-final-cta-note">{career.title} · {career.employmentType} · {career.location}</p>
+            </div>
+            <a href={applyHref} class="wt-btn-primary wt-btn-lg">{ctaLabel}</a>
+          </div>
+        </div>
+      </Container>
+    </main>
+
+    <div class="wt-mobile-bar" aria-label="Mobile application action">
+      <div class="wt-mobile-bar-inner">
+        <div class="wt-mobile-bar-text">
+          <span class="wt-mobile-price">{career.shortTitle ?? career.title}</span>
+          <span class="wt-mobile-note">{career.status} · {career.employmentType}</span>
+        </div>
+        <a href={applyHref} class="wt-btn-primary wt-btn-sm">{ctaLabel}</a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const navLinks = document.querySelectorAll('.wt-nav-link');
+  const sections = document.querySelectorAll('main[id], section[id]');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          navLinks.forEach((l) => l.classList.remove('wt-nav-link--active'));
+          const active = document.querySelector(`.wt-nav-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('wt-nav-link--active');
+        }
+      });
+    },
+    { rootMargin: '-25% 0px -65% 0px' }
+  );
+  sections.forEach((s) => observer.observe(s));
+  const nav = document.getElementById('wt-section-nav');
+  const hero = document.querySelector('.wt-hero');
+  if (nav && hero) {
+    const updateNavState = (isPastHero) => {
+      nav.classList.toggle('wt-nav--scrolled', isPastHero);
+      nav.classList.toggle('wt-nav--active', isPastHero);
+    };
+    const heroObserver = new IntersectionObserver(([e]) => { updateNavState(!e.isIntersecting); }, { threshold: 0 });
+    heroObserver.observe(hero);
+    const heroRect = hero.getBoundingClientRect();
+    if (heroRect.bottom <= 0) updateNavState(true);
+  }
+</script>
+
+<style>
+  .wt-page { background-color: #fafaf8; color: #1a1a1a; min-height: 100vh; }
+  @media (max-width: 860px) { .wt-page { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); } }
+  .wt-hero { background-color: var(--color-pepper-medium, #31473A); color: #EDF4F2; padding-top: clamp(6.5rem, 13vh, 8.5rem); padding-bottom: clamp(2.5rem, 5vw, 4rem); border-bottom: 1px solid rgba(237, 244, 242, 0.12); }
+  .wt-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: clamp(2rem, 4vw, 3.5rem); align-items: flex-start; }
+  @media (max-width: 1024px) { .wt-hero-grid { grid-template-columns: minmax(0, 1fr) 320px; gap: 2rem; } }
+  @media (max-width: 860px) { .wt-hero-grid { grid-template-columns: 1fr; } }
+  .wt-hero-left { display: flex; flex-direction: column; justify-content: center; gap: 1.125rem; padding: clamp(1rem, 2vw, 2rem) 0; }
+  .wt-hero-category { font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: rgba(237, 244, 242, 0.65); margin: 0; }
+  .wt-hero-title { font-family: var(--font-display, 'Space Grotesk', sans-serif); font-size: clamp(2.125rem, 4.5vw, 3.25rem); font-weight: 700; line-height: 1.12; letter-spacing: -0.025em; color: #EDF4F2; margin: 0; }
+  .wt-hero-desc { font-size: clamp(1.0625rem, 1.6vw, 1.1875rem); line-height: 1.6; color: rgba(237, 244, 242, 0.82); margin: 0; max-width: 58ch; }
+  .wt-hero-back { color: rgba(237,244,242,0.8); font-size: 0.9rem; }
+  .wt-hero-byline { font-size: 0.9375rem; margin: 0; }
+  .wt-hero-facts { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 0; font-size: 0.875rem; color: rgba(237, 244, 242, 0.8); margin-top: 0.5rem; }
+  .wt-fact { display: inline-flex; align-items: center; gap: 5px; }
+  .wt-fact-cert { color: #b5d5ad; font-weight: 500; }
+  .wt-fact-icon { font-size: 0.6875rem; opacity: 0.65; }
+  .wt-fact-sep { margin: 0 9px; opacity: 0.35; }
+  .wt-hero-seats { font-size: 0.875rem; font-weight: 600; color: #b5d5ad; margin: 0.25rem 0 0; }
+  .wt-hero-mobile-cta { display: none; margin-top: 0.5rem; }
+  @media (max-width: 860px) { .wt-hero-mobile-cta { display: block; } }
+  .wt-enroll-card { background: #ffffff; border: 1px solid #e0e0d8; border-radius: 12px; padding: 1.5rem; box-shadow: 0 10px 32px rgba(0, 0, 0, 0.16); display: flex; flex-direction: column; gap: 1rem; color: #1a1a1a; align-self: end; }
+  @media (max-width: 860px) { .wt-enroll-card { display: none; } }
+  .wt-card-header { display: flex; justify-content: space-between; align-items: center; }
+  .wt-card-badge { font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-pepper-dark, #7C8363); }
+  .wt-card-status { font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-pepper-medium, #31473A); }
+  .wt-card-price { display: flex; flex-direction: column; gap: 2px; }
+  .wt-price-main { font-family: var(--font-display, 'Space Grotesk', sans-serif); font-size: 1.5rem; font-weight: 700; line-height: 1.2; color: var(--color-pepper-medium, #31473A); }
+  .wt-price-note { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+  .wt-card-seats-note { font-size: 0.8125rem; color: #666; margin: -8px 0 0; text-align: center; word-break: break-word; }
+  .wt-card-meta { border-top: 1px solid #eaeae4; padding-top: 0.75rem; display: flex; flex-direction: column; gap: 6px; }
+  .wt-card-meta-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.8125rem; gap: 1rem; }
+  .wt-card-meta-key { color: #777; }
+  .wt-card-meta-val { font-weight: 600; color: #1a1a1a; text-align: right; max-width: 60%; }
+  .wt-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background-color: var(--color-pepper-medium, #31473A); color: #EDF4F2; font-family: var(--font-display, 'Space Grotesk', sans-serif); font-size: 0.9375rem; font-weight: 700; padding: 13px 26px; border-radius: 6px; text-decoration: none; transition: background-color 160ms ease, transform 100ms ease; border: none; cursor: pointer; }
+  .wt-btn-primary:hover { background-color: var(--color-pepper-dark, #7C8363); transform: translateY(-1px); color: #ffffff; }
+  .wt-btn-full { width: 100%; text-align: center; }
+  .wt-btn-sm { padding: 9px 18px; font-size: 0.875rem; }
+  .wt-btn-lg { padding: 14px 28px; font-size: 1rem; }
+  .wt-details-strip { background: transparent; padding: 2rem 0; }
+  .wt-strip-card { background: #ffffff; border: 1px solid #dfded7; border-radius: 12px; box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04); padding: 1.75rem 2rem; position: relative; z-index: 10; }
+  .wt-strip-grid { display: flex; align-items: center; justify-content: center; gap: 0; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .wt-strip-grid::-webkit-scrollbar { display: none; }
+  .wt-strip-fact { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 0.5rem clamp(1rem, 2.5vw, 2.25rem); border-right: 1px solid #e7e6df; min-width: 140px; flex: 1 1 0; }
+  .wt-strip-fact:first-child { padding-left: 0.5rem; }
+  .wt-strip-fact:last-child { border-right: none; padding-right: 0.5rem; }
+  .wt-strip-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #666; }
+  .wt-strip-val { font-family: var(--font-display, 'Space Grotesk', sans-serif); font-size: 1.0625rem; font-weight: 700; color: #111; line-height: 1.3; }
+  @media (max-width: 768px) { .wt-details-strip { padding: 1.25rem 0; } .wt-strip-card { padding: 1.25rem 1rem; border-radius: 10px; } .wt-strip-grid { justify-content: flex-start; } .wt-strip-fact { align-items: flex-start; text-align: left; flex: 0 0 auto; min-width: 130px; } }
+  .wt-section-nav { position: sticky; top: 0; z-index: 40; background: #ffffff; border-bottom: 1px solid #e8e8e2; transition: box-shadow 200ms ease; }
+  .wt-nav--scrolled, .wt-nav--active { box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08); }
+  .wt-nav-top-bar { display: none; background: #ffffff; border-bottom: 1px solid #eeeee8; padding: 0.5rem 0; }
+  .wt-nav--active .wt-nav-top-bar, .wt-nav--scrolled .wt-nav-top-bar { display: block; animation: wtNavSlideDown 180ms cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes wtNavSlideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+  .wt-top-bar-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; }
+  .wt-top-bar-left { display: flex; align-items: center; flex-shrink: 0; }
+  .wt-top-bar-logo { display: inline-flex; align-items: center; text-decoration: none; }
+  .wt-top-bar-center { flex: 1; display: flex; align-items: center; justify-content: center; min-width: 0; text-align: center; }
+  .wt-top-bar-title { font-family: var(--font-display, 'Space Grotesk', sans-serif); font-size: 0.9375rem; font-weight: 700; color: #111111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 520px; }
+  .wt-top-bar-right { display: flex; align-items: center; flex-shrink: 0; }
+  .wt-top-bar-btn { white-space: nowrap; font-size: 0.8125rem; padding: 8px 18px; border-radius: 6px; }
+  .wt-nav-tabs-bar { width: 100%; }
+  .wt-nav-inner { display: flex; align-items: center; overflow-x: auto; scrollbar-width: none; }
+  .wt-nav-inner::-webkit-scrollbar { display: none; }
+  .wt-nav-link { display: inline-block; padding: 12px 18px; font-size: 0.875rem; font-weight: 500; color: #555; text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; }
+  .wt-nav-link--active { color: var(--color-pepper-medium, #31473A); border-bottom-color: var(--color-pepper-medium, #31473A); font-weight: 600; }
+  .wt-main { padding: 3rem 0 5rem; }
+  .wt-content-col { max-width: 820px; }
+  .wt-section { padding: 2.25rem 0; }
+  .wt-divider { border: none; border-top: 1px solid #e5e5dc; margin: 0; }
+  .wt-section-title { font-family: var(--font-display, 'Space Grotesk', sans-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; color: #111; margin: 0 0 1.25rem; }
+  .wt-subhead { font-family: var(--font-display, 'Space Grotesk', sans-serif); font-size: 1.0625rem; font-weight: 600; color: #1a1a1a; margin: 1.5rem 0 0.75rem; }
+  .wt-body-text { font-size: 1rem; line-height: 1.7; color: #333; margin: 0 0 1rem; }
+  .wt-check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.625rem; }
+  .wt-check-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9375rem; line-height: 1.5; color: #333; }
+  .wt-check-icon { color: var(--color-pepper-medium, #31473A); font-weight: 700; flex-shrink: 0; font-size: 0.75rem; margin-top: 2px; }
+  .wt-outcomes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.875rem; }
+  .wt-outcome-row { display: flex; align-items: flex-start; gap: 10px; padding: 0.875rem 1rem; background: #ffffff; border: 1px solid #e2e2da; border-radius: 6px; }
+  .wt-outcome-check { color: var(--color-pepper-medium, #31473A); font-weight: 700; font-size: 0.875rem; flex-shrink: 0; margin-top: 2px; }
+  .wt-outcome-text { font-size: 0.9375rem; line-height: 1.5; color: #222; margin: 0; }
+  .wt-build-list { display: flex; flex-direction: column; gap: 0.625rem; }
+  .wt-build-item { display: flex; align-items: baseline; gap: 1rem; padding: 0.875rem 1.25rem; background: #ffffff; border-radius: 0 6px 6px 0; border: 1px solid #e2e2da; border-left: 3px solid var(--color-pepper-medium, #31473A); }
+  .wt-build-num { font-size: 0.75rem; font-weight: 700; color: var(--color-pepper-dark, #7C8363); min-width: 24px; }
+  .wt-build-text { font-size: 0.9375rem; line-height: 1.5; color: #222; margin: 0; }
+  .wt-tools-wrap { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .wt-tool-tag { display: inline-block; padding: 6px 14px; background: #ffffff; color: #333; font-size: 0.8125rem; font-weight: 500; border-radius: 4px; border: 1px solid #d4d4cb; }
+  .wt-details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem 1rem; margin-bottom: 1.5rem; }
+  .wt-detail-block { display: flex; flex-direction: column; gap: 3px; }
+  .wt-detail-label { font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #777; }
+  .wt-detail-val { font-size: 0.9375rem; font-weight: 600; color: #111; line-height: 1.4; }
+  .wt-final-cta { margin-top: 3rem; padding: 2rem 2.5rem; background: var(--color-pepper-medium, #31473A); border-radius: 12px; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .wt-final-cta-title { font-family: var(--font-display, 'Space Grotesk', sans-serif); font-size: 1.375rem; font-weight: 700; color: #EDF4F2; margin: 0; }
+  .wt-final-cta-note { font-size: 0.875rem; color: rgba(237, 244, 242, 0.7); margin: 0; }
+  .wt-mobile-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: var(--color-pepper-medium, #31473A); border-top: 1px solid rgba(237, 244, 242, 0.15); padding: 0.75rem 1rem; padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)); box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25); }
+  @media (max-width: 860px) { .wt-mobile-bar { display: block; } }
+  .wt-mobile-bar-inner { max-width: 600px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .wt-mobile-bar-text { display: flex; flex-direction: column; gap: 2px; }
+  .wt-mobile-price { font-family: var(--font-display, 'Space Grotesk', sans-serif); font-size: 1rem; font-weight: 700; color: #EDF4F2; line-height: 1.2; }
+  .wt-mobile-note { font-size: 0.6875rem; color: rgba(237, 244, 242, 0.7); text-transform: uppercase; letter-spacing: 0.05em; }
+</style>
