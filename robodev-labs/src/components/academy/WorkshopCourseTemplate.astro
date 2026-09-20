@@ -1,0 +1,1909 @@
+---
+/**
+ * RoboDev Academy — Reusable Workshop Course Page Template
+ * Direct Coursera information architecture reference with RoboDev brand identity.
+ * Clean 2-column hero, full-width details strip, sticky section nav, single-column main content.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import Icon from '../../components/ui/Icon.astro';
+import Logo from '../../components/common/Logo.astro';
+import type { Workshop } from '../../data/workshops';
+import { siteConfig } from '../../config/site';
+
+export interface Props {
+  course: Workshop;
+}
+
+const { course } = Astro.props;
+
+const pageUrl = `${siteConfig.url}/academy/courses/${course.slug}`;
+const bookingUrl = course.paymentUrl ?? course.registrationUrl;
+
+/* ── Derive dynamic registration status from course.status ── */
+const registrationLabel =
+  course.status === 'open'
+    ? 'Registration Open'
+    : course.status === 'upcoming'
+      ? 'Registration Opening Soon'
+      : 'Workshop Completed';
+
+const ctaLabel = course.isFree ? 'Enroll for Free' : 'Book a Seat →';
+
+/* ── Sticky navbar enroll CTA button text ── */
+const stickyEnrollPrice = course.price.replace(/^NPR\s*/i, '').trim();
+const stickyEnrollButtonText = course.isFree
+  ? 'Enroll for Free'
+  : course.price.toLowerCase() === 'coming soon'
+    ? 'Coming Soon'
+    : `Enroll for NPR ${stickyEnrollPrice}`;
+
+/* ── JSON-LD: BreadcrumbList + Course schemas (SEO preserved) ── */
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Academy',
+        item: `${siteConfig.url}/academy`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Courses',
+        item: `${siteConfig.url}/academy/courses`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: course.shortTitle ?? course.title,
+        item: pageUrl,
+      },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: course.title,
+    description: course.description,
+    url: pageUrl,
+    provider: {
+      '@type': 'Organization',
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+    instructor: course.instructor
+      ? {
+          '@type': 'Person',
+          name: course.instructor,
+          jobTitle: course.instructorTitle,
+        }
+      : undefined,
+    courseMode: course.format.toLowerCase().includes('online') ? 'online' : 'blended',
+    educationalLevel: course.level,
+    timeRequired: course.duration,
+    offers: {
+      '@type': 'Offer',
+      price: course.isFree ? '0' : (course.price.replace(/[^0-9.]/g, '') || '0'),
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      url: bookingUrl,
+    },
+    teaches: course.outcomes ?? [],
+  },
+];
+---
+
+<BaseLayout
+  title={`${course.title} — RoboDev Academy`}
+  description={course.tagline ?? course.description}
+>
+  <!-- Structured data (No visible breadcrumbs rendered in HTML) -->
+  {jsonLd.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
+
+  <div class="wt-page">
+    <!-- ================================================================
+         1. HERO SECTION (Clean 2-column desktop layout)
+         ================================================================ -->
+    <header class="wt-hero">
+      <Container>
+        <div class="wt-hero-grid">
+          <!-- LEFT -->
+          <div class="wt-hero-left">
+            <p class="wt-hero-category">RoboDev Academy · Workshop</p>
+            <h1 class="wt-hero-title">{course.title}</h1>
+            <p class="wt-hero-desc">{course.tagline ?? course.description}</p>
+
+            {course.instructor && (
+              <p class="wt-hero-byline">
+                Taught by <strong>{course.instructor}</strong>
+                {course.instructorTitle && <span class="wt-hero-byline-role"> · {course.instructorTitle}</span>}
+              </p>
+            )}
+
+            <div class="wt-hero-facts">
+              <span class="wt-fact">
+                <span class="wt-fact-icon" aria-hidden="true">◈</span>
+                {course.level}
+              </span>
+              <span class="wt-fact-sep" aria-hidden="true">·</span>
+              <span class="wt-fact">
+                <span class="wt-fact-icon" aria-hidden="true">◷</span>
+                {course.duration}
+              </span>
+              <span class="wt-fact-sep" aria-hidden="true">·</span>
+              <span class="wt-fact">
+                <span class="wt-fact-icon" aria-hidden="true">⬡</span>
+                {course.format}
+              </span>
+              {course.hasCertificate && (
+                <>
+                  <span class="wt-fact-sep" aria-hidden="true">·</span>
+                  <span class="wt-fact wt-fact-cert">
+                    <span class="wt-fact-icon" aria-hidden="true">✦</span>
+                    Free certificate
+                  </span>
+                </>
+              )}
+            </div>
+
+            <p class="wt-hero-seats">⚡ Limited seats available</p>
+
+            <!-- Mobile CTA in hero -->
+            <div class="wt-hero-mobile-cta">
+              <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="wt-btn-primary wt-btn-full">
+                {ctaLabel}
+              </a>
+            </div>
+          </div>
+
+          <!-- RIGHT: Contrasting Enrollment Card -->
+          <aside class="wt-enroll-card" aria-label="Workshop enrollment card">
+            <div class="wt-card-header">
+              <span class="wt-card-badge">{course.format.split('·')[0].trim()}</span>
+              <span class="wt-card-status">{registrationLabel}</span>
+            </div>
+
+            <div class="wt-card-price">
+              <span class="wt-price-main">{course.isFree ? 'Free' : course.price}</span>
+              <span class="wt-price-note">{course.isFree ? '100% Free · No payment required' : 'One-time registration'}</span>
+            </div>
+
+            <a
+              href={bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="wt-btn-primary wt-btn-full wt-btn-card"
+              id="hero-enroll-cta"
+            >
+              <span>{ctaLabel}</span>
+            </a>
+
+            <p class="wt-card-seats-note">Limited seats available</p>
+
+            {course.hasCertificate && (
+              <div class="wt-card-cert-row">
+                <svg class="wt-card-cert-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                </svg>
+                <span>Free certificate included</span>
+              </div>
+            )}
+
+            {course.includes && course.includes.length > 0 && (
+              <div class="wt-card-includes">
+                <p class="wt-card-includes-label">This workshop includes:</p>
+                <ul class="wt-card-includes-list">
+                  {course.includes.map((item) => (
+                    <li>
+                      <span class="wt-check-icon" aria-hidden="true">✓</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div class="wt-card-meta">
+              <div class="wt-card-meta-row">
+                <span class="wt-card-meta-key">Schedule</span>
+                <span class="wt-card-meta-val">{course.date ?? 'Announced soon'}</span>
+              </div>
+              <div class="wt-card-meta-row">
+                <span class="wt-card-meta-key">Duration</span>
+                <span class="wt-card-meta-val">{course.duration}</span>
+              </div>
+              <div class="wt-card-meta-row">
+                <span class="wt-card-meta-key">Format</span>
+                <span class="wt-card-meta-val">{course.format}</span>
+              </div>
+              <div class="wt-card-meta-row">
+                <span class="wt-card-meta-key">Language</span>
+                <span class="wt-card-meta-val">{course.language ?? 'English'}</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </Container>
+    </header>
+
+    <!-- ================================================================
+         2. HORIZONTAL DETAILS STRIP (Prominent Card Component)
+         ================================================================ -->
+    <section class="wt-details-strip" aria-label="Workshop facts at a glance">
+      <Container>
+        <div class="wt-strip-card">
+          <div class="wt-strip-grid">
+            <div class="wt-strip-fact">
+              <span class="wt-strip-label">Workshop type</span>
+              <span class="wt-strip-val">{course.format.split('·')[0].trim()}</span>
+            </div>
+            <div class="wt-strip-fact">
+              <span class="wt-strip-label">Certificate</span>
+              <span class="wt-strip-val">{course.hasCertificate ? 'Free included' : 'None'}</span>
+            </div>
+            <div class="wt-strip-fact">
+              <span class="wt-strip-label">Level</span>
+              <span class="wt-strip-val">{course.level}</span>
+            </div>
+            <div class="wt-strip-fact">
+              <span class="wt-strip-label">Duration</span>
+              <span class="wt-strip-val">{course.duration}</span>
+            </div>
+            <div class="wt-strip-fact">
+              <span class="wt-strip-label">Schedule</span>
+              <span class="wt-strip-val">{course.date ?? 'Announced soon'}</span>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <!-- ================================================================
+         3. STICKY SECTION NAV (Full-width clean navigation)
+         When active/scrolled: shows top bar with Logo, Workshop Name & Enroll Button
+         ================================================================ -->
+    <nav class="wt-section-nav" aria-label="Page sections" id="wt-section-nav">
+      <!-- Active Top Component -->
+      <div class="wt-nav-top-bar" id="wt-nav-top-bar" aria-label="Workshop quick action bar">
+        <Container>
+          <div class="wt-top-bar-inner">
+            <div class="wt-top-bar-left">
+              <a href="/" class="wt-top-bar-logo" aria-label="RoboDev Labs Home">
+                <Logo height={28} />
+              </a>
+            </div>
+            <div class="wt-top-bar-center">
+              <span class="wt-top-bar-title" title={course.title}>{course.title}</span>
+            </div>
+            <div class="wt-top-bar-right">
+              <a
+                href={bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="wt-btn-primary wt-top-bar-btn"
+                id="sticky-top-enroll-cta"
+              >
+                <span>{stickyEnrollButtonText}</span>
+              </a>
+            </div>
+          </div>
+        </Container>
+      </div>
+
+      <!-- Bottom tab links row -->
+      <div class="wt-nav-tabs-bar">
+        <Container>
+          <div class="wt-nav-inner">
+            <a href="#about" class="wt-nav-link wt-nav-link--active">About</a>
+            {course.outcomes && course.outcomes.length > 0 && <a href="#outcomes" class="wt-nav-link">Outcomes</a>}
+            {course.skills && course.skills.length > 0 && <a href="#skills" class="wt-nav-link">Skills</a>}
+            {course.tools && course.tools.length > 0 && <a href="#tools" class="wt-nav-link">Tools</a>}
+            <a href="#details" class="wt-nav-link">Details</a>
+            {course.curriculum && course.curriculum.length > 0 && <a href="#curriculum" class="wt-nav-link">Curriculum</a>}
+            {course.instructor && <a href="#instructor" class="wt-nav-link">Instructor</a>}
+            {course.faqs && course.faqs.length > 0 && <a href="#faq" class="wt-nav-link">FAQ</a>}
+          </div>
+        </Container>
+      </div>
+    </nav>
+
+    <!-- ================================================================
+         4. MAIN CONTENT (Single-column readable width, no dead spacer)
+         ================================================================ -->
+    <main class="wt-main" id="about">
+      <Container>
+        <div class="wt-content-col">
+
+          <!-- 4.1 WHAT YOU'LL LEARN -->
+          {course.outcomes && course.outcomes.length > 0 && (
+            <section id="outcomes" class="wt-section" aria-labelledby="outcomes-heading">
+              <h2 id="outcomes-heading" class="wt-section-title">What you'll learn</h2>
+              <div class="wt-outcomes-grid">
+                {course.outcomes.map((outcome) => (
+                  <div class="wt-outcome-row">
+                    <span class="wt-outcome-check" aria-hidden="true">✓</span>
+                    <p class="wt-outcome-text">{outcome}</p>
+                  </div>
+                ))}
+              </div>
+
+              <!-- Practical work / What you will build (if available) -->
+              {course.whatYouWillBuild && course.whatYouWillBuild.length > 0 && (
+                <div class="wt-build-block">
+                  <h3 class="wt-subhead">Deliverables you will build</h3>
+                  <div class="wt-build-list">
+                    {course.whatYouWillBuild.map((item, idx) => (
+                      <div class="wt-build-item">
+                        <span class="wt-build-num">0{idx + 1}</span>
+                        <p class="wt-build-text">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </section>
+          )}
+
+          <!-- 4.2 SKILLS YOU'LL GAIN -->
+          {course.skills && course.skills.length > 0 && (
+            <>
+              <hr class="wt-divider" />
+              <section id="skills" class="wt-section" aria-labelledby="skills-heading">
+                <h2 id="skills-heading" class="wt-section-title">Skills you'll gain</h2>
+                <div class="wt-skills-wrap">
+                  {course.skills.map((skill) => (
+                    <span class="wt-skill-tag">{skill}</span>
+                  ))}
+                </div>
+              </section>
+            </>
+          )}
+
+          <!-- 4.3 TOOLS YOU'LL USE -->
+          {course.tools && course.tools.length > 0 && (
+            <>
+              <hr class="wt-divider" />
+              <section id="tools" class="wt-section" aria-labelledby="tools-heading">
+                <h2 id="tools-heading" class="wt-section-title">Tools you'll use</h2>
+                <div class="wt-tools-wrap">
+                  {course.tools.map((tool) => (
+                    <span class="wt-tool-tag">{tool}</span>
+                  ))}
+                </div>
+              </section>
+            </>
+          )}
+
+          <!-- 4.4 DETAILS TO KNOW (Includes compact Certificate) -->
+          <hr class="wt-divider" />
+          <section id="details" class="wt-section" aria-labelledby="details-heading">
+            <h2 id="details-heading" class="wt-section-title">Details to know</h2>
+            <div class="wt-details-grid">
+              <div class="wt-detail-block">
+                <span class="wt-detail-label">Format</span>
+                <span class="wt-detail-val">{course.format}</span>
+              </div>
+              <div class="wt-detail-block">
+                <span class="wt-detail-label">Duration</span>
+                <span class="wt-detail-val">{course.duration}</span>
+              </div>
+              <div class="wt-detail-block">
+                <span class="wt-detail-label">Skill level</span>
+                <span class="wt-detail-val">{course.level}</span>
+              </div>
+              <div class="wt-detail-block">
+                <span class="wt-detail-label">Date &amp; Schedule</span>
+                <span class="wt-detail-val">{course.date ?? 'Date to be announced'}</span>
+              </div>
+              <div class="wt-detail-block">
+                <span class="wt-detail-label">Language</span>
+                <span class="wt-detail-val">{course.language ?? 'English'}</span>
+              </div>
+              <div class="wt-detail-block">
+                <span class="wt-detail-label">Access</span>
+                <span class="wt-detail-val">{course.isFree ? 'Free admission' : course.price}</span>
+              </div>
+            </div>
+
+            <!-- Compact Certificate block (honest, without employer/credential claims) -->
+            {course.hasCertificate && (
+              <div class="wt-cert-block">
+                <div class="wt-cert-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                  </svg>
+                </div>
+                <div class="wt-cert-text">
+                  <p class="wt-cert-title">Free certificate included</p>
+                  <p class="wt-cert-desc">Receive a RoboDev Academy certificate after completing the workshop.</p>
+                </div>
+              </div>
+            )}
+          </section>
+
+          <!-- 4.5 ABOUT THIS WORKSHOP (with expandable Read more) -->
+          <hr class="wt-divider" />
+          <section class="wt-section" aria-labelledby="about-heading">
+            <h2 id="about-heading" class="wt-section-title">About this workshop</h2>
+            <p class="wt-body-text">{course.description}</p>
+            {course.longDescription && (
+              <details class="wt-read-more">
+                <summary class="wt-read-more-trigger">Read more</summary>
+                <div class="wt-read-more-body">
+                  <p class="wt-body-text">{course.longDescription}</p>
+                </div>
+              </details>
+            )}
+
+            <!-- Target audience & Prerequisites -->
+            {((course.targetAudience && course.targetAudience.length > 0) || (course.prerequisites && course.prerequisites.length > 0)) && (
+              <div class="wt-two-col-section">
+                {course.targetAudience && course.targetAudience.length > 0 && (
+                  <div>
+                    <h3 class="wt-subhead">Who this is for</h3>
+                    <ul class="wt-check-list">
+                      {course.targetAudience.map((item) => (
+                        <li>
+                          <span class="wt-check-icon" aria-hidden="true">✓</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {course.prerequisites && course.prerequisites.length > 0 && (
+                  <div>
+                    <h3 class="wt-subhead">Prerequisites</h3>
+                    <ul class="wt-check-list">
+                      {course.prerequisites.map((item) => (
+                        <li>
+                          <span class="wt-check-icon" aria-hidden="true">✓</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+          </section>
+
+          <!-- 4.6 WORKSHOP CURRICULUM -->
+          {course.curriculum && course.curriculum.length > 0 && (
+            <>
+              <hr class="wt-divider" />
+              <section id="curriculum" class="wt-section" aria-labelledby="curriculum-heading">
+                <div class="wt-curriculum-head">
+                  <h2 id="curriculum-heading" class="wt-section-title">Workshop curriculum</h2>
+                  <span class="wt-curriculum-meta">{course.curriculum.length} parts · {course.duration}</span>
+                </div>
+                <div class="wt-accordion">
+                  {course.curriculum.map((module, idx) => (
+                    <details class="wt-module" open={idx === 0}>
+                      <summary class="wt-module-bar">
+                        <div class="wt-module-bar-left">
+                          <span class="wt-module-num">0{idx + 1}</span>
+                          <span class="wt-module-title">{module.title}</span>
+                        </div>
+                        <span class="wt-module-chevron" aria-hidden="true">
+                          <Icon name="chevron-right" size={16} />
+                        </span>
+                      </summary>
+                      <div class="wt-module-body">
+                        <ul class="wt-lesson-list">
+                          {module.lessons.map((lesson) => (
+                            <li class="wt-lesson">
+                              <span class="wt-lesson-bullet" aria-hidden="true">—</span>
+                              <span>{lesson.title}</span>
+                              {lesson.duration && <span class="wt-lesson-dur">{lesson.duration}</span>}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            </>
+          )}
+
+          <!-- 4.7 INSTRUCTOR / OFFERED BY -->
+          {course.instructor && (
+            <>
+              <hr class="wt-divider" />
+              <section id="instructor" class="wt-section" aria-labelledby="instructor-heading">
+                <p class="wt-eyebrow">Offered by RoboDev Academy</p>
+                <h2 id="instructor-heading" class="wt-section-title">Instructor</h2>
+                <div class="wt-instructor-row">
+                  <div class="wt-instructor-avatar" aria-hidden="true">
+                    <span>{course.instructor.split(' ').map((n: string) => n[0]).join('')}</span>
+                  </div>
+                  <div class="wt-instructor-info">
+                    <p class="wt-instructor-name">{course.instructor}</p>
+                    {course.instructorTitle && <p class="wt-instructor-role">{course.instructorTitle}</p>}
+                    {course.instructorBio && <p class="wt-instructor-bio">{course.instructorBio}</p>}
+                  </div>
+                </div>
+              </section>
+            </>
+          )}
+
+          <!-- 4.8 OPTIONAL SOCIAL PROOF (Renders nothing when arrays are empty) -->
+          {course.testimonials && course.testimonials.length > 0 && (
+            <>
+              <hr class="wt-divider" />
+              <section class="wt-section" aria-labelledby="testimonials-heading">
+                <h2 id="testimonials-heading" class="wt-section-title">What participants say</h2>
+                <div class="wt-testimonials-grid">
+                  {course.testimonials.map((t) => (
+                    <blockquote class="wt-testimonial">
+                      <p class="wt-testimonial-quote">"{t.quote}"</p>
+                      <footer class="wt-testimonial-footer">
+                        <span class="wt-testimonial-name">{t.name}</span>
+                        {t.role && <span class="wt-testimonial-role">{t.role}</span>}
+                      </footer>
+                    </blockquote>
+                  ))}
+                </div>
+              </section>
+            </>
+          )}
+
+          <!-- 4.9 FREQUENTLY ASKED QUESTIONS -->
+          {course.faqs && course.faqs.length > 0 && (
+            <>
+              <hr class="wt-divider" />
+              <section id="faq" class="wt-section" aria-labelledby="faq-heading">
+                <h2 id="faq-heading" class="wt-section-title">Frequently asked questions</h2>
+                <div class="wt-faq-stack">
+                  {course.faqs.map((faq, idx) => (
+                    <details class="wt-faq" open={idx === 0}>
+                      <summary class="wt-faq-q">
+                        <span>{faq.q}</span>
+                        <span class="wt-module-chevron" aria-hidden="true">
+                          <Icon name="chevron-right" size={15} />
+                        </span>
+                      </summary>
+                      <div class="wt-faq-a">
+                        <p>{faq.a}</p>
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            </>
+          )}
+
+          <!-- FINAL CTA BLOCK -->
+          <div class="wt-final-cta">
+            <div class="wt-final-cta-content">
+              <h2 class="wt-final-cta-title">Ready to join this workshop?</h2>
+              <p class="wt-final-cta-note">Limited seats available · {course.isFree ? '100% Free registration' : course.price}</p>
+            </div>
+            <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="wt-btn-primary wt-btn-lg" id="bottom-enroll-cta">
+              {ctaLabel}
+            </a>
+          </div>
+
+        </div>
+      </Container>
+    </main>
+
+    <!-- ================================================================
+         MOBILE FIXED BOTTOM ENROLL BAR
+         ================================================================ -->
+    <div class="wt-mobile-bar" aria-label="Mobile enrollment action">
+      <div class="wt-mobile-bar-inner">
+        <div class="wt-mobile-bar-text">
+          <span class="wt-mobile-price">{course.isFree ? 'Free' : course.price}</span>
+          <span class="wt-mobile-note">{course.hasCertificate ? 'Free certificate included' : 'Interactive workshop'}</span>
+        </div>
+        <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="wt-btn-primary wt-btn-sm" id="mobile-enroll-cta">
+          {ctaLabel}
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  /* Sticky nav active link highlighting on scroll */
+  const navLinks = document.querySelectorAll('.wt-nav-link');
+  const sections = document.querySelectorAll('main[id], section[id]');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          navLinks.forEach((l) => l.classList.remove('wt-nav-link--active'));
+          const active = document.querySelector(`.wt-nav-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('wt-nav-link--active');
+        }
+      });
+    },
+    { rootMargin: '-25% 0px -65% 0px' }
+  );
+
+  sections.forEach((s) => observer.observe(s));
+
+  /* Elevation shadow and top-bar activation when sticky nav passes hero */
+  const nav = document.getElementById('wt-section-nav');
+  const hero = document.querySelector('.wt-hero');
+  if (nav && hero) {
+    const updateNavState = (isPastHero: boolean) => {
+      nav.classList.toggle('wt-nav--scrolled', isPastHero);
+      nav.classList.toggle('wt-nav--active', isPastHero);
+    };
+
+    const heroObserver = new IntersectionObserver(
+      ([e]) => {
+        updateNavState(!e.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+    heroObserver.observe(hero);
+
+    // Initial check on load or restore
+    const heroRect = hero.getBoundingClientRect();
+    if (heroRect.bottom <= 0) {
+      updateNavState(true);
+    }
+  }
+</script>
+
+<style>
+  /* =========================================================================
+     RoboDev Academy — Workshop Template
+     Coursera information architecture with RoboDev branding:
+     - Hero: Dark Green (#31473A)
+     - Surfaces: Clean White & Off-white (#fafaf8)
+     - Accents: Sage Green (#7C8363)
+     - Text: Dark (#111111) and Subdued (#555555)
+     ========================================================================= */
+
+  .wt-page {
+    background-color: #fafaf8;
+    color: #1a1a1a;
+    min-height: 100vh;
+  }
+
+  @media (max-width: 860px) {
+    .wt-page {
+      padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    }
+  }
+
+  /* ── 1. HERO SECTION ── */
+  .wt-hero {
+    background-color: var(--color-pepper-medium, #31473A);
+    color: #EDF4F2;
+    padding-top: clamp(6.5rem, 13vh, 8.5rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    border-bottom: 1px solid rgba(237, 244, 242, 0.12);
+  }
+
+  .wt-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: flex-start;
+  }
+
+  @media (max-width: 1024px) {
+    .wt-hero-grid {
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .wt-hero-grid {
+      grid-template-columns: 1fr;
+      align-items: flex-start;
+    }
+  }
+
+  .wt-hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.125rem;
+    padding: clamp(1rem, 2vw, 2rem) 0;
+  }
+
+  .wt-hero-category {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: rgba(237, 244, 242, 0.65);
+    margin: 0;
+  }
+
+  .wt-hero-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(2.125rem, 4.5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    color: #EDF4F2;
+    margin: 0;
+  }
+
+  .wt-hero-desc {
+    font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
+    line-height: 1.6;
+    color: rgba(237, 244, 242, 0.82);
+    margin: 0;
+    max-width: 58ch;
+  }
+
+  .wt-hero-byline {
+    font-size: 0.9375rem;
+    color: rgba(237, 244, 242, 0.75);
+    margin: 0;
+  }
+
+  .wt-hero-byline strong {
+    color: #EDF4F2;
+    font-weight: 600;
+  }
+
+  .wt-hero-byline-role {
+    color: rgba(237, 244, 242, 0.6);
+  }
+
+  .wt-hero-facts {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 0;
+    font-size: 0.875rem;
+    color: rgba(237, 244, 242, 0.8);
+    margin-top: 0.5rem;
+  }
+
+  .wt-fact {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .wt-fact-cert {
+    color: #b5d5ad;
+    font-weight: 500;
+  }
+
+  .wt-fact-icon {
+    font-size: 0.6875rem;
+    opacity: 0.65;
+  }
+
+  .wt-fact-sep {
+    margin: 0 9px;
+    opacity: 0.35;
+  }
+
+  .wt-hero-seats {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #b5d5ad;
+    margin: 0.25rem 0 0;
+  }
+
+  .wt-hero-mobile-cta {
+    display: none;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 860px) {
+    .wt-hero-mobile-cta {
+      display: block;
+    }
+  }
+
+  /* ── Right Enrollment Card ── */
+  .wt-enroll-card {
+    background: #ffffff;
+    border: 1px solid #e0e0d8;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.16);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    color: #1a1a1a;
+    align-self: end;
+  }
+
+  @media (max-width: 860px) {
+    .wt-enroll-card {
+      display: none;
+    }
+  }
+
+  .wt-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .wt-card-badge {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-pepper-dark, #7C8363);
+  }
+
+  .wt-card-status {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-pepper-medium, #31473A);
+  }
+
+  .wt-card-price {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .wt-price-main {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-pepper-medium, #31473A);
+  }
+
+  .wt-price-note {
+    font-size: 0.75rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .wt-card-seats-note {
+    font-size: 0.8125rem;
+    color: #666;
+    margin: -8px 0 0;
+    text-align: center;
+  }
+
+  .wt-card-cert-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-pepper-medium, #31473A);
+    background: #edf3ed;
+    padding: 6px 10px;
+    border-radius: 6px;
+  }
+
+  .wt-card-cert-icon {
+    flex-shrink: 0;
+    color: var(--color-pepper-medium, #31473A);
+  }
+
+  .wt-card-includes {
+    border-top: 1px solid #eaeae4;
+    padding-top: 0.875rem;
+  }
+
+  .wt-card-includes-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 0.5rem;
+  }
+
+  .wt-card-includes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .wt-card-includes-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.8125rem;
+    color: #444;
+    line-height: 1.4;
+  }
+
+  .wt-check-icon {
+    color: var(--color-pepper-medium, #31473A);
+    font-weight: 700;
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    margin-top: 2px;
+  }
+
+  .wt-card-meta {
+    border-top: 1px solid #eaeae4;
+    padding-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .wt-card-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.8125rem;
+  }
+
+  .wt-card-meta-key {
+    color: #777;
+  }
+
+  .wt-card-meta-val {
+    font-weight: 600;
+    color: #1a1a1a;
+    text-align: right;
+    max-width: 60%;
+  }
+
+  /* ── Buttons ── */
+  .wt-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background-color: var(--color-pepper-medium, #31473A);
+    color: #EDF4F2;
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    padding: 13px 26px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 160ms ease, transform 100ms ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .wt-btn-primary:hover {
+    background-color: var(--color-pepper-dark, #7C8363);
+    transform: translateY(-1px);
+    color: #ffffff;
+  }
+
+  .wt-btn-full {
+    width: 100%;
+    text-align: center;
+  }
+
+  .wt-btn-sm {
+    padding: 9px 18px;
+    font-size: 0.875rem;
+  }
+
+  .wt-btn-lg {
+    padding: 14px 28px;
+    font-size: 1rem;
+  }
+
+  /* ── 2. HORIZONTAL DETAILS STRIP (Prominent Card Component) ── */
+  .wt-details-strip {
+    background: transparent;
+    padding: 2rem 0;
+  }
+
+  .wt-strip-card {
+    background: #ffffff;
+    border: 1px solid #dfded7;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+    padding: 1.75rem 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .wt-strip-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .wt-strip-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wt-strip-fact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    padding: 0.5rem clamp(1rem, 2.5vw, 2.25rem);
+    border-right: 1px solid #e7e6df;
+    min-width: 140px;
+    flex: 1 1 0;
+  }
+
+  .wt-strip-fact:first-child {
+    padding-left: 0.5rem;
+  }
+
+  .wt-strip-fact:last-child {
+    border-right: none;
+    padding-right: 0.5rem;
+  }
+
+  .wt-strip-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #666;
+  }
+
+  .wt-strip-val {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: #111;
+    line-height: 1.3;
+  }
+
+  @media (max-width: 768px) {
+    .wt-details-strip {
+      padding: 1.25rem 0;
+    }
+
+    .wt-strip-card {
+      padding: 1.25rem 1rem;
+      border-radius: 10px;
+    }
+
+    .wt-strip-grid {
+      justify-content: flex-start;
+    }
+
+    .wt-strip-fact {
+      align-items: flex-start;
+      text-align: left;
+      flex: 0 0 auto;
+      min-width: 130px;
+    }
+  }
+
+  /* ── 3. STICKY SECTION NAV ── */
+  .wt-section-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: #ffffff;
+    border-bottom: 1px solid #e8e8e2;
+    transition: box-shadow 200ms ease;
+  }
+
+  .wt-nav--scrolled,
+  .wt-nav--active {
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Secondary Navbar Top Component (Hidden until active/scrolled) */
+  .wt-nav-top-bar {
+    display: none;
+    background: #ffffff;
+    border-bottom: 1px solid #eeeee8;
+    padding: 0.5rem 0;
+  }
+
+  .wt-nav--active .wt-nav-top-bar,
+  .wt-nav--scrolled .wt-nav-top-bar {
+    display: block;
+    animation: wtNavSlideDown 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes wtNavSlideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .wt-top-bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  .wt-top-bar-left {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .wt-top-bar-logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    transition: opacity 150ms ease;
+  }
+
+  .wt-top-bar-logo:hover {
+    opacity: 0.85;
+  }
+
+  .wt-top-bar-center {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    text-align: center;
+  }
+
+  .wt-top-bar-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #111111;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 520px;
+    letter-spacing: -0.01em;
+  }
+
+  .wt-top-bar-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
+
+  .wt-top-bar-btn {
+    white-space: nowrap;
+    font-size: 0.8125rem;
+    padding: 8px 18px;
+    border-radius: 6px;
+    line-height: 1.2;
+    background-color: var(--color-pepper-medium, #31473A);
+    color: #EDF4F2;
+    box-shadow: 0 2px 8px rgba(49, 71, 58, 0.2);
+    text-decoration: none;
+  }
+
+  .wt-top-bar-btn:hover {
+    background-color: var(--color-pepper-dark, #7C8363);
+    color: #ffffff;
+  }
+
+  @media (max-width: 768px) {
+    .wt-top-bar-title {
+      font-size: 0.8125rem;
+      max-width: 240px;
+    }
+    .wt-top-bar-btn {
+      padding: 6px 12px;
+      font-size: 0.75rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .wt-top-bar-title {
+      display: none;
+    }
+  }
+
+  .wt-nav-tabs-bar {
+    width: 100%;
+  }
+
+  .wt-nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .wt-nav-inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wt-nav-link {
+    display: inline-block;
+    padding: 12px 18px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #555;
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 150ms ease, border-color 150ms ease;
+  }
+
+  .wt-nav-link:hover {
+    color: var(--color-pepper-medium, #31473A);
+  }
+
+  .wt-nav-link--active {
+    color: var(--color-pepper-medium, #31473A);
+    border-bottom-color: var(--color-pepper-medium, #31473A);
+    font-weight: 600;
+  }
+
+  /* ── 4. MAIN CONTENT (Single readable column, no dead spacer) ── */
+  .wt-main {
+    padding: 3rem 0 5rem;
+  }
+
+  .wt-content-col {
+    max-width: 820px;
+  }
+
+  .wt-section {
+    padding: 2.25rem 0;
+  }
+
+  .wt-divider {
+    border: none;
+    border-top: 1px solid #e5e5dc;
+    margin: 0;
+  }
+
+  .wt-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-pepper-dark, #7C8363);
+    margin: 0 0 0.25rem;
+  }
+
+  .wt-section-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #111;
+    margin: 0 0 1.25rem;
+  }
+
+  .wt-subhead {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  .wt-body-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #333;
+    margin: 0;
+  }
+
+  /* Read more expandable */
+  .wt-read-more {
+    margin-top: 0.875rem;
+  }
+
+  .wt-read-more-trigger {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-pepper-medium, #31473A);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .wt-read-more-trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  .wt-read-more-body {
+    margin-top: 0.875rem;
+    padding-top: 0.5rem;
+  }
+
+  /* Two-column section */
+  .wt-two-col-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .wt-two-col-section {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  .wt-check-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .wt-check-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: #333;
+  }
+
+  /* Outcomes 2-column grid */
+  .wt-outcomes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0.875rem;
+  }
+
+  .wt-outcome-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0.875rem 1rem;
+    background: #ffffff;
+    border: 1px solid #e2e2da;
+    border-radius: 6px;
+  }
+
+  .wt-outcome-check {
+    color: var(--color-pepper-medium, #31473A);
+    font-weight: 700;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .wt-outcome-text {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: #222;
+    margin: 0;
+  }
+
+  /* Build deliverables list */
+  .wt-build-block {
+    margin-top: 2rem;
+  }
+
+  .wt-build-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .wt-build-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.875rem 1.25rem;
+    border-left: 3px solid var(--color-pepper-medium, #31473A);
+    background: #ffffff;
+    border-radius: 0 6px 6px 0;
+    border: 1px solid #e2e2da;
+    border-left-width: 3px;
+    border-left-color: var(--color-pepper-medium, #31473A);
+  }
+
+  .wt-build-num {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-pepper-dark, #7C8363);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+    min-width: 24px;
+  }
+
+  .wt-build-text {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: #222;
+    margin: 0;
+  }
+
+  /* Skills & Tools pills */
+  .wt-skills-wrap,
+  .wt-tools-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .wt-skill-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: #edf3ed;
+    color: var(--color-pepper-medium, #31473A);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border-radius: 4px;
+    border: 1px solid #d3e2d3;
+  }
+
+  .wt-tool-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: #ffffff;
+    color: #333;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    border-radius: 4px;
+    border: 1px solid #d4d4cb;
+  }
+
+  /* Details grid */
+  .wt-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .wt-detail-block {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .wt-detail-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #777;
+  }
+
+  .wt-detail-val {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #111;
+    line-height: 1.4;
+  }
+
+  /* Compact Certificate block */
+  .wt-cert-block {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: #ffffff;
+    border: 1px solid #e2e2da;
+    border-radius: 6px;
+    border-left: 3px solid var(--color-pepper-medium, #31473A);
+  }
+
+  .wt-cert-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: #edf3ed;
+    color: var(--color-pepper-medium, #31473A);
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .wt-cert-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 2px;
+  }
+
+  .wt-cert-desc {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: #555;
+    margin: 0;
+  }
+
+  /* Curriculum accordion */
+  .wt-curriculum-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .wt-curriculum-meta {
+    font-size: 0.8125rem;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  .wt-accordion {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e2e2da;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .wt-module {
+    border-bottom: 1px solid #e2e2da;
+  }
+
+  .wt-module:last-child {
+    border-bottom: none;
+  }
+
+  .wt-module-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    background: #ffffff;
+    transition: background 150ms ease;
+  }
+
+  .wt-module-bar:hover {
+    background: #f7f7f3;
+  }
+
+  .wt-module-bar::-webkit-details-marker {
+    display: none;
+  }
+
+  .wt-module-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .wt-module-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-pepper-dark, #7C8363);
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  }
+
+  .wt-module-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #111;
+  }
+
+  .wt-module-chevron {
+    color: #888;
+    display: flex;
+    align-items: center;
+    transition: transform 180ms ease;
+    flex-shrink: 0;
+  }
+
+  .wt-module[open] .wt-module-chevron {
+    transform: rotate(90deg);
+  }
+
+  .wt-faq[open] .wt-module-chevron {
+    transform: rotate(90deg);
+  }
+
+  .wt-module-body {
+    padding: 0.5rem 1.25rem 1.25rem;
+    background: #fafaf7;
+    border-top: 1px solid #e8e8e0;
+  }
+
+  .wt-lesson-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .wt-lesson {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: #444;
+    line-height: 1.5;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ebebea;
+  }
+
+  .wt-lesson:last-child {
+    border-bottom: none;
+  }
+
+  .wt-lesson-bullet {
+    color: #aaa;
+    flex-shrink: 0;
+  }
+
+  .wt-lesson-dur {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: #888;
+    flex-shrink: 0;
+  }
+
+  /* Instructor */
+  .wt-instructor-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 600px) {
+    .wt-instructor-row {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }
+
+  .wt-instructor-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--color-pepper-medium, #31473A);
+    color: #EDF4F2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .wt-instructor-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .wt-instructor-name {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #111;
+    margin: 0;
+  }
+
+  .wt-instructor-role {
+    font-size: 0.875rem;
+    color: #666;
+    margin: 0;
+  }
+
+  .wt-instructor-bio {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: #444;
+    margin: 0.5rem 0 0;
+    max-width: 60ch;
+  }
+
+  /* Testimonials */
+  .wt-testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .wt-testimonial {
+    background: #ffffff;
+    border: 1px solid #e2e2da;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin: 0;
+  }
+
+  .wt-testimonial-quote {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: #333;
+    margin: 0 0 1rem;
+    font-style: italic;
+  }
+
+  .wt-testimonial-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .wt-testimonial-name {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #111;
+  }
+
+  .wt-testimonial-role {
+    font-size: 0.8125rem;
+    color: #777;
+  }
+
+  /* FAQ */
+  .wt-faq-stack {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e2e2da;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .wt-faq {
+    border-bottom: 1px solid #e2e2da;
+  }
+
+  .wt-faq:last-child {
+    border-bottom: none;
+  }
+
+  .wt-faq-q {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #111;
+    list-style: none;
+    background: #ffffff;
+    transition: background 150ms ease;
+  }
+
+  .wt-faq-q:hover {
+    background: #f7f7f3;
+  }
+
+  .wt-faq-q::-webkit-details-marker {
+    display: none;
+  }
+
+  .wt-faq-a {
+    padding: 0 1.25rem 1rem;
+    background: #fafaf7;
+    border-top: 1px solid #e8e8e0;
+  }
+
+  .wt-faq-a p {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: #444;
+    margin: 0.75rem 0 0;
+  }
+
+  /* Final CTA block */
+  .wt-final-cta {
+    margin-top: 3rem;
+    padding: 2rem 2.5rem;
+    background: var(--color-pepper-medium, #31473A);
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .wt-final-cta-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .wt-final-cta-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #EDF4F2;
+    margin: 0;
+  }
+
+  .wt-final-cta-note {
+    font-size: 0.875rem;
+    color: rgba(237, 244, 242, 0.7);
+    margin: 0;
+  }
+
+  /* ── Mobile Fixed Bottom Bar ── */
+  .wt-mobile-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: var(--color-pepper-medium, #31473A);
+    border-top: 1px solid rgba(237, 244, 242, 0.15);
+    padding: 0.75rem 1rem;
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  @media (max-width: 860px) {
+    .wt-mobile-bar {
+      display: block;
+    }
+  }
+
+  .wt-mobile-bar-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .wt-mobile-bar-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .wt-mobile-price {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #EDF4F2;
+    line-height: 1;
+  }
+
+  .wt-mobile-note {
+    font-size: 0.6875rem;
+    color: rgba(237, 244, 242, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+</style>

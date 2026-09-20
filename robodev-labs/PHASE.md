@@ -90,3 +90,20 @@ This file is our project execution roadmap. It tracks what needs to be completed
 - [x] Dedicated mobile morphing experience expanding into an accessible floating card without a generic full-screen takeover.
 - [x] Preserved existing navigation structure (`Services`, `Product Studio`, `RoboDev Academy`, `How We Work`, `Settings`) and primary CTA (`Start a Project`).
 
+## Phase 9 — RoboDev Academy V1 Editorial Studio Redesign (Completed)
+- [x] Ground-up editorial redesign of `academy.astro` into a calm, human, sophisticated modern learning studio.
+- [x] Eliminated SaaS dashboard card clutter, metric chips, nested boxes, artificial badges, and fake claims.
+- [x] Preserved existing RoboDev Labs brand design system: Combination 56 Salt & Pepper palette, typography tokens, and standard UI primitives.
+- [x] Maintained structured static data in `src/data/workshops.ts` with clean attributes for levels, formats, dates, prices, outcomes, and direct registration/payment URLs.
+- [x] Clear Free vs. Paid UX: "FREE" + "Join / Register" vs. explicit price display + "Enroll / Buy".
+- [x] Streamlined 7-part editorial story:
+  1. Hero: Spacious, human, confident ("Learn by building.") with large display typography.
+  2. Featured Workshop: Visually dominant showcase displaying title, date, duration, level, price, takeaways, and CTA.
+  3. Workshop Catalog: Clean, intentional editorial cards with minimal clutter and strong typographic hierarchy.
+  4. Learn → Build → Grow: Single cohesive philosophy section replacing heavy box layouts.
+  5. Mentorship: Grounded, honest statement on practitioner guidance.
+  6. For Colleges / Communities: Clean secondary collaboration invitation for university clubs.
+  7. Final CTA & Footer: Integrated the site-wide `ContinuousCtaFooter` component seamlessly.
+- [x] Static build verification with 0 errors via `npm run build`.
+
+

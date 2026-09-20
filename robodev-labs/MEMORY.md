@@ -24,6 +24,8 @@
    - Custom software, AI solutions, web & mobile applications, and cloud architecture.
 2. **RoboDev Academy (Public Pillar 2)**
    - Practical technology skills training, workshops, and developer mentorship.
+   - Grounded, student-focused V1 architecture centered on *learning by building*.
+   - Standalone page at `/academy` redesigned as an editorial modern learning studio: calm, human, sophisticated, large display typography, generous whitespace, zero dashboard box clutter, distinct Free vs. Paid UX, and static data located in `src/data/workshops.ts`.
 3. **Product Studio (Public Pillar 3)**
    - Incubating proprietary technology products (Flagship: **Busly** transit platform).
 4. **Media & Growth (Strictly Internal Division)**
@@ -31,7 +33,19 @@
 
 ---
 
+## Academy V1 Data & Editorial Architecture (`src/data/workshops.ts`)
+
+- **Schema**:
+  - `title`, `slug`, `description`, `level`, `format`, `duration`, `date`, `price`, `isFree`, `isFeatured`, `status`, `instructor`, `whatYouWillBuild`, `registrationUrl`, `paymentUrl`.
+- **UX Pathways**:
+  - **Free Workshops**: "FREE" pill badge, primary action: `Join / Register` → external registration form.
+  - **Paid Workshops**: Explicit price badge (e.g. `$19`, `$25`), primary action: `Enroll / Buy` → external checkout/registration link.
+- **Editorial Tone & Layout**: No SaaS dashboard boxes, no fake metrics/claims, unified 3-step *Learn → Build → Grow* philosophy, and seamless integration with `ContinuousCtaFooter`.
+
+---
+
 ## Verification & Build Log
 
 - **Static Build**: `npm run build` executed and passed with `0` errors.
 - **Dev Server**: Running on `http://localhost:4321`.
+
