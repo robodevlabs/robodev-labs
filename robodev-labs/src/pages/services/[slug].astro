@@ -1,0 +1,23 @@
+---
+/**
+ * Dynamic Service Route: /services/[slug]
+ * Generates pages for all services defined in engineering.ts
+ */
+import { engineeringServices, type EngineeringService } from '../../data/engineering';
+import ServiceTemplate from '../../components/services/ServiceTemplate.astro';
+
+export async function getStaticPaths() {
+  return engineeringServices.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+export interface Props {
+  service: EngineeringService;
+}
+
+const { service } = Astro.props;
+---
+
+<ServiceTemplate service={service} />

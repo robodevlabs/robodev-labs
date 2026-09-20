@@ -1,0 +1,238 @@
+---
+/**
+ * Engineering Services homepage: /services
+ * Presentation-only. All copy and services come from src/data/engineering.ts.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import Button from '../../components/ui/Button.astro';
+import AcademyGrid from '../../components/academy/AcademyGrid.astro';
+import AcademyNodes from '../../components/academy/AcademyNodes.astro';
+import AcademyBlueprint from '../../components/academy/AcademyBlueprint.astro';
+import ProcessEngineSection from '../../components/sections/ProcessEngineSection.astro';
+import { engineeringServices, engineeringPage } from '../../data/engineering';
+import { productsData } from '../../data/products';
+import { siteConfig } from '../../config/site';
+
+const contactHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent('Project inquiry: Engineering Services')}`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'RoboDev Labs Engineering Services',
+  description: engineeringPage.intro,
+  url: `${siteConfig.url}/services`,
+  itemListElement: engineeringServices.map((s, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: { '@type': 'Service', name: s.title, description: s.summary, url: `${siteConfig.url}/services/${s.slug}` },
+  })),
+};
+---
+
+<BaseLayout title={`Engineering Services — ${siteConfig.name}`} description={engineeringPage.intro}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <div class="eng-page">
+    <header class="eng-hero">
+      <div class="eng-hero__bg" aria-hidden="true">
+        <div class="eng-hero__grid" data-parallax="0.06"><AcademyGrid /></div>
+        <div class="eng-hero__nodes" data-parallax="0.14"><AcademyNodes /></div>
+      </div>
+      <Container>
+        <div class="eng-hero__layout">
+          <div class="reveal-fade-up">
+            <span class="eng-eyebrow">{engineeringPage.eyebrow}</span>
+            <h1 class="eng-hero__title">{engineeringPage.headline}</h1>
+            <p class="eng-hero__intro">{engineeringPage.intro}</p>
+            <div class="eng-hero__actions">
+              <Button variant="primary" size="lg" href={contactHref}><span>{engineeringPage.primaryCtaLabel}</span></Button>
+              <a class="eng-link" href="#services-offerings"><span>{engineeringPage.secondaryCtaLabel}</span><span class="eng-link__arrow" aria-hidden="true">→</span></a>
+            </div>
+          </div>
+          <div class="eng-hero__visual" aria-hidden="true" data-parallax="0.1"><AcademyBlueprint /></div>
+        </div>
+      </Container>
+    </header>
+
+    <section class="eng-section" id="services-offerings" aria-labelledby="services-title">
+      <Container>
+        <div class="reveal-fade-up">
+          <span class="eng-eyebrow">{engineeringPage.servicesEyebrow}</span>
+          <h2 id="services-title" class="eng-title">{engineeringPage.servicesTitle}</h2>
+          <p class="eng-intro">{engineeringPage.servicesIntro}</p>
+        </div>
+        <div class="eng-cards">
+          {engineeringServices.map((service, idx) => (
+            <article class={`eng-card eng-card--${idx} reveal-fade-up`} style={`--reveal-delay:${idx * 80}ms`}>
+              <span class="eng-card__index" aria-hidden="true">0{idx + 1}</span>
+              <h3 class="eng-card__title"><a href={`/services/${service.slug}`}>{service.title}</a></h3>
+              <p class="eng-card__tagline">{service.tagline}</p>
+              <p class="eng-card__summary">{service.summary}</p>
+              <a href={`/services/${service.slug}`} class="eng-card__cta"><span>View service</span><span class="eng-arrow" aria-hidden="true">→</span></a>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="eng-section eng-section--alt" aria-labelledby="capabilities-title">
+      <Container>
+        <div class="reveal-fade-up">
+          <span class="eng-eyebrow">{engineeringPage.capabilitiesEyebrow}</span>
+          <h2 id="capabilities-title" class="eng-title">{engineeringPage.capabilitiesTitle}</h2>
+          <p class="eng-intro">{engineeringPage.capabilitiesIntro}</p>
+        </div>
+        <div class="eng-tags reveal-fade-up">
+          {engineeringPage.capabilities.map((c) => (<span class="eng-tag">{c}</span>))}
+        </div>
+      </Container>
+    </section>
+
+    <ProcessEngineSection />
+
+    <section class="eng-section eng-section--alt" aria-labelledby="why-title">
+      <Container>
+        <div class="reveal-fade-up">
+          <span class="eng-eyebrow">{engineeringPage.whyEyebrow}</span>
+          <h2 id="why-title" class="eng-title">{engineeringPage.whyTitle}</h2>
+          <p class="eng-intro">{engineeringPage.whyIntro}</p>
+        </div>
+        <div class="eng-values">
+          {engineeringPage.values.map((v, idx) => (
+            <div class="eng-value reveal-fade-up" style={`--reveal-delay:${idx * 70}ms`}>
+              <span class="eng-value__index" aria-hidden="true">0{idx + 1}</span>
+              <h3 class="eng-value__title">{v.title}</h3>
+              <p class="eng-value__body">{v.description}</p>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="eng-section" aria-labelledby="proof-title">
+      <Container>
+        <div class="reveal-fade-up">
+          <span class="eng-eyebrow">{engineeringPage.proofEyebrow}</span>
+          <h2 id="proof-title" class="eng-title">{engineeringPage.proofTitle}</h2>
+          <p class="eng-intro">{engineeringPage.proofIntro}</p>
+        </div>
+        <div class="eng-proof">
+          {productsData.filter((p) => p.isFeatured).map((p) => (
+            <div class="eng-proof__card reveal-fade-up">
+              <span class="eng-proof__badge">{p.badge} · {p.status}</span>
+              <h3 class="eng-proof__name">{p.name}</h3>
+              <p class="eng-proof__tagline">{p.tagline}</p>
+              <p class="eng-proof__desc">{p.description}</p>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="eng-cta" aria-labelledby="cta-title">
+      <Container>
+        <div class="eng-cta__card reveal-fade-up">
+          <div>
+            <h2 id="cta-title" class="eng-cta__title">{engineeringPage.ctaTitle}</h2>
+            <p class="eng-cta__body">{engineeringPage.ctaDescription}</p>
+          </div>
+          <div class="eng-cta__actions">
+            <Button variant="primary" size="lg" href={contactHref}><span>{engineeringPage.ctaPrimaryLabel}</span></Button>
+            <Button variant="ghost" size="lg" href="#services-offerings" class="eng-cta__ghost"><span>{engineeringPage.ctaSecondaryLabel}</span><span class="eng-cta__arrow" aria-hidden="true">→</span></Button>
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const els = document.querySelectorAll('.eng-page .reveal-fade-up');
+        if ('IntersectionObserver' in window && !reduce) {
+          const io = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } }); }, { threshold: 0.1 });
+          els.forEach((el) => io.observe(el));
+        } else { els.forEach((el) => el.classList.add('is-visible')); }
+        if (reduce) return;
+        const layers = Array.from(document.querySelectorAll('.eng-page [data-parallax]'));
+        let t = false;
+        const up = () => { t = false; if (window.innerWidth < 768) return; const vh = window.innerHeight; layers.forEach((el) => { const s = parseFloat(el.getAttribute('data-parallax') || '0.08'); const r = el.getBoundingClientRect(); el.style.setProperty('--parallax-y', `${((-(r.top + r.height / 2 - vh / 2)) * s).toFixed(1)}px`); }); };
+        const sc = () => { if (!t) { t = true; requestAnimationFrame(up); } };
+        up(); window.addEventListener('scroll', sc, { passive: true });
+      });
+    </script>
+  </div>
+</BaseLayout>
+
+<style>
+  .eng-page { background: var(--color-background, #2b2b2b); color: var(--color-text, #fff); min-height: 100vh; overflow-x: clip; }
+  .eng-eyebrow { font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-secondary, #d4d4d4); }
+  .reveal-fade-up { opacity: 0; transform: translateY(18px); transition: opacity 600ms ease, transform 600ms cubic-bezier(0.16,1,0.3,1); transition-delay: var(--reveal-delay, 0ms); }
+  .reveal-fade-up.is-visible { opacity: 1; transform: none; }
+  [data-parallax] { transform: translate3d(0, var(--parallax-y, 0px), 0); }
+  .eng-hero { position: relative; padding: clamp(6.5rem,12vh,9rem) 0 clamp(3rem,6vw,5rem); background: var(--color-background-secondary, #31473a); border-bottom: 1px solid rgba(255,255,255,0.1); overflow: hidden; }
+  .eng-hero__bg { position: absolute; inset: 0; pointer-events: none; }
+  .eng-hero__grid { position: absolute; top: 0; right: 0; width: min(560px,60%); opacity: 0.35; }
+  .eng-hero__nodes { position: absolute; left: 3%; bottom: 8%; width: 300px; opacity: 0.6; }
+  .eng-hero__layout { position: relative; display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,0.85fr); gap: clamp(2rem,5vw,4rem); align-items: center; }
+  .eng-hero__title { font-size: clamp(2.4rem,5.5vw,4.2rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.06; margin: 1rem 0 1.25rem; }
+  .eng-hero__intro { opacity: 0.88; line-height: 1.65; max-width: 60ch; margin: 0 0 2rem; font-size: clamp(1.05rem,1.6vw,1.25rem); }
+  .eng-hero__actions { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+  .eng-link { color: #fff; text-underline-offset: 4px; display: inline-flex; align-items: center; gap: 8px; }
+  .eng-link__arrow { display: inline-block; transition: transform 180ms ease; }
+  .eng-link:hover .eng-link__arrow { transform: translateX(4px); }
+  .eng-hero__visual { min-height: 360px; display: flex; align-items: center; }
+  .eng-section { padding: clamp(3.5rem,7vw,5.5rem) 0; position: relative; }
+  .eng-section--alt { background: var(--color-background-secondary, #31473a); }
+  .eng-title { font-size: clamp(2rem,4vw,3rem); font-weight: 800; letter-spacing: -0.03em; margin: 0.7rem 0 1rem; }
+  .eng-intro { opacity: 0.82; line-height: 1.65; max-width: 68ch; margin: 0 0 2.5rem; }
+  .eng-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .eng-card { position: relative; border: 1px solid rgba(237, 244, 242, 0.16); border-radius: 12px; padding: 2rem 1.75rem; background: var(--color-pepper-medium, #31473a); color: #edf4f2; transition: border-color 250ms ease, box-shadow 250ms ease, background-color 250ms ease; overflow: hidden; }
+  .eng-card:hover { transform: none; border-color: rgba(237, 244, 242, 0.4); box-shadow: 0 12px 32px rgba(0,0,0,0.3); background-color: #365040; }
+  .eng-card--1, .eng-card--2 { transform: none; }
+  .eng-card--1:hover, .eng-card--2:hover { transform: none; }
+  .eng-card__index { font-family: var(--font-mono,monospace); font-size: clamp(2.2rem,3.5vw,3rem); font-weight: 800; opacity: 0.9; line-height: 1; }
+  .eng-card__title { font-size: 1.45rem; margin: 1rem 0 0.6rem; }
+  .eng-card__title a { color: inherit; text-decoration: none; }
+  .eng-card__title a:hover { text-decoration: underline; text-underline-offset: 5px; }
+  .eng-card__tagline { font-weight: 600; opacity: 0.92; margin: 0 0 0.7rem; }
+  .eng-card__summary { opacity: 0.8; line-height: 1.6; margin: 0 0 1.5rem; font-size: 0.95rem; }
+  .eng-card__cta { display: inline-flex; gap: 8px; font-weight: 650; color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.22); border-radius: 8px; padding: 10px 18px; }
+  .eng-card__cta:hover { background: #fff; color: #2b2b2b; }
+  .eng-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .eng-tag { border: 1px solid rgba(255,255,255,0.18); border-radius: 6px; padding: 7px 13px; font-size: 0.83rem; background: rgba(255,255,255,0.05); }
+  .eng-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 1.5rem; }
+  .eng-steps li { border-top: 1px solid rgba(255,255,255,0.18); padding-top: 1.1rem; }
+  .eng-step__index { font-family: var(--font-mono,monospace); color: #b5d5ad; font-size: 0.8rem; font-weight: 700; }
+  .eng-step__title { margin: 0.5rem 0; font-size: 1.05rem; }
+  .eng-step__body { opacity: 0.8; font-size: 0.92rem; margin: 0; line-height: 1.6; }
+  .eng-values { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 1.25rem; }
+  .eng-value { border-left: 2px solid rgba(181,213,173,0.4); padding-left: 1.25rem; }
+  .eng-value__index { font-family: var(--font-mono,monospace); font-size: 0.75rem; opacity: 0.5; }
+  .eng-value__title { margin: 0.4rem 0 0.5rem; font-size: 1.12rem; }
+  .eng-value__body { opacity: 0.82; font-size: 0.94rem; line-height: 1.65; margin: 0; }
+  .eng-proof { display: grid; gap: 1.25rem; }
+  .eng-proof__card { border: 1px solid rgba(237, 244, 242, 0.16); border-radius: 12px; padding: 2rem; background: var(--color-pepper-medium, #31473a); color: #edf4f2; max-width: 860px; }
+  .eng-proof__badge { font-family: var(--font-mono,monospace); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #b5d5ad; }
+  .eng-proof__name { font-size: 1.8rem; margin: 0.7rem 0 0.4rem; }
+  .eng-proof__tagline { font-weight: 600; opacity: 0.9; margin: 0 0 0.8rem; }
+  .eng-proof__desc { opacity: 0.82; line-height: 1.65; margin: 0; }
+  .eng-cta { padding: 0 0 clamp(4rem,7vw,6rem); }
+  .eng-cta__card { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; align-items: center; border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: clamp(1.75rem,4vw,2.75rem); background: rgba(255,255,255,0.04); }
+  .eng-cta__title { font-size: clamp(1.6rem,3vw,2.2rem); margin: 0 0 0.6rem; }
+  .eng-cta__body { opacity: 0.82; margin: 0; max-width: 56ch; }
+  .eng-cta__actions { display: flex; gap: 0.9rem; flex-wrap: wrap; align-items: center; }
+  .eng-cta__arrow { display: inline-block; transition: transform 180ms ease; }
+  .eng-cta__ghost:hover .eng-cta__arrow { transform: translateX(4px); }
+  .eng-cta__ghost,
+  .eng-cta__ghost:hover,
+  .eng-cta__ghost:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    color: var(--color-salt-white, #edf4f2) !important;
+  }
+  .eng-cta__ghost::after { display: none !important; }
+  @media (max-width: 1024px) { .eng-cards { grid-template-columns: 1fr; } .eng-card--1, .eng-card--2 { transform: none; } }
+  @media (max-width: 960px) { .eng-hero__layout { grid-template-columns: 1fr; } .eng-hero__visual { min-height: 240px; } }
+  @media (prefers-reduced-motion: reduce) { .reveal-fade-up { opacity: 1 !important; transform: none !important; } [data-parallax] { transform: none !important; } }
+</style>
