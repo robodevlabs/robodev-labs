@@ -9,6 +9,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/ui/Container.astro';
 import Button from '../components/ui/Button.astro';
 import Icon from '../components/ui/Icon.astro';
+import AcademyOrbit from '../components/academy/AcademyOrbit.astro';
+import AcademyGrid from '../components/academy/AcademyGrid.astro';
+import AcademyNodes from '../components/academy/AcademyNodes.astro';
+import AcademyBlueprint from '../components/academy/AcademyBlueprint.astro';
+import AcademyPath from '../components/academy/AcademyPath.astro';
+import AcademyWorkshopMark from '../components/academy/AcademyWorkshopMark.astro';
 import { workshopsData } from '../data/workshops';
 import { siteConfig } from '../config/site';
 import ceoPhoto from '../assets/images/CEO Photo.png';
@@ -75,19 +81,22 @@ const jsonLd = {
     <!-- ================================================================
          1. HERO — Confident, minimal editorial hero
          ================================================================ -->
-    <header class="studio-hero">
-      <!-- Layered Abstract SVG / Technical Geometry Artwork -->
+    <header class="studio-hero academy-section" data-academy-section="hero">
+      <!-- Layered Abstract SVG / Technical Geometry Artwork — 3-depth parallax -->
       <div class="studio-hero__backdrop" aria-hidden="true">
-        <div class="studio-hero__glow"></div>
-        <div class="studio-hero__blueprint-grid"></div>
-        <svg class="studio-hero__geometry studio-hero__geometry--back" viewBox="0 0 1200 600" fill="none" preserveAspectRatio="xMidYMid slice">
+        <div class="studio-hero__glow" data-parallax="0.04"></div>
+        <div class="studio-hero__blueprint-grid academy-grid-layer" data-parallax="0.06"></div>
+        <div class="academy-orbit academy-orbit--back" data-parallax="0.1">
+          <AcademyGrid class="academy-grid--hero" />
+        </div>
+        <svg class="studio-hero__geometry studio-hero__geometry--back" viewBox="0 0 1200 600" fill="none" preserveAspectRatio="xMidYMid slice" data-parallax="0.12">
           <circle cx="950" cy="180" r="320" stroke="rgba(212, 212, 212, 0.08)" stroke-width="1" stroke-dasharray="6 6" />
           <circle cx="950" cy="180" r="210" stroke="rgba(181, 213, 173, 0.12)" stroke-width="1.5" />
           <circle cx="950" cy="180" r="90" stroke="rgba(212, 212, 212, 0.1)" stroke-width="1" />
           <path d="M600,0 L950,180 L1200,60" stroke="rgba(212, 212, 212, 0.06)" stroke-width="1" />
           <path d="M820,380 L950,180 L1120,340" stroke="rgba(181, 213, 173, 0.08)" stroke-width="1" />
         </svg>
-        <svg class="studio-hero__geometry studio-hero__geometry--front" viewBox="0 0 1200 600" fill="none" preserveAspectRatio="xMidYMid slice">
+        <svg class="studio-hero__geometry studio-hero__geometry--front" viewBox="0 0 1200 600" fill="none" preserveAspectRatio="xMidYMid slice" data-parallax="0.2">
           <!-- Technical Crosshairs & Node points -->
           <circle cx="950" cy="180" r="4" fill="#b5d5ad" />
           <circle cx="820" cy="380" r="3" fill="rgba(237, 244, 242, 0.5)" />
@@ -97,16 +106,16 @@ const jsonLd = {
           <text x="965" y="175" fill="rgba(212, 212, 212, 0.35)" font-family="monospace" font-size="10" letter-spacing="1">COORD::LABS-01</text>
           <text x="835" y="395" fill="rgba(212, 212, 212, 0.25)" font-family="monospace" font-size="9" letter-spacing="1">SEC//NODE</text>
         </svg>
+        <div class="academy-node-field" data-parallax="0.28" aria-hidden="true">
+          <AcademyNodes class="academy-nodes--hero" />
+        </div>
       </div>
 
       <Container>
+        <div class="studio-hero__layout">
         <div class="studio-hero__inner reveal-fade-up">
           <div class="studio-hero__meta-label">
             <span class="studio-eyebrow">ROBODEV ACADEMY</span>
-            <span class="studio-hero__badge-indicator" aria-hidden="true">
-              <span class="studio-pulse-dot"></span>
-              <span>LIVE WORKSHOP STUDIO</span>
-            </span>
           </div>
 
           <h1 class="studio-hero__headline">
@@ -127,6 +136,15 @@ const jsonLd = {
             </a>
           </div>
         </div>
+        <div class="studio-hero__anchor" aria-hidden="true" data-parallax="0.14">
+          <div class="studio-hero__anchor-main">
+            <AcademyBlueprint class="academy-blueprint--hero" />
+          </div>
+          <div class="studio-hero__anchor-orbit" data-parallax="0.22">
+            <AcademyOrbit variant="hero" />
+          </div>
+        </div>
+        </div>
       </Container>
     </header>
 
@@ -136,14 +154,20 @@ const jsonLd = {
          2. FEATURED / UPCOMING WORKSHOP — Asymmetric editorial layout
          ================================================================ -->
     {featured && (
-      <section class="studio-featured" id="featured" aria-labelledby="featured-workshop-title">
-        <!-- Elevated background technical accent geometry -->
+      <section class="studio-featured academy-section" id="featured" aria-labelledby="featured-workshop-title" data-academy-section="featured">
+        <!-- Elevated background technical accent geometry + parallax depth -->
         <div class="studio-featured__bg-accents" aria-hidden="true">
-          <svg class="studio-featured__corner-svg" viewBox="0 0 400 400" fill="none">
+          <svg class="studio-featured__corner-svg" viewBox="0 0 400 400" fill="none" data-parallax="0.08">
             <path d="M0,80 L80,80 L80,0" stroke="rgba(181, 213, 173, 0.18)" stroke-width="1.5" />
             <path d="M20,100 L100,100 L100,20" stroke="rgba(212, 212, 212, 0.08)" stroke-width="1" stroke-dasharray="4 4" />
             <circle cx="80" cy="80" r="3" fill="#b5d5ad" />
           </svg>
+          <div class="academy-line-art academy-line-art--featured" data-parallax="0.12" aria-hidden="true">
+            <AcademyGrid />
+          </div>
+          <div class="academy-orbit--featured" data-parallax="0.18" aria-hidden="true">
+            <AcademyOrbit variant="card" />
+          </div>
         </div>
 
         <Container>
@@ -204,8 +228,9 @@ const jsonLd = {
               </div>
             </div>
 
-            <!-- Right: Action & Enrollment Card -->
-            <aside class="studio-featured__aside reveal-fade-up" aria-label="Session enrollment">
+            <!-- Right: Action & Enrollment Card — floating physical object -->
+            <aside class="studio-featured__aside reveal-fade-up academy-float" aria-label="Session enrollment" data-parallax="0.05">
+              <div class="studio-aside-card__halo" aria-hidden="true"></div>
               <div class="studio-aside-card">
                 <div class="studio-aside-card__badge">Live Studio Session</div>
 
@@ -274,7 +299,10 @@ const jsonLd = {
     <!-- ================================================================
          3. WORKSHOP DISCOVERY — Editorial Card / List System
          ================================================================ -->
-    <section class="studio-discovery" id="workshops" aria-labelledby="discovery-heading">
+    <section class="studio-discovery academy-section" id="workshops" aria-labelledby="discovery-heading" data-academy-section="discovery">
+      <div class="academy-ambient academy-ambient--discovery" aria-hidden="true" data-parallax="0.06">
+        <AcademyGrid />
+      </div>
       <Container>
         <div class="studio-discovery__header reveal-fade-up">
           <span class="studio-eyebrow">WORKSHOPS</span>
@@ -288,33 +316,12 @@ const jsonLd = {
 
         <div class="studio-cards-stack" role="list">
           {allWorkshops.map((workshop, idx) => (
-            <article class={`studio-card studio-card--variant-${idx % 3} reveal-fade-up`} role="listitem">
-              <!-- Geometric subtle watermark pattern per card based on array index -->
+            <article class={`studio-card studio-card--variant-${idx % 3} reveal-fade-up academy-card-stagger`} role="listitem" style={`--reveal-delay:${idx * 70}ms`}>
+              <!-- Index-derived visual identity: 01 circular / 02 grid / 03 layered -->
               <div class="studio-card__motif" aria-hidden="true">
-                {idx % 3 === 0 && (
-                  <svg viewBox="0 0 120 120" fill="none">
-                    <circle cx="60" cy="60" r="50" stroke="rgba(181, 213, 173, 0.1)" stroke-width="1" stroke-dasharray="3 3" />
-                    <circle cx="60" cy="60" r="30" stroke="rgba(212, 212, 212, 0.08)" stroke-width="1" />
-                    <line x1="60" y1="0" x2="60" y2="120" stroke="rgba(212, 212, 212, 0.05)" stroke-width="1" />
-                    <line x1="0" y1="60" x2="120" y2="60" stroke="rgba(212, 212, 212, 0.05)" stroke-width="1" />
-                  </svg>
-                )}
-                {idx % 3 === 1 && (
-                  <svg viewBox="0 0 120 120" fill="none">
-                    <rect x="25" y="25" width="70" height="70" stroke="rgba(181, 213, 173, 0.1)" stroke-width="1" />
-                    <rect x="40" y="40" width="40" height="40" stroke="rgba(212, 212, 212, 0.08)" stroke-width="1" stroke-dasharray="4 4" />
-                    <line x1="10" y1="10" x2="110" y2="110" stroke="rgba(212, 212, 212, 0.05)" stroke-width="1" />
-                  </svg>
-                )}
-                {idx % 3 === 2 && (
-                  <svg viewBox="0 0 120 120" fill="none">
-                    <path d="M20,100 L60,20 L100,100 Z" stroke="rgba(181, 213, 173, 0.1)" stroke-width="1" />
-                    <circle cx="60" cy="20" r="4" fill="rgba(181, 213, 173, 0.25)" />
-                    <circle cx="20" cy="100" r="3" fill="rgba(212, 212, 212, 0.2)" />
-                    <circle cx="100" cy="100" r="3" fill="rgba(212, 212, 212, 0.2)" />
-                  </svg>
-                )}
+                <AcademyWorkshopMark index={idx} />
               </div>
+              <div class="studio-card__diagonal" aria-hidden="true"></div>
 
               <div class="studio-card__index-wrap" aria-hidden="true">
                 <span class="studio-card__index">0{idx + 1}</span>
@@ -385,7 +392,10 @@ const jsonLd = {
     <!-- ================================================================
          4. OUTCOMES — "LEAVE WITH SOMETHING YOU BUILT."
          ================================================================ -->
-    <section class="studio-outcomes" aria-labelledby="outcomes-heading">
+    <section class="studio-outcomes academy-section" aria-labelledby="outcomes-heading" data-academy-section="outcomes">
+      <div class="academy-ambient academy-ambient--outcomes" aria-hidden="true" data-parallax="0.07">
+        <AcademyNodes />
+      </div>
       <Container>
         <div class="studio-outcomes__header reveal-fade-up">
           <span class="studio-eyebrow">OUTCOMES</span>
@@ -398,7 +408,8 @@ const jsonLd = {
         </div>
 
         <div class="studio-pillars-grid">
-          <div class="studio-pillar-card reveal-fade-up">
+          <div class="studio-pillar-card studio-pillar-card--build reveal-fade-up" style="--reveal-delay:0ms">
+            <div class="studio-pillar-card__bg" aria-hidden="true"><AcademyWorkshopMark index={0} /></div>
             <div class="studio-pillar-card__top">
               <span class="studio-pillar-num">01</span>
               <svg class="studio-pillar-decor" viewBox="0 0 32 32" fill="none" aria-hidden="true">
@@ -412,7 +423,8 @@ const jsonLd = {
             </p>
           </div>
 
-          <div class="studio-pillar-card reveal-fade-up">
+          <div class="studio-pillar-card studio-pillar-card--learn reveal-fade-up" style="--reveal-delay:90ms">
+            <div class="studio-pillar-card__bg" aria-hidden="true"><AcademyWorkshopMark index={1} /></div>
             <div class="studio-pillar-card__top">
               <span class="studio-pillar-num">02</span>
               <svg class="studio-pillar-decor" viewBox="0 0 32 32" fill="none" aria-hidden="true">
@@ -426,7 +438,8 @@ const jsonLd = {
             </p>
           </div>
 
-          <div class="studio-pillar-card reveal-fade-up">
+          <div class="studio-pillar-card studio-pillar-card--continue reveal-fade-up" style="--reveal-delay:180ms">
+            <div class="studio-pillar-card__bg" aria-hidden="true"><AcademyWorkshopMark index={2} /></div>
             <div class="studio-pillar-card__top">
               <span class="studio-pillar-num">03</span>
               <svg class="studio-pillar-decor" viewBox="0 0 32 32" fill="none" aria-hidden="true">
@@ -462,16 +475,19 @@ const jsonLd = {
     <!-- ================================================================
          5. WHY ROBODEV ACADEMY — Compact brand/value editorial section
          ================================================================ -->
-    <section class="studio-why" aria-labelledby="why-heading">
-      <!-- Technical blueprint background subtle lines -->
+    <section class="studio-why academy-section" aria-labelledby="why-heading" data-academy-section="why">
+      <!-- Editorial blueprint artwork + parallax -->
       <div class="studio-why__bg-artwork" aria-hidden="true">
-        <svg class="studio-why__svg-grid" viewBox="0 0 1000 400" fill="none" preserveAspectRatio="none">
+        <svg class="studio-why__svg-grid" viewBox="0 0 1000 400" fill="none" preserveAspectRatio="none" data-parallax="0.05">
           <line x1="0" y1="100" x2="1000" y2="100" stroke="rgba(212, 212, 212, 0.04)" stroke-width="1" />
           <line x1="0" y1="200" x2="1000" y2="200" stroke="rgba(212, 212, 212, 0.04)" stroke-width="1" />
           <line x1="0" y1="300" x2="1000" y2="300" stroke="rgba(212, 212, 212, 0.04)" stroke-width="1" />
           <line x1="300" y1="0" x2="300" y2="400" stroke="rgba(212, 212, 212, 0.04)" stroke-width="1" />
           <line x1="700" y1="0" x2="700" y2="400" stroke="rgba(212, 212, 212, 0.04)" stroke-width="1" />
         </svg>
+        <div class="studio-why__blueprint" data-parallax="0.1" aria-hidden="true">
+          <AcademyBlueprint />
+        </div>
       </div>
 
       <Container>
@@ -517,7 +533,7 @@ const jsonLd = {
     <!-- ================================================================
          6. HOW IT WORKS — Compact, restrained 3-step sequence
          ================================================================ -->
-    <section class="studio-steps" id="how-it-works" aria-labelledby="how-heading">
+    <section class="studio-steps academy-section" id="how-it-works" aria-labelledby="how-heading" data-academy-section="steps">
       <Container>
         <div class="studio-steps__header reveal-fade-up">
           <span class="studio-eyebrow">PROCESS</span>
@@ -525,13 +541,9 @@ const jsonLd = {
         </div>
 
         <div class="studio-steps__wrapper reveal-fade-up">
-          <!-- Connected SVG path and nodes connecting the 3 steps -->
-          <svg class="studio-steps__connector" viewBox="0 0 900 40" fill="none" preserveAspectRatio="none" aria-hidden="true">
-            <line x1="40" y1="20" x2="860" y2="20" stroke="rgba(212, 212, 212, 0.2)" stroke-width="1.5" stroke-dasharray="4 4" />
-            <circle cx="40" cy="20" r="5" fill="#b5d5ad" />
-            <circle cx="450" cy="20" r="5" fill="#b5d5ad" />
-            <circle cx="860" cy="20" r="5" fill="#b5d5ad" />
-          </svg>
+          <!-- Visual progression path: Choose → Build → Keep building -->
+          <AcademyPath class="studio-steps__path" />
+          <div class="studio-steps__connector-fallback" aria-hidden="true"></div>
 
           <div class="studio-steps__grid">
             <div class="studio-step-item">
@@ -567,21 +579,28 @@ const jsonLd = {
     <!-- ================================================================
          7. INSTRUCTOR / FOUNDER — Human element, compact & genuine
          ================================================================ -->
-    <section class="studio-instructor" aria-labelledby="instructor-heading">
+    <section class="studio-instructor academy-section" aria-labelledby="instructor-heading" data-academy-section="instructor">
+      <div class="studio-instructor__ambient" aria-hidden="true" data-parallax="0.08">
+        <AcademyOrbit variant="faint" />
+      </div>
       <Container>
-        <div class="studio-instructor__card reveal-fade-up">
-          <div class="studio-instructor__portrait-wrap">
-            <div class="studio-instructor__frame">
+        <div class="studio-instructor__card studio-instructor__card--editorial reveal-fade-up">
+          <div class="studio-instructor__portrait-wrap" data-parallax="0.04">
+            <div class="studio-instructor__portrait-bg" aria-hidden="true">
+              <AcademyNodes />
+            </div>
+            <div class="studio-instructor__frame studio-instructor__frame--large">
               <img
                 src={ceoPhoto.src}
                 alt={leadInstructor.name}
                 class="studio-instructor__img"
                 loading="lazy"
-                width="240"
-                height="240"
+                width="480"
+                height="560"
               />
               <div class="studio-instructor__frame-border" aria-hidden="true"></div>
             </div>
+            <div class="studio-instructor__offset-layer" aria-hidden="true"></div>
             <div class="studio-instructor__crosshair" aria-hidden="true"></div>
           </div>
 
@@ -604,7 +623,10 @@ const jsonLd = {
     <!-- ================================================================
          8. FAQ — Accordion interaction with concise questions
          ================================================================ -->
-    <section class="studio-faq" aria-labelledby="faq-heading">
+    <section class="studio-faq academy-section" aria-labelledby="faq-heading" data-academy-section="faq">
+      <div class="studio-faq__ambient" aria-hidden="true" data-parallax="0.05">
+        <AcademyGrid />
+      </div>
       <Container>
         <div class="studio-faq__grid">
           <div class="studio-faq__left reveal-fade-up">
@@ -695,10 +717,11 @@ const jsonLd = {
       </Container>
     </section>
 
-    <!-- Scroll Reveal Client Script -->
+    <!-- Scroll Reveal + Parallax Client Script — transform/opacity only -->
     <script is:inline>
       document.addEventListener('DOMContentLoaded', () => {
-        if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if ('IntersectionObserver' in window && !reduceMotion) {
           const observer = new IntersectionObserver(
             (entries) => {
               entries.forEach((entry) => {
@@ -714,12 +737,43 @@ const jsonLd = {
           document.querySelectorAll('.reveal-fade-up').forEach((el) => {
             observer.observe(el);
           });
+          // Animate AcademyPath when steps enter
+          const steps = document.querySelector('.studio-steps__wrapper');
+          if (steps) observer.observe(steps);
         } else {
           // Immediately make all elements visible if reduced motion or no IntersectionObserver
-          document.querySelectorAll('.reveal-fade-up').forEach((el) => {
+          document.querySelectorAll('.reveal-fade-up, .studio-steps__wrapper').forEach((el) => {
             el.classList.add('is-visible');
           });
         }
+
+        // Coherent lightweight parallax: different speeds via data-parallax
+        if (reduceMotion) return;
+        const layers = Array.from(document.querySelectorAll('[data-parallax]'));
+        if (!layers.length) return;
+        let ticking = false;
+        const isMobile = () => window.innerWidth < 768;
+        const update = () => {
+          ticking = false;
+          if (isMobile()) {
+            layers.forEach((el) => { el.style.setProperty('--parallax-y', '0px'); });
+            return;
+          }
+          const vh = window.innerHeight;
+          layers.forEach((el) => {
+            const speed = parseFloat(el.getAttribute('data-parallax') || '0.1');
+            const rect = el.getBoundingClientRect();
+            const centerOffset = rect.top + rect.height / 2 - vh / 2;
+            const y = (-centerOffset * speed).toFixed(1);
+            el.style.setProperty('--parallax-y', `${y}px`);
+          });
+        };
+        const onScroll = () => {
+          if (!ticking) { ticking = true; requestAnimationFrame(update); }
+        };
+        update();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
       });
     </script>
 
@@ -2311,5 +2365,176 @@ const jsonLd = {
     .studio-marquee__track--right {
       transform: translateX(-50%);
     }
+  }
+
+  /* =========================================================================
+     ACADEMY VISUAL UPGRADE — living editorial workshop system (visual only)
+     - layered parallax via --parallax-y + translate3d
+     - reusable decorative layers: ambient / grid / orbit / node-field / line-art
+     - no content changes, same palette + typography + components
+     ========================================================================= */
+
+  .studio-page { overflow-x: clip; }
+  .academy-section { position: relative; }
+
+  [data-parallax] {
+    transform: translate3d(0, var(--parallax-y, 0px), 0);
+    will-change: transform;
+  }
+
+  .academy-ambient,
+  .academy-grid-layer,
+  .academy-orbit--back,
+  .academy-node-field,
+  .academy-line-art,
+  .academy-ambient--discovery,
+  .academy-ambient--outcomes {
+    pointer-events: none;
+  }
+
+  .reveal-fade-up { transition-delay: var(--reveal-delay, 0ms); }
+
+  /* ---- HERO layout + anchor ---- */
+  .studio-hero__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.85fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+  .studio-hero__anchor { position: relative; min-height: 420px; }
+  .studio-hero__anchor-main { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .academy-blueprint--hero { width: min(520px, 100%); height: auto; opacity: 0.9; }
+  .studio-hero__anchor-orbit {
+    position: absolute; right: 6%; top: 8%; width: 180px; opacity: 0.9;
+  }
+  .academy-grid--hero { position: absolute; inset: 8% 4% auto 30%; width: 66%; opacity: 0.5; }
+  .academy-orbit--back { position: absolute; inset: 0; }
+  .academy-node-field { position: absolute; left: 4%; bottom: 6%; width: 300px; opacity: 0.8; }
+  .academy-nodes--hero { width: 100%; height: auto; }
+
+  /* ---- FEATURED physical object ---- */
+  .studio-featured__bg-accents { overflow: visible; }
+  .academy-line-art--featured { position: absolute; left: -40px; bottom: -30px; width: 420px; opacity: 0.4; }
+  .academy-orbit--featured { position: absolute; right: -60px; top: -60px; width: 320px; opacity: 0.55; }
+  .academy-float { position: relative; z-index: 2; }
+  .studio-aside-card__halo {
+    position: absolute; inset: -1px; border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), transparent 40%, rgba(181,213,173,0.14));
+    filter: blur(0.5px); pointer-events: none;
+  }
+  .studio-aside-card {
+    position: relative;
+    background:
+      radial-gradient(120% 90% at 80% 0%, rgba(181,213,173,0.08), transparent 55%),
+      var(--color-pepper-medium, #31473A);
+  }
+  .studio-aside-card::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    border: 1px solid rgba(255,255,255,0.06);
+    mask: linear-gradient(#000, transparent 70%);
+  }
+
+  /* ---- DISCOVERY editorial composition ---- */
+  .academy-ambient--discovery { position: absolute; top: 40px; right: 0; width: 520px; opacity: 0.28; }
+  .studio-card { isolation: isolate; }
+  .studio-card__diagonal {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
+    background: linear-gradient(115deg, transparent 62%, rgba(212,212,212,0.05) 62.2%, transparent 62.6%);
+  }
+  .studio-card__motif { width: 150px; height: 150px; }
+  .studio-card__motif .academy-mark { width: 100%; height: 100%; }
+  @media (min-width: 1024px) {
+    .academy-card-stagger:nth-child(2) { transform: translateX(18px); }
+    .academy-card-stagger:nth-child(3) { transform: translateX(36px); }
+    .academy-card-stagger:nth-child(2):hover { transform: translate(18px, -4px); }
+    .academy-card-stagger:nth-child(3):hover { transform: translate(36px, -4px); }
+  }
+  .studio-card { transition: transform 280ms cubic-bezier(0.16,1,0.3,1), background 200ms ease, border-color 220ms ease, box-shadow 280ms ease; }
+  .studio-card:hover .studio-card__motif .academy-mark { transform: rotate(4deg) translateY(-2px) scale(1.06); }
+  .studio-card:hover .studio-explore-btn .studio-arrow { transform: translateX(5px); }
+
+  /* ---- OUTCOMES pillars ---- */
+  .academy-ambient--outcomes { position: absolute; left: -60px; top: 20px; width: 420px; opacity: 0.32; }
+  .studio-pillar-card { position: relative; overflow: hidden; }
+  .studio-pillar-card__bg {
+    position: absolute; right: -30px; top: -20px; width: 190px; height: 190px;
+    opacity: 0.5; pointer-events: none; transition: transform 320ms ease, opacity 220ms ease;
+  }
+  .studio-pillar-card:hover .studio-pillar-card__bg { transform: translateY(-4px) rotate(3deg); opacity: 0.85; }
+  .studio-pillar-num {
+    font-size: clamp(2.4rem, 4vw, 3.4rem) !important;
+    font-weight: 800 !important; letter-spacing: -0.04em !important;
+    color: rgba(237,244,242,0.92) !important; line-height: 1 !important;
+  }
+  @media (min-width: 1024px) {
+    .studio-pillar-card--learn { transform: translateY(18px); }
+    .studio-pillar-card--continue { transform: translateY(36px); }
+    .studio-pillar-card--learn:hover { transform: translateY(14px); }
+    .studio-pillar-card--continue:hover { transform: translateY(32px); }
+  }
+
+  /* ---- WHY editorial ---- */
+  .studio-why__blueprint {
+    position: absolute; right: -40px; top: 10%; width: min(560px, 55%);
+    opacity: 0.22; pointer-events: none;
+  }
+  .studio-why__blueprint svg { width: 100%; height: auto; }
+
+  /* ---- STEPS path ---- */
+  .studio-steps__path { margin-bottom: 1.5rem; }
+  .studio-steps__connector-fallback { display: none; }
+  .studio-step-item { position: relative; }
+  .studio-step-item::before {
+    content: ''; position: absolute; top: -7px; left: 0; width: 10px; height: 10px;
+    border-radius: 50%; background: #b5d5ad; box-shadow: 0 0 0 5px rgba(181,213,173,0.12);
+  }
+
+  /* ---- INSTRUCTOR editorial ---- */
+  .studio-instructor__ambient { position: absolute; left: -80px; top: -40px; width: 380px; opacity: 0.3; }
+  .studio-instructor__card--editorial { max-width: 1020px !important; align-items: stretch !important; overflow: hidden; }
+  .studio-instructor__portrait-bg { position: absolute; left: -30px; top: -20px; width: 220px; opacity: 0.5; }
+  .studio-instructor__frame--large {
+    width: min(320px, 72vw) !important; height: 400px !important;
+    border-radius: 18px !important;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 26px), calc(100% - 26px) 100%, 0 100%);
+  }
+  .studio-instructor__frame--large .studio-instructor__img { height: 100% !important; }
+  .studio-instructor__offset-layer {
+    position: absolute; inset: 14px -14px -14px 14px; border-radius: 18px;
+    border: 1px solid rgba(181,213,173,0.28); pointer-events: none; z-index: -1;
+  }
+  .studio-instructor__portrait-wrap { z-index: 0; }
+
+  /* ---- FAQ depth ---- */
+  .studio-faq__ambient { position: absolute; right: 0; top: 0; width: 480px; opacity: 0.22; }
+  .studio-faq-item { position: relative; border-left: 1px solid transparent; transition: background-color 220ms ease, border-color 220ms ease; }
+  .studio-faq-item:hover { border-left-color: rgba(181,213,173,0.4); }
+  .studio-faq-item[open]::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(#b5d5ad, rgba(181,213,173,0));
+  }
+  .studio-faq-item[open] .studio-faq-chevron { transform: rotate(90deg) scale(1.08); }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 1024px) {
+    .studio-hero__layout { grid-template-columns: 1fr; }
+    .studio-hero__anchor { min-height: 340px; order: 2; }
+    .academy-ambient--discovery, .studio-why__blueprint { opacity: 0.18; }
+  }
+  @media (max-width: 768px) {
+    .studio-hero__anchor { min-height: 260px; }
+    .studio-hero__anchor-orbit, .academy-node-field, .academy-orbit--featured { display: none; }
+    .academy-ambient--discovery, .academy-ambient--outcomes, .studio-faq__ambient { display: none; }
+    .academy-line-art--featured { opacity: 0.25; width: 300px; }
+    .studio-instructor__frame--large { width: 100% !important; height: 380px !important; }
+    .studio-pillar-card--learn, .studio-pillar-card--continue { transform: none !important; }
+    .academy-card-stagger:nth-child(2), .academy-card-stagger:nth-child(3) { transform: none !important; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-parallax] { transform: none !important; }
+    .studio-card, .studio-pillar-card, .studio-aside-card { transition: none !important; }
+    .studio-card:hover, .studio-pillar-card:hover { transform: none !important; }
+    .academy-path__draw { stroke-dashoffset: 0 !important; }
   }
 </style>
