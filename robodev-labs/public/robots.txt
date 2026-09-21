@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://robodevlabs.com/sitemap-index.xml

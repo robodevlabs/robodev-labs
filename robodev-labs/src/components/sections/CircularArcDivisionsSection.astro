@@ -1638,8 +1638,8 @@ import Button from '../ui/Button.astro';
       display: none; /* Hide 3D visual on tablets to prioritize readable layout */
     }
     .division-narrative-stage {
-      left: 340px;
-      max-width: 580px;
+      left: min(340px, 32vw);
+      max-width: min(580px, 60vw);
     }
   }
 

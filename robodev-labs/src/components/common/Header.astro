@@ -663,6 +663,23 @@ const navItems = [
   /* --------------------------------------------------------------------------
      RESPONSIVE BREAKPOINTS
      -------------------------------------------------------------------------- */
+  /* Tighten the island at narrow desktop widths so all 7 links fit without clipping */
+  @media (max-width: 1150px) {
+    .island-main-bar {
+      padding: 0 10px;
+      gap: 8px;
+    }
+
+    .island-nav-deck {
+      gap: clamp(6px, 1vw, 14px);
+    }
+
+    .island-nav-link {
+      font-size: 0.78rem;
+      padding: 6px 4px;
+    }
+  }
+
   @media (max-width: 960px) {
     .corner-cta-anchor {
       display: none; /* Relocates into mobile expanded deck */

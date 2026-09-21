@@ -1,0 +1,17 @@
+{
+  "name": "RoboDev Labs",
+  "short_name": "RoboDev Labs",
+  "description": "Software Solutions. Developer Education. Technology Products.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#2B2B2B",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "1254x1254",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
