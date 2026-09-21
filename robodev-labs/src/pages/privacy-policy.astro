@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalDocumentTemplate from '../components/legal/LegalDocumentTemplate.astro';
+import { getLegalDocumentBySlug } from '../data/legal';
+
+const document = getLegalDocumentBySlug('privacy-policy');
+
+if (!document) {
+  throw new Error('Missing legal document: privacy-policy');
+}
+---
+
+<BaseLayout
+  title="Privacy Policy — RoboDev Labs"
+  description={document.shortDescription}
+>
+  <LegalDocumentTemplate document={document} />
+</BaseLayout>
