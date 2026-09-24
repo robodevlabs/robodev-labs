@@ -1,0 +1,327 @@
+---
+import Container from '../ui/Container.astro';
+import Icon from '../ui/Icon.astro';
+---
+
+<section id="growth-engine" class="growth-engine-section">
+  <!-- Multi-color glowing ambient background glows -->
+  <div class="ambient-glow glow-orange"></div>
+  <div class="ambient-glow glow-cyan"></div>
+
+  <!-- Dynamic Sweeping Multi-Color Animated SVG Wave Spline -->
+  <div class="spline-background-wrapper" aria-hidden="true">
+    <svg 
+      class="spline-svg" 
+      viewBox="0 0 1400 420" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="none"
+    >
+      <defs>
+        <!-- Multi-color gradient for the sweeping line: Green/Cyan -> Sky Blue -> Amber -> Vibrant Orange/Red -->
+        <linearGradient id="growthSplineGradient" x1="0%" y1="50%" x2="100%" y2="50%">
+          <stop offset="0%" stop-color="#10b981" />
+          <stop offset="25%" stop-color="#06b6d4" />
+          <stop offset="50%" stop-color="#38bdf8" />
+          <stop offset="75%" stop-color="#f59e0b" />
+          <stop offset="100%" stop-color="#f97316" />
+        </linearGradient>
+
+        <!-- Dynamic Arrow Head Marker -->
+        <marker 
+          id="splineArrow" 
+          viewBox="0 0 10 10" 
+          refX="6" 
+          refY="5" 
+          markerWidth="7" 
+          markerHeight="7" 
+          orient="auto-start-reverse"
+        >
+          <path d="M 0 1 L 9 5 L 0 9 z" fill="#f97316" />
+        </marker>
+      </defs>
+
+      <!-- Outer Ambient Glow Line -->
+      <path
+        d="M -50 360 C 150 200, 250 350, 450 320 C 650 290, 680 120, 850 160 C 1020 200, 1150 300, 1280 250 C 1340 220, 1380 190, 1420 170"
+        stroke="url(#growthSplineGradient)"
+        stroke-width="6"
+        stroke-linecap="round"
+        stroke-dasharray="14 10"
+        opacity="0.25"
+        class="spline-path-glow"
+      />
+
+      <!-- Main Crisp Dashed Animated Wave Line with Arrow Marker -->
+      <path
+        d="M -50 360 C 150 200, 250 350, 450 320 C 650 290, 680 120, 850 160 C 1020 200, 1150 300, 1280 250 C 1340 220, 1380 190, 1420 170"
+        stroke="url(#growthSplineGradient)"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-dasharray="12 9"
+        marker-end="url(#splineArrow)"
+        class="spline-path-main"
+      />
+    </svg>
+  </div>
+
+  <Container class="growth-container">
+    <div class="growth-content text-center">
+      <!-- Big Display Headline (Matching Reference Screenshot) -->
+      <h2 class="growth-headline">
+        Let’s Build the Next Growth Engine <br class="hidden-mobile" />
+        <span class="growth-headline-gradient">Together</span>
+      </h2>
+
+      <!-- Subtitle Paragraph -->
+      <p class="growth-subtitle">
+        Whether you are building enterprise software, scaling admissions, launching a SaaS, training developers, or developing future technology, RoboDev Labs gives you the ecosystem to move faster.
+      </p>
+
+      <!-- Dual Pill CTA Buttons -->
+      <div class="growth-cta-group">
+        <!-- Primary Pill Button (Vibrant Orange Fill) -->
+        <a href="#pillars" class="pill-btn pill-btn-primary">
+          <span>Explore Our Ecosystem</span>
+          <svg class="pill-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+
+        <!-- Secondary Pill Button (Clean Outline) -->
+        <a href="#contact" class="pill-btn pill-btn-secondary">
+          <span>Work With RoboDev Labs</span>
+          <svg class="pill-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ==========================================================================
+     GROWTH ENGINE CTA SECTION STYLES
+     Inspired by reference image: Clean typography, dual pill buttons,
+     flowing dashed wave spline with arrow tip.
+     ========================================================================== */
+  .growth-engine-section {
+    position: relative;
+    padding: var(--space-24) 0 var(--space-28) 0;
+    background-color: var(--color-background);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* Ambient Glow Spotlights */
+  .ambient-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.25;
+  }
+
+  .glow-orange {
+    top: 20%;
+    right: 15%;
+    width: 450px;
+    height: 350px;
+    background: radial-gradient(circle, #f97316 0%, transparent 70%);
+  }
+
+  .glow-cyan {
+    bottom: 10%;
+    left: 10%;
+    width: 500px;
+    height: 400px;
+    background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+  }
+
+  /* --------------------------------------------------------------------------
+     Dynamic SVG Spline Wave Background
+     -------------------------------------------------------------------------- */
+  .spline-background-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .spline-svg {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: cover;
+  }
+
+  .spline-path-main {
+    animation: dashFlow 25s linear infinite;
+  }
+
+  .spline-path-glow {
+    animation: dashFlow 25s linear infinite;
+    filter: blur(4px);
+  }
+
+  @keyframes dashFlow {
+    from {
+      stroke-dashoffset: 440;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+     Container & Typography
+     -------------------------------------------------------------------------- */
+  .growth-container {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .growth-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .growth-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--raw-white);
+    margin: 0;
+  }
+
+  .growth-headline-gradient {
+    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .growth-subtitle {
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    max-width: 740px;
+    margin: 0 auto;
+    font-weight: 400;
+  }
+
+  /* --------------------------------------------------------------------------
+     Dual Pill CTA Buttons
+     -------------------------------------------------------------------------- */
+  .growth-cta-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-5);
+    margin-top: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  /* Base Pill Styling */
+  .pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.95rem 2.2rem;
+    border-radius: 9999px; /* Seamless Pill Shape */
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .pill-arrow {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Primary Pill (Vibrant Orange Solid with Glow & Lift) */
+  .pill-btn-primary {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: #ffffff;
+    border: 1px solid rgba(249, 115, 22, 0.8);
+    box-shadow: 0 10px 25px -5px rgba(249, 115, 22, 0.4), 
+                0 0 15px -3px rgba(249, 115, 22, 0.3);
+  }
+
+  .pill-btn-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    background: linear-gradient(135deg, #ff8427 0%, #f97316 100%);
+    box-shadow: 0 16px 35px -5px rgba(249, 115, 22, 0.55), 
+                0 0 25px 0px rgba(249, 115, 22, 0.5);
+    color: #ffffff;
+  }
+
+  .pill-btn-primary:hover .pill-arrow {
+    transform: translate(3px, -3px);
+  }
+
+  /* Secondary Pill (Outline Glass with Orange Accent Hover) */
+  .pill-btn-secondary {
+    background: rgba(15, 23, 42, 0.6);
+    color: #ffffff;
+    border: 1px solid rgba(249, 115, 22, 0.6);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  }
+
+  .pill-btn-secondary:hover {
+    transform: translateY(-3px) scale(1.02);
+    background: rgba(249, 115, 22, 0.1);
+    border-color: rgba(249, 115, 22, 0.9);
+    box-shadow: 0 12px 28px -5px rgba(249, 115, 22, 0.25);
+    color: #ff8427;
+  }
+
+  .pill-btn-secondary:hover .pill-arrow {
+    transform: translate(3px, -3px);
+    color: #ff8427;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .growth-engine-section {
+      padding: var(--space-16) 0 var(--space-20) 0;
+    }
+
+    .growth-cta-group {
+      flex-direction: column;
+      width: 100%;
+      gap: var(--space-3);
+    }
+
+    .pill-btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hidden-mobile {
+      display: none;
+    }
+  }
+</style>

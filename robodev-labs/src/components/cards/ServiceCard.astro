@@ -1,0 +1,189 @@
+---
+import type { ServiceItem } from '../../data/services';
+import Heading from '../ui/Heading.astro';
+import Text from '../ui/Text.astro';
+import Icon from '../ui/Icon.astro';
+import Divider from '../ui/Divider.astro';
+
+export interface Props {
+  service: ServiceItem;
+}
+
+const { service } = Astro.props;
+---
+
+<div class="service-card group">
+  <div class="service-header">
+    <div class="icon-box">
+      <Icon name={service.icon} size={22} class="service-icon" />
+    </div>
+    <span class="service-badge">{service.badge}</span>
+  </div>
+
+  <div class="service-body">
+    <Heading level="h3" size="h4" class="service-title">
+      {service.title}
+    </Heading>
+    <p class="service-tagline">{service.tagline}</p>
+    <Text variant="small" class="service-desc">
+      {service.description}
+    </Text>
+  </div>
+
+  <Divider class="my-4 card-divider" />
+
+  <div class="service-capabilities">
+    <span class="caps-label">Core Capabilities</span>
+    <ul class="caps-list">
+      {
+        service.capabilities.map((cap) => (
+          <li>
+            <Icon name="check" size={15} class="check-icon" />
+            <span>{cap}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<style>
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: var(--space-6);
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--duration-normal) var(--ease-standard);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.4), transparent);
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-standard);
+  }
+
+  .service-card:hover {
+    border-color: rgba(6, 182, 212, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.5), 0 0 20px -4px rgba(6, 182, 212, 0.15);
+  }
+
+  .service-card:hover::before {
+    opacity: 1;
+  }
+
+  .service-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+  }
+
+  .icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: rgba(37, 99, 235, 0.12);
+    border: 1px solid rgba(37, 99, 235, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    transition: all var(--duration-fast) var(--ease-standard);
+  }
+
+  .service-card:hover .icon-box {
+    background: rgba(6, 182, 212, 0.15);
+    border-color: var(--color-accent);
+    color: var(--raw-white);
+  }
+
+  .service-badge {
+    font-size: var(--font-size-caption);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wider);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+  }
+
+  .service-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .service-title {
+    color: var(--color-text);
+    margin-top: var(--space-1);
+  }
+
+  .service-tagline {
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+    margin-bottom: var(--space-1);
+    line-height: var(--line-height-snug);
+  }
+
+  .service-desc {
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+  }
+
+  .card-divider {
+    border-color: var(--color-border-subtle);
+  }
+
+  .service-capabilities {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .caps-label {
+    font-size: var(--font-size-caption);
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+  }
+
+  .caps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .caps-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: var(--font-size-body-small);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-tight);
+  }
+
+  .check-icon {
+    color: var(--color-accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+</style>

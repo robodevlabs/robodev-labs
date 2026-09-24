@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalDocumentTemplate from '../components/legal/LegalDocumentTemplate.astro';
+import { getLegalDocumentBySlug } from '../data/legal';
+
+const document = getLegalDocumentBySlug('cookie-policy');
+
+if (!document) {
+  throw new Error('Missing legal document: cookie-policy');
+}
+---
+
+<BaseLayout
+  title="Cookie Policy — RoboDev Labs"
+  description={document.shortDescription}
+>
+  <LegalDocumentTemplate document={document} />
+</BaseLayout>

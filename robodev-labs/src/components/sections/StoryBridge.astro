@@ -1,0 +1,695 @@
+---
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import Icon from '../ui/Icon.astro';
+---
+
+<section class="story-bridge-section" id="ecosystem-bridge">
+  <div class="story-sticky-container">
+    <!-- Sky & Dynamic Clouds Parallax Layer -->
+    <div class="sky-layer">
+      <div class="sun-orb" id="story-sun"></div>
+
+      <!-- Left Billowy Cloud Cluster -->
+      <div class="cloud-cluster cloud-left-high" id="cloud-left">
+        <svg viewBox="0 0 380 220" fill="none" xmlns="http://www.w3.org/2000/svg" class="cloud-svg">
+          <path d="M70 190h260a50 50 0 000-100 70 70 0 00-135-25 55 55 0 00-105 50 45 45 0 00-20 75z" fill="rgba(255,255,255,0.18)"/>
+          <path d="M85 180h230a42 42 0 000-84 60 60 0 00-118-20 48 48 0 00-92 42 38 38 0 00-20 62z" fill="rgba(255,255,255,0.3)"/>
+        </svg>
+      </div>
+
+      <!-- Right Billowy Cloud Cluster -->
+      <div class="cloud-cluster cloud-right-high" id="cloud-right">
+        <svg viewBox="0 0 420 240" fill="none" xmlns="http://www.w3.org/2000/svg" class="cloud-svg">
+          <path d="M80 200h280a55 55 0 000-110 80 80 0 00-155-30 60 60 0 00-115 55 50 50 0 00-10 85z" fill="rgba(255,255,255,0.15)"/>
+          <path d="M95 190h250a45 45 0 000-90 70 70 0 00-135-25 52 52 0 00-100 48 42 42 0 00-15 67z" fill="rgba(255,255,255,0.28)"/>
+        </svg>
+      </div>
+
+      <!-- Mid-level Floating Clouds -->
+      <div class="cloud-cluster cloud-mid-left" id="cloud-mid-1">
+        <svg viewBox="0 0 260 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40 95h180a32 32 0 000-64 48 48 0 00-92-12 36 36 0 00-72 32 28 28 0 00-16 44z" fill="rgba(255,255,255,0.12)"/>
+        </svg>
+      </div>
+
+      <div class="cloud-cluster cloud-mid-right" id="cloud-mid-2">
+        <svg viewBox="0 0 280 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M45 100h190a35 35 0 000-70 52 52 0 00-100-15 40 40 0 00-78 35 30 30 0 00-12 50z" fill="rgba(255,255,255,0.1)"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- TALL MULTI-TIER MOUNTAIN RANGES -->
+    <div class="mountains-layer">
+      <!-- Tier 1: Distant Sharp Alpine Peaks (White/Snowy) -->
+      <svg class="mountain-tier mountain-back" id="mt-back" viewBox="0 0 1440 680" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="mtnBackGradSB" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/>
+            <stop offset="30%" stop-color="#e8eef5" stop-opacity="0.95"/>
+            <stop offset="65%" stop-color="#c0d0d8" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#9ab0bc" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,680 L0,320 L180,120 L320,280 L480,80 L640,260 L800,40 L960,240 L1120,90 L1280,270 L1440,160 L1440,680 Z" fill="url(#mtnBackGradSB)"/>
+        <!-- Snow highlight on peak faces -->
+        <path d="M480,80 L560,260 L640,260 L480,80 Z" fill="#f0f5f8" opacity="0.8"/>
+        <path d="M800,40 L880,240 L960,240 L800,40 Z" fill="#f0f5f8" opacity="0.8"/>
+        <path d="M1120,90 L1200,270 L1280,270 L1120,90 Z" fill="#f0f5f8" opacity="0.8"/>
+      </svg>
+
+      <!-- Tier 2: Mid Pine/Forest Green Ridgeline -->
+      <svg class="mountain-tier mountain-mid" id="mt-mid" viewBox="0 0 1440 560" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="mtnMidGradSB" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#4a7c35" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#2d5a1e" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,560 L0,280 Q140,140 280,240 T580,160 T880,220 T1180,140 T1440,210 L1440,560 Z" fill="url(#mtnMidGradSB)"/>
+        <path d="M0,560 L0,340 C200,220 400,380 600,260 C800,160 1050,320 1250,220 C1350,180 1400,240 1440,260 L1440,560 Z" fill="#3d6b2e" opacity="0.7"/>
+      </svg>
+
+      <!-- Tier 3: Near Rolling Green Foothills -->
+      <svg class="mountain-tier mountain-fore" id="mt-fore" viewBox="0 0 1440 440" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="mtnForeGradSB" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#3d6b2e" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#1e4012" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,440 L0,200 Q180,110 380,180 T760,130 T1140,170 T1440,120 L1440,440 Z" fill="url(#mtnForeGradSB)"/>
+        <!-- Pine tree silhouettes in dark green -->
+        <path d="M120,180 Q130,155 140,180 Q150,150 160,180 Q170,158 180,180 M880,150 Q890,125 900,150 Q910,120 920,150 Q930,130 940,150" stroke="#1a3d0e" stroke-width="6" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+
+    <!-- THE GORGE, RIVER & DRAWBRIDGE (Anchored Directly with Extended Natural Rock Cliffs) -->
+    <div class="canyon-layer">
+      <!-- Water River Canyon -->
+      <div class="river-flow">
+        <div class="water-ripples">
+          <span class="ripple-line r1"></span>
+          <span class="ripple-line r2"></span>
+        </div>
+      </div>
+
+      <!-- Left Cliff Rock Shelf (Earthy Sandstone - Reaches directly into the bridge hinge) -->
+      <div class="cliff cliff-left">
+        <svg viewBox="0 0 520 280" preserveAspectRatio="none">
+          <!-- Main cliff body (earthy sandstone) -->
+          <path d="M0,280 L0,0 L480,0 C510,70 470,170 440,220 L400,280 Z" fill="#8a5a30"/>
+          <!-- Top cliff shelf rock platform -->
+          <path d="M0,0 L480,0 L450,32 L0,32 Z" fill="#a0714a"/>
+          <path d="M0,32 L450,32 L430,50 L0,50 Z" fill="#7a5535"/>
+          <!-- Rock texture lines (dark brown) -->
+          <path d="M220,50 L200,180 M340,50 L310,210 M410,50 L380,240" stroke="#5c3d20" stroke-width="3" opacity="0.7"/>
+        </svg>
+      </div>
+
+      <!-- Right Cliff Rock Shelf (Earthy Sandstone - Reaches directly into the bridge hinge) -->
+      <div class="cliff cliff-right">
+        <svg viewBox="0 0 520 280" preserveAspectRatio="none">
+          <!-- Main cliff body (earthy sandstone) -->
+          <path d="M520,280 L520,0 L40,0 C10,70 50,170 80,220 L120,280 Z" fill="#8a5a30"/>
+          <!-- Top cliff shelf rock platform -->
+          <path d="M520,0 L40,0 L70,32 L520,32 Z" fill="#a0714a"/>
+          <path d="M520,32 L70,32 L90,50 L520,50 Z" fill="#7a5535"/>
+          <!-- Rock texture lines (dark brown) -->
+          <path d="M300,50 L320,180 M180,50 L210,210 M110,50 L140,240" stroke="#5c3d20" stroke-width="3" opacity="0.7"/>
+        </svg>
+      </div>
+
+      <!-- THE INTERACTIVE DRAWBRIDGE (Seamlessly Connected to Cliff Rock Tops) -->
+      <div class="bridge-chasm">
+        <!-- Left Bridge Leaf (hinges at bottom left edge touching cliff) -->
+        <div class="bridge-leaf bridge-left" id="bridge-leaf-left">
+          <div class="truss-structure">
+            <div class="truss-rail top"></div>
+            <div class="truss-deck"></div>
+            <div class="truss-crosses">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Bridge Leaf (hinges at bottom right edge touching cliff) -->
+        <div class="bridge-leaf bridge-right" id="bridge-leaf-right">
+          <div class="truss-structure">
+            <div class="truss-rail top"></div>
+            <div class="truss-deck"></div>
+            <div class="truss-crosses">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Minimalist Connection Status Indicator -->
+      <div class="bridge-status-pill" id="bridge-status">
+        <span class="status-dot"></span>
+        <span class="status-text">Scroll down to connect the bridge</span>
+      </div>
+    </div>
+
+    <!-- STORYTELLING HEADLINE RISING UP FROM BELOW THE LOWEST HILL & BRIDGE -->
+    <div class="story-headline-stage" id="story-headline">
+      <div class="headline-inner">
+        <div class="story-badge-pill">
+          <span class="badge-spark">&block;</span>
+          <span>ONE ORGANISATION &bull; THREE GROWTH ENGINES</span>
+        </div>
+        <h2 class="story-main-title">
+          Bridging Solutions,
+          <br />
+          <span class="text-gradient-cyan">Talent &amp; Innovation</span>
+        </h2>
+        <p class="story-body-text">
+          Instead of separate, isolated services, RoboDev Labs operates as a singular unified matrix&mdash;connecting
+          high-performance client engineering, deep talent mentorship, and proprietary venture products.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initBridgeScroll() {
+    const section = document.getElementById('ecosystem-bridge');
+    const bridgeLeft = document.getElementById('bridge-leaf-left');
+    const bridgeRight = document.getElementById('bridge-leaf-right');
+    const headline = document.getElementById('story-headline');
+    const statusText = document.querySelector('#bridge-status .status-text');
+    const statusDot = document.querySelector('#bridge-status .status-dot') as HTMLElement;
+    const mtBack = document.getElementById('mt-back');
+    const mtMid = document.getElementById('mt-mid');
+    const mtFore = document.getElementById('mt-fore');
+    const cloudLeft = document.getElementById('cloud-left');
+    const cloudRight = document.getElementById('cloud-right');
+    const sunOrb = document.getElementById('story-sun');
+
+    if (!section || !bridgeLeft || !bridgeRight) return;
+
+    function handleScroll() {
+      const rect = section.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      const totalScrollable = rect.height - windowHeight;
+      if (totalScrollable <= 0) return;
+
+      const currentScroll = -rect.top;
+      let progress = currentScroll / totalScrollable;
+      progress = Math.max(0, Math.min(1, progress));
+
+      // 1. Text Rising Effect:
+      // Starts deep down (translateY: 280px, below the lowest hill near the bridge)
+      // and smoothly ascends to the center of the screen as user scrolls into the section
+      if (headline) {
+        // As scroll progresses from 0.0 to 0.55, text ascends from 280px to 0px
+        let textIn = Math.min(1, progress / 0.5);
+        let textY = (1 - textIn) * 260; // Ascends 260px upwards from below the lowest hill
+        let opacity = Math.min(1, progress / 0.3);
+
+        // Near section exit (0.85 to 1.0), subtle fade
+        if (progress > 0.85) {
+          opacity = Math.max(0, 1 - (progress - 0.85) / 0.15);
+        }
+
+        headline.style.transform = `translate(-50%, -50%) translateY(${textY}px)`;
+        headline.style.opacity = `${opacity}`;
+      }
+
+      // 2. Drawbridge Closing:
+      // Closes smoothly as progress goes from 0.1 to 0.75
+      let bridgeProgress = (progress - 0.1) / 0.65;
+      bridgeProgress = Math.max(0, Math.min(1, bridgeProgress));
+
+      const leftAngle = 38 * (1 - bridgeProgress);
+      const rightAngle = -38 * (1 - bridgeProgress);
+
+      bridgeLeft.style.transform = `rotate(${leftAngle}deg)`;
+      bridgeRight.style.transform = `rotate(${rightAngle}deg)`;
+
+      // 3. Tall Mountains Multi-Depth Parallax:
+      if (mtBack) mtBack.style.transform = `translateY(${progress * -80}px) scale(${1 + progress * 0.05})`;
+      if (mtMid) mtMid.style.transform = `translateY(${progress * -50}px)`;
+      if (mtFore) mtFore.style.transform = `translateY(${progress * -25}px)`;
+
+      // 4. Clouds Parting Parallax:
+      if (cloudLeft) cloudLeft.style.transform = `translate(${progress * -100}px, ${progress * -35}px)`;
+      if (cloudRight) cloudRight.style.transform = `translate(${progress * 100}px, ${progress * -35}px)`;
+      if (sunOrb) sunOrb.style.transform = `translate(-50%, ${progress * -45}px) scale(${1 + progress * 0.15})`;
+
+      // 5. Connection Status Badge Update:
+      if (statusText && statusDot) {
+        if (bridgeProgress >= 0.98) {
+          statusText.textContent = 'Ecosystem Connected: Solutions ↔ Products ↔ Talent';
+          statusDot.style.backgroundColor = '#ffffff';
+          statusDot.style.boxShadow = '0 0 10px rgba(255,255,255,0.8)';
+        } else if (bridgeProgress > 0.08) {
+          const pct = Math.round(bridgeProgress * 100);
+          statusText.textContent = `Aligning Bridge Infrastructure (${pct}% Closed)`;
+          statusDot.style.backgroundColor = '#d4d4d4';
+          statusDot.style.boxShadow = '0 0 8px rgba(212,212,212,0.6)';
+        } else {
+          statusText.textContent = 'Scroll down to connect the bridge';
+          statusDot.style.backgroundColor = '#b3b3b3';
+          statusDot.style.boxShadow = 'none';
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+  }
+
+  initBridgeScroll();
+  document.addEventListener('astro:page-load', initBridgeScroll);
+</script>
+
+<style>
+  /* ------------------------------------------------------------------------
+     Storytelling Bridge Section (240vh for smooth scroll narrative pacing)
+     ------------------------------------------------------------------------ */
+  .story-bridge-section {
+    position: relative;
+    height: 240vh;
+    /* Natural blue sky background */
+    background: linear-gradient(180deg, #1a4a8a 0%, #2e6db8 25%, #5b9fd4 55%, #8dc3e8 80%, #daeefa 100%);
+    overflow: clip;
+    border-top: 1px solid rgba(100, 160, 210, 0.3);
+    border-bottom: 1px solid rgba(100, 160, 210, 0.3);
+  }
+
+  .story-sticky-container {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  /* ------------------------------------------------------------------------
+     Sky & Clouds Layers
+     ------------------------------------------------------------------------ */
+  .sky-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .sun-orb {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    /* Warm golden sun */
+    background: radial-gradient(circle, rgba(255, 240, 150, 0.6) 0%, rgba(255, 200, 80, 0.3) 40%, rgba(255, 180, 50, 0.1) 70%, transparent 85%);
+    filter: blur(20px);
+    transition: transform 0.1s linear;
+  }
+
+  .cloud-cluster {
+    position: absolute;
+    transition: transform 0.1s linear;
+  }
+
+  .cloud-left-high {
+    top: 4%;
+    left: -40px;
+    width: 420px;
+  }
+
+  .cloud-right-high {
+    top: 6%;
+    right: -40px;
+    width: 460px;
+  }
+
+  .cloud-mid-left {
+    top: 26%;
+    left: 8%;
+    width: 280px;
+    animation: slowDrift 30s ease-in-out infinite alternate;
+  }
+
+  .cloud-mid-right {
+    top: 22%;
+    right: 12%;
+    width: 300px;
+    animation: slowDrift 32s ease-in-out infinite alternate-reverse;
+  }
+
+  @keyframes slowDrift {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(45px); }
+  }
+
+  .cloud-svg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.4));
+  }
+
+  /* ------------------------------------------------------------------------
+     Tall Mountain Ranges
+     ------------------------------------------------------------------------ */
+  .mountains-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .mountain-tier {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    transition: transform 0.1s linear;
+  }
+
+  /* Back Alpine Peaks */
+  .mountain-back {
+    bottom: 120px;
+    height: 68vh;
+    min-height: 520px;
+    z-index: 2;
+  }
+
+  /* Mid Green/Slate Peaks */
+  .mountain-mid {
+    bottom: 100px;
+    height: 52vh;
+    min-height: 420px;
+    z-index: 3;
+  }
+
+  /* Near Rolling Foothills */
+  .mountain-fore {
+    bottom: 80px;
+    height: 38vh;
+    min-height: 300px;
+    z-index: 4;
+  }
+
+  /* ------------------------------------------------------------------------
+     Storytelling Headline (Centered & Rising Up from below lowest hill)
+     ------------------------------------------------------------------------ */
+  .story-headline-stage {
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateY(260px);
+    z-index: 8;
+    text-align: center;
+    width: 100%;
+    max-width: 920px;
+    padding: 0 var(--space-6);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.12s linear, opacity 0.12s linear;
+  }
+
+  .headline-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .story-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    letter-spacing: var(--letter-spacing-wider);
+    color: var(--color-salt-white);
+    background: var(--color-pepper-alpha-85);
+    border: 1px solid var(--color-border);
+    padding: 0.35rem 0.95rem;
+    border-radius: var(--radius-full);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+  }
+
+  .badge-spark {
+    color: var(--color-accent);
+    font-size: 0.75rem;
+  }
+
+  .story-main-title {
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--raw-white);
+    line-height: 1.1;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 0, 0, 0.6);
+    letter-spacing: var(--letter-spacing-tight);
+  }
+
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, var(--color-salt-white) 0%, var(--color-salt-light) 50%, var(--color-pepper-medium) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .story-body-text {
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    max-width: 780px;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95);
+  }
+
+  /* ------------------------------------------------------------------------
+     Canyon, Cliffs, River & Drawbridge
+     ------------------------------------------------------------------------ */
+  .canyon-layer {
+    position: relative;
+    height: 320px;
+    width: 100%;
+    z-index: 12;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  /* River */
+  .river-flow {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 110px;
+    /* Blue river water reflecting the sky */
+    background: linear-gradient(180deg, #2a6090 0%, #1a4d78 40%, #0d3358 100%);
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .water-ripples {
+    position: absolute;
+    inset: 0;
+  }
+
+  .ripple-line {
+    position: absolute;
+    left: -40%;
+    width: 180%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  }
+
+  .ripple-line.r1 {
+    top: 20%;
+    animation: flowRipple 7s linear infinite;
+  }
+
+  .ripple-line.r2 {
+    top: 55%;
+    animation: flowRipple 9s linear infinite;
+    animation-delay: 2s;
+  }
+
+  @keyframes flowRipple {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(30%); }
+  }
+
+  /* Cliffs Reaching Inward to Anchor the Bridge */
+  .cliff {
+    position: absolute;
+    bottom: 0;
+    width: 32%;
+    height: 240px;
+    z-index: 5;
+  }
+
+  .cliff svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: drop-shadow(0 -4px 16px rgba(0, 0, 0, 0.6));
+  }
+
+  .cliff-left {
+    left: 0;
+  }
+
+  .cliff-right {
+    right: 0;
+  }
+
+  /* Drawbridge Structure (Floating on Air Fixed to Cliff Hinges) */
+  .bridge-chasm {
+    position: absolute;
+    bottom: 128px; /* Perfectly aligned with top cliff shelf (240px - 112px shelf) */
+    width: 40%;
+    max-width: 580px;
+    height: 52px;
+    z-index: 6;
+    display: flex;
+    justify-content: center;
+  }
+
+  .bridge-leaf {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    transition: transform 0.05s linear;
+  }
+
+  /* Left Leaf hinges at bottom-left corner */
+  .bridge-left {
+    left: 0;
+    transform-origin: bottom left;
+    transform: rotate(38deg);
+  }
+
+  /* Right Leaf hinges at bottom-right corner */
+  .bridge-right {
+    right: 0;
+    transform-origin: bottom right;
+    transform: rotate(-38deg);
+  }
+
+  /* Wooden & Steel Truss Aesthetics */
+  .truss-structure {
+    width: 100%;
+    height: 52px;
+    background: #854d0e;
+    border: 3px solid #3d1a03;
+    border-radius: 2px;
+    position: relative;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.7);
+  }
+
+  .truss-rail.top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: #713f12;
+    border-bottom: 2px solid #2e1403;
+  }
+
+  .truss-deck {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: #271406;
+  }
+
+  .truss-crosses {
+    position: absolute;
+    inset: 6px 4px 10px 4px;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .truss-crosses span {
+    width: 18%;
+    height: 100%;
+    position: relative;
+    border-left: 2px solid #5a2e0a;
+    border-right: 2px solid #5a2e0a;
+  }
+
+  .truss-crosses span::before,
+  .truss-crosses span::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: #3d1a03;
+  }
+
+  .truss-crosses span::before {
+    left: 50%;
+    transform: rotate(38deg);
+  }
+
+  .truss-crosses span::after {
+    left: 50%;
+    transform: rotate(-38deg);
+  }
+
+  /* Status Pill */
+  .bridge-status-pill {
+    position: absolute;
+    bottom: 20px;
+    z-index: 15;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    background: var(--color-pepper-alpha-95);
+    border: 1px solid var(--color-border);
+    padding: 0.4rem 1.1rem;
+    border-radius: var(--radius-full);
+    color: var(--raw-white);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-pepper-medium);
+    transition: all 0.3s ease;
+  }
+
+  @media (max-width: 768px) {
+    .cliff {
+      width: 25%;
+    }
+    .bridge-chasm {
+      width: 52%;
+      bottom: 128px;
+    }
+    .story-main-title {
+      font-size: 2rem;
+    }
+    .mountain-back {
+      height: 48vh;
+    }
+    .cloud-cluster {
+      display: none;
+    }
+  }
+</style>

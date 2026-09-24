@@ -1,0 +1,52 @@
+# RoboDev Labs
+
+> RoboDev Labs is a technology company building practical software solutions, educating and mentoring aspiring engineers, and creating proprietary software products.
+
+- Website: https://robodevlabs.com
+- Contact: robodevlabs.team@gmail.com
+- Founder: Safal Bhattarai
+
+## Areas
+
+- Engineering Services: custom software, AI solutions, web and mobile applications, cloud architecture.
+- RoboDev Academy: practical technology training, hands-on workshops, and developer mentorship.
+- Product Studio: incubating proprietary technology products, starting with the Busly transit platform.
+
+## Engineering Services
+
+- Custom Software (/services/custom-software): web applications, internal business systems, dashboards, portals, APIs.
+- AI Automation (/services/ai-automation): AI-powered workflows, integrations, assistants, document and data automation.
+- SaaS & Product Development (/services/saas-product-development): MVPs, SaaS platforms, prototypes, scalable product engineering.
+
+## RoboDev Academy
+
+Practical workshops for students and early-career developers who want to build real things:
+
+- AI Automation for Beginners (/academy/courses/ai-automation)
+- UI/UX Design with Figma (/academy/courses/ui-ux-design-figma)
+- SEO Fundamentals: Get Your Website Found (/academy/courses/seo-fundamentals)
+
+Workshop catalog: https://robodevlabs.com/academy
+
+## Product Studio
+
+- Busly – Smart Route Search & Booking System (/products/busly): a smart urban bus route search and booking platform with route discovery, transfer planning, interactive maps, booking, and Khalti digital payments. Built with React, Django, Supabase PostgreSQL, and Leaflet.
+
+Studio overview: https://robodevlabs.com/products
+
+## Careers
+
+Open roles are listed at https://robodevlabs.com/career and applied to by email:
+
+- Frontend Development Intern (Internship, Engineering)
+- Junior Backend Developer (Full-time, Engineering)
+
+## Contact
+
+Start a project, workshop, partnership, or general inquiry: https://robodevlabs.com/contact
+
+## Policies
+
+- Privacy Policy: https://robodevlabs.com/privacy-policy
+- Terms of Service: https://robodevlabs.com/terms
+- Cookie Policy: https://robodevlabs.com/cookie-policy

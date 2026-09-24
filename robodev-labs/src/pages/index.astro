@@ -1,0 +1,723 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import Heading from '../components/ui/Heading.astro';
+import Text from '../components/ui/Text.astro';
+import Button from '../components/ui/Button.astro';
+import Divider from '../components/ui/Divider.astro';
+import Icon from '../components/ui/Icon.astro';
+import Logo from '../components/common/Logo.astro';
+import Eyebrow from '../components/ui/Eyebrow.astro';
+
+import ServiceCard from '../components/cards/ServiceCard.astro';
+import ProductCard from '../components/cards/ProductCard.astro';
+import AcademyCard from '../components/cards/AcademyCard.astro';
+import ProcessStep from '../components/cards/ProcessStep.astro';
+import CinematicBridge from '../components/sections/CinematicBridge.astro';
+import ModelAccordionCards from '../components/sections/ModelAccordionCards.astro';
+import CircularArcDivisionsSection from '../components/sections/CircularArcDivisionsSection.astro';
+import ProcessEngineSection from '../components/sections/ProcessEngineSection.astro';
+import FoundersLeadershipSection from '../components/sections/FoundersLeadershipSection.astro';
+import ContinuousCtaFooter from '../components/sections/ContinuousCtaFooter.astro';
+
+import { servicesData } from '../data/services';
+import { productsData } from '../data/products';
+import { academyData } from '../data/academy';
+import { processData } from '../data/process';
+import { siteConfig } from '../config/site';
+---
+
+<BaseLayout hideFooter={true}>
+  <!-- =========================================================================
+       HERO SECTION: High-impact proposition, dual CTAs, subtle tech visual
+       ========================================================================= -->
+  <section class="hero-section" id="hero" aria-label="Introduction">
+    <Container class="hero-container">
+      <div class="hero-main">
+        <!-- Eyebrow Tagline -->
+        <Eyebrow class="hero-brand-eyebrow">ROBODEV LABS</Eyebrow>
+
+        <!-- Main Focus Headline - Editorial Centerpiece -->
+        <h1 class="hero-display-headline">
+          We turn software into a competitive advantage.
+        </h1>
+
+        <!-- Calm, Confident Value Proposition -->
+        <p class="hero-statement">
+          Software engineering and digital products for teams turning ambitious ideas into reality.
+        </p>
+
+        <!-- Primary CTA -->
+        <div class="hero-action-row">
+          <Button variant="primary" size="md" href="#contact" class="hero-primary-pill">
+            <span>Start a project</span>
+          </Button>
+        </div>
+      </div>
+
+      <!-- Bottom-Right Non-Clickable Scroll Invitation with Custom Geometric Arrow -->
+      <div class="hero-scroll-indicator" aria-hidden="true">
+        <span class="scroll-invitation-text">Explore what we are</span>
+        <div class="scroll-arrow-container">
+          <svg
+            class="custom-scroll-arrow"
+            viewBox="0 0 16 28"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <!-- Custom RoboDev Labs architectural scroll arrow -->
+            <line x1="8" y1="2" x2="8" y2="24"></line>
+            <polyline points="2 18 8 25 14 18"></polyline>
+          </svg>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- =========================================================================
+       CINEMATIC SCROLL-DRIVEN ARCHITECTURAL BRIDGE TRANSITION
+       Hero -> Approach -> Bridge Towering -> Underneath Passage -> Light Emergence -> Pillars
+       ========================================================================= -->
+  <CinematicBridge />
+
+  <!-- =========================================================================
+       THREE PILLARS OVERVIEW (INGSKILL-Inspired Interactive Horizontal Accordion Cards)
+       ========================================================================= -->
+  <Section id="pillars" size="lg" bg="default" class="pillars-section">
+    <Container>
+      <div class="section-intro text-center model-header-center">
+        <Eyebrow class="section-eyebrow">The RoboDev Labs Ecosystem</Eyebrow>
+        <h2 class="model-big-display-title">
+          Built for Businesses,
+          <br />
+          <span class="text-gradient-brand">Institutions, and Learners</span>
+        </h2>
+        <p class="section-subtitle">
+          Select your segment below to see how our engineering divisions, mentorship academy, and venture studio align with your goals.
+        </p>
+      </div>
+
+      <!-- Interactive Horizontal Expanding Cards -->
+      <ModelAccordionCards />
+    </Container>
+  </Section>
+
+  <!-- =========================================================================
+       SIGNATURE CIRCULAR ARC DIVISIONS SHOWCASE (Matching Reference Screenshot)
+       Features: Ultra-thin geometric circle line, mathematical circular rotation,
+       pinned 300vh scroll scrubbing, 3D floating glass IDE & performance card
+       ========================================================================= -->
+  <CircularArcDivisionsSection />
+
+  <!-- =========================================================================
+       HOW WE WORK: FROM DISCOVERY TO ITERATION (#process)
+       Screen-height 100vh section with 6 engineering stages, sweeping wave path,
+       directional arrows, and dual pill CTAs.
+       ========================================================================= -->
+  <ProcessEngineSection />
+
+  <Divider />
+
+  <!-- =========================================================================
+       FOUNDERS & LEADERSHIP SECTION (#leadership)
+       Awwwards-inspired editorial composition: Asymmetric 2-column founder showcase
+       and restrained 4-column department leadership layer.
+       ========================================================================= -->
+  <FoundersLeadershipSection />
+
+  <Divider />
+
+  <!-- =========================================================================
+       CONTINUOUS CTA + RISING FOOTER SCENE (#contact)
+       Unifies final conversion CTA and the rising footer surface into one continuous scene
+       with scroll parallax, connecting spline path, and oversized background typography.
+       ========================================================================= -->
+  <ContinuousCtaFooter />
+</BaseLayout>
+
+<style>
+  /* ------------------------------------------------------------------------
+     Hero Section Styling - Premium, Minimal, Calm & Confident
+     - Generous whitespace
+     - Editorial display typography
+     - Centered headline focus
+     - Bottom-right non-clickable scroll invitation with custom animated arrow
+     - No particles, glowing spheres, 3D elements, or excessive decoration
+     ------------------------------------------------------------------------ */
+  .hero-section {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--color-background-secondary);
+    padding-top: clamp(6.5rem, 12vh, 8.5rem);
+    padding-bottom: clamp(2rem, 5vh, 3.5rem);
+    overflow: hidden;
+  }
+
+  .hero-container {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-main {
+    max-width: 980px;
+    width: 100%;
+    margin: auto;
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Eyebrow - Calm, technical, confident */
+  .hero-brand-eyebrow {
+    margin-bottom: clamp(1.25rem, 3vh, 2.25rem);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-brand-eyebrow::before,
+  .hero-brand-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 1.5px;
+    background-color: var(--color-pepper-medium);
+    opacity: 0.8;
+  }
+
+  /* Main Visual Focus - Strong Editorial Display Typography (similar to reference screenshot) */
+  .hero-display-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(2.75rem, 6.2vw, 5.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+    color: var(--color-text);
+    margin: 0 auto clamp(1.5rem, 3.5vh, 2.5rem) auto;
+    max-width: 920px;
+    text-wrap: balance;
+  }
+
+  /* Supporting Value Proposition - Calm, measured, italicized nuance like reference */
+  .hero-statement {
+    font-family: var(--font-sans);
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+    max-width: 680px;
+    margin: 0 auto clamp(2rem, 4.5vh, 3.25rem) auto;
+    font-weight: var(--font-weight-regular);
+    letter-spacing: -0.01em;
+  }
+
+  /* Actions Row - Centered dual pills */
+  .hero-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .hero-primary-pill {
+    padding: 0.85rem 2rem !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.01em !important;
+  }
+
+  .cta-arrow-symbol {
+    font-size: 1rem;
+    display: inline-block;
+    color: var(--color-text-inverse);
+    transition: transform var(--duration-fast) var(--ease-standard);
+  }
+
+  .hero-primary-pill:hover .cta-arrow-symbol {
+    transform: translateX(4px);
+    color: var(--color-text-inverse);
+  }
+
+  /* ------------------------------------------------------------------------
+     Bottom-Right Non-Clickable Scroll Invitation
+     - "Explore what we are"
+     - Custom RoboDev Labs architectural arrow strictly BELOW text
+     - Very slow continuous vertical translation (6–10px travel)
+     - No bounce, rotation, glow, scaling, or opacity effects
+     - Respects prefers-reduced-motion
+     ------------------------------------------------------------------------ */
+  .hero-scroll-indicator {
+    position: absolute;
+    right: var(--container-padding-x);
+    bottom: clamp(1rem, 2vh, 2rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.75rem;
+    pointer-events: none;
+    user-select: none;
+    z-index: 2;
+  }
+
+  .scroll-invitation-text {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    /* User requested: use medium green color for explore */
+    color: var(--color-pepper-dark);
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    background: rgba(49, 71, 58, 0.45);
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+    border: 1px solid rgba(124, 131, 99, 0.3);
+  }
+
+  .scroll-arrow-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .custom-scroll-arrow {
+    width: 16px;
+    height: 26px;
+    /* User requested: medium green color for arrow */
+    color: var(--color-pepper-dark);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+    stroke-width: 2.2;
+    /* Very slow vertical movement, 6-10px travel, smooth ease-in-out */
+    animation: slow-scroll-travel 3.4s ease-in-out infinite;
+  }
+
+  @keyframes slow-scroll-travel {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(8px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .custom-scroll-arrow {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     Section Header Primitives
+     ------------------------------------------------------------------------ */
+  .section-intro {
+    max-width: 720px;
+    margin: 0 auto var(--space-12) auto;
+  }
+
+  .section-eyebrow {
+    margin-bottom: var(--space-2);
+  }
+
+  .section-title {
+    color: var(--color-text);
+    margin-bottom: var(--space-3);
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-body-large);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .model-header-center {
+    max-width: 860px;
+  }
+
+  .model-big-display-title {
+    font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin: var(--space-3) 0 var(--space-4) 0;
+  }
+
+  .section-header-split {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--space-8);
+    align-items: flex-end;
+    margin-bottom: var(--space-12);
+  }
+
+  .section-header-desc {
+    font-size: var(--font-size-body);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+
+  /* ------------------------------------------------------------------------
+     Three Pillars Layout
+     ------------------------------------------------------------------------ */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  .pillar-box {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-8);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    position: relative;
+    transition: all var(--duration-normal) var(--ease-standard);
+  }
+
+  .pillar-box.featured {
+    border-color: var(--color-border-bright);
+  }
+
+  .pillar-box:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-salt-white);
+    box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.5);
+  }
+
+  .pillar-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-4);
+    background: var(--color-surface-hover);
+    color: var(--color-salt-white);
+    border: 1px solid var(--color-border);
+  }
+
+  .pillar-icon-box.blue,
+  .pillar-icon-box.purple,
+  .pillar-icon-box.cyan {
+    background: var(--color-surface-hover);
+    color: var(--color-salt-white);
+    border: 1px solid var(--color-border);
+  }
+
+  .pillar-number {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    color: var(--color-text-muted);
+    letter-spacing: var(--letter-spacing-wide);
+    margin-bottom: var(--space-2);
+  }
+
+  .pillar-name {
+    color: var(--color-text);
+    margin-bottom: var(--space-3);
+  }
+
+  .pillar-desc {
+    font-size: var(--font-size-body-small);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+    flex: 1;
+    margin-bottom: var(--space-6);
+  }
+
+  .pillar-anchor {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+  }
+
+  .pillar-anchor:hover {
+    color: var(--raw-white);
+  }
+
+  /* ------------------------------------------------------------------------
+     Process Grid
+     ------------------------------------------------------------------------ */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  /* ------------------------------------------------------------------------
+     About / Why RoboDev Labs
+     ------------------------------------------------------------------------ */
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.35fr;
+    gap: var(--space-12);
+    align-items: flex-start;
+  }
+
+  .about-left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .about-headline {
+    color: var(--color-text);
+    line-height: var(--line-height-tight);
+  }
+
+  .about-lead {
+    font-size: var(--font-size-body);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .about-callout {
+    padding: var(--space-6);
+    border-left: 3px solid var(--color-brand);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: var(--space-2);
+  }
+
+  .callout-quote {
+    font-size: var(--font-size-body-large);
+    font-weight: var(--font-weight-medium);
+    color: var(--raw-white);
+  }
+
+  .callout-author {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    color: var(--color-text-muted);
+  }
+
+  .about-principles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .principle-item {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .principle-icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    margin-bottom: var(--space-1);
+  }
+
+  .principle-title {
+    color: var(--color-text);
+  }
+
+  .principle-desc {
+    font-size: var(--font-size-body-small);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+  }
+
+  /* ------------------------------------------------------------------------
+     Final CTA Section
+     ------------------------------------------------------------------------ */
+  .final-cta-section {
+    position: relative;
+    overflow: hidden;
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-24);
+  }
+
+  .cta-glow {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 650px;
+    height: 650px;
+  }
+
+  .cta-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-box {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+    padding: var(--space-12) var(--space-8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    border-color: var(--color-border);
+    box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px -10px rgba(255, 255, 255, 0.05);
+  }
+
+  .cta-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    letter-spacing: var(--letter-spacing-wider);
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .cta-headline {
+    color: var(--color-text);
+    line-height: var(--line-height-tight);
+  }
+
+  .cta-desc {
+    font-size: var(--font-size-body-large);
+    color: var(--color-text-secondary);
+    max-width: 640px;
+    line-height: var(--line-height-relaxed);
+  }
+
+  .cta-buttons {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cta-email-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .contact-details {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--font-size-caption);
+    color: var(--color-text-muted);
+    margin-top: var(--space-4);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .contact-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .contact-icon {
+    color: var(--color-accent);
+  }
+
+  .contact-dot {
+    opacity: 0.4;
+  }
+
+  /* ------------------------------------------------------------------------
+     Responsive Breakpoints
+     ------------------------------------------------------------------------ */
+  @media (max-width: 1024px) {
+    .section-header-split {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .pillars-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .academy-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .process-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-main {
+      padding-bottom: 5rem;
+    }
+
+    .hero-scroll-indicator {
+      bottom: 1.25rem;
+      right: 1.25rem;
+    }
+
+    .scroll-invitation-text {
+      font-size: 0.7rem;
+    }
+
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-banner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .banner-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .process-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-principles-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-box {
+      padding: var(--space-8) var(--space-4);
+    }
+  }
+</style>

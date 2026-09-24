@@ -1,0 +1,182 @@
+---
+export interface Props {
+  badge?: string;
+  subBadge?: string;
+}
+
+const {
+  badge = 'Next Step &bull; Ready to Build',
+} = Astro.props as Props;
+---
+
+<div class="section-divider-band" aria-hidden="true">
+  <!-- Gradient transition between the two sections -->
+  <div class="gradient-veil"></div>
+
+  <!-- Ambient focal light glow -->
+  <div class="glow-focal"></div>
+
+  <!-- Horizontal optical conduit line -->
+  <div class="conduit-track">
+    <div class="conduit-glow"></div>
+    <div class="conduit-hairline"></div>
+  </div>
+
+  <!-- Central architectural marker pill -->
+  <div class="central-badge-container">
+    <div class="badge-ring-pulse"></div>
+    <div class="badge-pill">
+      <span class="pulsing-cyan-dot"></span>
+      <span class="badge-label" set:html={badge}></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ==========================================================================
+     SECTION DIVIDER BAND
+     Sophisticated atmospheric boundary between Founders and the Final CTA.
+     Provides clear tonal separation and architectural closure.
+     ========================================================================== */
+  .section-divider-band {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, var(--color-background-dark) 0%, var(--color-background) 50%, var(--color-background-dark) 100%);
+    overflow: hidden;
+    margin: 0;
+    isolation: isolate;
+  }
+
+  /* Smooth gradient veil */
+  .gradient-veil {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.04) 0%, transparent 75%);
+    pointer-events: none;
+  }
+
+  /* Central ambient glow */
+  .glow-focal {
+    position: absolute;
+    width: 480px;
+    height: 60px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.12) 0%, rgba(212, 212, 212, 0.05) 45%, transparent 70%);
+    filter: blur(20px);
+    pointer-events: none;
+  }
+
+  /* Conduit track with illuminated hairline */
+  .conduit-track {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    transform: translateY(-50%);
+  }
+
+  .conduit-glow {
+    position: absolute;
+    top: -2px;
+    left: 15%;
+    right: 15%;
+    height: 5px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.25) 50%, transparent 100%);
+    filter: blur(4px);
+  }
+
+  .conduit-hairline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(255, 255, 255, 0.04) 15%, 
+      rgba(212, 212, 212, 0.35) 45%, 
+      var(--color-salt-white) 50%, 
+      rgba(212, 212, 212, 0.35) 55%, 
+      rgba(255, 255, 255, 0.04) 85%, 
+      transparent 100%
+    );
+  }
+
+  /* Central badge */
+  .central-badge-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .badge-ring-pulse {
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 75%);
+    animation: ringGlow 3s infinite ease-in-out;
+  }
+
+  @keyframes ringGlow {
+    0%, 100% { opacity: 0.5; transform: scale(0.98); }
+    50% { opacity: 1; transform: scale(1.05); }
+  }
+
+  .badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.42rem 1.25rem;
+    background: var(--color-background-dark);
+    border: 1px solid var(--color-border);
+    border-radius: 9999px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+  }
+
+  .pulsing-cyan-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-salt-white);
+    box-shadow: 0 0 8px var(--color-salt-white);
+    animation: dotBlink 2s infinite ease-in-out;
+  }
+
+  @keyframes dotBlink {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  .badge-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-salt-light);
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    .section-divider-band {
+      height: 90px;
+    }
+
+    .badge-pill {
+      padding: 0.35rem 1rem;
+    }
+
+    .badge-label {
+      font-size: 0.68rem;
+    }
+  }
+</style>

@@ -1,0 +1,623 @@
+---
+/**
+ * LegalDocumentTemplate — reusable legal-page presentation.
+ * Uses the WorkshopCourseTemplate design language:
+ * light editorial surfaces, dark-green hero, white meta card,
+ * sticky section nav, single-column content.
+ * Consumes only a `document` object from src/data/legal.ts.
+ */
+import Container from '../ui/Container.astro';
+import Logo from '../common/Logo.astro';
+import type { LegalDocument } from '../../data/legal';
+import { siteConfig } from '../../config/site';
+
+export interface Props {
+  document: LegalDocument;
+}
+
+const { document } = Astro.props as Props;
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
+const pageUrl = `${siteConfig.url}/${document.slug === 'terms' ? 'terms' : document.slug}`;
+const contactHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent(`Question about the ${document.title}`)}`;
+---
+
+  <div class="wt-page">
+    <header class="wt-hero">
+      <Container>
+        <div class="wt-hero-grid">
+          <div class="wt-hero-left">
+            <p class="wt-hero-category">RoboDev Labs · Legal</p>
+            <h1 class="wt-hero-title" id="legal-title">{document.title}</h1>
+            <p class="wt-hero-desc">{document.shortDescription}</p>
+            <div class="wt-hero-facts">
+              <span class="wt-fact">
+                <span class="wt-fact-icon" aria-hidden="true">◷</span>
+                Last updated: {document.lastUpdated}
+              </span>
+              <span class="wt-fact-sep" aria-hidden="true">·</span>
+              <span class="wt-fact">
+                <span class="wt-fact-icon" aria-hidden="true">⬡</span>
+                {document.sections.length} sections
+              </span>
+            </div>
+          </div>
+
+          <aside class="wt-enroll-card" aria-label="About this document">
+            <div class="wt-card-header">
+              <span class="wt-card-badge">Legal document</span>
+              <span class="wt-card-status">Current version</span>
+            </div>
+            <div class="wt-card-price">
+              <span class="wt-price-main">{document.title}</span>
+              <span class="wt-price-note">Last updated: {document.lastUpdated}</span>
+            </div>
+            <a href={contactHref} class="wt-btn-primary wt-btn-full wt-btn-card">
+              <span>Ask about this policy</span>
+            </a>
+            <div class="wt-card-meta">
+              <div class="wt-card-meta-row">
+                <span class="wt-card-meta-key">Contact</span>
+                <span class="wt-card-meta-val">{siteConfig.email}</span>
+              </div>
+              <div class="wt-card-meta-row">
+                <span class="wt-card-meta-key">Scope</span>
+                <span class="wt-card-meta-val">Website & communications</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </Container>
+    </header>
+
+    <nav class="wt-section-nav" aria-label="Document sections" id="wt-section-nav">
+      <div class="wt-nav-top-bar" id="wt-nav-top-bar" aria-label="Document quick action bar">
+        <Container>
+          <div class="wt-top-bar-inner">
+            <div class="wt-top-bar-left">
+              <a href="/" class="wt-top-bar-logo" aria-label="RoboDev Labs Home">
+                <Logo height={28} />
+              </a>
+            </div>
+            <div class="wt-top-bar-center">
+              <span class="wt-top-bar-title" title={document.title}>{document.title}</span>
+            </div>
+            <div class="wt-top-bar-right">
+              <a href={contactHref} class="wt-btn-primary wt-top-bar-btn">
+                <span>Contact us</span>
+              </a>
+            </div>
+          </div>
+        </Container>
+      </div>
+
+      <div class="wt-nav-tabs-bar">
+        <Container>
+          <div class="wt-nav-inner">
+            {document.sections.map((section, idx) => (
+              <a href={`#${slugify(section.heading)}`} class={`wt-nav-link${idx === 0 ? ' wt-nav-link--active' : ''}`}>
+                {section.heading}
+              </a>
+            ))}
+          </div>
+        </Container>
+      </div>
+    </nav>
+
+    <main class="wt-main" id="about">
+      <Container>
+        <div class="wt-content-col">
+          {document.sections.map((section, idx) => (
+            <div class="wt-block">
+              {idx > 0 && <hr class="wt-divider" />}
+              <section id={slugify(section.heading)} class="wt-section" aria-labelledby={`${slugify(section.heading)}-heading`}>
+                <h2 id={`${slugify(section.heading)}-heading`} class="wt-section-title">{section.heading}</h2>
+                {section.paragraphs.map((paragraph) => (
+                  <p class="wt-body-text">{paragraph}</p>
+                ))}
+                {section.bullets && section.bullets.length > 0 && (
+                  <ul class="wt-check-list">
+                    {section.bullets.map((item) => (
+                      <li>
+                        <span class="wt-check-icon" aria-hidden="true">—</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {section.subsections?.map((subsection) => (
+                  <div class="wt-subsection">
+                    <h3 class="wt-subhead">{subsection.heading}</h3>
+                    {subsection.paragraphs.map((paragraph) => (
+                      <p class="wt-body-text">{paragraph}</p>
+                    ))}
+                    {subsection.bullets && subsection.bullets.length > 0 && (
+                      <ul class="wt-check-list">
+                        {subsection.bullets.map((item) => (
+                          <li>
+                            <span class="wt-check-icon" aria-hidden="true">—</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </section>
+            </div>
+          ))}
+
+          <div class="wt-final-cta">
+            <div class="wt-final-cta-content">
+              <h2 class="wt-final-cta-title">Questions about this document?</h2>
+              <p class="wt-final-cta-note">{document.title} · Last updated {document.lastUpdated}</p>
+            </div>
+            <a href={contactHref} class="wt-btn-primary wt-btn-lg">Contact us</a>
+          </div>
+        </div>
+      </Container>
+    </main>
+  </div>
+
+<script>
+  const navLinks = document.querySelectorAll('.wt-nav-link');
+  const sections = document.querySelectorAll('main[id], section[id]');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          navLinks.forEach((l) => l.classList.remove('wt-nav-link--active'));
+          const active = document.querySelector(`.wt-nav-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('wt-nav-link--active');
+        }
+      });
+    },
+    { rootMargin: '-25% 0px -65% 0px' }
+  );
+
+  sections.forEach((s) => observer.observe(s));
+
+  const nav = document.getElementById('wt-section-nav');
+  const hero = document.querySelector('.wt-hero');
+  if (nav && hero) {
+    const updateNavState = (isPastHero: boolean) => {
+      nav.classList.toggle('wt-nav--scrolled', isPastHero);
+      nav.classList.toggle('wt-nav--active', isPastHero);
+    };
+
+    const heroObserver = new IntersectionObserver(
+      ([e]) => {
+        updateNavState(!e.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+    heroObserver.observe(hero);
+
+    const heroRect = hero.getBoundingClientRect();
+    if (heroRect.bottom <= 0) {
+      updateNavState(true);
+    }
+  }
+</script>
+
+<style>
+  .wt-page {
+    background-color: #fafaf8;
+    color: #1a1a1a;
+    min-height: 100vh;
+  }
+
+  .wt-hero {
+    background-color: var(--color-pepper-medium, #31473A);
+    color: #EDF4F2;
+    padding-top: clamp(6.5rem, 13vh, 8.5rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    border-bottom: 1px solid rgba(237, 244, 242, 0.12);
+  }
+
+  .wt-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: flex-start;
+  }
+
+  @media (max-width: 1024px) {
+    .wt-hero-grid {
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .wt-hero-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .wt-hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.125rem;
+    padding: clamp(1rem, 2vw, 2rem) 0;
+  }
+
+  .wt-hero-category {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: rgba(237, 244, 242, 0.65);
+    margin: 0;
+  }
+
+  .wt-hero-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(2.125rem, 4.5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    color: #EDF4F2;
+    margin: 0;
+  }
+
+  .wt-hero-desc {
+    font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
+    line-height: 1.6;
+    color: rgba(237, 244, 242, 0.82);
+    margin: 0;
+    max-width: 58ch;
+  }
+
+  .wt-hero-facts {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 0;
+    font-size: 0.875rem;
+    color: rgba(237, 244, 242, 0.8);
+    margin-top: 0.5rem;
+  }
+
+  .wt-fact {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .wt-fact-icon {
+    font-size: 0.6875rem;
+    opacity: 0.65;
+  }
+
+  .wt-fact-sep {
+    margin: 0 9px;
+    opacity: 0.35;
+  }
+
+  .wt-enroll-card {
+    background: #ffffff;
+    border: 1px solid #e0e0d8;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.16);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    color: #1a1a1a;
+    align-self: end;
+  }
+
+  @media (max-width: 860px) {
+    .wt-enroll-card {
+      display: none;
+    }
+  }
+
+  .wt-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .wt-card-badge {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-pepper-dark, #7C8363);
+  }
+
+  .wt-card-status {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-pepper-medium, #31473A);
+  }
+
+  .wt-card-price {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .wt-price-main {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-pepper-medium, #31473A);
+  }
+
+  .wt-price-note {
+    font-size: 0.75rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .wt-card-meta {
+    border-top: 1px solid #eaeae4;
+    padding-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .wt-card-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    font-size: 0.8125rem;
+  }
+
+  .wt-card-meta-key {
+    color: #777;
+    flex-shrink: 0;
+  }
+
+  .wt-card-meta-val {
+    font-weight: 600;
+    color: #1a1a1a;
+    text-align: right;
+    word-break: break-word;
+  }
+
+  .wt-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background-color: var(--color-pepper-medium, #31473A);
+    color: #EDF4F2;
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    padding: 13px 26px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 160ms ease, transform 100ms ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .wt-btn-primary:hover {
+    background-color: var(--color-pepper-dark, #7C8363);
+    transform: translateY(-1px);
+    color: #ffffff;
+  }
+
+  .wt-btn-full {
+    width: 100%;
+    text-align: center;
+  }
+
+  .wt-btn-lg {
+    padding: 14px 28px;
+    font-size: 1rem;
+  }
+
+  .wt-section-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: #ffffff;
+    border-bottom: 1px solid #e8e8e2;
+    transition: box-shadow 200ms ease;
+  }
+
+  .wt-nav--scrolled,
+  .wt-nav--active {
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  }
+
+  .wt-nav-top-bar {
+    display: none;
+    background: #ffffff;
+    border-bottom: 1px solid #eeeee8;
+    padding: 0.5rem 0;
+  }
+
+  .wt-nav--active .wt-nav-top-bar,
+  .wt-nav--scrolled .wt-nav-top-bar {
+    display: block;
+  }
+
+  .wt-top-bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  .wt-top-bar-center {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+  }
+
+  .wt-top-bar-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #111111;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .wt-top-bar-btn {
+    white-space: nowrap;
+    font-size: 0.8125rem;
+    padding: 8px 18px;
+    border-radius: 6px;
+  }
+
+  .wt-nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .wt-nav-inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wt-nav-link {
+    display: inline-block;
+    padding: 12px 18px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #555;
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 150ms ease, border-color 150ms ease;
+  }
+
+  .wt-nav-link:hover {
+    color: var(--color-pepper-medium, #31473A);
+  }
+
+  .wt-nav-link--active {
+    color: var(--color-pepper-medium, #31473A);
+    border-bottom-color: var(--color-pepper-medium, #31473A);
+    font-weight: 600;
+  }
+
+  .wt-main {
+    padding: 3rem 0 5rem;
+  }
+
+  .wt-content-col {
+    max-width: 820px;
+  }
+
+  .wt-section {
+    padding: 2.25rem 0;
+  }
+
+  .wt-divider {
+    border: none;
+    border-top: 1px solid #e5e5dc;
+    margin: 0;
+  }
+
+  .wt-section-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #111;
+    margin: 0 0 1.25rem;
+  }
+
+  .wt-subhead {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: #111;
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  .wt-body-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #000;
+    margin: 0 0 1rem;
+  }
+
+  .wt-check-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .wt-check-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: #000;
+  }
+
+  .wt-check-icon {
+    color: var(--color-pepper-medium, #31473A);
+    font-weight: 700;
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    margin-top: 2px;
+  }
+
+  .wt-subsection {
+    margin-top: 1.5rem;
+  }
+
+  .wt-final-cta {
+    margin-top: 3rem;
+    padding: 2rem 2.5rem;
+    background: var(--color-pepper-medium, #31473A);
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .wt-final-cta-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .wt-final-cta-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #EDF4F2;
+    margin: 0;
+  }
+
+  .wt-final-cta-note {
+    font-size: 0.875rem;
+    color: rgba(237, 244, 242, 0.7);
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,532 @@
+---
+/**
+ * Contact / Start a Project — /contact
+ * Business inquiry page. No backend exists in this project, so the form
+ * composes an email to the team inbox (no fake success states).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui/Container.astro';
+import Button from '../components/ui/Button.astro';
+import Icon from '../components/ui/Icon.astro';
+import { siteConfig } from '../config/site';
+
+const inbox = siteConfig.email;
+
+const topics = [
+  'Software Engineering',
+  'AI Automation',
+  'SaaS / Product Development',
+  'Website / Web Application',
+  'Custom Business Software',
+  'RoboDev Academy / Workshop',
+  'University / Student Organization',
+  'Product Collaboration',
+  'Partnership',
+  'General Inquiry',
+  'Other',
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: `Contact — ${siteConfig.name}`,
+  url: `${siteConfig.url}/contact`,
+  about: { '@type': 'Organization', name: siteConfig.name, url: siteConfig.url, email: inbox },
+};
+---
+
+<BaseLayout title={`Contact — Start a Project | ${siteConfig.name}`} description="Tell RoboDev Labs about your software project, Academy workshop, partnership, or product idea. We work with businesses, organizations, and educational institutions.">
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <div class="contact-page">
+    <!-- ATMOSPHERE: tonal washes + one signature R-bowl arc, cropped left -->
+    <div class="contact-atmosphere" aria-hidden="true">
+      <div class="layer layer--wash"></div>
+      <svg class="contact-signature" viewBox="0 0 640 640" fill="none" aria-hidden="true">
+        <circle cx="200" cy="320" r="252" stroke="rgba(237,244,242,0.09)" stroke-width="64" />
+        <circle cx="200" cy="320" r="152" stroke="rgba(237,244,242,0.08)" stroke-width="1.5" />
+      </svg>
+    </div>
+
+    <Container>
+      <div class="contact-layout">
+        <!-- LEFT: intro + value statements -->
+        <div class="contact-intro reveal-fade-up">
+          <span class="contact-eyebrow">Contact · Start a project</span>
+          <h1 class="contact-title">Let's build something together.</h1>
+          <p class="contact-lead">
+            RoboDev Labs works with businesses, organizations, educational institutions,
+            and people building meaningful digital products — from software and AI
+            systems to workshops and collaborations.
+          </p>
+
+          <ul class="contact-values">
+            <li class="contact-value" style="--reveal-delay:0ms">
+              <span class="contact-value__icon" aria-hidden="true"><Icon name="code" size={17} /></span>
+              <div>
+                <h2 class="contact-value__title">Engineering</h2>
+                <p class="contact-value__body">Software and digital products built around real requirements.</p>
+              </div>
+            </li>
+            <li class="contact-value" style="--reveal-delay:60ms">
+              <span class="contact-value__icon" aria-hidden="true"><Icon name="users" size={17} /></span>
+              <div>
+                <h2 class="contact-value__title">Academy</h2>
+                <p class="contact-value__body">Practical workshops for schools, universities, and student communities.</p>
+              </div>
+            </li>
+            <li class="contact-value" style="--reveal-delay:120ms">
+              <span class="contact-value__icon" aria-hidden="true"><Icon name="layers" size={17} /></span>
+              <div>
+                <h2 class="contact-value__title">Collaboration</h2>
+                <p class="contact-value__body">Partnerships, product ideas, and other opportunities.</p>
+              </div>
+            </li>
+            <li class="contact-value" style="--reveal-delay:180ms">
+              <span class="contact-value__icon" aria-hidden="true"><Icon name="info" size={17} /></span>
+              <div>
+                <h2 class="contact-value__title">Questions</h2>
+                <p class="contact-value__body">Not sure what you need? Start the conversation anyway.</p>
+              </div>
+            </li>
+          </ul>
+
+          <p class="contact-direct">
+            Prefer email? Write to us directly at
+            <a href={`mailto:${inbox}`}>{inbox}</a>.
+          </p>
+        </div>
+
+        <!-- RIGHT: floating form panel -->
+        <div class="contact-panel reveal-fade-up" style="--reveal-delay:120ms">
+          <h2 class="contact-panel__title">Tell us what you're building.</h2>
+          <p class="contact-panel__sub">
+            Tell us about a project, workshop, partnership, or anything you'd like to discuss.
+          </p>
+
+          <form id="contact-form" class="contact-form" novalidate>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="cf-name">Full name *</label>
+                <input id="cf-name" name="name" type="text" autocomplete="name" required placeholder="Your full name" aria-describedby="cf-name-error" />
+                <p class="form-error" id="cf-name-error" hidden>Please enter your name.</p>
+              </div>
+              <div class="form-field">
+                <label for="cf-email">Email address *</label>
+                <input id="cf-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" aria-describedby="cf-email-error" />
+                <p class="form-error" id="cf-email-error" hidden>Please enter a valid email address.</p>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="cf-org">Company / Organization</label>
+                <input id="cf-org" name="organization" type="text" autocomplete="organization" placeholder="Company or school name" />
+              </div>
+              <div class="form-field">
+                <label for="cf-role">Your role</label>
+                <input id="cf-role" name="role" type="text" autocomplete="organization-title" placeholder="e.g. Founder, Teacher, Student" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="cf-phone">Phone <span class="form-optional">(optional)</span></label>
+                <input id="cf-phone" name="phone" type="tel" autocomplete="tel" placeholder="+977 …, +1 …" />
+              </div>
+              <div class="form-field">
+                <label for="cf-location">Country / Location <span class="form-optional">(optional)</span></label>
+                <input id="cf-location" name="location" type="text" autocomplete="country-name" placeholder="Where are you based?" />
+              </div>
+            </div>
+
+            <div class="form-field form-field--topic">
+              <label for="cf-topic">What can we help you with? *</label>
+              <select id="cf-topic" name="topic" required aria-describedby="cf-topic-error">
+                <option value="" selected>Select a topic</option>
+                {topics.map((t) => (<option value={t}>{t}</option>))}
+              </select>
+              <p class="form-error" id="cf-topic-error" hidden>Please choose a topic.</p>
+            </div>
+
+            <!-- Contextual: engineering -->
+            <fieldset class="form-context" data-context="engineering" hidden>
+              <legend>Project context</legend>
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="cf-projtype">Project type</label>
+                  <input id="cf-projtype" name="projectType" type="text" placeholder="e.g. Web app, internal tool, MVP" />
+                </div>
+                <div class="form-field">
+                  <label for="cf-timeline">Estimated timeline</label>
+                  <input id="cf-timeline" name="timeline" type="text" placeholder="e.g. 2–3 months" />
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="cf-budget">Budget range <span class="form-optional">(optional)</span></label>
+                <input id="cf-budget" name="budget" type="text" placeholder="e.g. Rough range, if known" />
+              </div>
+            </fieldset>
+
+            <!-- Contextual: academy -->
+            <fieldset class="form-context" data-context="academy" hidden>
+              <legend>Workshop context</legend>
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="cf-institution">Institution / organization</label>
+                  <input id="cf-institution" name="institution" type="text" placeholder="School, university, or club" />
+                </div>
+                <div class="form-field">
+                  <label for="cf-workshop">Workshop / topic</label>
+                  <input id="cf-workshop" name="workshop" type="text" placeholder="e.g. AI automation, UI/UX" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="cf-participants">Approximate participants</label>
+                  <input id="cf-participants" name="participants" type="text" inputmode="numeric" placeholder="e.g. 30" />
+                </div>
+                <div class="form-field">
+                  <label for="cf-prefdate">Preferred date <span class="form-optional">(optional)</span></label>
+                  <input id="cf-prefdate" name="preferredDate" type="text" placeholder="e.g. Mid-October" />
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Contextual: partnership -->
+            <fieldset class="form-context" data-context="partnership" hidden>
+              <legend>Collaboration context</legend>
+              <div class="form-field">
+                <label for="cf-partner-org">Organization</label>
+                <input id="cf-partner-org" name="partnerOrg" type="text" placeholder="Your organization" />
+              </div>
+              <div class="form-field">
+                <label for="cf-collab">Collaboration idea</label>
+                <input id="cf-collab" name="collaboration" type="text" placeholder="Briefly, what do you have in mind?" />
+              </div>
+            </fieldset>
+
+            <div class="form-field">
+              <label for="cf-subject">Subject *</label>
+              <input id="cf-subject" name="subject" type="text" required placeholder="What would you like to discuss?" aria-describedby="cf-subject-error" />
+              <p class="form-error" id="cf-subject-error" hidden>Please add a subject.</p>
+            </div>
+
+            <div class="form-field">
+              <label for="cf-message">Tell us more *</label>
+              <textarea
+                id="cf-message"
+                name="message"
+                rows="6"
+                required
+                aria-describedby="cf-message-error"
+                placeholder="What are you trying to build? What problem are you solving? What do you need, and any useful context — timeline, users, or constraints."
+              ></textarea>
+              <p class="form-error" id="cf-message-error" hidden>Please tell us a little about your inquiry (20+ characters).</p>
+            </div>
+
+            <div class="form-field">
+              <label for="cf-file">Attachment <span class="form-optional">(optional)</span></label>
+              <input id="cf-file" name="attachment" type="file" class="form-file" aria-describedby="cf-file-note" />
+              <p class="form-file-note" id="cf-file-note">Briefs, sketches, or documents. Files attach in your email app in the next step.</p>
+            </div>
+
+            <Button variant="primary" size="lg" type="submit" class="contact-submit">
+              <span>Start the conversation</span>
+              <span class="contact-submit__arrow" aria-hidden="true">→</span>
+            </Button>
+            <p class="contact-status" id="contact-status" role="status" aria-live="polite" hidden></p>
+            <p class="contact-privacy">Your information stays with this message — it only goes to our team inbox at {inbox}.</p>
+          </form>
+        </div>
+      </div>
+    </Container>
+
+    <script is:inline data-contact-script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* Reveal */
+        const els = document.querySelectorAll('.contact-page .reveal-fade-up');
+        if ('IntersectionObserver' in window && !reduce) {
+          const io = new IntersectionObserver((es) => {
+            es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+          }, { threshold: 0.12 });
+          els.forEach((el) => io.observe(el));
+        } else { els.forEach((el) => el.classList.add('is-visible')); }
+
+        /* Conditional contextual fields */
+        const topic = document.getElementById('cf-topic');
+        const groups = {
+          engineering: ['Software Engineering', 'AI Automation', 'SaaS / Product Development', 'Website / Web Application', 'Custom Business Software'],
+          academy: ['RoboDev Academy / Workshop', 'University / Student Organization'],
+          partnership: ['Product Collaboration', 'Partnership'],
+        };
+        const contexts = Array.from(document.querySelectorAll('[data-context]'));
+        const syncContexts = () => {
+          const v = topic.value;
+          const show = v ? Object.keys(groups).find((k) => groups[k].includes(v)) : null;
+          contexts.forEach((fs) => { fs.hidden = fs.getAttribute('data-context') !== show; });
+        };
+        topic.addEventListener('change', syncContexts);
+        syncContexts();
+
+        /* File name feedback */
+        const file = document.getElementById('cf-file');
+        const fileNote = document.getElementById('cf-file-note');
+        const fileDefault = fileNote.textContent;
+        file.addEventListener('change', () => {
+          fileNote.textContent = file.files.length
+            ? `Selected: ${file.files[0].name} — please re-attach it in your email app after it opens.`
+            : fileDefault;
+        });
+
+        /* Validation + honest mailto handoff (no backend, no fake success) */
+        const form = document.getElementById('contact-form');
+        const status = document.getElementById('contact-status');
+        const inbox = 'robodevlabs.team@gmail.com';
+        const setError = (inputId, errorId, bad) => {
+          const input = document.getElementById(inputId);
+          const err = document.getElementById(errorId);
+          input.setAttribute('aria-invalid', bad ? 'true' : 'false');
+          err.hidden = !bad;
+          input.classList.toggle('is-invalid', bad);
+          return !bad;
+        };
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = document.getElementById('cf-name').value.trim();
+          const email = document.getElementById('cf-email').value.trim();
+          const subject = document.getElementById('cf-subject').value.trim();
+          const message = document.getElementById('cf-message').value.trim();
+          const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+          const checks = [
+            setError('cf-name', 'cf-name-error', !name),
+            setError('cf-email', 'cf-email-error', !emailOk),
+            setError('cf-topic', 'cf-topic-error', !topic.value),
+            setError('cf-subject', 'cf-subject-error', !subject),
+            setError('cf-message', 'cf-message-error', message.length < 20),
+          ];
+          if (checks.includes(false)) {
+            const firstBad = form.querySelector('.is-invalid');
+            if (firstBad) firstBad.focus();
+            status.hidden = false;
+            status.textContent = 'Please review the highlighted fields before continuing.';
+            return;
+          }
+
+          const get = (id) => document.getElementById(id).value.trim();
+          const lines = [
+            `Name: ${name}`,
+            `Email: ${email}`,
+            get('cf-org') && `Organization: ${get('cf-org')}`,
+            get('cf-role') && `Role: ${get('cf-role')}`,
+            get('cf-phone') && `Phone: ${get('cf-phone')}`,
+            get('cf-location') && `Location: ${get('cf-location')}`,
+            `Topic: ${topic.value}`,
+            get('cf-projtype') && `Project type: ${get('cf-projtype')}`,
+            get('cf-timeline') && `Timeline: ${get('cf-timeline')}`,
+            get('cf-budget') && `Budget: ${get('cf-budget')}`,
+            get('cf-institution') && `Institution: ${get('cf-institution')}`,
+            get('cf-workshop') && `Workshop: ${get('cf-workshop')}`,
+            get('cf-participants') && `Participants: ${get('cf-participants')}`,
+            get('cf-prefdate') && `Preferred date: ${get('cf-prefdate')}`,
+            get('cf-partner-org') && `Partner org: ${get('cf-partner-org')}`,
+            get('cf-collab') && `Collaboration: ${get('cf-collab')}`,
+            '',
+            message,
+            file.files.length ? `\n(Note: sender selected a file "${file.files[0].name}" — attach it in your email app.)` : '',
+          ].filter(Boolean).join('\n');
+
+          window.location.href = `mailto:${inbox}?subject=${encodeURIComponent(`[${topic.value}] ${subject}`)}&body=${encodeURIComponent(lines)}`;
+          status.hidden = false;
+          status.textContent = 'Your email app is opening with your message pre-addressed — just press send there to reach us.';
+        });
+
+        /* Clear errors on input */
+        form.querySelectorAll('input, select, textarea').forEach((el) => {
+          el.addEventListener('input', () => {
+            el.classList.remove('is-invalid');
+            el.removeAttribute('aria-invalid');
+            const err = el.parentElement.querySelector('.form-error');
+            if (err) err.hidden = true;
+          });
+        });
+      });
+    </script>
+  </div>
+</BaseLayout>
+
+<style>
+  .contact-page {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: clip;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.18) 45%, rgba(0,0,0,0.30) 100%),
+      var(--color-pepper-medium, #31473a);
+    color: var(--color-salt-white, #edf4f2);
+    padding-top: clamp(6.5rem, 12vh, 9rem);
+    padding-bottom: clamp(3.5rem, 7vw, 5.5rem);
+  }
+
+  /* Atmosphere: quiet tonal wash + one signature R-bowl arc */
+  .contact-atmosphere { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .layer--wash {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(900px 620px at 8% 4%, rgba(237,244,242,0.05) 0%, transparent 70%),
+      radial-gradient(1000px 700px at 90% 100%, rgba(10,10,10,0.32) 0%, transparent 70%);
+  }
+  .contact-signature {
+    position: absolute; top: -9rem; left: -17rem; width: 40rem; height: 40rem;
+    opacity: 0.9; animation: signatureDrift 26s ease-in-out infinite;
+  }
+  @keyframes signatureDrift { 0%, 100% { translate: 0 0; } 50% { translate: 12px 14px; } }
+
+  .reveal-fade-up { opacity: 0; transform: translateY(20px); transition: opacity 600ms ease, transform 600ms cubic-bezier(0.16,1,0.3,1); transition-delay: var(--reveal-delay, 0ms); }
+  .reveal-fade-up.is-visible { opacity: 1; transform: none; }
+
+  /* Layout */
+  .contact-layout {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(2.5rem, 5vw, 4.5rem); align-items: start;
+    padding-bottom: clamp(3.5rem, 7vw, 5.5rem);
+  }
+
+  /* Left: editorial intro */
+  .contact-intro { position: relative; }
+  .contact-eyebrow { position: relative; font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-salt-light, #d4d4d4); }
+  .contact-title {
+    position: relative;
+    font-size: clamp(3rem, 6vw, 4.8rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.02;
+    margin: 1.25rem 0 1.5rem; text-wrap: balance; max-width: 12ch;
+  }
+  .contact-lead { position: relative; font-size: clamp(1.05rem, 1.5vw, 1.2rem); line-height: 1.7; color: rgba(237,244,242,0.88); max-width: 50ch; margin: 0 0 2.75rem; }
+
+  /* Value items stagger with the intro reveal */
+  .contact-intro.is-visible .contact-value { opacity: 0; transform: translateY(14px); animation: valueIn 550ms cubic-bezier(0.16,1,0.3,1) forwards; animation-delay: var(--reveal-delay, 0ms); }
+  @keyframes valueIn { to { opacity: 1; transform: none; } }
+  /* Value list: single editorial column, no cards */
+  .contact-values { position: relative; list-style: none; margin: 0 0 2.25rem; padding: 1.25rem 0 0 0; display: flex; flex-direction: column; }
+  .contact-values::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 2rem; height: 2px;
+    background: rgba(181,213,173,0.55);
+  }
+  .contact-value {
+    position: relative;
+    display: grid; grid-template-columns: 2.75rem 1fr; gap: 0 1.1rem; align-items: start;
+    padding: 1.1rem 0; margin: 0;
+    border-top: 1px solid rgba(237,244,242,0.12);
+  }
+  .contact-value:last-child { border-bottom: 1px solid rgba(237,244,242,0.12); }
+  .contact-value__icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; border: 1px solid rgba(237,244,242,0.20); color: rgba(217,232,213,0.85);
+  }
+  .contact-value__title { font-size: 1.02rem; font-weight: 700; margin: 0 0 0.25rem; }
+  .contact-value__body { font-size: 0.93rem; line-height: 1.6; color: rgba(237,244,242,0.78); margin: 0; max-width: 44ch; }
+  .contact-direct { font-size: 0.92rem; color: rgba(237,244,242,0.8); margin: 0; }
+  .contact-direct a { color: #fff; text-underline-offset: 4px; }
+
+  /* Right: premium form panel */
+  .contact-panel {
+    background: var(--color-salt-white, #edf4f2); color: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.4); border-radius: 24px;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.42), 0 1px 3px rgba(0,0,0,0.18);
+    padding: clamp(2rem, 3.5vw, 3rem);
+  }
+  .contact-panel__title { font-size: clamp(1.6rem, 2.6vw, 2.1rem); font-weight: 800; letter-spacing: -0.025em; margin: 0 0 0.6rem; color: #101c15; text-wrap: balance; }
+  .contact-panel__sub { font-size: 0.95rem; line-height: 1.65; color: #3c4a42; margin: 0 0 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #dde3dc; }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1.3rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.45rem; }
+  .form-field label { font-size: 0.8rem; font-weight: 650; letter-spacing: 0.01em; color: #22352b; transition: color 200ms ease; }
+  .form-field:focus-within label { color: #101c15; }
+  .form-optional { font-weight: 500; color: #6b7a71; }
+  .form-field input, .form-field select, .form-field textarea {
+    font-size: 0.93rem; color: #101c15; background: #fbfdfb;
+    border: 1px solid #d3dad3; border-radius: 12px; padding: 0.8rem 1rem;
+    transition: border-color 250ms ease, box-shadow 250ms ease, background 250ms ease;
+    width: 100%;
+  }
+  .form-field input:hover, .form-field textarea:hover { border-color: #b9c4bc; }
+  .form-field textarea { resize: vertical; min-height: 160px; line-height: 1.65; }
+  .form-field input::placeholder, .form-field textarea::placeholder { color: #8a978f; }
+  .form-field input:focus-visible, .form-field select:focus-visible, .form-field textarea:focus-visible {
+    outline: none; border-color: var(--color-pepper-medium, #31473a); background: #fff;
+    box-shadow: 0 0 0 3px rgba(49,71,58,0.12);
+  }
+  /* Topic selector: primary interaction emphasis */
+  .form-field--topic select {
+    font-weight: 650; font-size: 0.96rem; padding: 0.9rem 2.6rem 0.9rem 1rem;
+    background-color: #f2f6f2; border: 1.5px solid #9fb3a4;
+  }
+  .form-field--topic select:hover { border-color: #7e9684; }
+  .form-field--topic label { font-size: 0.86rem; }
+  .form-field--topic label::before {
+    content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--color-pepper-medium, #31473a); margin-right: 0.45rem; vertical-align: 1px;
+  }
+  .form-field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2331473a' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.9rem center; padding-right: 2.4rem; cursor: pointer; }
+  .form-field input.is-invalid, .form-field select.is-invalid, .form-field textarea.is-invalid { border-color: #b3261e; box-shadow: 0 0 0 3px rgba(179,38,30,0.12); }
+  .form-error { font-size: 0.8rem; color: #8c1d18; margin: 0; }
+  /* Contextual groups: integrated reveal, same show/hide logic */
+  .form-context {
+    border: none; border-left: 2px solid rgba(49,71,58,0.30); border-radius: 0;
+    padding: 0.25rem 0 0.25rem 1.1rem; margin: 0.15rem 0;
+    display: flex; flex-direction: column; gap: 1.1rem; background: transparent;
+  }
+  .form-context:not([hidden]) { animation: contextIn 300ms cubic-bezier(0.16,1,0.3,1); }
+  @keyframes contextIn { from { opacity: 0; translate: 0 10px; } to { opacity: 1; translate: 0 0; } }
+  .form-context legend { font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #31473a; padding: 0; margin-bottom: 0.15rem; }
+  .form-file {
+    background: #fbfdfb; border: 1px dashed #b9c4bc; border-radius: 12px;
+    padding: 0.85rem 1rem; cursor: pointer; font-size: 0.88rem; color: #3c4a42;
+    transition: border-color 250ms ease, background 250ms ease;
+  }
+  .form-file:hover { border-color: #7e9684; background: #fff; }
+  .form-file::file-selector-button {
+    border: none; background: var(--color-pepper-medium, #31473a); border-radius: 8px;
+    padding: 0.5rem 1rem; font-size: 0.83rem; font-weight: 650; color: #edf4f2;
+    margin-right: 0.75rem; cursor: pointer; transition: opacity 200ms ease;
+  }
+  .form-file::file-selector-button:hover { opacity: 0.88; }
+  .form-file-note {
+    display: flex; gap: 0.55rem; align-items: flex-start;
+    background: rgba(49,71,58,0.06); border: 1px solid rgba(49,71,58,0.16);
+    border-radius: 10px; padding: 0.65rem 0.85rem;
+    font-size: 0.8rem; line-height: 1.55; color: #3c4a42; margin: 0;
+  }
+
+  .contact-submit { width: 100%; justify-content: center; font-size: 1.02rem !important; padding: 1.05rem !important; margin-top: 0.35rem; }
+  .contact-submit__arrow { display: inline-block; transition: transform 250ms cubic-bezier(0.16,1,0.3,1); }
+  .contact-submit:hover .contact-submit__arrow { transform: translateX(6px); }
+  .contact-status {
+    font-size: 0.88rem; line-height: 1.6; color: #1c3329; font-weight: 550;
+    background: rgba(49,71,58,0.07); border: 1px solid rgba(49,71,58,0.28); border-left: 3px solid var(--color-pepper-medium, #31473a);
+    border-radius: 10px; padding: 0.85rem 1rem; margin: 0;
+  }
+  .contact-status:not([hidden]) { animation: contextIn 280ms cubic-bezier(0.16,1,0.3,1); }
+  .contact-privacy { font-size: 0.78rem; color: #6b7a71; text-align: center; margin: 0; }
+
+  @media (max-width: 1024px) {
+    .contact-layout { grid-template-columns: 1fr; }
+    .contact-signature { opacity: 0.55; width: 30rem; height: 30rem; top: -7rem; left: -13rem; }
+  }
+  @media (max-width: 640px) {
+    .form-row { grid-template-columns: 1fr; }
+    .contact-panel { border-radius: 18px; }
+    .contact-signature { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .contact-signature { animation: none !important; }
+    .form-context:not([hidden]), .contact-status:not([hidden]) { animation: none !important; }
+    .contact-intro.is-visible .contact-value { opacity: 1 !important; transform: none !important; animation: none !important; }
+  }
+</style>

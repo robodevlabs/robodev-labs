@@ -1,0 +1,384 @@
+---
+/**
+ * ProductTemplate — reusable product-detail presentation.
+ * Consumes only a `product` object from src/data/products.ts.
+ * No product-specific content is hardcoded here.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../ui/Container.astro';
+import Logo from '../common/Logo.astro';
+import AcademyGrid from '../academy/AcademyGrid.astro';
+import { getRelatedProducts, type Product } from '../../data/products';
+import { siteConfig } from '../../config/site';
+
+export interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props as Props;
+const related = getRelatedProducts(product.relatedSlugs);
+
+const pageUrl = `${siteConfig.url}/products/${product.slug}`;
+const contactHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent(`About ${product.title}`)}`;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Product Studio', item: `${siteConfig.url}/products` },
+      { '@type': 'ListItem', position: 2, name: product.title, item: pageUrl },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.title,
+    description: product.details,
+    url: pageUrl,
+    brand: { '@type': 'Brand', name: siteConfig.name },
+  },
+];
+---
+
+<BaseLayout title={`${product.title} — Product Studio`} description={product.details}>
+  {jsonLd.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
+
+  <div class="wt-page prod-detail">
+    <header class="wt-hero prod-hero">
+      <div class="prod-hero__bg" aria-hidden="true">
+        <div class="prod-hero__grid"><AcademyGrid /></div>
+      </div>
+      <Container>
+        <div class="wt-hero-grid">
+          <div class="wt-hero-left">
+            <p class="wt-hero-category">Product Studio · {product.category}</p>
+            <img src={product.logo} alt={`${product.title} logo`} class="prod-logo" width="120" height="120" loading="eager" />
+            <h1 class="wt-hero-title">{product.title}</h1>
+            <p class="wt-hero-desc">{product.details}</p>
+            <p class="wt-hero-byline"><a href="/products" class="wt-hero-back">← Back to Product Studio</a></p>
+            <div class="wt-hero-facts">
+              <span class="wt-fact">{product.tag}</span>
+              <span class="wt-fact-sep" aria-hidden="true">·</span>
+              <span class="wt-fact">{product.role}</span>
+            </div>
+          </div>
+          <aside class="wt-enroll-card prod-visual-card" aria-label="Product summary">
+            <div class="wt-card-header">
+              <span class="wt-card-badge">{product.tag}</span>
+              <span class="wt-card-status">{product.category}</span>
+            </div>
+            <img src={product.images[0]} alt={`${product.title} product screenshot`} class="prod-card-img" loading="lazy" />
+            <p class="wt-price-note">{product.description}</p>
+            <a href={contactHref} class="wt-btn-primary wt-btn-full"><span>Contact about this product</span></a>
+          </aside>
+        </div>
+      </Container>
+    </header>
+
+    <main class="wt-main" id="about">
+      <Container>
+        <div class="wt-content-col">
+          <section class="wt-section" aria-labelledby="what-heading">
+            <h2 id="what-heading" class="wt-section-title">What is {product.shortTitle ?? product.title}?</h2>
+            <p class="wt-body-text">{product.details}</p>
+            <p class="wt-body-text">{product.description}</p>
+          </section>
+          <hr class="wt-divider" />
+          <section class="wt-section" aria-labelledby="problem-heading">
+            <h2 id="problem-heading" class="wt-section-title">What problem does it solve?</h2>
+            <p class="wt-body-text">{product.problem}</p>
+          </section>
+          <hr class="wt-divider" />
+          <section class="wt-section" aria-labelledby="solution-heading">
+            <h2 id="solution-heading" class="wt-section-title">How does it solve it?</h2>
+            <p class="wt-body-text">{product.solution}</p>
+          </section>
+          <hr class="wt-divider" />
+          <section class="wt-section" aria-labelledby="features-heading">
+            <h2 id="features-heading" class="wt-section-title">What did we build?</h2>
+            <div class="wt-outcomes-grid">
+              {product.keyFeatures.map((f) => (
+                <div class="wt-outcome-row"><span class="wt-outcome-check" aria-hidden="true">✓</span><p class="wt-outcome-text">{f}</p></div>
+              ))}
+            </div>
+          </section>
+          <hr class="wt-divider" />
+          <section class="wt-section" aria-labelledby="gallery-heading">
+            <h2 id="gallery-heading" class="wt-section-title">Product gallery</h2>
+            <div class="prod-gallery" data-gallery data-page-size="6">
+              {product.images.map((src, idx) => (
+                <button
+                  type="button"
+                  class="prod-gallery__item"
+                  data-gallery-item={idx}
+                  data-full={src}
+                  aria-label={`View ${product.title} screenshot ${idx + 1} fullscreen`}
+                >
+                  <img src={src} alt={`${product.title} screenshot ${idx + 1}`} class="prod-gallery__img" loading="lazy" />
+                </button>
+              ))}
+            </div>
+            <div class="prod-gallery__pagination" data-gallery-pagination hidden>
+              <button type="button" class="prod-gallery__nav" data-gallery-prev aria-label="Previous gallery page">← Prev</button>
+              <span class="prod-gallery__pages" data-gallery-pages></span>
+              <button type="button" class="prod-gallery__nav" data-gallery-next aria-label="Next gallery page">Next →</button>
+            </div>
+            <div class="prod-lightbox" data-lightbox hidden role="dialog" aria-modal="true" aria-label={`${product.title} image viewer`}>
+              <div class="prod-lightbox__backdrop" data-lightbox-close></div>
+              <figure class="prod-lightbox__figure">
+                <img src="" alt="" class="prod-lightbox__img" data-lightbox-img />
+                <figcaption class="prod-lightbox__caption" data-lightbox-caption></figcaption>
+              </figure>
+              <button type="button" class="prod-lightbox__close" data-lightbox-close aria-label="Close fullscreen view">✕</button>
+              <button type="button" class="prod-lightbox__prev" data-lightbox-prev aria-label="Previous image">←</button>
+              <button type="button" class="prod-lightbox__next" data-lightbox-next aria-label="Next image">→</button>
+            </div>
+          </section>
+          <hr class="wt-divider" />
+          <section class="wt-section" aria-labelledby="evidence-heading">
+            <h2 id="evidence-heading" class="wt-section-title">What did users say?</h2>
+            <h3 class="wt-subhead">Research</h3>
+            <div class="wt-details-grid">
+              <div class="wt-detail-block"><span class="wt-detail-label">Survey participants</span><span class="wt-detail-val">{product.research.surveyParticipants}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Reported route difficulty</span><span class="wt-detail-val">{product.research.routeDifficulty}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Missed or wrong bus</span><span class="wt-detail-val">{product.research.missedOrWrongBus}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Transfer difficulty</span><span class="wt-detail-val">{product.research.transferDifficulty}</span></div>
+            </div>
+            <h3 class="wt-subhead">User feedback</h3>
+            <div class="wt-details-grid">
+              <div class="wt-detail-block"><span class="wt-detail-label">Route search</span><span class="wt-detail-val">{product.userFeedback.routeSearch}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Booking</span><span class="wt-detail-val">{product.userFeedback.booking}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Payment</span><span class="wt-detail-val">{product.userFeedback.payment}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Map</span><span class="wt-detail-val">{product.userFeedback.map}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Save routes</span><span class="wt-detail-val">{product.userFeedback.saveRoutes}</span></div>
+            </div>
+            <h3 class="wt-subhead">Usability ratings</h3>
+            <div class="wt-details-grid">
+              <div class="wt-detail-block"><span class="wt-detail-label">Route search</span><span class="wt-detail-val">{product.ratings.routeSearch}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Map</span><span class="wt-detail-val">{product.ratings.map}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Overall usability</span><span class="wt-detail-val">{product.ratings.overallUsability}</span></div>
+            </div>
+          </section>
+          <hr class="wt-divider" />
+          <section class="wt-section" aria-labelledby="tech-heading">
+            <h2 id="tech-heading" class="wt-section-title">How was it engineered?</h2>
+            <div class="wt-details-grid">
+              <div class="wt-detail-block"><span class="wt-detail-label">Frontend</span><span class="wt-detail-val">{product.technical.frontend}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Styling</span><span class="wt-detail-val">{product.technical.styling}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Mapping</span><span class="wt-detail-val">{product.technical.mapping}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Backend</span><span class="wt-detail-val">{product.technical.backend}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Database</span><span class="wt-detail-val">{product.technical.database}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Distance</span><span class="wt-detail-val">{product.technical.distanceCalculation}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Payment</span><span class="wt-detail-val">{product.technical.payment}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Frontend deploy</span><span class="wt-detail-val">{product.technical.frontendDeployment}</span></div>
+              <div class="wt-detail-block"><span class="wt-detail-label">Backend deploy</span><span class="wt-detail-val">{product.technical.backendDeployment}</span></div>
+            </div>
+            <h3 class="wt-subhead">Technology stack</h3>
+            <div class="wt-tools-wrap">
+              {product.tech.map((t) => (<span class="wt-tool-tag">{t}</span>))}
+            </div>
+          </section>
+          <hr class="wt-divider" />
+          <section class="wt-section" aria-labelledby="future-heading">
+            <h2 id="future-heading" class="wt-section-title">What comes next?</h2>
+            <ul class="wt-check-list">
+              {product.futureScope.map((item) => (
+                <li><span class="wt-check-icon" aria-hidden="true">✓</span><span>{item}</span></li>
+              ))}
+            </ul>
+          </section>
+          {related.length > 0 && (
+            <>
+              <hr class="wt-divider" />
+              <section class="wt-section" aria-labelledby="related-heading">
+                <h2 id="related-heading" class="wt-section-title">Related products</h2>
+                <div class="wt-outcomes-grid">
+                  {related.map((r) => (
+                    <a href={`/products/${r.slug}`} class="wt-outcome-row">
+                      <span class="wt-outcome-check" aria-hidden="true">→</span>
+                      <span><strong>{r.title}</strong><br />{r.tag}</span>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            </>
+          )}
+          <div class="wt-final-cta">
+            <div class="wt-final-cta-content">
+              <h2 class="wt-final-cta-title">{product.title}</h2>
+              <p class="wt-final-cta-note">{product.details}</p>
+            </div>
+            <a href={contactHref} class="wt-btn-primary wt-btn-lg">Contact us</a>
+          </div>
+        </div>
+      </Container>
+    </main>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-gallery]').forEach((gallery) => {
+      const items = Array.from(gallery.querySelectorAll('[data-gallery-item]'));
+      const pagination = gallery.parentElement.querySelector('[data-gallery-pagination]');
+      const pagesWrap = gallery.parentElement.querySelector('[data-gallery-pages]');
+      const prevBtn = gallery.parentElement.querySelector('[data-gallery-prev]');
+      const nextBtn = gallery.parentElement.querySelector('[data-gallery-next]');
+      const pageSize = parseInt(gallery.getAttribute('data-page-size') || '6', 10);
+      const pageCount = Math.ceil(items.length / pageSize);
+      let page = 0;
+
+      const render = () => {
+        items.forEach((el, idx) => {
+          const visible = pageCount <= 1 || Math.floor(idx / pageSize) === page;
+          el.hidden = !visible;
+        });
+        if (pagination) pagination.hidden = pageCount <= 1;
+        if (pagesWrap) {
+          pagesWrap.innerHTML = '';
+          for (let i = 0; i < pageCount; i++) {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'prod-gallery__page';
+            b.textContent = String(i + 1);
+            b.setAttribute('aria-label', `Go to gallery page ${i + 1}`);
+            if (i === page) b.setAttribute('aria-current', 'page');
+            b.addEventListener('click', () => { page = i; render(); });
+            pagesWrap.appendChild(b);
+          }
+        }
+        if (prevBtn) prevBtn.disabled = page === 0;
+        if (nextBtn) nextBtn.disabled = page === pageCount - 1;
+      };
+
+      if (prevBtn) prevBtn.addEventListener('click', () => { if (page > 0) { page -= 1; render(); } });
+      if (nextBtn) nextBtn.addEventListener('click', () => { if (page < pageCount - 1) { page += 1; render(); } });
+      render();
+
+      /* Lightbox */
+      const section = gallery.closest('section');
+      const lightbox = section.querySelector('[data-lightbox]');
+      const lightboxImg = section.querySelector('[data-lightbox-img]');
+      const caption = section.querySelector('[data-lightbox-caption]');
+      let current = 0;
+      let lastFocus = null;
+
+      const open = (idx) => {
+        current = idx;
+        update();
+        lightbox.hidden = false;
+        document.body.style.overflow = 'hidden';
+        lastFocus = document.activeElement;
+        const closeBtn = section.querySelector('[data-lightbox-close]');
+        if (closeBtn) closeBtn.focus();
+      };
+      const close = () => {
+        lightbox.hidden = true;
+        document.body.style.overflow = '';
+        if (lastFocus) lastFocus.focus();
+      };
+      const update = () => {
+        const el = items[current];
+        const src = el.getAttribute('data-full');
+        const img = el.querySelector('img');
+        lightboxImg.src = src;
+        lightboxImg.alt = img ? img.alt : '';
+        if (caption) caption.textContent = `${current + 1} / ${items.length}`;
+      };
+      const step = (dir) => { current = (current + dir + items.length) % items.length; update(); };
+
+      items.forEach((el, idx) => el.addEventListener('click', () => open(idx)));
+      section.querySelectorAll('[data-lightbox-close]').forEach((b) => b.addEventListener('click', close));
+      const prevL = section.querySelector('[data-lightbox-prev]');
+      const nextL = section.querySelector('[data-lightbox-next]');
+      if (prevL) prevL.addEventListener('click', (e) => { e.stopPropagation(); step(-1); });
+      if (nextL) nextL.addEventListener('click', (e) => { e.stopPropagation(); step(1); });
+      document.addEventListener('keydown', (e) => {
+        if (lightbox.hidden) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') step(-1);
+        if (e.key === 'ArrowRight') step(1);
+      });
+    });
+  });
+</script>
+
+<style>
+  .wt-page { background-color: #fafaf8; color: #1a1a1a; min-height: 100vh; }
+  .prod-detail { overflow-x: clip; }
+  .wt-hero { background-color: var(--color-pepper-medium, #31473A); color: #EDF4F2; padding-top: clamp(6.5rem, 13vh, 8.5rem); padding-bottom: clamp(2.5rem, 5vw, 4rem); border-bottom: 1px solid rgba(237, 244, 242, 0.12); position: relative; overflow: hidden; }
+  .prod-hero__bg { position: absolute; inset: 0; pointer-events: none; }
+  .prod-hero__grid { position: absolute; top: 0; right: 0; width: min(560px, 60%); opacity: 0.35; }
+  .wt-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: clamp(2rem, 4vw, 3.5rem); align-items: flex-start; position: relative; }
+  @media (max-width: 860px) { .wt-hero-grid { grid-template-columns: 1fr; } }
+  .wt-hero-left { display: flex; flex-direction: column; gap: 1.125rem; padding: clamp(1rem, 2vw, 2rem) 0; }
+  .wt-hero-category { font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: rgba(237, 244, 242, 0.65); margin: 0; }
+  .prod-logo { width: 96px; height: 96px; object-fit: contain; background: #fff; border-radius: 16px; padding: 10px; border: 1px solid rgba(255,255,255,0.2); }
+  .wt-hero-title { font-family: var(--font-display, 'Space Grotesk', sans-serif); font-size: clamp(2rem, 4.5vw, 3.25rem); font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; color: #EDF4F2; margin: 0; }
+  .wt-hero-desc { font-size: 1.0625rem; line-height: 1.65; color: rgba(237, 244, 242, 0.85); margin: 0; max-width: 62ch; }
+  .wt-hero-back { color: rgba(237,244,242,0.85); font-size: 0.9rem; }
+  .wt-hero-byline { margin: 0; }
+  .wt-hero-facts { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 0; font-size: 0.875rem; color: rgba(237, 244, 242, 0.8); }
+  .wt-fact { display: inline-flex; align-items: center; gap: 5px; }
+  .wt-fact-sep { margin: 0 9px; opacity: 0.35; }
+  .wt-enroll-card { background: #fff; border: 1px solid #e0e0d8; border-radius: 12px; padding: 1.5rem; box-shadow: 0 10px 32px rgba(0,0,0,0.16); display: flex; flex-direction: column; gap: 1rem; color: #1a1a1a; }
+  @media (max-width: 860px) { .wt-enroll-card { display: none; } }
+  .wt-card-header { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; }
+  .wt-card-badge, .wt-card-status { font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--color-pepper-medium, #31473A); }
+  .prod-card-img { width: 100%; border-radius: 8px; border: 1px solid #e5e5dc; }
+  .wt-price-note { font-size: 0.9rem; color: #000; line-height: 1.6; margin: 0; }
+  .wt-btn-primary { display: inline-flex; align-items: center; justify-content: center; background-color: var(--color-pepper-medium, #31473A); color: #EDF4F2; font-weight: 700; padding: 13px 26px; border-radius: 6px; text-decoration: none; }
+  .wt-btn-primary:hover { background-color: var(--color-pepper-dark, #7C8363); color: #fff; }
+  .wt-btn-full { width: 100%; }
+  .wt-btn-lg { padding: 14px 28px; }
+  .wt-main { padding: 3rem 0 5rem; }
+  .wt-content-col { max-width: 860px; }
+  .wt-section { padding: 2.25rem 0; }
+  .wt-divider { border: none; border-top: 1px solid #e5e5dc; margin: 0; }
+  .wt-section-title { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; color: #111; margin: 0 0 1.25rem; }
+  .wt-subhead { font-size: 1.0625rem; font-weight: 600; margin: 1.5rem 0 0.75rem; color: #111; }
+  .wt-body-text { font-size: 1rem; line-height: 1.7; color: #000; margin: 0 0 1rem; }
+  .wt-outcomes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.875rem; }
+  .wt-outcome-row { display: flex; gap: 10px; padding: 0.875rem 1rem; background: #fff; border: 1px solid #e2e2da; border-radius: 6px; color: #000; font-size: 0.9375rem; text-decoration: none; }
+  .wt-outcome-check { color: var(--color-pepper-medium, #31473A); font-weight: 700; }
+  .wt-outcome-text { margin: 0; color: #000; line-height: 1.6; }
+  .prod-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+  .prod-gallery__item { position: relative; padding: 0; border: 1px solid #e2e2da; border-radius: 10px; background: #fff; cursor: zoom-in; overflow: hidden; transition: border-color 200ms ease, box-shadow 200ms ease; }
+  .prod-gallery__item:hover { border-color: var(--color-pepper-medium, #31473A); box-shadow: 0 10px 28px rgba(0,0,0,0.14); }
+  .prod-gallery__item[hidden] { display: none; }
+  .prod-gallery__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .prod-gallery__pagination { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.25rem; }
+  .prod-gallery__pagination[hidden] { display: none; }
+  .prod-gallery__nav { border: 1px solid #d4d4cb; background: #fff; border-radius: 8px; padding: 8px 16px; font-size: 0.875rem; font-weight: 600; cursor: pointer; color: #111; }
+  .prod-gallery__nav:disabled { opacity: 0.4; cursor: not-allowed; }
+  .prod-gallery__pages { display: flex; gap: 6px; }
+  .prod-gallery__page { min-width: 32px; height: 32px; border-radius: 8px; border: 1px solid #d4d4cb; background: #fff; font-size: 0.85rem; cursor: pointer; color: #111; }
+  .prod-gallery__page[aria-current="page"] { background: var(--color-pepper-medium, #31473A); border-color: var(--color-pepper-medium, #31473A); color: #EDF4F2; font-weight: 700; }
+  .prod-lightbox[hidden] { display: none; }
+  .prod-lightbox { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; }
+  .prod-lightbox__backdrop { position: absolute; inset: 0; background: rgba(8, 12, 10, 0.9); }
+  .prod-lightbox__figure { position: relative; max-width: min(1100px, 92vw); max-height: 86vh; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+  .prod-lightbox__img { max-width: min(1100px, 92vw); max-height: 76vh; object-fit: contain; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: #000; }
+  .prod-lightbox__caption { color: #EDF4F2; text-align: center; font-size: 0.9rem; }
+  .prod-lightbox__close, .prod-lightbox__prev, .prod-lightbox__next { position: absolute; border: 1px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.08); color: #fff; border-radius: 10px; width: 44px; height: 44px; font-size: 1.1rem; cursor: pointer; }
+  .prod-lightbox__close:hover, .prod-lightbox__prev:hover, .prod-lightbox__next:hover { background: rgba(255,255,255,0.18); }
+  .prod-lightbox__close { top: 18px; right: 18px; }
+  .prod-lightbox__prev { left: 18px; top: 50%; transform: translateY(-50%); }
+  .prod-lightbox__next { right: 18px; top: 50%; transform: translateY(-50%); }
+  @media (prefers-reduced-motion: reduce) { .prod-gallery__item { transition: none; } }
+  .wt-details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem 1rem; margin-bottom: 1.5rem; }
+  .wt-detail-block { display: flex; flex-direction: column; gap: 3px; background: #fff; border: 1px solid #e2e2da; border-radius: 8px; padding: 1rem 1.1rem; }
+  .wt-detail-label { font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #555; }
+  .wt-detail-val { font-weight: 700; color: #000; font-size: 1.05rem; }
+  .wt-check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.625rem; }
+  .wt-check-list li { display: flex; gap: 10px; font-size: 0.9375rem; color: #000; }
+  .wt-check-icon { color: var(--color-pepper-medium, #31473A); font-weight: 700; }
+  .wt-tools-wrap { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .wt-tool-tag { padding: 6px 14px; background: #fff; border: 1px solid #d4d4cb; border-radius: 4px; font-size: 0.8125rem; color: #111; }
+  .wt-final-cta { margin-top: 3rem; padding: 2rem 2.5rem; background: var(--color-pepper-medium, #31473A); border-radius: 12px; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .wt-final-cta-title { font-size: 1.375rem; color: #EDF4F2; margin: 0; }
+  .wt-final-cta-note { color: rgba(237,244,242,0.75); margin: 0.5rem 0 0; font-size: 0.875rem; line-height: 1.6; }
+</style>

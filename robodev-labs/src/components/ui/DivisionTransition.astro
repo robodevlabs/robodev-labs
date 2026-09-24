@@ -1,0 +1,161 @@
+---
+/**
+ * DivisionTransition.astro
+ * 
+ * Cinematic visual transition seam between ecosystem divisions:
+ * Engineering Architecture -> Knowledge / Learning -> Venture / Product Studio -> Convergence
+ * 
+ * Features:
+ * - Ambient atmospheric gradient transformation
+ * - SVG vector circuit & topological connection lines with glowing junction nodes
+ * - Floating division identity badge with icon
+ * - Hardware-accelerated CSS effects
+ */
+import Icon from './Icon.astro';
+
+export interface Props {
+  fromDivision?: string;
+  toDivision: string;
+  badge: string;
+  icon: 'layers' | 'users' | 'sparkles' | 'code' | 'cpu' | 'zap';
+  accentColor?: 'blue' | 'purple' | 'cyan';
+}
+
+const {
+  fromDivision,
+  toDivision,
+  badge,
+  icon,
+  accentColor = 'blue'
+} = Astro.props as Props;
+---
+
+<div class={`division-transition-band theme-${accentColor}`} aria-hidden="true">
+  <!-- Glowing Horizontal Conduit Line -->
+  <div class="conduit-line-wrapper">
+    <div class="conduit-glow"></div>
+    <div class="conduit-core"></div>
+  </div>
+
+  <!-- Central Bridge Junction Node & Badge -->
+  <div class="junction-badge-node">
+    <div class="node-ring-pulse"></div>
+    <div class="node-pill">
+      <Icon name={icon} size={15} class="node-icon" />
+      <span class="node-text">{badge}</span>
+    </div>
+  </div>
+
+  <!-- Decorative Converging Circuit Tracks -->
+  <svg class="circuit-convergence-svg" viewBox="0 0 1200 60" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id={`transGrad-${accentColor}`} x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="transparent"/>
+        <stop offset="35%" stop-color="rgba(255,255,255,0.08)"/>
+        <stop offset="50%" stop-color="rgba(255,255,255,0.3)"/>
+        <stop offset="65%" stop-color="rgba(255,255,255,0.08)"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </linearGradient>
+    </defs>
+    <path d="M0,30 L450,30 L500,50 L700,50 L750,30 L1200,30" stroke={`url(#transGrad-${accentColor})`} stroke-width="1.5" fill="none"/>
+    <circle cx="500" cy="50" r="3" fill="#ffffff" opacity="0.8"/>
+    <circle cx="700" cy="50" r="3" fill="#ffffff" opacity="0.8"/>
+  </svg>
+</div>
+
+<style>
+  .division-transition-band {
+    position: relative;
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  /* Conduit Line */
+  .conduit-line-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    transform: translateY(-50%);
+  }
+
+  .conduit-glow {
+    position: absolute;
+    inset: -6px 0;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+    filter: blur(8px);
+  }
+
+  .theme-purple .conduit-glow,
+  .theme-cyan .conduit-glow {
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  }
+
+  .conduit-core {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 5%, rgba(255, 255, 255, 0.15) 30%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.15) 70%, transparent 95%);
+  }
+
+  /* Central Junction Node */
+  .junction-badge-node {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .node-ring-pulse {
+    position: absolute;
+    inset: -6px;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+  }
+
+  .node-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    background: var(--color-background-dark);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    color: var(--color-salt-white);
+  }
+
+  .theme-blue .node-pill,
+  .theme-purple .node-pill,
+  .theme-cyan .node-pill { border-color: var(--color-border); color: var(--color-salt-white); }
+
+  .node-icon {
+    flex-shrink: 0;
+  }
+
+  .node-text {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: var(--letter-spacing-wide);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-medium);
+  }
+
+  /* Decorative Circuit Curves */
+  .circuit-convergence-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+</style>

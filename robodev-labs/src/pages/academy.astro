@@ -1,0 +1,2540 @@
+---
+/**
+ * RoboDev Academy — Editorial Workshop Studio
+ * Inspired by Maven, Frontend Masters, Skillshare, and MasterClass:
+ * workshop-first, outcome-focused, strong typography, clear discovery,
+ * premium editorial layout, driven 100% dynamically by src/data/workshops.ts.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui/Container.astro';
+import Button from '../components/ui/Button.astro';
+import Icon from '../components/ui/Icon.astro';
+import AcademyOrbit from '../components/academy/AcademyOrbit.astro';
+import AcademyGrid from '../components/academy/AcademyGrid.astro';
+import AcademyNodes from '../components/academy/AcademyNodes.astro';
+import AcademyBlueprint from '../components/academy/AcademyBlueprint.astro';
+import AcademyPath from '../components/academy/AcademyPath.astro';
+import AcademyWorkshopMark from '../components/academy/AcademyWorkshopMark.astro';
+import { workshopsData } from '../data/workshops';
+import { siteConfig } from '../config/site';
+import ceoPhoto from '../assets/images/CEO Photo.png';
+
+/* ── Dynamic Workshop Derivations ── */
+const featured = workshopsData.find((w) => w.isFeatured) ?? workshopsData[0];
+const allWorkshops = workshopsData;
+
+/* Collect representative real outcomes from workshopsData */
+const sampleOutcomes = [
+  ...new Set(
+    workshopsData.flatMap((w) => w.outcomes ?? []).filter(Boolean)
+  ),
+].slice(0, 6);
+
+/* Collect primary instructor/founder from data or siteConfig */
+const leadInstructor = {
+  name: workshopsData[0]?.instructor ?? siteConfig.founder,
+  title: workshopsData[0]?.instructorTitle ?? 'Founder & Lead Engineer, RoboDev Labs',
+  bio: workshopsData[0]?.instructorBio ?? 'Safal is the founder of RoboDev Labs, a technology company focused on practical software, AI solutions, and opportunities for students and young engineers.',
+};
+
+/* ── JSON-LD: ItemList for Google rich results ── */
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'RoboDev Academy Workshops',
+  description: 'Practical digital and software workshops for beginners and early-career developers.',
+  url: `${siteConfig.url}/academy`,
+  itemListElement: workshopsData.map((w, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'Course',
+      name: w.title,
+      description: w.description,
+      url: `${siteConfig.url}/academy/courses/${w.slug}`,
+      provider: {
+        '@type': 'Organization',
+        name: siteConfig.name,
+        url: siteConfig.url,
+      },
+      courseMode: w.format.toLowerCase().includes('online') ? 'online' : 'blended',
+      offers: {
+        '@type': 'Offer',
+        price: w.isFree ? '0' : (w.price.replace(/[^0-9.]/g, '') || '0'),
+        priceCurrency: 'NPR',
+        availability: 'https://schema.org/InStock',
+        url: w.paymentUrl ?? w.registrationUrl,
+      },
+    },
+  })),
+};
+---
+
+<BaseLayout
+  title="RoboDev Academy — Practical Workshops for Builders"
+  description="Practical digital workshops for students and early-career developers. Learn AI automation, UI/UX in Figma, and SEO by building real deliverables."
+>
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <div class="studio-page">
+    <!-- ================================================================
+         1. HERO — Confident, minimal editorial hero
+         ================================================================ -->
+    <header class="studio-hero academy-section" data-academy-section="hero">
+      <!-- Layered Abstract SVG / Technical Geometry Artwork — 3-depth parallax -->
+      <div class="studio-hero__backdrop" aria-hidden="true">
+        <div class="studio-hero__glow" data-parallax="0.04"></div>
+        <div class="studio-hero__blueprint-grid academy-grid-layer" data-parallax="0.06"></div>
+        <div class="academy-orbit academy-orbit--back" data-parallax="0.1">
+          <AcademyGrid class="academy-grid--hero" />
+        </div>
+        <svg class="studio-hero__geometry studio-hero__geometry--back" viewBox="0 0 1200 600" fill="none" preserveAspectRatio="xMidYMid slice" data-parallax="0.12">
+          <circle cx="950" cy="180" r="320" stroke="rgba(212, 212, 212, 0.08)" stroke-width="1" stroke-dasharray="6 6" />
+          <circle cx="950" cy="180" r="210" stroke="rgba(181, 213, 173, 0.12)" stroke-width="1.5" />
+          <circle cx="950" cy="180" r="90" stroke="rgba(212, 212, 212, 0.1)" stroke-width="1" />
+          <path d="M600,0 L950,180 L1200,60" stroke="rgba(212, 212, 212, 0.06)" stroke-width="1" />
+          <path d="M820,380 L950,180 L1120,340" stroke="rgba(181, 213, 173, 0.08)" stroke-width="1" />
+        </svg>
+        <svg class="studio-hero__geometry studio-hero__geometry--front" viewBox="0 0 1200 600" fill="none" preserveAspectRatio="xMidYMid slice" data-parallax="0.2">
+          <!-- Technical Crosshairs & Node points -->
+          <circle cx="950" cy="180" r="4" fill="#b5d5ad" />
+          <circle cx="820" cy="380" r="3" fill="rgba(237, 244, 242, 0.5)" />
+          <circle cx="1120" cy="340" r="3" fill="rgba(237, 244, 242, 0.5)" />
+          <line x1="930" y1="180" x2="970" y2="180" stroke="rgba(237, 244, 242, 0.4)" stroke-width="1" />
+          <line x1="950" y1="160" x2="950" y2="200" stroke="rgba(237, 244, 242, 0.4)" stroke-width="1" />
+          <text x="965" y="175" fill="rgba(212, 212, 212, 0.35)" font-family="monospace" font-size="10" letter-spacing="1">COORD::LABS-01</text>
+          <text x="835" y="395" fill="rgba(212, 212, 212, 0.25)" font-family="monospace" font-size="9" letter-spacing="1">SEC//NODE</text>
+        </svg>
+        <div class="academy-node-field" data-parallax="0.28" aria-hidden="true">
+          <AcademyNodes class="academy-nodes--hero" />
+        </div>
+      </div>
+
+      <Container>
+        <div class="studio-hero__layout">
+        <div class="studio-hero__inner reveal-fade-up">
+          <div class="studio-hero__meta-label">
+            <span class="studio-eyebrow">ROBODEV ACADEMY</span>
+          </div>
+
+          <h1 class="studio-hero__headline">
+            Learn by <em>building.</em>
+          </h1>
+
+          <p class="studio-hero__lead">
+            Practical workshops for students and early-career developers who want to build real things, not just follow tutorials.
+          </p>
+
+          <div class="studio-hero__actions">
+            <Button variant="primary" size="lg" href="#workshops" id="hero-explore-cta" class="studio-cta-btn">
+              <span>Explore workshops</span>
+              <span class="studio-arrow" aria-hidden="true">→</span>
+            </Button>
+            <a href="#how-it-works" class="studio-text-link" id="hero-how-it-works-link">
+              How it works
+            </a>
+          </div>
+        </div>
+        <div class="studio-hero__anchor" aria-hidden="true" data-parallax="0.14">
+          <div class="studio-hero__anchor-main">
+            <AcademyBlueprint class="academy-blueprint--hero" />
+          </div>
+          <div class="studio-hero__anchor-orbit" data-parallax="0.22">
+            <AcademyOrbit variant="hero" />
+          </div>
+        </div>
+        </div>
+      </Container>
+    </header>
+
+    <div class="studio-divider"><Container><hr /></Container></div>
+
+    <!-- ================================================================
+         2. FEATURED / UPCOMING WORKSHOP — Asymmetric editorial layout
+         ================================================================ -->
+    {featured && (
+      <section class="studio-featured academy-section" id="featured" aria-labelledby="featured-workshop-title" data-academy-section="featured">
+        <!-- Elevated background technical accent geometry + parallax depth -->
+        <div class="studio-featured__bg-accents" aria-hidden="true">
+          <svg class="studio-featured__corner-svg" viewBox="0 0 400 400" fill="none" data-parallax="0.08">
+            <path d="M0,80 L80,80 L80,0" stroke="rgba(181, 213, 173, 0.18)" stroke-width="1.5" />
+            <path d="M20,100 L100,100 L100,20" stroke="rgba(212, 212, 212, 0.08)" stroke-width="1" stroke-dasharray="4 4" />
+            <circle cx="80" cy="80" r="3" fill="#b5d5ad" />
+          </svg>
+          <div class="academy-line-art academy-line-art--featured" data-parallax="0.12" aria-hidden="true">
+            <AcademyGrid />
+          </div>
+          <div class="academy-orbit--featured" data-parallax="0.18" aria-hidden="true">
+            <AcademyOrbit variant="card" />
+          </div>
+        </div>
+
+        <Container>
+          <div class="studio-section-header reveal-fade-up">
+            <span class="studio-eyebrow">FEATURED WORKSHOP</span>
+            <span class="studio-status-pill">
+              <span class="studio-pulse-dot" aria-hidden="true"></span>
+              {featured.status === 'open' ? 'Registration Open' : 'Upcoming Session'}
+            </span>
+          </div>
+
+          <div class="studio-featured__grid">
+            <!-- Left: Primary Editorial Narrative -->
+            <div class="studio-featured__narrative reveal-fade-up">
+              <div class="studio-featured__meta-strip">
+                <span class="studio-tag">{featured.level}</span>
+                <span class="studio-meta-sep" aria-hidden="true">/</span>
+                <span class="studio-tag">{featured.duration}</span>
+                <span class="studio-meta-sep" aria-hidden="true">/</span>
+                <span class="studio-tag">{featured.format}</span>
+                {featured.hasCertificate && (
+                  <>
+                    <span class="studio-meta-sep" aria-hidden="true">/</span>
+                    <span class="studio-tag studio-tag--cert">Certificate included</span>
+                  </>
+                )}
+              </div>
+
+              <h2 class="studio-featured__title" id="featured-workshop-title">
+                {featured.title}
+              </h2>
+
+              {featured.tagline && (
+                <p class="studio-featured__tagline">
+                  {featured.tagline}
+                </p>
+              )}
+
+              {featured.outcomes && featured.outcomes.length > 0 && (
+                <div class="studio-featured__outcomes-block">
+                  <h3 class="studio-micro-heading">Key deliverables you will build</h3>
+                  <ul class="studio-outcomes-list" aria-label="Workshop takeaways">
+                    {featured.outcomes.slice(0, 3).map((outcome) => (
+                      <li class="studio-outcome-item">
+                        <span class="studio-outcome-check" aria-hidden="true">✓</span>
+                        <span>{outcome}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <div class="studio-featured__footer-link">
+                <a href={`/academy/courses/${featured.slug}`} class="studio-link-arrow" id="featured-read-more-link">
+                  <span>Explore full syllabus & workshop details</span>
+                  <span class="studio-arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Right: Action & Enrollment Card — floating physical object -->
+            <aside class="studio-featured__aside reveal-fade-up academy-float" aria-label="Session enrollment" data-parallax="0.05">
+              <div class="studio-aside-card__halo" aria-hidden="true"></div>
+              <div class="studio-aside-card">
+                <div class="studio-aside-card__badge">Live Studio Session</div>
+
+                <div class="studio-aside-card__price-wrap">
+                  <span class="studio-aside-card__price-sub">Session Tuition</span>
+                  <div class="studio-aside-card__price">
+                    {featured.isFree ? 'Free' : featured.price}
+                  </div>
+                  <span class="studio-aside-card__price-note">
+                    {featured.isFree ? '100% Free · No payment required' : 'One-time admission'}
+                  </span>
+                </div>
+
+                <div class="studio-aside-card__details">
+                  <div class="studio-aside-row">
+                    <span class="studio-aside-label">Format</span>
+                    <span class="studio-aside-val">{featured.format}</span>
+                  </div>
+                  <div class="studio-aside-row">
+                    <span class="studio-aside-label">Duration</span>
+                    <span class="studio-aside-val">{featured.duration}</span>
+                  </div>
+                  <div class="studio-aside-row">
+                    <span class="studio-aside-label">Next Date</span>
+                    <span class="studio-aside-val">{featured.date ?? 'To be announced'}</span>
+                  </div>
+                  {featured.instructor && (
+                    <div class="studio-aside-row">
+                      <span class="studio-aside-label">Mentor</span>
+                      <span class="studio-aside-val">{featured.instructor}</span>
+                    </div>
+                  )}
+                </div>
+
+                <div class="studio-aside-card__actions">
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    href={featured.paymentUrl ?? featured.registrationUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="studio-aside-btn"
+                    id="featured-enroll-cta"
+                  >
+                    <span>{featured.isFree ? 'Register — Free' : `Enroll — ${featured.price}`}</span>
+                    <Icon name="arrow-right" size={15} />
+                  </Button>
+
+                  <a
+                    href={`/academy/courses/${featured.slug}`}
+                    class="studio-aside-link"
+                    id="featured-course-page-cta"
+                  >
+                    Course details page
+                  </a>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </Container>
+      </section>
+    )}
+
+    <div class="studio-divider"><Container><hr /></Container></div>
+
+    <!-- ================================================================
+         3. WORKSHOP DISCOVERY — Editorial Card / List System
+         ================================================================ -->
+    <section class="studio-discovery academy-section" id="workshops" aria-labelledby="discovery-heading" data-academy-section="discovery">
+      <div class="academy-ambient academy-ambient--discovery" aria-hidden="true" data-parallax="0.06">
+        <AcademyGrid />
+      </div>
+      <Container>
+        <div class="studio-discovery__header reveal-fade-up">
+          <span class="studio-eyebrow">WORKSHOPS</span>
+          <h2 class="studio-discovery__title" id="discovery-heading">
+            Choose what you want to build next.
+          </h2>
+          <p class="studio-discovery__lead">
+            Every session is focused on a tangible deliverable. Pick the topic that solves your immediate problem.
+          </p>
+        </div>
+
+        <div class="studio-cards-stack" role="list">
+          {allWorkshops.map((workshop, idx) => (
+            <article class={`studio-card studio-card--variant-${idx % 3} reveal-fade-up academy-card-stagger`} role="listitem" style={`--reveal-delay:${idx * 70}ms`}>
+              <!-- Index-derived visual identity: 01 circular / 02 grid / 03 layered -->
+              <div class="studio-card__motif" aria-hidden="true">
+                <AcademyWorkshopMark index={idx} />
+              </div>
+              <div class="studio-card__diagonal" aria-hidden="true"></div>
+
+              <div class="studio-card__index-wrap" aria-hidden="true">
+                <span class="studio-card__index">0{idx + 1}</span>
+                <span class="studio-card__index-bar"></span>
+              </div>
+
+              <div class="studio-card__content">
+                <div class="studio-card__top">
+                  <div class="studio-card__meta">
+                    <span class="studio-pill">{workshop.level}</span>
+                    <span class="studio-pill">{workshop.duration}</span>
+                    <span class="studio-pill">{workshop.format.split('·')[0].trim()}</span>
+                    {workshop.hasCertificate && (
+                      <span class="studio-pill studio-pill--cert">Certificate</span>
+                    )}
+                    {workshop.status === 'open' && (
+                      <span class="studio-pill studio-pill--open">Open</span>
+                    )}
+                    {workshop.status === 'upcoming' && (
+                      <span class="studio-pill studio-pill--upcoming">Upcoming</span>
+                    )}
+                  </div>
+                  <div class="studio-card__price">
+                    {workshop.isFree ? (
+                      <span class="studio-price-free">Free</span>
+                    ) : (
+                      <span class="studio-price-val">{workshop.price}</span>
+                    )}
+                  </div>
+                </div>
+
+                <h3 class="studio-card__title">
+                  <a href={`/academy/courses/${workshop.slug}`} class="studio-card__title-link">
+                    {workshop.shortTitle ?? workshop.title}
+                  </a>
+                </h3>
+
+                <p class="studio-card__desc">
+                  {workshop.description}
+                </p>
+
+                {workshop.outcomes && workshop.outcomes.length > 0 && (
+                  <div class="studio-card__preview-outcome">
+                    <span class="studio-outcome-bullet" aria-hidden="true">↳</span>
+                    <span>{workshop.outcomes[0]}</span>
+                  </div>
+                )}
+              </div>
+
+              <div class="studio-card__action">
+                <a
+                  href={`/academy/courses/${workshop.slug}`}
+                  class="studio-explore-btn"
+                  id={`explore-workshop-${workshop.id}`}
+                >
+                  <span>Explore workshop</span>
+                  <span class="studio-arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <div class="studio-divider"><Container><hr /></Container></div>
+
+    <!-- ================================================================
+         4. OUTCOMES — "LEAVE WITH SOMETHING YOU BUILT."
+         ================================================================ -->
+    <section class="studio-outcomes academy-section" aria-labelledby="outcomes-heading" data-academy-section="outcomes">
+      <div class="academy-ambient academy-ambient--outcomes" aria-hidden="true" data-parallax="0.07">
+        <AcademyNodes />
+      </div>
+      <Container>
+        <div class="studio-outcomes__header reveal-fade-up">
+          <span class="studio-eyebrow">OUTCOMES</span>
+          <h2 class="studio-outcomes__title" id="outcomes-heading">
+            LEAVE WITH SOMETHING YOU BUILT.
+          </h2>
+          <p class="studio-outcomes__lead">
+            We measure progress by shipped deliverables, not hours spent watching presentations.
+          </p>
+        </div>
+
+        <div class="studio-pillars-grid">
+          <div class="studio-pillar-card studio-pillar-card--build reveal-fade-up" style="--reveal-delay:0ms">
+            <div class="studio-pillar-card__bg" aria-hidden="true"><AcademyWorkshopMark index={0} /></div>
+            <div class="studio-pillar-card__top">
+              <span class="studio-pillar-num">01</span>
+              <svg class="studio-pillar-decor" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                <rect x="4" y="4" width="24" height="24" stroke="rgba(181, 213, 173, 0.3)" stroke-width="1.5" />
+                <circle cx="16" cy="16" r="4" fill="#b5d5ad" />
+              </svg>
+            </div>
+            <h3 class="studio-pillar-title">Build a real project</h3>
+            <p class="studio-pillar-desc">
+              Every workshop centers on concrete implementation. You start with clear specifications and end with working software or a deployable interface.
+            </p>
+          </div>
+
+          <div class="studio-pillar-card studio-pillar-card--learn reveal-fade-up" style="--reveal-delay:90ms">
+            <div class="studio-pillar-card__bg" aria-hidden="true"><AcademyWorkshopMark index={1} /></div>
+            <div class="studio-pillar-card__top">
+              <span class="studio-pillar-num">02</span>
+              <svg class="studio-pillar-decor" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                <circle cx="16" cy="16" r="12" stroke="rgba(181, 213, 173, 0.3)" stroke-width="1.5" stroke-dasharray="3 3" />
+                <path d="M16,8 L16,24 M8,16 L24,16" stroke="rgba(212, 212, 212, 0.3)" stroke-width="1" />
+              </svg>
+            </div>
+            <h3 class="studio-pillar-title">Gain practical skills</h3>
+            <p class="studio-pillar-desc">
+              Learn the architectural patterns, debugging routines, and mental models that engineering teams use daily to turn ambiguous requirements into production systems.
+            </p>
+          </div>
+
+          <div class="studio-pillar-card studio-pillar-card--continue reveal-fade-up" style="--reveal-delay:180ms">
+            <div class="studio-pillar-card__bg" aria-hidden="true"><AcademyWorkshopMark index={2} /></div>
+            <div class="studio-pillar-card__top">
+              <span class="studio-pillar-num">03</span>
+              <svg class="studio-pillar-decor" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                <path d="M8,24 L16,8 L24,24 Z" stroke="rgba(181, 213, 173, 0.3)" stroke-width="1.5" />
+                <circle cx="16" cy="18" r="3" fill="#b5d5ad" />
+              </svg>
+            </div>
+            <h3 class="studio-pillar-title">Keep and continue building</h3>
+            <p class="studio-pillar-desc">
+              Your code and deliverables belong to you. Push to GitHub, integrate into client projects, or publish to your portfolio as proof of verified applied ability.
+            </p>
+          </div>
+        </div>
+
+        {sampleOutcomes.length > 0 && (
+          <div class="studio-outcomes__samples reveal-fade-up">
+            <h4 class="studio-micro-heading">Recent deliverables created in studio sessions</h4>
+            <div class="studio-samples-grid">
+              {sampleOutcomes.map((item) => (
+                <div class="studio-sample-item">
+                  <span class="studio-sample-dash" aria-hidden="true">—</span>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </Container>
+    </section>
+
+    <div class="studio-divider"><Container><hr /></Container></div>
+
+    <!-- ================================================================
+         5. WHY ROBODEV ACADEMY — Compact brand/value editorial section
+         ================================================================ -->
+    <section class="studio-why academy-section" aria-labelledby="why-heading" data-academy-section="why">
+      <!-- Editorial blueprint artwork + parallax -->
+      <div class="studio-why__bg-artwork" aria-hidden="true">
+        <svg class="studio-why__svg-grid" viewBox="0 0 1000 400" fill="none" preserveAspectRatio="none" data-parallax="0.05">
+          <line x1="0" y1="100" x2="1000" y2="100" stroke="rgba(212, 212, 212, 0.04)" stroke-width="1" />
+          <line x1="0" y1="200" x2="1000" y2="200" stroke="rgba(212, 212, 212, 0.04)" stroke-width="1" />
+          <line x1="0" y1="300" x2="1000" y2="300" stroke="rgba(212, 212, 212, 0.04)" stroke-width="1" />
+          <line x1="300" y1="0" x2="300" y2="400" stroke="rgba(212, 212, 212, 0.04)" stroke-width="1" />
+          <line x1="700" y1="0" x2="700" y2="400" stroke="rgba(212, 212, 212, 0.04)" stroke-width="1" />
+        </svg>
+        <div class="studio-why__blueprint" data-parallax="0.1" aria-hidden="true">
+          <AcademyBlueprint />
+        </div>
+      </div>
+
+      <Container>
+        <div class="studio-why__grid">
+          <div class="studio-why__left reveal-fade-up">
+            <span class="studio-eyebrow">WHY ROBODEV ACADEMY</span>
+            <h2 class="studio-why__title" id="why-heading">
+              Learn from builders.
+            </h2>
+            <p class="studio-why__lead">
+              RoboDev Academy is taught directly by engineers who actively build and deploy software at RoboDev Labs. We teach the workflows we rely on ourselves.
+            </p>
+          </div>
+
+          <div class="studio-why__right reveal-fade-up">
+            <div class="studio-value-block">
+              <h3 class="studio-value-title">Practical learning</h3>
+              <p class="studio-value-desc">
+                No artificial toy problems or high-level slide lectures. You work directly on architectures, tools, and code structures identical to actual development sprints.
+              </p>
+            </div>
+
+            <div class="studio-value-block">
+              <h3 class="studio-value-title">Direct guidance</h3>
+              <p class="studio-value-desc">
+                Interactive sessions where you can ask specific questions, troubleshoot roadblocks, and understand why certain trade-offs are chosen in live systems.
+              </p>
+            </div>
+
+            <div class="studio-value-block">
+              <h3 class="studio-value-title">Current tools and workflows</h3>
+              <p class="studio-value-desc">
+                We continuously refresh our curriculums so you practise with modern frameworks, automation APIs, and Figma design systems currently valued in technology careers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <div class="studio-divider"><Container><hr /></Container></div>
+
+    <!-- ================================================================
+         6. HOW IT WORKS — Compact, restrained 3-step sequence
+         ================================================================ -->
+    <section class="studio-steps academy-section" id="how-it-works" aria-labelledby="how-heading" data-academy-section="steps">
+      <Container>
+        <div class="studio-steps__header reveal-fade-up">
+          <span class="studio-eyebrow">PROCESS</span>
+          <h2 class="studio-steps__title" id="how-heading">How it works</h2>
+        </div>
+
+        <div class="studio-steps__wrapper reveal-fade-up">
+          <!-- Visual progression path: Choose → Build → Keep building -->
+          <AcademyPath class="studio-steps__path" />
+          <div class="studio-steps__connector-fallback" aria-hidden="true"></div>
+
+          <div class="studio-steps__grid">
+            <div class="studio-step-item">
+              <div class="studio-step-num">01 — Choose</div>
+              <h3 class="studio-step-headline">Pick your workshop</h3>
+              <p class="studio-step-text">
+                Pick a workshop that matches your goal. Each syllabus outlines prerequisites, duration, and the deliverable you will produce.
+              </p>
+            </div>
+
+            <div class="studio-step-item">
+              <div class="studio-step-num">02 — Build</div>
+              <h3 class="studio-step-headline">Work alongside mentors</h3>
+              <p class="studio-step-text">
+                Join the session and work alongside the instructor. Write code, test implementations, and receive real-time answers to your questions.
+              </p>
+            </div>
+
+            <div class="studio-step-item">
+              <div class="studio-step-num">03 — Keep building</div>
+              <h3 class="studio-step-headline">Ship and iterate</h3>
+              <p class="studio-step-text">
+                Take your project with you and continue after the workshop. You leave with source files, documented patterns, and confidence to build more.
+              </p>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <div class="studio-divider"><Container><hr /></Container></div>
+
+    <!-- ================================================================
+         7. INSTRUCTOR / FOUNDER — Human element, compact & genuine
+         ================================================================ -->
+    <section class="studio-instructor academy-section" aria-labelledby="instructor-heading" data-academy-section="instructor">
+      <div class="studio-instructor__ambient" aria-hidden="true" data-parallax="0.08">
+        <AcademyOrbit variant="faint" />
+      </div>
+      <Container>
+        <div class="studio-instructor__card studio-instructor__card--editorial reveal-fade-up">
+          <div class="studio-instructor__portrait-wrap" data-parallax="0.04">
+            <div class="studio-instructor__portrait-bg" aria-hidden="true">
+              <AcademyNodes />
+            </div>
+            <div class="studio-instructor__frame studio-instructor__frame--large">
+              <img
+                src={ceoPhoto.src}
+                alt={leadInstructor.name}
+                class="studio-instructor__img"
+                loading="lazy"
+                width="480"
+                height="560"
+              />
+              <div class="studio-instructor__frame-border" aria-hidden="true"></div>
+            </div>
+            <div class="studio-instructor__offset-layer" aria-hidden="true"></div>
+            <div class="studio-instructor__crosshair" aria-hidden="true"></div>
+          </div>
+
+          <div class="studio-instructor__details">
+            <span class="studio-eyebrow">INSTRUCTOR & FOUNDER</span>
+            <h2 class="studio-instructor__name" id="instructor-heading">
+              {leadInstructor.name}
+            </h2>
+            <p class="studio-instructor__role">{leadInstructor.title}</p>
+            <p class="studio-instructor__bio">
+              {leadInstructor.bio}
+            </p>
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <div class="studio-divider"><Container><hr /></Container></div>
+
+    <!-- ================================================================
+         8. FAQ — Accordion interaction with concise questions
+         ================================================================ -->
+    <section class="studio-faq academy-section" aria-labelledby="faq-heading" data-academy-section="faq">
+      <div class="studio-faq__ambient" aria-hidden="true" data-parallax="0.05">
+        <AcademyGrid />
+      </div>
+      <Container>
+        <div class="studio-faq__grid">
+          <div class="studio-faq__left reveal-fade-up">
+            <span class="studio-eyebrow">QUESTIONS</span>
+            <h2 class="studio-faq__title" id="faq-heading">Frequently asked questions</h2>
+            <p class="studio-faq__lead">
+              Need more details before booking? Email us anytime at
+              <a href={`mailto:${siteConfig.email}?subject=RoboDev%20Academy%20Inquiry`} class="studio-text-link">
+                {siteConfig.email}
+              </a>.
+            </p>
+          </div>
+
+          <div class="studio-faq__right reveal-fade-up">
+            <div class="studio-faq-stack">
+              <details class="studio-faq-item">
+                <summary class="studio-faq-summary">
+                  <span>Who are the workshops for?</span>
+                  <span class="studio-faq-chevron" aria-hidden="true">
+                    <Icon name="chevron-right" size={15} />
+                  </span>
+                </summary>
+                <div class="studio-faq-answer">
+                  <p>
+                    RoboDev Academy workshops are designed for computer science students, self-taught creators, and early-career developers who want to move beyond tutorials and build real, deployable projects with practical guidance.
+                  </p>
+                </div>
+              </details>
+
+              <details class="studio-faq-item">
+                <summary class="studio-faq-summary">
+                  <span>Are workshops live?</span>
+                  <span class="studio-faq-chevron" aria-hidden="true">
+                    <Icon name="chevron-right" size={15} />
+                  </span>
+                </summary>
+                <div class="studio-faq-answer">
+                  <p>
+                    Yes. Workshops are conducted as live interactive online sessions where you follow along step by step, build your own deliverable, and can ask questions directly to the instructor.
+                  </p>
+                </div>
+              </details>
+
+              <details class="studio-faq-item">
+                <summary class="studio-faq-summary">
+                  <span>What do I need before joining?</span>
+                  <span class="studio-faq-chevron" aria-hidden="true">
+                    <Icon name="chevron-right" size={15} />
+                  </span>
+                </summary>
+                <div class="studio-faq-answer">
+                  <p>
+                    You need a laptop with stable internet access. Specific software or free tool prerequisites (such as a Figma account or browser setup) are listed on each individual workshop page.
+                  </p>
+                </div>
+              </details>
+
+              <details class="studio-faq-item">
+                <summary class="studio-faq-summary">
+                  <span>Do I receive a certificate?</span>
+                  <span class="studio-faq-chevron" aria-hidden="true">
+                    <Icon name="chevron-right" size={15} />
+                  </span>
+                </summary>
+                <div class="studio-faq-answer">
+                  <p>
+                    Yes. When specified in the workshop details, participants who attend and complete the session receive an official RoboDev Academy certificate documenting their project participation.
+                  </p>
+                </div>
+              </details>
+
+              <details class="studio-faq-item">
+                <summary class="studio-faq-summary">
+                  <span>Can a university or student club host a workshop?</span>
+                  <span class="studio-faq-chevron" aria-hidden="true">
+                    <Icon name="chevron-right" size={15} />
+                  </span>
+                </summary>
+                <div class="studio-faq-answer">
+                  <p>
+                    Yes. We collaborate with student societies, computing clubs, and university groups to conduct tailored hands-on sessions. Email us directly at <a href={`mailto:${siteConfig.email}?subject=Host%20a%20RoboDev%20Workshop`} class="studio-text-link">{siteConfig.email}</a> to coordinate dates.
+                  </p>
+                </div>
+              </details>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <!-- Scroll Reveal + Parallax Client Script — transform/opacity only -->
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if ('IntersectionObserver' in window && !reduceMotion) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('is-visible');
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { rootMargin: '0px 0px -40px 0px', threshold: 0.1 }
+          );
+
+          document.querySelectorAll('.reveal-fade-up').forEach((el) => {
+            observer.observe(el);
+          });
+          // Animate AcademyPath when steps enter
+          const steps = document.querySelector('.studio-steps__wrapper');
+          if (steps) observer.observe(steps);
+        } else {
+          // Immediately make all elements visible if reduced motion or no IntersectionObserver
+          document.querySelectorAll('.reveal-fade-up, .studio-steps__wrapper').forEach((el) => {
+            el.classList.add('is-visible');
+          });
+        }
+
+        // Coherent lightweight parallax: different speeds via data-parallax
+        if (reduceMotion) return;
+        const layers = Array.from(document.querySelectorAll('[data-parallax]'));
+        if (!layers.length) return;
+        let ticking = false;
+        const isMobile = () => window.innerWidth < 768;
+        const update = () => {
+          ticking = false;
+          if (isMobile()) {
+            layers.forEach((el) => { el.style.setProperty('--parallax-y', '0px'); });
+            return;
+          }
+          const vh = window.innerHeight;
+          layers.forEach((el) => {
+            const speed = parseFloat(el.getAttribute('data-parallax') || '0.1');
+            const rect = el.getBoundingClientRect();
+            const centerOffset = rect.top + rect.height / 2 - vh / 2;
+            const y = (-centerOffset * speed).toFixed(1);
+            el.style.setProperty('--parallax-y', `${y}px`);
+          });
+        };
+        const onScroll = () => {
+          if (!ticking) { ticking = true; requestAnimationFrame(update); }
+        };
+        update();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+      });
+    </script>
+
+    <!-- ================================================================
+         9. TOOLS & TECHNOLOGY MARQUEE — Infinite engineering ticker
+         ================================================================ -->
+    <section class="studio-marquee" aria-label="Technologies and skills">
+      <!-- Gradient edge fades -->
+      <div class="studio-marquee__edge studio-marquee__edge--left" aria-hidden="true"></div>
+      <div class="studio-marquee__edge studio-marquee__edge--right" aria-hidden="true"></div>
+
+      <!-- Row 1 — scrolls left -->
+      <div class="studio-marquee__row studio-marquee__row--1" aria-hidden="true">
+        <div class="studio-marquee__track studio-marquee__track--left">
+          <!-- Duplicated content for seamless infinite loop -->
+          {[0, 1].map(() => (
+            <div class="studio-marquee__set">
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="16 18 22 12 16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8 6 2 12 8 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>React</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">◆</span>
+
+              <span class="mq-item mq-item--large">TypeScript</span>
+              <span class="mq-sep" aria-hidden="true">—</span>
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5z" stroke="currentColor" stroke-width="2"/><path d="M4 13a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6z" stroke="currentColor" stroke-width="2"/><path d="M16 13a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-6z" stroke="currentColor" stroke-width="2"/></svg>
+                <span>Figma</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">◆</span>
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>AI Automation</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">—</span>
+
+              <span class="mq-item">JavaScript</span>
+              <span class="mq-sep" aria-hidden="true">◆</span>
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>GitHub</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">—</span>
+
+              <span class="mq-item mq-item--large mq-item--accent">Build &amp; Ship</span>
+              <span class="mq-sep" aria-hidden="true">◆</span>
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2"/><rect x="9" y="9" width="6" height="6" stroke="currentColor" stroke-width="2"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <span>Node.js</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">—</span>
+
+              <span class="mq-item">Astro</span>
+              <span class="mq-sep" aria-hidden="true">◆</span>
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>SaaS APIs</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">—</span>
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Busly</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">◆</span>
+
+              <span class="mq-item">SEO</span>
+              <span class="mq-sep" aria-hidden="true">—</span>
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polygon points="12 2 2 7 12 12 22 7 12 2" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><polyline points="2 17 12 22 22 17" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><polyline points="2 12 12 17 22 12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                <span>Product Studio</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">◆</span>
+
+              <span class="mq-item mq-item--large">HTML · CSS</span>
+              <span class="mq-sep" aria-hidden="true">—</span>
+
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Row 2 — scrolls right (opposite direction) -->
+      <div class="studio-marquee__row studio-marquee__row--2" aria-hidden="true">
+        <div class="studio-marquee__track studio-marquee__track--right">
+          {[0, 1].map(() => (
+            <div class="studio-marquee__set">
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="4 17 10 11 4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="19" x2="20" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <span>Engineering</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">◆</span>
+
+              <span class="mq-item mq-item--large mq-item--accent">UI/UX Design</span>
+              <span class="mq-sep" aria-hidden="true">—</span>
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" stroke="currentColor" stroke-width="2"/></svg>
+                <span>Web Apps</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">◆</span>
+
+              <span class="mq-item">Git</span>
+              <span class="mq-sep" aria-hidden="true">—</span>
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>AI-First</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">◆</span>
+
+              <span class="mq-item mq-item--large">RoboDev Labs</span>
+              <span class="mq-sep" aria-hidden="true">—</span>
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <span>Live Workshops</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">◆</span>
+
+              <span class="mq-item">Automation</span>
+              <span class="mq-sep" aria-hidden="true">—</span>
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2"/><rect x="9" y="9" width="6" height="6" stroke="currentColor" stroke-width="2"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <span>APIs</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">◆</span>
+
+              <span class="mq-item mq-item--large mq-item--accent">Ship Fast</span>
+              <span class="mq-sep" aria-hidden="true">—</span>
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="16 18 22 12 16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8 6 2 12 8 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>TypeScript</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">◆</span>
+
+              <span class="mq-item">Figma</span>
+              <span class="mq-sep" aria-hidden="true">—</span>
+
+              <span class="mq-item mq-item--icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polygon points="12 2 2 7 12 12 22 7 12 2" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><polyline points="2 17 12 22 22 17" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><polyline points="2 12 12 17 22 12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                <span>Full-Stack</span>
+              </span>
+              <span class="mq-sep" aria-hidden="true">◆</span>
+
+              <span class="mq-item">SEO · Analytics</span>
+              <span class="mq-sep" aria-hidden="true">—</span>
+
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* =========================================================================
+     RoboDev Academy — Editorial Workshop Studio
+     Color Palette:
+       --color-pepper-dark:   #7C8363
+       --color-pepper-medium: #31473A
+       --color-salt-white:    #EDF4F2
+       --color-salt-light:    #D4D4D4
+     ========================================================================= */
+
+  .studio-page {
+    background-color: var(--color-pepper-dark, #7C8363);
+    color: var(--color-salt-white, #EDF4F2);
+    min-height: 100vh;
+  }
+
+  /* ── Shared Eyebrow & Typographic Utilities ── */
+  .studio-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-salt-light, #D4D4D4);
+  }
+
+  .studio-micro-heading {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(237, 244, 242, 0.7);
+    margin: 0 0 0.75rem;
+  }
+
+  .studio-text-link {
+    font-size: 0.9375rem;
+    color: var(--color-salt-white, #EDF4F2);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: rgba(212, 212, 212, 0.4);
+    transition: color 150ms ease, text-decoration-color 150ms ease;
+  }
+
+  .studio-text-link:hover {
+    color: #ffffff;
+    text-decoration-color: #ffffff;
+  }
+
+  .studio-divider {
+    padding: 0;
+  }
+
+  .studio-divider hr {
+    border: none;
+    border-top: 1px solid rgba(212, 212, 212, 0.16);
+    margin: 0;
+  }
+
+  .studio-arrow {
+    display: inline-block;
+    transition: transform 160ms ease;
+  }
+
+  /* ── Motion & Reveal System ── */
+  .reveal-fade-up {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal-fade-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-fade-up {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* =========================================================================
+     1. HERO
+     ========================================================================= */
+  .studio-hero {
+    position: relative;
+    background-color: var(--color-pepper-medium, #31473A);
+    padding-top: clamp(6.5rem, 13vh, 9.5rem);
+    padding-bottom: clamp(4.5rem, 9vh, 7rem);
+    border-bottom: 1px solid rgba(212, 212, 212, 0.15);
+    overflow: hidden;
+  }
+
+  .studio-hero__backdrop {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .studio-hero__glow {
+    position: absolute;
+    top: -15%;
+    right: -10%;
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, rgba(181, 213, 173, 0.12) 0%, rgba(49, 71, 58, 0) 70%);
+    filter: blur(40px);
+  }
+
+  .studio-hero__blueprint-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(212, 212, 212, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212, 212, 212, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(circle at 75% 35%, black 20%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at 75% 35%, black 20%, transparent 80%);
+  }
+
+  .studio-hero__geometry {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .studio-hero__geometry--back {
+    opacity: 0.8;
+  }
+
+  .studio-hero__geometry--front {
+    opacity: 0.95;
+  }
+
+  .studio-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 820px;
+  }
+
+  .studio-hero__meta-label {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .studio-hero__badge-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: #b5d5ad;
+    background: rgba(181, 213, 173, 0.08);
+    border: 1px solid rgba(181, 213, 173, 0.2);
+    border-radius: 9999px;
+    padding: 0.2rem 0.65rem;
+  }
+
+  .studio-hero__headline {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(3.25rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--color-salt-white, #EDF4F2);
+    margin: 1.25rem 0 1.5rem;
+  }
+
+  .studio-hero__headline em {
+    font-style: normal;
+    color: #ffffff;
+    text-decoration: underline;
+    text-decoration-color: rgba(237, 244, 242, 0.35);
+    text-underline-offset: 8px;
+  }
+
+  .studio-hero__lead {
+    font-size: clamp(1.125rem, 1.8vw, 1.35rem);
+    line-height: 1.6;
+    color: rgba(237, 244, 242, 0.88);
+    margin: 0 0 2.5rem;
+    max-width: 62ch;
+  }
+
+  .studio-hero__actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .studio-cta-btn:hover .studio-arrow {
+    transform: translateX(5px);
+  }
+
+  /* =========================================================================
+     2. FEATURED WORKSHOP
+     ========================================================================= */
+  .studio-featured {
+    position: relative;
+    background-color: var(--color-pepper-dark, #7C8363);
+    padding: clamp(4rem, 8vw, 6.5rem) 0;
+    overflow: hidden;
+  }
+
+  .studio-featured__bg-accents {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 320px;
+    pointer-events: none;
+    opacity: 0.65;
+  }
+
+  .studio-featured__corner-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .studio-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .studio-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    color: var(--color-salt-white, #EDF4F2);
+    background: rgba(49, 71, 58, 0.75);
+    border: 1px solid rgba(212, 212, 212, 0.28);
+    border-radius: 9999px;
+    padding: 0.25rem 0.85rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  .studio-pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #b5d5ad;
+    box-shadow: 0 0 8px #b5d5ad;
+    animation: pulseGlow 2.5s infinite ease-in-out;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.65; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 12px #b5d5ad; }
+  }
+
+  .studio-featured__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.85fr);
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 900px) {
+    .studio-featured__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .studio-featured__meta-strip {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 0;
+    margin-bottom: 1rem;
+  }
+
+  .studio-tag {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.78rem;
+    color: var(--color-salt-light, #D4D4D4);
+    letter-spacing: 0.04em;
+  }
+
+  .studio-tag--cert {
+    color: #b5d5ad;
+    font-weight: 600;
+  }
+
+  .studio-meta-sep {
+    color: rgba(212, 212, 212, 0.35);
+    margin: 0 9px;
+  }
+
+  .studio-featured__title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(2rem, 3.8vw, 3.15rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--color-salt-white, #EDF4F2);
+    margin: 0 0 1rem;
+  }
+
+  .studio-featured__tagline {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: rgba(237, 244, 242, 0.88);
+    margin: 0 0 2rem;
+  }
+
+  .studio-featured__outcomes-block {
+    border-top: 1px solid rgba(212, 212, 212, 0.18);
+    padding-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .studio-outcomes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .studio-outcome-item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: rgba(237, 244, 242, 0.92);
+  }
+
+  .studio-outcome-check {
+    color: #b5d5ad;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .studio-link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-salt-white, #EDF4F2);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: rgba(212, 212, 212, 0.4);
+    transition: color 150ms ease, text-decoration-color 150ms ease, transform 150ms ease;
+  }
+
+  .studio-link-arrow:hover {
+    color: #ffffff;
+    text-decoration-color: #ffffff;
+  }
+
+  .studio-link-arrow:hover .studio-arrow {
+    transform: translateX(4px);
+  }
+
+  /* Aside card */
+  .studio-aside-card {
+    position: relative;
+    background: var(--color-pepper-medium, #31473A);
+    border: 1px solid rgba(212, 212, 212, 0.25);
+    border-radius: 12px;
+    padding: 2.25rem;
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  }
+
+  .studio-aside-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(181, 213, 173, 0.2) inset;
+    border-color: rgba(181, 213, 173, 0.4);
+  }
+
+  .studio-aside-card__badge {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #b5d5ad;
+  }
+
+  .studio-aside-card__price-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-bottom: 1px solid rgba(212, 212, 212, 0.16);
+    padding-bottom: 1.25rem;
+  }
+
+  .studio-aside-card__price-sub {
+    font-size: 0.75rem;
+    color: var(--color-salt-light, #D4D4D4);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .studio-aside-card__price {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 2.35rem;
+    font-weight: 700;
+    color: var(--color-salt-white, #EDF4F2);
+    line-height: 1.1;
+  }
+
+  .studio-aside-card__price-note {
+    font-size: 0.78rem;
+    color: rgba(237, 244, 242, 0.75);
+  }
+
+  .studio-aside-card__details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .studio-aside-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.84rem;
+  }
+
+  .studio-aside-label {
+    color: var(--color-salt-light, #D4D4D4);
+  }
+
+  .studio-aside-val {
+    font-weight: 600;
+    color: var(--color-salt-white, #EDF4F2);
+    text-align: right;
+    max-width: 60%;
+  }
+
+  .studio-aside-card__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    margin-top: 0.5rem;
+  }
+
+  .studio-aside-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .studio-aside-link {
+    text-align: center;
+    font-size: 0.8125rem;
+    color: var(--color-salt-light, #D4D4D4);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(212, 212, 212, 0.35);
+    transition: color 140ms ease;
+  }
+
+  .studio-aside-link:hover {
+    color: #ffffff;
+  }
+
+  /* =========================================================================
+     3. WORKSHOP DISCOVERY
+     ========================================================================= */
+  .studio-discovery {
+    background-color: var(--color-pepper-medium, #31473A);
+    padding: clamp(4rem, 8vw, 6.5rem) 0;
+    position: relative;
+  }
+
+  .studio-discovery__header {
+    max-width: 780px;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .studio-discovery__title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--color-salt-white, #EDF4F2);
+    margin: 0.75rem 0 1rem;
+  }
+
+  .studio-discovery__lead {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    line-height: 1.6;
+    color: rgba(237, 244, 242, 0.85);
+    margin: 0;
+  }
+
+  .studio-cards-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .studio-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(212, 212, 212, 0.16);
+    border-radius: 12px;
+    padding: clamp(1.6rem, 3vw, 2.35rem);
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+    gap: clamp(1.25rem, 2.5vw, 2.5rem);
+    align-items: center;
+    overflow: hidden;
+    transition: transform 220ms ease, background 200ms ease, border-color 200ms ease, box-shadow 220ms ease;
+  }
+
+  .studio-card:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.075);
+    border-color: rgba(181, 213, 173, 0.35);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+  }
+
+  /* Watermark SVG Motif per card */
+  .studio-card__motif {
+    position: absolute;
+    right: 180px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 140px;
+    height: 140px;
+    pointer-events: none;
+    opacity: 0.6;
+    transition: opacity 220ms ease, transform 300ms ease;
+  }
+
+  .studio-card:hover .studio-card__motif {
+    opacity: 0.95;
+    transform: translateY(-50%) scale(1.08) rotate(3deg);
+  }
+
+  @media (max-width: 992px) {
+    .studio-card__motif {
+      display: none;
+    }
+  }
+
+  .studio-card__index-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    align-self: start;
+    padding-top: 4px;
+  }
+
+  .studio-card__index {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: rgba(212, 212, 212, 0.45);
+    transition: color 200ms ease;
+  }
+
+  .studio-card:hover .studio-card__index {
+    color: #b5d5ad;
+  }
+
+  .studio-card__index-bar {
+    width: 1px;
+    height: 24px;
+    background: rgba(212, 212, 212, 0.2);
+    transition: background 200ms ease, height 200ms ease;
+  }
+
+  .studio-card:hover .studio-card__index-bar {
+    background: #b5d5ad;
+    height: 32px;
+  }
+
+  @media (max-width: 780px) {
+    .studio-card {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    .studio-card__index-wrap {
+      display: none;
+    }
+  }
+
+  .studio-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .studio-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .studio-card__meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .studio-pill {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-salt-light, #D4D4D4);
+    border: 1px solid rgba(212, 212, 212, 0.2);
+    border-radius: 9999px;
+    padding: 0.15rem 0.65rem;
+  }
+
+  .studio-pill--cert {
+    color: #b5d5ad;
+    border-color: rgba(181, 213, 173, 0.4);
+  }
+
+  .studio-pill--open {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .studio-pill--upcoming {
+    color: var(--color-salt-light, #D4D4D4);
+  }
+
+  .studio-card__price {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+
+  .studio-price-free {
+    background-color: var(--color-salt-white, #EDF4F2);
+    color: var(--color-pepper-medium, #31473A);
+    padding: 0.18rem 0.65rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .studio-price-val {
+    color: var(--color-salt-white, #EDF4F2);
+  }
+
+  .studio-card__title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(1.25rem, 2.2vw, 1.625rem);
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  .studio-card__title-link {
+    color: var(--color-salt-white, #EDF4F2);
+    text-decoration: none;
+    transition: color 140ms ease;
+  }
+
+  .studio-card__title-link:hover {
+    color: #ffffff;
+  }
+
+  .studio-card__desc {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgba(237, 244, 242, 0.8);
+    margin: 0;
+    max-width: 68ch;
+  }
+
+  .studio-card__preview-outcome {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 0.84rem;
+    color: rgba(237, 244, 242, 0.72);
+    margin-top: 0.25rem;
+  }
+
+  .studio-outcome-bullet {
+    color: #b5d5ad;
+    font-weight: 700;
+  }
+
+  .studio-card__action {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .studio-explore-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-salt-white, #EDF4F2);
+    border: 1px solid rgba(212, 212, 212, 0.28);
+    border-radius: 6px;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+    white-space: nowrap;
+  }
+
+  .studio-explore-btn:hover {
+    background: var(--color-salt-white, #EDF4F2);
+    color: var(--color-pepper-medium, #31473A);
+    border-color: var(--color-salt-white, #EDF4F2);
+  }
+
+  .studio-explore-btn:hover .studio-arrow {
+    transform: translateX(4px);
+  }
+
+  /* =========================================================================
+     4. OUTCOMES — "LEAVE WITH SOMETHING YOU BUILT."
+     ========================================================================= */
+  .studio-outcomes {
+    background-color: var(--color-pepper-dark, #7C8363);
+    padding: clamp(4rem, 8vw, 6.5rem) 0;
+  }
+
+  .studio-outcomes__header {
+    max-width: 820px;
+    margin-bottom: 3.5rem;
+  }
+
+  .studio-outcomes__title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--color-salt-white, #EDF4F2);
+    margin: 0.75rem 0 1rem;
+  }
+
+  .studio-outcomes__lead {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    line-height: 1.6;
+    color: rgba(237, 244, 242, 0.85);
+    margin: 0;
+  }
+
+  .studio-pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .studio-pillar-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(212, 212, 212, 0.16);
+    border-radius: 10px;
+    padding: 2.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
+  }
+
+  .studio-pillar-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(181, 213, 173, 0.35);
+  }
+
+  .studio-pillar-card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .studio-pillar-num {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: rgba(212, 212, 212, 0.4);
+    letter-spacing: 0.05em;
+  }
+
+  .studio-pillar-decor {
+    width: 24px;
+    height: 24px;
+  }
+
+  .studio-pillar-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-salt-white, #EDF4F2);
+    margin: 0;
+  }
+
+  .studio-pillar-desc {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgba(237, 244, 242, 0.8);
+    margin: 0;
+  }
+
+  .studio-outcomes__samples {
+    border-top: 1px solid rgba(212, 212, 212, 0.16);
+    padding-top: 2rem;
+  }
+
+  .studio-samples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem 2rem;
+  }
+
+  .studio-sample-item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: rgba(237, 244, 242, 0.85);
+  }
+
+  .studio-sample-dash {
+    color: #b5d5ad;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* =========================================================================
+     5. WHY ROBODEV ACADEMY
+     ========================================================================= */
+  .studio-why {
+    position: relative;
+    background-color: var(--color-pepper-medium, #31473A);
+    padding: clamp(4rem, 8vw, 6.5rem) 0;
+    overflow: hidden;
+  }
+
+  .studio-why__bg-artwork {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .studio-why__svg-grid {
+    width: 100%;
+    height: 100%;
+  }
+
+  .studio-why__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr);
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+
+  @media (max-width: 860px) {
+    .studio-why__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .studio-why__title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--color-salt-white, #EDF4F2);
+    margin: 0.75rem 0 1.25rem;
+  }
+
+  .studio-why__lead {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    line-height: 1.65;
+    color: rgba(237, 244, 242, 0.85);
+    margin: 0;
+    max-width: 48ch;
+  }
+
+  .studio-why__right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .studio-value-block {
+    border-left: 2px solid rgba(181, 213, 173, 0.4);
+    padding-left: 1.5rem;
+    transition: transform 200ms ease, border-color 200ms ease;
+  }
+
+  .studio-value-block:hover {
+    transform: translateX(4px);
+    border-left-color: #b5d5ad;
+  }
+
+  .studio-value-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.1875rem;
+    font-weight: 700;
+    color: var(--color-salt-white, #EDF4F2);
+    margin: 0 0 0.5rem;
+  }
+
+  .studio-value-desc {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgba(237, 244, 242, 0.8);
+    margin: 0;
+  }
+
+  /* =========================================================================
+     6. HOW IT WORKS
+     ========================================================================= */
+  .studio-steps {
+    background-color: var(--color-pepper-dark, #7C8363);
+    padding: clamp(4rem, 8vw, 6rem) 0;
+  }
+
+  .studio-steps__header {
+    margin-bottom: 2.5rem;
+  }
+
+  .studio-steps__title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(2rem, 3.8vw, 3rem);
+    font-weight: 800;
+    color: var(--color-salt-white, #EDF4F2);
+    margin: 0.75rem 0 0;
+  }
+
+  .studio-steps__wrapper {
+    position: relative;
+  }
+
+  .studio-steps__connector {
+    width: 100%;
+    height: 32px;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  @media (max-width: 780px) {
+    .studio-steps__connector {
+      display: none;
+    }
+  }
+
+  .studio-steps__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+  }
+
+  .studio-step-item {
+    border-top: 1px solid rgba(212, 212, 212, 0.22);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: transform 200ms ease;
+  }
+
+  .studio-step-item:hover {
+    transform: translateY(-3px);
+  }
+
+  .studio-step-num {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #b5d5ad;
+  }
+
+  .studio-step-headline {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-salt-white, #EDF4F2);
+    margin: 0;
+  }
+
+  .studio-step-text {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgba(237, 244, 242, 0.8);
+    margin: 0;
+  }
+
+  /* =========================================================================
+     7. INSTRUCTOR / FOUNDER
+     ========================================================================= */
+  .studio-instructor {
+    background-color: var(--color-pepper-medium, #31473A);
+    padding: clamp(4rem, 8vw, 6rem) 0;
+  }
+
+  .studio-instructor__card {
+    display: flex;
+    align-items: center;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    max-width: 860px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(212, 212, 212, 0.16);
+    border-radius: 14px;
+    padding: clamp(1.75rem, 3.5vw, 2.75rem);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (max-width: 720px) {
+    .studio-instructor__card {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+  }
+
+  .studio-instructor__portrait-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .studio-instructor__frame {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  @media (max-width: 720px) {
+    .studio-instructor__frame {
+      width: 110px;
+      height: 110px;
+    }
+  }
+
+  .studio-instructor__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: contrast(1.06) brightness(0.96);
+    transition: transform 300ms ease;
+  }
+
+  .studio-instructor__card:hover .studio-instructor__img {
+    transform: scale(1.04);
+  }
+
+  .studio-instructor__frame-border {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(181, 213, 173, 0.3);
+    border-radius: 12px;
+    pointer-events: none;
+  }
+
+  .studio-instructor__crosshair {
+    position: absolute;
+    bottom: -6px;
+    right: -6px;
+    width: 16px;
+    height: 16px;
+    border-bottom: 2px solid #b5d5ad;
+    border-right: 2px solid #b5d5ad;
+    pointer-events: none;
+  }
+
+  .studio-instructor__details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .studio-instructor__name {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+    font-weight: 700;
+    color: var(--color-salt-white, #EDF4F2);
+    margin: 0.25rem 0 0;
+  }
+
+  .studio-instructor__role {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #b5d5ad;
+    margin: 0 0 0.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .studio-instructor__bio {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: rgba(237, 244, 242, 0.85);
+    margin: 0;
+  }
+
+  /* =========================================================================
+     8. FAQ
+     ========================================================================= */
+  .studio-faq {
+    background-color: var(--color-pepper-dark, #7C8363);
+    padding: clamp(4rem, 8vw, 6.5rem) 0;
+  }
+
+  .studio-faq__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+
+  @media (max-width: 860px) {
+    .studio-faq__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .studio-faq__title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(2rem, 3.8vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--color-salt-white, #EDF4F2);
+    margin: 0.75rem 0 1rem;
+  }
+
+  .studio-faq__lead {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgba(237, 244, 242, 0.82);
+    margin: 0;
+  }
+
+  .studio-faq-stack {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(212, 212, 212, 0.2);
+  }
+
+  .studio-faq-item {
+    border-bottom: 1px solid rgba(212, 212, 212, 0.2);
+    transition: background-color 200ms ease;
+  }
+
+  .studio-faq-item[open] {
+    background-color: rgba(255, 255, 255, 0.035);
+  }
+
+  .studio-faq-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.35rem 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--color-salt-white, #EDF4F2);
+    transition: color 150ms ease, padding-left 150ms ease;
+  }
+
+  .studio-faq-summary:hover {
+    color: #ffffff;
+    padding-left: 0.25rem;
+  }
+
+  .studio-faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .studio-faq-chevron {
+    color: rgba(212, 212, 212, 0.6);
+    display: flex;
+    align-items: center;
+    transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1), color 200ms ease;
+    flex-shrink: 0;
+  }
+
+  .studio-faq-item[open] .studio-faq-chevron {
+    transform: rotate(90deg);
+    color: #b5d5ad;
+  }
+
+  .studio-faq-answer {
+    padding: 0 0.5rem 1.35rem;
+  }
+
+  .studio-faq-answer p {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: rgba(237, 244, 242, 0.88);
+    margin: 0;
+  }
+
+  /* =========================================================================
+     9. TOOLS & TECHNOLOGY MARQUEE
+     ========================================================================= */
+
+  /* Keyframes */
+  @keyframes marquee-left {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes marquee-right {
+    0%   { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  .studio-marquee {
+    position: relative;
+    background-color: var(--color-pepper-medium, #31473A);
+    border-top: 1px solid rgba(212, 212, 212, 0.1);
+    /* Subtle gradient bridge toward footer */
+    background-image: linear-gradient(
+      to bottom,
+      var(--color-pepper-medium, #31473A) 0%,
+      rgba(49, 71, 58, 0.92) 100%
+    );
+    overflow: hidden;
+    padding: 3.5rem 0 3.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Left & right fade masks */
+  .studio-marquee__edge {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 140px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .studio-marquee__edge--left {
+    left: 0;
+    background: linear-gradient(to right, var(--color-pepper-medium, #31473A), transparent);
+  }
+
+  .studio-marquee__edge--right {
+    right: 0;
+    background: linear-gradient(to left, var(--color-pepper-medium, #31473A), transparent);
+  }
+
+  /* Each row is a viewport-wide overflow-hidden strip */
+  .studio-marquee__row {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* The moving track: display flex, width = 200% (two copies of the set) */
+  .studio-marquee__track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    gap: 0;
+  }
+
+  .studio-marquee__track--left {
+    animation: marquee-left 28s linear infinite;
+  }
+
+  .studio-marquee__track--right {
+    animation: marquee-right 34s linear infinite;
+  }
+
+  /* Pause on hover anywhere over the marquee section */
+  .studio-marquee:hover .studio-marquee__track {
+    animation-play-state: paused;
+  }
+
+  /* One complete copy of all items */
+  .studio-marquee__set {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* ── Individual Items ── */
+  .mq-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(0.95rem, 1.4vw, 1.2rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: rgba(237, 244, 242, 0.62);
+    padding: 0 2rem;
+    transition: color 200ms ease;
+    cursor: default;
+  }
+
+  .mq-item svg {
+    opacity: 0.65;
+    transition: opacity 200ms ease;
+    flex-shrink: 0;
+  }
+
+  .mq-item:hover {
+    color: rgba(237, 244, 242, 0.92);
+  }
+
+  .mq-item:hover svg {
+    opacity: 1;
+  }
+
+  /* Large editorial variant — prominent keyword */
+  .mq-item--large {
+    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: rgba(237, 244, 242, 0.28);
+    padding: 0 2.5rem;
+  }
+
+  .mq-item--large:hover {
+    color: rgba(237, 244, 242, 0.65);
+  }
+
+  /* Accent — green highlight keywords */
+  .mq-item--accent {
+    color: rgba(181, 213, 173, 0.55);
+  }
+
+  .mq-item--accent:hover {
+    color: #b5d5ad;
+  }
+
+  /* Icon variant sizing */
+  .mq-item--icon {
+    gap: 10px;
+  }
+
+  /* Separators */
+  .mq-sep {
+    font-size: 0.45rem;
+    color: rgba(212, 212, 212, 0.25);
+    padding: 0 0.25rem;
+    user-select: none;
+    flex-shrink: 0;
+    letter-spacing: 0;
+  }
+
+  /* Row 1 slight opacity fade vs row 2 for depth */
+  .studio-marquee__row--1 .mq-item--large {
+    color: rgba(237, 244, 242, 0.22);
+  }
+
+  .studio-marquee__row--2 .mq-item {
+    color: rgba(237, 244, 242, 0.5);
+  }
+
+  .studio-marquee__row--2 .mq-item--large {
+    color: rgba(237, 244, 242, 0.2);
+  }
+
+  .studio-marquee__row--2 .mq-item:hover {
+    color: rgba(237, 244, 242, 0.85);
+  }
+
+  /* Respect reduced motion — freeze the marquee */
+  @media (prefers-reduced-motion: reduce) {
+    .studio-marquee__track {
+      animation: none !important;
+    }
+
+    .studio-marquee__track--right {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* =========================================================================
+     ACADEMY VISUAL UPGRADE — living editorial workshop system (visual only)
+     - layered parallax via --parallax-y + translate3d
+     - reusable decorative layers: ambient / grid / orbit / node-field / line-art
+     - no content changes, same palette + typography + components
+     ========================================================================= */
+
+  .studio-page { overflow-x: clip; }
+  .academy-section { position: relative; }
+
+  [data-parallax] {
+    transform: translate3d(0, var(--parallax-y, 0px), 0);
+    will-change: transform;
+  }
+
+  .academy-ambient,
+  .academy-grid-layer,
+  .academy-orbit--back,
+  .academy-node-field,
+  .academy-line-art,
+  .academy-ambient--discovery,
+  .academy-ambient--outcomes {
+    pointer-events: none;
+  }
+
+  .reveal-fade-up { transition-delay: var(--reveal-delay, 0ms); }
+
+  /* ---- HERO layout + anchor ---- */
+  .studio-hero__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.85fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+  .studio-hero__anchor { position: relative; min-height: 420px; }
+  .studio-hero__anchor-main { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .academy-blueprint--hero { width: min(520px, 100%); height: auto; opacity: 0.9; }
+  .studio-hero__anchor-orbit {
+    position: absolute; right: 6%; top: 8%; width: 180px; opacity: 0.9;
+  }
+  .academy-grid--hero { position: absolute; inset: 8% 4% auto 30%; width: 66%; opacity: 0.5; }
+  .academy-orbit--back { position: absolute; inset: 0; }
+  .academy-node-field { position: absolute; left: 4%; bottom: 6%; width: 300px; opacity: 0.8; }
+  .academy-nodes--hero { width: 100%; height: auto; }
+
+  /* ---- FEATURED physical object ---- */
+  .studio-featured__bg-accents { overflow: visible; }
+  .academy-line-art--featured { position: absolute; left: -40px; bottom: -30px; width: 420px; opacity: 0.4; }
+  .academy-orbit--featured { position: absolute; right: -60px; top: -60px; width: 320px; opacity: 0.55; }
+  .academy-float { position: relative; z-index: 2; }
+  .studio-aside-card__halo {
+    position: absolute; inset: -1px; border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), transparent 40%, rgba(181,213,173,0.14));
+    filter: blur(0.5px); pointer-events: none;
+  }
+  .studio-aside-card {
+    position: relative;
+    background:
+      radial-gradient(120% 90% at 80% 0%, rgba(181,213,173,0.08), transparent 55%),
+      var(--color-pepper-medium, #31473A);
+  }
+  .studio-aside-card::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    border: 1px solid rgba(255,255,255,0.06);
+    mask: linear-gradient(#000, transparent 70%);
+  }
+
+  /* ---- DISCOVERY editorial composition ---- */
+  .academy-ambient--discovery { position: absolute; top: 40px; right: 0; width: 520px; opacity: 0.28; }
+  .studio-card { isolation: isolate; }
+  .studio-card__diagonal {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
+    background: linear-gradient(115deg, transparent 62%, rgba(212,212,212,0.05) 62.2%, transparent 62.6%);
+  }
+  .studio-card__motif { width: 150px; height: 150px; }
+  .studio-card__motif .academy-mark { width: 100%; height: 100%; }
+  @media (min-width: 1024px) {
+    .academy-card-stagger:nth-child(2) { transform: translateX(18px); }
+    .academy-card-stagger:nth-child(3) { transform: translateX(36px); }
+    .academy-card-stagger:nth-child(2):hover { transform: translate(18px, -4px); }
+    .academy-card-stagger:nth-child(3):hover { transform: translate(36px, -4px); }
+  }
+  .studio-card { transition: transform 280ms cubic-bezier(0.16,1,0.3,1), background 200ms ease, border-color 220ms ease, box-shadow 280ms ease; }
+  .studio-card:hover .studio-card__motif .academy-mark { transform: rotate(4deg) translateY(-2px) scale(1.06); }
+  .studio-card:hover .studio-explore-btn .studio-arrow { transform: translateX(5px); }
+
+  /* ---- OUTCOMES pillars ---- */
+  .academy-ambient--outcomes { position: absolute; left: -60px; top: 20px; width: 420px; opacity: 0.32; }
+  .studio-pillar-card { position: relative; overflow: hidden; }
+  .studio-pillar-card__bg {
+    position: absolute; right: -30px; top: -20px; width: 190px; height: 190px;
+    opacity: 0.5; pointer-events: none; transition: transform 320ms ease, opacity 220ms ease;
+  }
+  .studio-pillar-card:hover .studio-pillar-card__bg { transform: translateY(-4px) rotate(3deg); opacity: 0.85; }
+  .studio-pillar-num {
+    font-size: clamp(2.4rem, 4vw, 3.4rem) !important;
+    font-weight: 800 !important; letter-spacing: -0.04em !important;
+    color: rgba(237,244,242,0.92) !important; line-height: 1 !important;
+  }
+  @media (min-width: 1024px) {
+    .studio-pillar-card--learn { transform: translateY(18px); }
+    .studio-pillar-card--continue { transform: translateY(36px); }
+    .studio-pillar-card--learn:hover { transform: translateY(14px); }
+    .studio-pillar-card--continue:hover { transform: translateY(32px); }
+  }
+
+  /* ---- WHY editorial ---- */
+  .studio-why__blueprint {
+    position: absolute; right: -40px; top: 10%; width: min(560px, 55%);
+    opacity: 0.22; pointer-events: none;
+  }
+  .studio-why__blueprint svg { width: 100%; height: auto; }
+
+  /* ---- STEPS path ---- */
+  .studio-steps__path { margin-bottom: 1.5rem; }
+  .studio-steps__connector-fallback { display: none; }
+  .studio-step-item { position: relative; }
+  .studio-step-item::before {
+    content: ''; position: absolute; top: -7px; left: 0; width: 10px; height: 10px;
+    border-radius: 50%; background: #b5d5ad; box-shadow: 0 0 0 5px rgba(181,213,173,0.12);
+  }
+
+  /* ---- INSTRUCTOR editorial ---- */
+  .studio-instructor__ambient { position: absolute; left: -80px; top: -40px; width: 380px; opacity: 0.3; }
+  .studio-instructor__card--editorial { max-width: 1020px !important; align-items: stretch !important; overflow: hidden; }
+  .studio-instructor__portrait-bg { position: absolute; left: -30px; top: -20px; width: 220px; opacity: 0.5; }
+  .studio-instructor__frame--large {
+    width: min(320px, 72vw) !important; height: 400px !important;
+    border-radius: 18px !important;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 26px), calc(100% - 26px) 100%, 0 100%);
+  }
+  .studio-instructor__frame--large .studio-instructor__img { height: 100% !important; }
+  .studio-instructor__offset-layer {
+    position: absolute; inset: 14px -14px -14px 14px; border-radius: 18px;
+    border: 1px solid rgba(181,213,173,0.28); pointer-events: none; z-index: -1;
+  }
+  .studio-instructor__portrait-wrap { z-index: 0; }
+
+  /* ---- FAQ depth ---- */
+  .studio-faq__ambient { position: absolute; right: 0; top: 0; width: 480px; opacity: 0.22; }
+  .studio-faq-item { position: relative; border-left: 1px solid transparent; transition: background-color 220ms ease, border-color 220ms ease; }
+  .studio-faq-item:hover { border-left-color: rgba(181,213,173,0.4); }
+  .studio-faq-item[open]::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(#b5d5ad, rgba(181,213,173,0));
+  }
+  .studio-faq-item[open] .studio-faq-chevron { transform: rotate(90deg) scale(1.08); }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 1024px) {
+    .studio-hero__layout { grid-template-columns: 1fr; }
+    .studio-hero__anchor { min-height: 340px; order: 2; }
+    .academy-ambient--discovery, .studio-why__blueprint { opacity: 0.18; }
+  }
+  @media (max-width: 768px) {
+    .studio-hero__anchor { min-height: 260px; }
+    .studio-hero__anchor-orbit, .academy-node-field, .academy-orbit--featured { display: none; }
+    .academy-ambient--discovery, .academy-ambient--outcomes, .studio-faq__ambient { display: none; }
+    .academy-line-art--featured { opacity: 0.25; width: 300px; }
+    .studio-instructor__frame--large { width: 100% !important; height: 380px !important; }
+    .studio-pillar-card--learn, .studio-pillar-card--continue { transform: none !important; }
+    .academy-card-stagger:nth-child(2), .academy-card-stagger:nth-child(3) { transform: none !important; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-parallax] { transform: none !important; }
+    .studio-card, .studio-pillar-card, .studio-aside-card { transition: none !important; }
+    .studio-card:hover, .studio-pillar-card:hover { transform: none !important; }
+    .academy-path__draw { stroke-dashoffset: 0 !important; }
+  }
+</style>

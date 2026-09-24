@@ -1,0 +1,541 @@
+---
+import Container from '../ui/Container.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+import { foundersData, departmentLeadsData } from '../../data/team';
+import ceoPhoto from '../../assets/images/CEO Photo.png';
+import coFounderPhoto from '../../assets/images/Co Founder Photo.jpeg';
+
+const [founderOne, founderTwo] = foundersData;
+---
+
+<section id="leadership" class="founders-leadership-section">
+  <!-- Minimal Ambient Background Tones -->
+  <div class="ambient-glow glow-subtle" aria-hidden="true"></div>
+
+  <Container class="leadership-container">
+    <!-- =======================================================================
+         1. EDITORIAL SECTION HEADER
+         ======================================================================= -->
+    <header class="editorial-header">
+      <div class="eyebrow-wrapper">
+        <Eyebrow class="editorial-eyebrow">The People Behind RoboDev Labs</Eyebrow>
+      </div>
+      <div class="header-main-row">
+        <h2 class="editorial-headline">
+          Built by people <br class="headline-br" />
+          <span class="editorial-headline-dim">who build.</span>
+        </h2>
+        <p class="editorial-lead">
+          We are engineers, educators, and product designers building enduring software systems and cultivating technical talent for the long haul.
+        </p>
+      </div>
+    </header>
+
+    <!-- =======================================================================
+         2. PRIMARY STORY: ASYMMETRIC FOUNDERS SHOWCASE
+         ======================================================================= -->
+    <div class="founders-stage">
+      <!-- Founder 01: Safal Bhattarai -->
+      <article class="founder-col founder-col-primary">
+        <div class="portrait-frame frame-primary">
+          <div class="portrait-inner">
+            <img 
+              src={ceoPhoto.src} 
+              alt={founderOne.imageAlt}
+              class="portrait-img"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="portrait-scrim" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div class="founder-meta">
+          <div class="meta-label-row">
+            <span class="role-pill">{founderOne.eyebrow}</span>
+          </div>
+          <h3 class="founder-name">{founderOne.name}</h3>
+          <p class="founder-role">{founderOne.role}</p>
+          <p class="founder-bio">{founderOne.bio}</p>
+        </div>
+      </article>
+
+      <!-- Founder 02: Staggered Asymmetric Placement -->
+      <article class="founder-col founder-col-secondary">
+        <div class="portrait-frame frame-secondary">
+          <div class="portrait-inner">
+            <img 
+              src={coFounderPhoto.src} 
+              alt={founderTwo.imageAlt}
+              class="portrait-img"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="portrait-scrim" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div class="founder-meta">
+          <div class="meta-label-row">
+            <span class="role-pill">{founderTwo.eyebrow}</span>
+          </div>
+          <h3 class="founder-name">{founderTwo.name}</h3>
+          <p class="founder-role">{founderTwo.role}</p>
+          <p class="founder-bio">{founderTwo.bio}</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- =======================================================================
+         3. QUIET EDITORIAL TRANSITION
+         ======================================================================= -->
+    <div class="editorial-divider-wrap" aria-hidden="true">
+      <div class="editorial-line"></div>
+    </div>
+
+    <!-- =======================================================================
+         4. LEADERSHIP LAYER: HEADS OF DEPARTMENT
+         Restrained, architectural, concise typography-first grid
+         ======================================================================= -->
+    <div class="department-leadership-section">
+      <div class="dept-header-row">
+        <span class="dept-super-title">Leadership</span>
+        <span class="dept-annotation">Pillar &amp; Division Directors</span>
+      </div>
+
+      <div class="dept-grid">
+        {departmentLeadsData.map((lead) => (
+          <div class="dept-item">
+            {lead.image && (
+              <div class="dept-portrait-frame">
+                <img 
+                  src={ceoPhoto.src} 
+                  alt={lead.imageAlt || lead.name}
+                  class="dept-portrait-img"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
+            <div class="dept-item-content">
+              <div class="dept-item-top">
+                <h4 class="dept-division-name">{lead.department}</h4>
+                <span class="dept-role-title">{lead.role}</span>
+              </div>
+
+              <div class="dept-item-bottom">
+                <span class="dept-person-name">{lead.name}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ==========================================================================
+     FOUNDERS & LEADERSHIP: EDITORIAL AESTHETIC
+     Large typography, large photography, generous whitespace, precise alignment.
+     Strict adherence to existing RoboDev Labs design tokens.
+     ========================================================================== */
+  .founders-leadership-section {
+    position: relative;
+    padding: var(--space-24) 0 var(--space-28) 0;
+    /* Dark green background */
+    background-color: var(--color-pepper-medium);
+    overflow: hidden;
+  }
+
+  .ambient-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(140px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .glow-subtle {
+    top: 25%;
+    left: 15%;
+    width: 600px;
+    height: 500px;
+    background: radial-gradient(circle, var(--color-salt-alpha-10) 0%, transparent 70%);
+  }
+
+  .leadership-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* --------------------------------------------------------------------------
+     1. Editorial Header
+     -------------------------------------------------------------------------- */
+  .editorial-header {
+    margin-bottom: var(--space-16);
+  }
+
+  .eyebrow-wrapper {
+    margin-bottom: var(--space-4);
+  }
+
+  .editorial-eyebrow {
+    display: inline-block;
+  }
+
+  .header-main-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: var(--space-12);
+    align-items: flex-end;
+  }
+
+  .editorial-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(2.5rem, 5.5vw, 4.4rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: var(--raw-white);
+    margin: 0;
+  }
+
+  .editorial-headline-dim {
+    color: var(--color-text-muted);
+    font-weight: 400;
+  }
+
+  .editorial-lead {
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 1.35vw, 1.15rem);
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    margin: 0;
+    max-width: 460px;
+  }
+
+  /* --------------------------------------------------------------------------
+     2. Asymmetric Founders Showcase
+     -------------------------------------------------------------------------- */
+  .founders-stage {
+    display: grid;
+    grid-template-columns: 1.15fr 0.95fr;
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: flex-start;
+  }
+
+  .founder-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  /* Asymmetric vertical offset for Founder 02 (Awwwards editorial layout) */
+  .founder-col-secondary {
+    margin-top: clamp(3rem, 8vw, 7.5rem);
+  }
+
+  /* Portrait Framing with Architectural Diagonal Curves (Top-Left & Bottom-Right) */
+  .portrait-frame {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--raw-slate-surface);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top-left-radius: 36px;
+    border-bottom-right-radius: 36px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .frame-primary {
+    aspect-ratio: 3 / 4;
+  }
+
+  .frame-secondary {
+    aspect-ratio: 4 / 5;
+  }
+
+  .portrait-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(100%) contrast(1.05) brightness(0.92);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Subtle dark vignette overlay for editorial depth */
+  .portrait-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 65%, rgba(15, 23, 42, 0.6) 100%);
+    pointer-events: none;
+  }
+
+  /* Refined, expensive hover interaction */
+  .portrait-frame:hover .portrait-img {
+    transform: scale(1.025);
+    filter: grayscale(85%) contrast(1.08) brightness(0.96);
+  }
+
+  /* Founder Metadata Stack */
+  .founder-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .meta-label-row {
+    margin-bottom: 0.2rem;
+  }
+
+  .role-pill {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: var(--letter-spacing-wider);
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .founder-name {
+    font-family: var(--font-sans);
+    font-size: clamp(1.65rem, 2.5vw, 2.25rem);
+    font-weight: 700;
+    color: var(--raw-white);
+    letter-spacing: -0.02em;
+    margin: 0;
+    line-height: 1.15;
+  }
+
+  .founder-role {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body);
+    font-weight: 500;
+    color: var(--color-text);
+    margin: 0 0 var(--space-2) 0;
+  }
+
+  .founder-bio {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body-small);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 480px;
+  }
+
+  /* --------------------------------------------------------------------------
+     3. Editorial Divider
+     -------------------------------------------------------------------------- */
+  .editorial-divider-wrap {
+    padding: var(--space-20) 0 var(--space-12) 0;
+  }
+
+  .editorial-line {
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* --------------------------------------------------------------------------
+     4. Department Leadership Layer
+     Restrained, architectural, typography-first grid
+     -------------------------------------------------------------------------- */
+  .department-leadership-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .dept-header-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .dept-super-title {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-caption);
+    letter-spacing: var(--letter-spacing-wider);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .dept-annotation {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+  }
+
+  .dept-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-8);
+  }
+
+  .dept-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-4) 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    transition: border-color 0.3s ease;
+  }
+
+  .dept-item:hover {
+    border-color: var(--color-salt-white);
+  }
+
+  .dept-portrait-frame {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background-color: var(--raw-slate-surface);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    position: relative;
+  }
+
+  .dept-portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(100%) contrast(1.05) brightness(0.92);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.6s ease;
+  }
+
+  .dept-item:hover .dept-portrait-img {
+    transform: scale(1.03);
+    filter: grayscale(70%) contrast(1.08) brightness(0.98);
+  }
+
+  .dept-item-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex: 1;
+  }
+
+  .dept-item-top {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .dept-division-name {
+    font-family: var(--font-sans);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--raw-white);
+    margin: 0;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  .dept-role-title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-accent);
+    letter-spacing: 0.02em;
+  }
+
+  .dept-item-bottom {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dept-person-name {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body-small);
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: color 0.3s ease;
+  }
+
+  .dept-item:hover .dept-person-name {
+    color: var(--raw-white);
+  }
+
+  /* --------------------------------------------------------------------------
+     5. Responsive Adjustments
+     -------------------------------------------------------------------------- */
+  @media (max-width: 1024px) {
+    .header-main-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .founders-stage {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+    }
+
+    .founder-col-secondary {
+      margin-top: var(--space-8);
+    }
+
+    .dept-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .founders-leadership-section {
+      padding: var(--space-16) 0 var(--space-20) 0;
+    }
+
+    .founders-stage {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .founder-col-secondary {
+      margin-top: 0;
+    }
+
+    .frame-primary,
+    .frame-secondary {
+      aspect-ratio: 4 / 5;
+    }
+
+    .dept-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .headline-br {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portrait-img {
+      transition: none;
+    }
+    .portrait-frame:hover .portrait-img {
+      transform: none;
+    }
+  }
+</style>

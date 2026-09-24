@@ -1,0 +1,110 @@
+---
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import { siteConfig } from '../config/site';
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalUrl?: string;
+  noindex?: boolean;
+  hideFooter?: boolean;
+}
+
+const {
+  title = `${siteConfig.name} — ${siteConfig.tagline}`,
+  description = siteConfig.description,
+  image = '/brand/og-image.png',
+  canonicalUrl = `${siteConfig.url}${Astro.url.pathname}`,
+  noindex = false,
+  hideFooter = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <!-- Essential Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Document Info -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={siteConfig.founder} />
+    <meta name="theme-color" content="#2B2B2B" />
+    <meta name="generator" content={Astro.generator} />
+
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Open Graph Metadata -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, siteConfig.url).href} />
+    <meta property="og:site_name" content={siteConfig.name} />
+
+    <!-- Twitter / X Metadata -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, siteConfig.url).href} />
+
+    <!-- Dynamic Theme & Global Component Customizer Storage -->
+    <script is:inline>
+      (function() {
+        try {
+          const saved = localStorage.getItem('robodev_theme_customizer');
+          if (saved) {
+            const config = JSON.parse(saved);
+            const root = document.documentElement;
+            if (config.primaryColor) root.style.setProperty('--color-brand', config.primaryColor);
+            if (config.accentColor) root.style.setProperty('--color-accent', config.accentColor);
+            if (config.bgColor) {
+              root.style.setProperty('--color-background', config.bgColor);
+              root.style.setProperty('--color-background-primary', config.bgColor);
+              root.style.setProperty('--color-background-secondary', config.bgColor);
+              root.style.setProperty('--color-background-dark', config.bgColor);
+            }
+            if (config.surfaceColor) root.style.setProperty('--color-surface', config.surfaceColor);
+            if (config.fontFamily) root.style.setProperty('--font-sans', config.fontFamily);
+            if (config.borderRadius) {
+              root.style.setProperty('--radius-md', config.borderRadius + 'px');
+              root.style.setProperty('--radius-lg', (parseInt(config.borderRadius) + 4) + 'px');
+              root.style.setProperty('--radius-xl', (parseInt(config.borderRadius) + 8) + 'px');
+            }
+            if (config.sectionPadding) {
+              root.style.setProperty('--space-16', (parseInt(config.sectionPadding) * 0.8) + 'px');
+              root.style.setProperty('--space-20', config.sectionPadding + 'px');
+            }
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <Header />
+    <main id="main-content">
+      <slot />
+    </main>
+    {!hideFooter && <Footer />}
+  </body>
+</html>
+
+<style>
+  #main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+</style>

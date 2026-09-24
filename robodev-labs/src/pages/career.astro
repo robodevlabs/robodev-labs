@@ -1,0 +1,326 @@
+---
+/**
+ * Careers landing page: /career
+ * Presentation-only. All copy and positions come from src/data/careers.ts.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui/Container.astro';
+import Button from '../components/ui/Button.astro';
+import Icon from '../components/ui/Icon.astro';
+import AcademyGrid from '../components/academy/AcademyGrid.astro';
+import AcademyNodes from '../components/academy/AcademyNodes.astro';
+import AcademyBlueprint from '../components/academy/AcademyBlueprint.astro';
+import AcademyOrbit from '../components/academy/AcademyOrbit.astro';
+import { careersData, careersPage, getOpenCareers } from '../data/careers';
+import { siteConfig } from '../config/site';
+
+const openCareers = getOpenCareers();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'RoboDev Labs Careers',
+  description: careersPage.intro,
+  url: `${siteConfig.url}/career`,
+  numberOfItems: careersData.length,
+  itemListElement: careersData.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'JobPosting',
+      title: c.title,
+      description: c.summary,
+      url: `${siteConfig.url}/careers/${c.slug}`,
+      employmentType: c.employmentType,
+      hiringOrganization: { '@type': 'Organization', name: siteConfig.name, sameAs: siteConfig.url },
+    },
+  })),
+};
+---
+
+<BaseLayout title={`Careers — ${siteConfig.name}`} description={careersPage.intro}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <div class="careers-page">
+    <!-- HERO -->
+    <header class="careers-hero" data-careers-section="hero">
+      <div class="careers-hero__backdrop" aria-hidden="true">
+        <div class="careers-hero__grid" data-parallax="0.06">
+          <AcademyGrid />
+        </div>
+        <div class="careers-hero__nodes" data-parallax="0.14">
+          <AcademyNodes />
+        </div>
+      </div>
+
+      <Container>
+        <div class="careers-hero__layout">
+          <div class="careers-hero__content reveal-fade-up">
+            <span class="careers-eyebrow">{careersPage.eyebrow}</span>
+            <h1 class="careers-hero__title">{careersPage.headline}</h1>
+            <p class="careers-hero__intro">{careersPage.intro}</p>
+            <div class="careers-hero__actions">
+              <Button variant="primary" size="lg" href="#positions">
+                <span>{careersPage.ctaPrimaryLabel}</span>
+                <Icon name="arrow-right" size={16} />
+              </Button>
+              <a class="careers-text-link" href={`mailto:${siteConfig.email}?subject=Careers%20at%20RoboDev%20Labs`}>
+                {careersPage.ctaSecondaryLabel}
+              </a>
+            </div>
+          </div>
+          <div class="careers-hero__visual" aria-hidden="true" data-parallax="0.1">
+            <AcademyBlueprint class="careers-blueprint" />
+            <div class="careers-hero__orbit">
+              <AcademyOrbit variant="hero" />
+            </div>
+          </div>
+        </div>
+      </Container>
+    </header>
+
+    <!-- OPEN POSITIONS -->
+    <section class="careers-positions" id="positions" aria-labelledby="positions-title" data-careers-section="positions">
+      <Container>
+        <div class="careers-section-head reveal-fade-up">
+          <span class="careers-eyebrow">{careersPage.positionsEyebrow}</span>
+          <h2 id="positions-title" class="careers-section-title">{careersPage.positionsTitle}</h2>
+          <p class="careers-section-intro">{careersPage.positionsIntro}</p>
+        </div>
+
+        {openCareers.length > 0 ? (
+          <div class="careers-list" role="list">
+            {openCareers.map((career, idx) => (
+              <article class="career-card reveal-fade-up" role="listitem" style={`--reveal-delay:${idx * 80}ms`}>
+                <div class="career-card__main">
+                  <div class="career-card__top">
+                    <span class={`career-status career-status--${career.status.toLowerCase()}`}>
+                      <span class="career-status__dot" aria-hidden="true"></span>
+                      {career.status}
+                    </span>
+                    <span class="career-card__meta">{career.department} · {career.employmentType}</span>
+                  </div>
+                  <h3 class="career-card__title">
+                    <a href={`/careers/${career.slug}`}>{career.title}</a>
+                  </h3>
+                  <p class="career-card__summary">{career.summary}</p>
+                  <p class="career-card__location">{career.location} · {career.workMode}</p>
+                </div>
+                <div class="career-card__side">
+                  <a href={`/careers/${career.slug}`} class="career-card__cta">
+                    <span>View position</span>
+                    <span class="career-card__arrow" aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div class="careers-empty reveal-fade-up">
+            <h3 class="careers-empty__title">{careersPage.emptyTitle}</h3>
+            <p class="careers-empty__body">{careersPage.emptyDescription}</p>
+            <Button
+              variant="secondary"
+              size="md"
+              href={`mailto:${siteConfig.email}?subject=Future%20roles%20at%20RoboDev%20Labs`}
+            >
+              <span>{careersPage.emptyCtaLabel}</span>
+            </Button>
+          </div>
+        )}
+      </Container>
+    </section>
+
+    <!-- WHY -->
+    <section class="careers-why" aria-labelledby="why-title" data-careers-section="why">
+      <div class="careers-why__bg" aria-hidden="true" data-parallax="0.05">
+        <AcademyGrid />
+      </div>
+      <Container>
+        <div class="careers-section-head reveal-fade-up">
+          <span class="careers-eyebrow">{careersPage.valuesEyebrow}</span>
+          <h2 id="why-title" class="careers-section-title">{careersPage.valuesTitle}</h2>
+          <p class="careers-section-intro">{careersPage.valuesIntro}</p>
+        </div>
+        <div class="careers-values-grid">
+          {careersPage.values.map((value, idx) => (
+            <div class="careers-value reveal-fade-up" style={`--reveal-delay:${idx * 70}ms`}>
+              <span class="careers-value__index" aria-hidden="true">0{idx + 1}</span>
+              <h3 class="careers-value__title">{value.title}</h3>
+              <p class="careers-value__body">{value.description}</p>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="careers-process" aria-labelledby="process-title" data-careers-section="process">
+      <Container>
+        <div class="careers-section-head reveal-fade-up">
+          <span class="careers-eyebrow">{careersPage.processEyebrow}</span>
+          <h2 id="process-title" class="careers-section-title">{careersPage.processTitle}</h2>
+          <p class="careers-section-intro">{careersPage.processIntro}</p>
+        </div>
+        <ol class="careers-steps">
+          {careersPage.steps.map((step) => (
+            <li class="careers-step reveal-fade-up">
+              <span class="careers-step__index">{step.index}</span>
+              <div>
+                <h3 class="careers-step__title">{step.title}</h3>
+                <p class="careers-step__body">{step.description}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </Container>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="careers-cta" aria-labelledby="cta-title">
+      <Container>
+        <div class="careers-cta__card reveal-fade-up">
+          <div>
+            <h2 id="cta-title" class="careers-cta__title">{careersPage.ctaTitle}</h2>
+            <p class="careers-cta__body">{careersPage.ctaDescription}</p>
+          </div>
+          <div class="careers-cta__actions">
+            <Button variant="primary" size="lg" href="#positions">
+              <span>{careersPage.ctaPrimaryLabel}</span>
+            </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              href={`mailto:${siteConfig.email}?subject=Careers%20at%20RoboDev%20Labs`}
+            >
+              <span>{careersPage.ctaSecondaryLabel}</span>
+            </Button>
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const els = document.querySelectorAll('.careers-page .reveal-fade-up');
+        if ('IntersectionObserver' in window && !reduce) {
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+            });
+          }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+          els.forEach((el) => io.observe(el));
+        } else {
+          els.forEach((el) => el.classList.add('is-visible'));
+        }
+        if (reduce) return;
+        const layers = Array.from(document.querySelectorAll('.careers-page [data-parallax]'));
+        let ticking = false;
+        const update = () => {
+          ticking = false;
+          if (window.innerWidth < 768) return;
+          const vh = window.innerHeight;
+          layers.forEach((el) => {
+            const speed = parseFloat(el.getAttribute('data-parallax') || '0.08');
+            const r = el.getBoundingClientRect();
+            const off = r.top + r.height / 2 - vh / 2;
+            el.style.setProperty('--parallax-y', `${(-off * speed).toFixed(1)}px`);
+          });
+        };
+        const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+        update();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      });
+    </script>
+  </div>
+</BaseLayout>
+
+<style>
+  .careers-page { background: var(--color-background, #2b2b2b); color: var(--color-text, #fff); min-height: 100vh; overflow-x: clip; }
+  .careers-eyebrow {
+    font-family: var(--font-mono, monospace); font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-secondary, #d4d4d4);
+  }
+  .reveal-fade-up { opacity: 0; transform: translateY(18px); transition: opacity 600ms ease, transform 600ms cubic-bezier(0.16,1,0.3,1); transition-delay: var(--reveal-delay, 0ms); }
+  .reveal-fade-up.is-visible { opacity: 1; transform: none; }
+  [data-parallax] { transform: translate3d(0, var(--parallax-y, 0px), 0); will-change: transform; }
+
+  .careers-hero { position: relative; padding: clamp(6.5rem, 12vh, 9rem) 0 clamp(3rem, 6vw, 5rem); background: var(--color-background-secondary, #31473a); border-bottom: 1px solid rgba(255,255,255,0.1); overflow: hidden; }
+  .careers-hero__backdrop { position: absolute; inset: 0; pointer-events: none; }
+  .careers-hero__grid { position: absolute; top: 0; right: 0; width: min(560px, 60%); opacity: 0.35; }
+  .careers-hero__nodes { position: absolute; left: 3%; bottom: 8%; width: 300px; opacity: 0.6; }
+  .careers-hero__layout { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,0.85fr); gap: clamp(2rem,5vw,4rem); align-items: center; }
+  .careers-hero__title { font-size: clamp(2.4rem,5.5vw,4.2rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.06; margin: 1rem 0 1.25rem; }
+  .careers-hero__intro { font-size: clamp(1.05rem,1.6vw,1.25rem); line-height: 1.65; opacity: 0.88; max-width: 60ch; margin: 0 0 2rem; }
+  .careers-hero__actions { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .careers-text-link { color: #fff; text-underline-offset: 4px; }
+  .careers-hero__visual { position: relative; min-height: 380px; }
+  .careers-blueprint { width: min(480px,100%); height: auto; opacity: 0.9; }
+  .careers-hero__orbit { position: absolute; right: 4%; top: 2%; width: 160px; }
+
+  .careers-positions, .careers-why, .careers-process { padding: clamp(3.5rem,7vw,5.5rem) 0; position: relative; }
+  .careers-positions { background: var(--color-background, #2b2b2b); }
+  .careers-section-head { max-width: 760px; margin-bottom: 2.5rem; }
+  .careers-section-title { font-size: clamp(2rem,4vw,3rem); font-weight: 800; letter-spacing: -0.03em; margin: 0.7rem 0 1rem; }
+  .careers-section-intro { opacity: 0.82; line-height: 1.65; margin: 0; }
+
+  .careers-list { display: flex; flex-direction: column; gap: 1.25rem; }
+  .career-card {
+    display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 1.5rem; align-items: center;
+    border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: clamp(1.5rem,3vw,2.25rem);
+    background: rgba(255,255,255,0.04); transition: transform 280ms ease, border-color 220ms ease, box-shadow 280ms ease;
+  }
+  .career-card:hover { transform: translateY(-3px); border-color: rgba(181,213,173,0.4); box-shadow: 0 18px 40px rgba(0,0,0,0.28); }
+  .career-card__top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 0.9rem; }
+  .career-status { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono,monospace); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: #b5d5ad; border: 1px solid rgba(181,213,173,0.4); background: rgba(181,213,173,0.08); border-radius: 999px; padding: 0.25rem 0.75rem; }
+  .career-status__dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
+  .career-card__meta { font-size: 0.82rem; opacity: 0.7; }
+  .career-card__title { font-size: clamp(1.4rem,2.4vw,1.9rem); font-weight: 750; letter-spacing: -0.02em; margin: 0 0 0.7rem; }
+  .career-card__title a { color: inherit; text-decoration: none; }
+  .career-card__title a:hover { text-decoration: underline; text-underline-offset: 5px; }
+  .career-card__summary { opacity: 0.85; line-height: 1.65; margin: 0 0 0.8rem; max-width: 64ch; }
+  .career-card__location { font-family: var(--font-mono,monospace); font-size: 0.8rem; opacity: 0.65; margin: 0; }
+  .career-card__cta { display: inline-flex; align-items: center; gap: 8px; font-weight: 650; color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.22); border-radius: 8px; padding: 10px 18px; white-space: nowrap; }
+  .career-card__cta:hover { background: #fff; color: #2b2b2b; }
+  .career-card__cta:hover .career-card__arrow { transform: translateX(4px); }
+  .career-card__arrow { display: inline-block; transition: transform 180ms ease; }
+
+  .careers-empty { border: 1px dashed rgba(255,255,255,0.2); border-radius: 12px; padding: 2.5rem; max-width: 720px; }
+  .careers-empty__title { font-size: 1.5rem; margin: 0 0 0.75rem; }
+  .careers-empty__body { opacity: 0.82; line-height: 1.65; margin: 0 0 1.5rem; }
+
+  .careers-why { background: var(--color-background-secondary, #31473a); overflow: hidden; }
+  .careers-why__bg { position: absolute; right: 0; top: 30px; width: 480px; opacity: 0.25; pointer-events: none; }
+  .careers-values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 1.25rem; position: relative; }
+  .careers-value { border-left: 2px solid rgba(181,213,173,0.4); padding-left: 1.25rem; }
+  .careers-value__index { font-family: var(--font-mono,monospace); font-size: 0.75rem; opacity: 0.5; }
+  .careers-value__title { font-size: 1.15rem; font-weight: 700; margin: 0.4rem 0 0.5rem; }
+  .careers-value__body { opacity: 0.82; line-height: 1.65; margin: 0; font-size: 0.95rem; }
+
+  .careers-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 1.5rem; }
+  .careers-step { border-top: 1px solid rgba(255,255,255,0.18); padding-top: 1.25rem; }
+  .careers-step__index { font-family: var(--font-mono,monospace); color: #b5d5ad; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; }
+  .careers-step__title { font-size: 1.1rem; margin: 0.5rem 0; }
+  .careers-step__body { opacity: 0.8; line-height: 1.6; margin: 0; font-size: 0.94rem; }
+
+  .careers-cta { padding: 0 0 clamp(4rem,7vw,6rem); }
+  .careers-cta__card { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap; border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: clamp(1.75rem,4vw,2.75rem); background: rgba(255,255,255,0.04); }
+  .careers-cta__title { font-size: clamp(1.6rem,3vw,2.2rem); letter-spacing: -0.02em; margin: 0 0 0.6rem; }
+  .careers-cta__body { opacity: 0.82; margin: 0; max-width: 56ch; line-height: 1.6; }
+  .careers-cta__actions { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+
+  @media (max-width: 960px) {
+    .careers-hero__layout { grid-template-columns: 1fr; }
+    .careers-hero__visual { min-height: 280px; }
+    .career-card { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    .careers-hero__orbit, .careers-hero__nodes { display: none; }
+    .careers-why__bg { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+    [data-parallax] { transform: none !important; }
+  }
+</style>

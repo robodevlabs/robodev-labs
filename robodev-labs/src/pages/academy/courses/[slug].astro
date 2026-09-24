@@ -1,0 +1,23 @@
+---
+/**
+ * Dynamic Workshop Route: /academy/courses/[slug]
+ * Automatically generates pages for all workshops defined in workshops.ts
+ */
+import { workshopsData, type Workshop } from '../../../data/workshops';
+import WorkshopCourseTemplate from '../../../components/academy/WorkshopCourseTemplate.astro';
+
+export async function getStaticPaths() {
+  return workshopsData.map((course) => ({
+    params: { slug: course.slug },
+    props: { course },
+  }));
+}
+
+export interface Props {
+  course: Workshop;
+}
+
+const { course } = Astro.props;
+---
+
+<WorkshopCourseTemplate course={course} />

@@ -1,0 +1,756 @@
+---
+import { Image } from 'astro:assets';
+import logoImage from '../../assets/images/robodevlabs.png';
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+
+// Canonical navigation items including all sections
+const navItems = [
+  { name: 'Ecosystem', href: '/#pillars', sectionId: 'pillars' },
+  { name: 'Services', href: '/#services', sectionId: 'services' },
+  { name: 'Product Studio', href: '/#products', sectionId: 'products' },
+  { name: 'Academy', href: '/#academy', sectionId: 'academy' },
+  { name: 'How We Work', href: '/#process', sectionId: 'process' },
+  { name: 'Leadership', href: '/#leadership', sectionId: 'leadership' },
+  { name: 'Careers', href: '/career', sectionId: 'careers' },
+];
+---
+
+<!-- =========================================================================
+     ROBODEV LABS FLOATING NAVIGATION ARCHITECTURE
+     - Top-Left: Standalone Brand Logo
+     - Center: Floating Dynamic Island Capsule with Nav Items & Progress Line
+     - Top-Right: Standalone "Start a Project" CTA Action
+     ========================================================================= -->
+<header class="island-header-viewport" id="island-header-viewport">
+  <div class="island-viewport-bar">
+    <!-- Top-Left: Logo -->
+    <div class="corner-logo-anchor">
+      <a href="/" class="brand-logo-link" aria-label="RoboDev Labs Home">
+        <Image
+          src={logoImage}
+          alt="RoboDev Labs Logo"
+          height={36}
+          class="brand-logo-img"
+          loading="eager"
+        />
+      </a>
+    </div>
+
+    <!-- Center: Floating Dynamic Island Navigation Capsule -->
+    <div 
+      class="dynamic-island-capsule" 
+      id="dynamic-island-capsule" 
+      role="navigation" 
+      aria-label="Main Navigation"
+      aria-expanded="false"
+    >
+      <!-- Horizontal Navigation Track inside Island -->
+      <div class="island-main-bar">
+        <!-- Contextual Section Indicator (Mobile/Compact context) -->
+        <div class="island-context-badge" id="island-context-badge" aria-hidden="true">
+          <span class="context-pulse-dot"></span>
+          <span class="context-title" id="island-active-label">Overview</span>
+        </div>
+
+        <!-- Desktop Navigation Items -->
+        <nav class="island-nav-deck" id="island-nav-deck" aria-label="Desktop Navigation Links">
+          {navItems.map((item) => (
+            <a 
+              href={item.href} 
+              class="island-nav-link" 
+              data-section={item.sectionId}
+              title={item.title || item.name}
+            >
+              <span class="link-label">{item.name}</span>
+              <span class="active-indicator-dot"></span>
+            </a>
+          ))}
+        </nav>
+
+        <!-- Mobile Morph Trigger inside Island -->
+        <button 
+          type="button" 
+          class="island-morph-trigger" 
+          id="island-morph-trigger" 
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+        >
+          <span class="morph-bar top"></span>
+          <span class="morph-bar bottom"></span>
+        </button>
+      </div>
+
+      <!-- Integrated Mobile Morphed Expansion Dropdown -->
+      <div class="island-expanded-content" id="island-expanded-content" aria-hidden="true">
+        <nav class="mobile-links-deck" aria-label="Mobile Navigation">
+          {navItems.map((item) => (
+            <a 
+              href={item.href} 
+              class="mobile-island-link" 
+              data-section={item.sectionId}
+            >
+              <span class="mobile-item-name">{item.name}</span>
+              <span class="mobile-item-arrow">&rarr;</span>
+            </a>
+          ))}
+        </nav>
+
+        <div class="mobile-bottom-action">
+          <Button href="/contact" variant="primary" size="md" class="mobile-expanded-cta-btn" id="mobile-expanded-cta">
+            <span>Start a Project</span>
+          </Button>
+        </div>
+      </div>
+
+      <!-- Integrated Razor-Thin Page Progress Line (0% to 100%) -->
+      <div class="island-progress-track" aria-hidden="true">
+        <div class="island-progress-bar" id="island-progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- Top-Right: Standalone "Start a Project" CTA Action -->
+    <div class="corner-cta-anchor">
+      <Button href="/contact" variant="primary" size="sm" class="corner-cta-btn" id="corner-cta-button">
+        <span class="cta-text">Start a Project</span>
+      </Button>
+    </div>
+  </div>
+
+  <!-- Subtle backdrop overlay for mobile expanded state -->
+  <div class="island-backdrop-scrim" id="island-backdrop-scrim" aria-hidden="true"></div>
+</header>
+
+<script>
+  function initializeDynamicIsland() {
+    const capsule = document.getElementById('dynamic-island-capsule');
+    const progressBar = document.getElementById('island-progress-bar');
+    const trigger = document.getElementById('island-morph-trigger');
+    const scrim = document.getElementById('island-backdrop-scrim');
+    const activeLabel = document.getElementById('island-active-label');
+    const navLinks = document.querySelectorAll('.island-nav-link');
+    const mobileLinks = document.querySelectorAll('.mobile-island-link, #mobile-expanded-cta');
+
+    if (!capsule || !progressBar) return;
+
+    let lastScrollY = window.scrollY;
+    let isTicking = false;
+    let scrollStopTimer: any = null;
+
+    // ------------------------------------------------------------------------
+    // 1. Page Progress Indicator & Scroll-Aware Directional Morphing
+    // ------------------------------------------------------------------------
+    function updateScrollState() {
+      const currentScrollY = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      
+      // Calculate precise progress (0% - 100%)
+      const progress = docHeight > 0 ? Math.min(100, Math.max(0, (currentScrollY / docHeight) * 100)) : 0;
+      progressBar.style.width = `${progress}%`;
+
+      // Morphing classes based on scroll dynamics
+      if (currentScrollY > 60) {
+        capsule.classList.add('is-floating');
+      } else {
+        capsule.classList.remove('is-floating');
+      }
+
+      // Scrolling down vs scrolling up
+      if (currentScrollY > lastScrollY && currentScrollY > 120) {
+        capsule.classList.add('is-scrolling-down');
+        capsule.classList.remove('is-scrolling-up');
+      } else if (currentScrollY < lastScrollY && currentScrollY > 80) {
+        capsule.classList.add('is-scrolling-up');
+        capsule.classList.remove('is-scrolling-down');
+      } else if (currentScrollY <= 80) {
+        capsule.classList.remove('is-scrolling-down', 'is-scrolling-up');
+      }
+
+      // Settle into resting state after scroll halts
+      clearTimeout(scrollStopTimer);
+      scrollStopTimer = setTimeout(() => {
+        capsule.classList.remove('is-scrolling-down');
+      }, 350);
+
+      lastScrollY = currentScrollY;
+      isTicking = false;
+    }
+
+    function onScroll() {
+      if (!isTicking) {
+        window.requestAnimationFrame(updateScrollState);
+        isTicking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', updateScrollState, { passive: true });
+    updateScrollState();
+
+    // ------------------------------------------------------------------------
+    // 2. Section Awareness & Location Tracking
+    // ------------------------------------------------------------------------
+    const sectionDefinitions = [
+      { id: 'hero-section', name: 'Overview' },
+      { id: 'pillars', name: 'Ecosystem' },
+      { id: 'ecosystem-divisions', name: 'Services' },
+      { id: 'services', name: 'Services' },
+      { id: 'products', name: 'Product Studio' },
+      { id: 'academy', name: 'Academy' },
+      { id: 'process', name: 'How We Work' },
+      { id: 'leadership', name: 'Leadership' },
+      { id: 'contact', name: 'Contact' },
+    ];
+
+    const observedElements: { el: Element; name: string; sectionId: string }[] = [];
+
+    // Track hero
+    const heroEl = document.querySelector('.hero-section');
+    if (heroEl) observedElements.push({ el: heroEl, name: 'Overview', sectionId: 'hero' });
+
+    // Track sections
+    sectionDefinitions.forEach(def => {
+      const el = document.getElementById(def.id);
+      if (el) observedElements.push({ el, name: def.name, sectionId: def.id });
+    });
+
+    if ('IntersectionObserver' in window && observedElements.length > 0) {
+      const sectionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const matched = observedElements.find((item) => item.el === entry.target);
+              if (matched) {
+                // Update active micro-label
+                if (activeLabel) {
+                  activeLabel.textContent = matched.name;
+                }
+
+                // Update nav link optical active highlights
+                navLinks.forEach((link) => {
+                  const targetSec = link.getAttribute('data-section');
+                  if (
+                    targetSec === matched.sectionId ||
+                    (matched.sectionId === 'ecosystem-divisions' && targetSec === 'services')
+                  ) {
+                    link.classList.add('is-active');
+                  } else {
+                    link.classList.remove('is-active');
+                  }
+                });
+              }
+            }
+          });
+        },
+        {
+          rootMargin: '-20% 0px -50% 0px',
+          threshold: 0.1,
+        }
+      );
+
+      observedElements.forEach((item) => sectionObserver.observe(item.el));
+    }
+
+    // ------------------------------------------------------------------------
+    // 3. Dynamic Island Mobile Morphing Interaction
+    // ------------------------------------------------------------------------
+    function toggleMobileMorph() {
+      const isExpanded = capsule.classList.contains('is-expanded');
+      if (isExpanded) {
+        closeMobileMorph();
+      } else {
+        openMobileMorph();
+      }
+    }
+
+    function openMobileMorph() {
+      capsule.classList.add('is-expanded');
+      trigger?.classList.add('is-active');
+      trigger?.setAttribute('aria-expanded', 'true');
+      capsule.setAttribute('aria-expanded', 'true');
+      scrim?.classList.add('is-visible');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMorph() {
+      capsule.classList.remove('is-expanded');
+      trigger?.classList.remove('is-active');
+      trigger?.setAttribute('aria-expanded', 'false');
+      capsule.setAttribute('aria-expanded', 'false');
+      scrim?.classList.remove('is-visible');
+      document.body.style.overflow = '';
+    }
+
+    trigger?.addEventListener('click', toggleMobileMorph);
+    scrim?.addEventListener('click', closeMobileMorph);
+    mobileLinks.forEach((link) => link.addEventListener('click', closeMobileMorph));
+
+    // Keyboard accessibility: Escape key to collapse
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && capsule.classList.contains('is-expanded')) {
+        closeMobileMorph();
+      }
+    });
+  }
+
+  // Support initial load and Astro View Transitions
+  initializeDynamicIsland();
+  document.addEventListener('astro:page-load', initializeDynamicIsland);
+</script>
+
+<style>
+  /* ==========================================================================
+     FLOATING VIEWPORT BAR STYLES
+     - Top-Left: Logo
+     - Center: Floating Dynamic Island
+     - Top-Right: Start a Project Button
+     ========================================================================== */
+  .island-header-viewport {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: var(--z-sticky);
+    pointer-events: none; /* Content below receives clicks */
+    padding-top: clamp(14px, 2.2vw, 22px);
+    padding-left: clamp(1rem, 3.5vw, 3rem);
+    padding-right: clamp(1rem, 3.5vw, 3rem);
+  }
+
+  .island-viewport-bar {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    position: relative;
+  }
+
+  /* --------------------------------------------------------------------------
+     1. Top-Left Logo Anchor
+     -------------------------------------------------------------------------- */
+  .corner-logo-anchor {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+  }
+
+  .brand-logo-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.22s ease, opacity 0.22s ease;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .brand-logo-img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .brand-logo-link:hover {
+    opacity: 0.85;
+    transform: scale(1.03);
+  }
+
+  .brand-logo-link:active {
+    transform: scale(0.97);
+  }
+
+  /* --------------------------------------------------------------------------
+     2. Top-Right "Start a Project" Button Anchor
+     -------------------------------------------------------------------------- */
+  .corner-cta-anchor {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    z-index: 10;
+  }
+
+  .corner-cta-btn {
+    font-size: 0.85rem !important;
+    padding: 0.6rem 1.35rem !important;
+  }
+
+  /* --------------------------------------------------------------------------
+     3. Center Floating Dynamic Island Navigation Capsule
+     -------------------------------------------------------------------------- */
+  .dynamic-island-capsule {
+    pointer-events: auto;
+    grid-column: 2;
+    justify-self: center;
+    position: relative;
+    width: auto;
+    background: var(--color-pepper-alpha-85, rgba(43, 43, 43, 0.85));
+    backdrop-filter: blur(24px) saturate(190%);
+    -webkit-backdrop-filter: blur(24px) saturate(190%);
+    border: 1px solid var(--color-border);
+    border-radius: 9999px;
+    box-shadow: 
+      0 12px 36px -4px rgba(0, 0, 0, 0.55),
+      0 2px 8px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    transition: 
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease,
+      border-radius 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: center top;
+    user-select: none;
+    overflow: hidden;
+  }
+
+  /* Micro-glow on hover */
+  .dynamic-island-capsule:hover {
+    border-color: var(--color-salt-light);
+    box-shadow: 
+      0 16px 42px -4px rgba(0, 0, 0, 0.65),
+      0 0 24px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  /* Scroll-Aware States */
+  .dynamic-island-capsule.is-floating {
+    background: var(--color-pepper-alpha-95, rgba(35, 35, 35, 0.95));
+    border-color: var(--color-border);
+  }
+
+  .dynamic-island-capsule.is-scrolling-down {
+    transform: translateY(-2px) scale(0.985);
+    box-shadow: 0 8px 24px -2px rgba(0, 0, 0, 0.5);
+  }
+
+  .dynamic-island-capsule.is-scrolling-up {
+    transform: translateY(0) scale(1);
+    border-color: var(--color-salt-light);
+  }
+
+  /* --------------------------------------------------------------------------
+     Main Island Bar (Inside Capsule)
+     -------------------------------------------------------------------------- */
+  .island-main-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 14px;
+    gap: clamp(10px, 2vw, 18px);
+  }
+
+  /* Context Badge (Mobile display) */
+  .island-context-badge {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    color: #cbd5e1;
+    font-weight: 500;
+  }
+
+  .context-pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-salt-white);
+    box-shadow: 0 0 8px var(--color-salt-white);
+  }
+
+  /* Desktop Nav Deck */
+  .island-nav-deck {
+    display: flex;
+    align-items: center;
+    gap: clamp(8px, 1.4vw, 20px);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .island-nav-link {
+    position: relative;
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: var(--color-salt-white);
+    text-decoration: none;
+    padding: 6px 6px;
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+    transition: color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+    white-space: nowrap;
+    opacity: 0.88;
+  }
+
+  .island-nav-link:hover {
+    color: #ffffff;
+    opacity: 1;
+    transform: translateY(-1px);
+  }
+
+  .island-nav-link:active {
+    transform: scale(0.96);
+  }
+
+  /* Active Indicator Dot */
+  .active-indicator-dot {
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background-color: var(--color-salt-white);
+    box-shadow: 0 0 6px var(--color-salt-white);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .island-nav-link.is-active {
+    color: #ffffff;
+    font-weight: 600;
+    opacity: 1;
+  }
+
+  .island-nav-link.is-active .active-indicator-dot {
+    transform: translateX(-50%) scale(1);
+  }
+
+  /* Mobile Morph Trigger inside Island */
+  .island-morph-trigger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    gap: 4px;
+    color: var(--color-text-secondary);
+    padding: 0;
+    transition: all 0.2s ease;
+  }
+
+  .island-morph-trigger:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--color-salt-white);
+  }
+
+  .morph-bar {
+    width: 14px;
+    height: 1.6px;
+    background-color: currentColor;
+    border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+  }
+
+  .island-morph-trigger.is-active .morph-bar.top {
+    transform: translateY(2.8px) rotate(45deg);
+  }
+
+  .island-morph-trigger.is-active .morph-bar.bottom {
+    transform: translateY(-2.8px) rotate(-45deg);
+  }
+
+  /* --------------------------------------------------------------------------
+     Integrated Mobile Morphed Content Deck
+     -------------------------------------------------------------------------- */
+  .island-expanded-content {
+    display: none;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 16px;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, padding 0.3s ease;
+  }
+
+  .mobile-links-deck {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-top: 10px;
+    padding-bottom: 12px;
+  }
+
+  .mobile-island-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0.9rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-salt-white);
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-island-link:hover,
+  .mobile-island-link:active {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+  }
+
+  .mobile-item-arrow {
+    color: var(--color-salt-light);
+    font-family: var(--font-mono);
+  }
+
+  .mobile-bottom-action {
+    padding-top: 4px;
+    padding-bottom: 16px;
+  }
+
+  .mobile-expanded-cta-btn {
+    width: 100% !important;
+    padding: 0.8rem !important;
+  }
+
+  /* --------------------------------------------------------------------------
+     Razor-Thin Integrated Page Progress Line
+     -------------------------------------------------------------------------- */
+  .island-progress-track {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+  }
+
+  .island-progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-pepper-medium) 0%, var(--color-salt-light) 50%, var(--color-salt-white) 100%);
+    box-shadow: 0 0 6px var(--color-salt-white);
+    transition: width 0.08s linear;
+  }
+
+  /* --------------------------------------------------------------------------
+     Backdrop Scrim for Mobile Expanded State
+     -------------------------------------------------------------------------- */
+  .island-backdrop-scrim {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+  }
+
+  /* --------------------------------------------------------------------------
+     RESPONSIVE BREAKPOINTS
+     -------------------------------------------------------------------------- */
+  /* Tighten the island at narrow desktop widths so all 7 links fit without clipping */
+  @media (max-width: 1150px) {
+    .island-main-bar {
+      padding: 0 10px;
+      gap: 8px;
+    }
+
+    .island-nav-deck {
+      gap: clamp(6px, 1vw, 14px);
+    }
+
+    .island-nav-link {
+      font-size: 0.78rem;
+      padding: 6px 4px;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .corner-cta-anchor {
+      display: none; /* Relocates into mobile expanded deck */
+    }
+
+    .island-viewport-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .dynamic-island-capsule {
+      grid-column: auto;
+    }
+
+    .island-nav-deck {
+      display: none;
+    }
+
+    .island-context-badge {
+      display: inline-flex;
+    }
+
+    .island-morph-trigger {
+      display: flex;
+    }
+
+    .island-expanded-content {
+      display: block;
+    }
+
+    .dynamic-island-capsule.is-expanded {
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      border-color: var(--color-salt-light);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 20;
+    }
+
+    .dynamic-island-capsule.is-expanded .island-expanded-content {
+      max-height: 520px;
+      opacity: 1;
+      padding: 0 16px;
+    }
+
+    .island-backdrop-scrim.is-visible {
+      display: block;
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .island-header-viewport {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    .dynamic-island-capsule,
+    .island-progress-bar,
+    .morph-bar,
+    .island-expanded-content {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>

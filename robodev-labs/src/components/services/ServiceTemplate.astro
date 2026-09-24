@@ -1,0 +1,356 @@
+---
+/**
+ * ServiceTemplate — reusable service-detail presentation.
+ * Uses WorkshopCourseTemplate design language.
+ * Consumes only a `service` object from src/data/engineering.ts.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../ui/Container.astro';
+import Logo from '../common/Logo.astro';
+import { getRelatedServices, type EngineeringService } from '../../data/engineering';
+import { siteConfig } from '../../config/site';
+
+export interface Props {
+  service: EngineeringService;
+}
+
+const { service } = Astro.props as Props;
+const related = getRelatedServices(service.relatedSlugs);
+
+const pageUrl = `${siteConfig.url}/services/${service.slug}`;
+const contactHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent(`Project inquiry: ${service.title}`)}`;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Engineering Services', item: `${siteConfig.url}/services` },
+      { '@type': 'ListItem', position: 2, name: service.title, item: pageUrl },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: `${service.title} — ${siteConfig.name}`,
+    description: service.summary,
+    url: pageUrl,
+    provider: { '@type': 'Organization', name: siteConfig.name, url: siteConfig.url },
+  },
+];
+---
+
+<BaseLayout title={`${service.title} — Engineering Services`} description={service.summary}>
+  {jsonLd.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
+
+  <div class="wt-page">
+    <header class="wt-hero">
+      <Container>
+        <div class="wt-hero-grid">
+          <div class="wt-hero-left">
+            <p class="wt-hero-category">Engineering Services · {service.shortTitle ?? service.title}</p>
+            <h1 class="wt-hero-title">{service.title}</h1>
+            <p class="wt-hero-desc">{service.tagline}</p>
+            <p class="wt-hero-byline"><a href="/services" class="wt-hero-back">← Back to Engineering Services</a></p>
+            <div class="wt-hero-facts">
+              <span class="wt-fact"><span class="wt-fact-icon" aria-hidden="true">◈</span>Fixed scope</span>
+              <span class="wt-fact-sep" aria-hidden="true">·</span>
+              <span class="wt-fact"><span class="wt-fact-icon" aria-hidden="true">◷</span>Milestone delivery</span>
+              <span class="wt-fact-sep" aria-hidden="true">·</span>
+              <span class="wt-fact wt-fact-cert"><span class="wt-fact-icon" aria-hidden="true">✦</span>Production-ready</span>
+            </div>
+            <div class="wt-hero-mobile-cta">
+              <a href={contactHref} class="wt-btn-primary wt-btn-full">Start a project</a>
+            </div>
+          </div>
+          <aside class="wt-enroll-card" aria-label="Service inquiry card">
+            <div class="wt-card-header">
+              <span class="wt-card-badge">Engineering offer</span>
+              <span class="wt-card-status">Available</span>
+            </div>
+            <div class="wt-card-price">
+              <span class="wt-price-main">{service.shortTitle ?? service.title}</span>
+              <span class="wt-price-note">{service.summary}</span>
+            </div>
+            <a href={contactHref} class="wt-btn-primary wt-btn-full wt-btn-card"><span>Start a project</span></a>
+            <p class="wt-card-seats-note">{siteConfig.email}</p>
+            <div class="wt-card-meta">
+              <div class="wt-card-meta-row"><span class="wt-card-meta-key">Scope</span><span class="wt-card-meta-val">Defined per project</span></div>
+              <div class="wt-card-meta-row"><span class="wt-card-meta-key">Delivery</span><span class="wt-card-meta-val">Milestones + reviews</span></div>
+              <div class="wt-card-meta-row"><span class="wt-card-meta-key">Handover</span><span class="wt-card-meta-val">Code + docs</span></div>
+            </div>
+          </aside>
+        </div>
+      </Container>
+    </header>
+
+    <section class="wt-details-strip" aria-label="Service facts at a glance">
+      <Container>
+        <div class="wt-strip-card">
+          <div class="wt-strip-grid">
+            <div class="wt-strip-fact"><span class="wt-strip-label">Offer</span><span class="wt-strip-val">{service.shortTitle ?? service.title}</span></div>
+            <div class="wt-strip-fact"><span class="wt-strip-label">Focus</span><span class="wt-strip-val">Engineering</span></div>
+            <div class="wt-strip-fact"><span class="wt-strip-label">Delivery</span><span class="wt-strip-val">Milestones</span></div>
+            <div class="wt-strip-fact"><span class="wt-strip-label">Support</span><span class="wt-strip-val">Included</span></div>
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <nav class="wt-section-nav" aria-label="Page sections" id="wt-section-nav">
+      <div class="wt-nav-top-bar" id="wt-nav-top-bar">
+        <Container>
+          <div class="wt-top-bar-inner">
+            <div class="wt-top-bar-left"><a href="/" class="wt-top-bar-logo" aria-label="RoboDev Labs Home"><Logo height={28} /></a></div>
+            <div class="wt-top-bar-center"><span class="wt-top-bar-title" title={service.title}>{service.title}</span></div>
+            <div class="wt-top-bar-right"><a href={contactHref} class="wt-btn-primary wt-top-bar-btn"><span>Start a project</span></a></div>
+          </div>
+        </Container>
+      </div>
+      <div class="wt-nav-tabs-bar">
+        <Container>
+          <div class="wt-nav-inner">
+            <a href="#about" class="wt-nav-link wt-nav-link--active">About</a>
+            <a href="#problems" class="wt-nav-link">Problems</a>
+            <a href="#capabilities" class="wt-nav-link">Capabilities</a>
+            <a href="#technologies" class="wt-nav-link">Technologies</a>
+            <a href="#process" class="wt-nav-link">Process</a>
+            {service.faqs && service.faqs.length > 0 && <a href="#faq" class="wt-nav-link">FAQ</a>}
+          </div>
+        </Container>
+      </div>
+    </nav>
+
+    <main class="wt-main" id="about">
+      <Container>
+        <div class="wt-content-col">
+          <section class="wt-section" aria-labelledby="overview-heading">
+            <h2 id="overview-heading" class="wt-section-title">Overview</h2>
+            <p class="wt-body-text">{service.overview}</p>
+          </section>
+          <hr class="wt-divider" />
+          <section id="problems" class="wt-section" aria-labelledby="problems-heading">
+            <h2 id="problems-heading" class="wt-section-title">Problems we solve</h2>
+            <div class="wt-outcomes-grid">
+              {service.problems.map((item) => (
+                <div class="wt-outcome-row"><span class="wt-outcome-check" aria-hidden="true">—</span><p class="wt-outcome-text">{item}</p></div>
+              ))}
+            </div>
+          </section>
+          <hr class="wt-divider" />
+          <section id="capabilities" class="wt-section" aria-labelledby="capabilities-heading">
+            <h2 id="capabilities-heading" class="wt-section-title">Capabilities</h2>
+            <ul class="wt-check-list">
+              {service.capabilities.map((item) => (
+                <li><span class="wt-check-icon" aria-hidden="true">✓</span><span>{item}</span></li>
+              ))}
+            </ul>
+            <h3 class="wt-subhead">What you receive</h3>
+            <div class="wt-build-list">
+              {service.deliverables.map((item, idx) => (
+                <div class="wt-build-item"><span class="wt-build-num">0{idx + 1}</span><p class="wt-build-text">{item}</p></div>
+              ))}
+            </div>
+          </section>
+          <hr class="wt-divider" />
+          <section id="technologies" class="wt-section" aria-labelledby="tech-heading">
+            <h2 id="tech-heading" class="wt-section-title">Technologies</h2>
+            <div class="wt-tools-wrap">
+              {service.technologies.map((t) => (<span class="wt-tool-tag">{t}</span>))}
+            </div>
+            <h3 class="wt-subhead">Ideal for</h3>
+            <ul class="wt-check-list">
+              {service.idealFor.map((item) => (
+                <li><span class="wt-check-icon" aria-hidden="true">✓</span><span>{item}</span></li>
+              ))}
+            </ul>
+          </section>
+          <hr class="wt-divider" />
+          <section id="process" class="wt-section" aria-labelledby="process-heading">
+            <h2 id="process-heading" class="wt-section-title">Process</h2>
+            <div class="wt-build-list">
+              {service.process.map((step, idx) => (
+                <div class="wt-build-item"><span class="wt-build-num">0{idx + 1}</span><p class="wt-build-text"><strong>{step.title}:</strong> {step.description}</p></div>
+              ))}
+            </div>
+          </section>
+          {service.faqs && service.faqs.length > 0 && (
+            <>
+              <hr class="wt-divider" />
+              <section id="faq" class="wt-section" aria-labelledby="faq-heading">
+                <h2 id="faq-heading" class="wt-section-title">Frequently asked questions</h2>
+                <div class="wt-faq-stack">
+                  {service.faqs.map((faq, idx) => (
+                    <details class="wt-faq" open={idx === 0}>
+                      <summary class="wt-faq-q"><span>{faq.q}</span><span class="wt-module-chevron" aria-hidden="true">→</span></summary>
+                      <div class="wt-faq-a"><p>{faq.a}</p></div>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            </>
+          )}
+          {related.length > 0 && (
+            <>
+              <hr class="wt-divider" />
+              <section class="wt-section" aria-labelledby="related-heading">
+                <h2 id="related-heading" class="wt-section-title">Related services</h2>
+                <div class="wt-outcomes-grid">
+                  {related.map((r) => (
+                    <a href={`/services/${r.slug}`} class="wt-outcome-row wt-related-link">
+                      <span class="wt-outcome-check" aria-hidden="true">→</span>
+                      <span><strong>{r.title}</strong><br />{r.tagline}</span>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            </>
+          )}
+          <div class="wt-final-cta">
+            <div class="wt-final-cta-content">
+              <h2 class="wt-final-cta-title">Start a project</h2>
+              <p class="wt-final-cta-note">{service.title} · {siteConfig.email}</p>
+            </div>
+            <a href={contactHref} class="wt-btn-primary wt-btn-lg">Start a project</a>
+          </div>
+        </div>
+      </Container>
+    </main>
+
+    <div class="wt-mobile-bar" aria-label="Mobile inquiry action">
+      <div class="wt-mobile-bar-inner">
+        <div class="wt-mobile-bar-text">
+          <span class="wt-mobile-price">{service.shortTitle ?? service.title}</span>
+          <span class="wt-mobile-note">Engineering Services</span>
+        </div>
+        <a href={contactHref} class="wt-btn-primary wt-btn-sm">Start a project</a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const navLinks = document.querySelectorAll('.wt-nav-link');
+  const sections = document.querySelectorAll('main[id], section[id]');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          navLinks.forEach((l) => l.classList.remove('wt-nav-link--active'));
+          const active = document.querySelector(`.wt-nav-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('wt-nav-link--active');
+        }
+      });
+    },
+    { rootMargin: '-25% 0px -65% 0px' }
+  );
+  sections.forEach((s) => observer.observe(s));
+  const nav = document.getElementById('wt-section-nav');
+  const hero = document.querySelector('.wt-hero');
+  if (nav && hero) {
+    const updateNavState = (isPastHero) => {
+      nav.classList.toggle('wt-nav--scrolled', isPastHero);
+      nav.classList.toggle('wt-nav--active', isPastHero);
+    };
+    const heroObserver = new IntersectionObserver(([e]) => { updateNavState(!e.isIntersecting); }, { threshold: 0 });
+    heroObserver.observe(hero);
+  }
+</script>
+
+<style>
+  .wt-page { background-color: #fafaf8; color: #1a1a1a; min-height: 100vh; }
+  @media (max-width: 860px) { .wt-page { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); } }
+  .wt-hero { background-color: var(--color-pepper-medium, #31473A); color: #EDF4F2; padding-top: clamp(6.5rem, 13vh, 8.5rem); padding-bottom: clamp(2.5rem, 5vw, 4rem); border-bottom: 1px solid rgba(237, 244, 242, 0.12); }
+  .wt-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: clamp(2rem, 4vw, 3.5rem); align-items: flex-start; }
+  @media (max-width: 1024px) { .wt-hero-grid { grid-template-columns: minmax(0, 1fr) 320px; } }
+  @media (max-width: 860px) { .wt-hero-grid { grid-template-columns: 1fr; } }
+  .wt-hero-left { display: flex; flex-direction: column; gap: 1.125rem; padding: clamp(1rem, 2vw, 2rem) 0; }
+  .wt-hero-category { font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: rgba(237, 244, 242, 0.65); margin: 0; }
+  .wt-hero-title { font-family: var(--font-display, 'Space Grotesk', sans-serif); font-size: clamp(2.125rem, 4.5vw, 3.25rem); font-weight: 700; line-height: 1.12; letter-spacing: -0.025em; color: #EDF4F2; margin: 0; }
+  .wt-hero-desc { font-size: clamp(1.0625rem, 1.6vw, 1.1875rem); line-height: 1.6; color: rgba(237, 244, 242, 0.82); margin: 0; max-width: 58ch; }
+  .wt-hero-back { color: rgba(237,244,242,0.85); font-size: 0.9rem; }
+  .wt-hero-byline { margin: 0; }
+  .wt-hero-facts { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 0; font-size: 0.875rem; color: rgba(237, 244, 242, 0.8); }
+  .wt-fact { display: inline-flex; align-items: center; gap: 5px; }
+  .wt-fact-cert { color: #b5d5ad; }
+  .wt-fact-icon { font-size: 0.6875rem; opacity: 0.65; }
+  .wt-fact-sep { margin: 0 9px; opacity: 0.35; }
+  .wt-hero-mobile-cta { display: none; }
+  @media (max-width: 860px) { .wt-hero-mobile-cta { display: block; } }
+  .wt-enroll-card { background: #fff; border: 1px solid #e0e0d8; border-radius: 12px; padding: 1.5rem; box-shadow: 0 10px 32px rgba(0,0,0,0.16); display: flex; flex-direction: column; gap: 1rem; color: #1a1a1a; }
+  @media (max-width: 860px) { .wt-enroll-card { display: none; } }
+  .wt-card-header { display: flex; justify-content: space-between; align-items: center; }
+  .wt-card-badge, .wt-card-status { font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--color-pepper-medium, #31473A); }
+  .wt-card-price { display: flex; flex-direction: column; gap: 4px; }
+  .wt-price-main { font-size: 1.4rem; font-weight: 700; color: var(--color-pepper-medium, #31473A); line-height: 1.25; }
+  .wt-price-note { font-size: 0.85rem; color: #555; line-height: 1.5; }
+  .wt-card-seats-note { font-size: 0.8125rem; color: #666; text-align: center; word-break: break-word; }
+  .wt-card-meta { border-top: 1px solid #eaeae4; padding-top: 0.75rem; display: flex; flex-direction: column; gap: 6px; }
+  .wt-card-meta-row { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.8125rem; }
+  .wt-card-meta-key { color: #777; }
+  .wt-card-meta-val { font-weight: 600; text-align: right; }
+  .wt-btn-primary { display: inline-flex; align-items: center; justify-content: center; background-color: var(--color-pepper-medium, #31473A); color: #EDF4F2; font-weight: 700; padding: 13px 26px; border-radius: 6px; text-decoration: none; }
+  .wt-btn-primary:hover { background-color: var(--color-pepper-dark, #7C8363); color: #fff; }
+  .wt-btn-full { width: 100%; }
+  .wt-btn-sm { padding: 9px 18px; font-size: 0.875rem; }
+  .wt-btn-lg { padding: 14px 28px; }
+  .wt-details-strip { padding: 2rem 0; }
+  .wt-strip-card { background: #fff; border: 1px solid #dfded7; border-radius: 12px; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.08); padding: 1.75rem 2rem; }
+  .wt-strip-grid { display: flex; justify-content: center; overflow-x: auto; }
+  .wt-strip-fact { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 0.5rem clamp(1rem,2.5vw,2.25rem); border-right: 1px solid #e7e6df; min-width: 140px; flex: 1 1 0; }
+  .wt-strip-fact:last-child { border-right: none; }
+  .wt-strip-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #666; }
+  .wt-strip-val { font-size: 1.02rem; font-weight: 700; color: #111; }
+  .wt-section-nav { position: sticky; top: 0; z-index: 40; background: #fff; border-bottom: 1px solid #e8e8e2; }
+  .wt-nav-top-bar { display: none; border-bottom: 1px solid #eeeee8; padding: 0.5rem 0; }
+  .wt-nav--active .wt-nav-top-bar, .wt-nav--scrolled .wt-nav-top-bar { display: block; }
+  .wt-top-bar-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; }
+  .wt-top-bar-center { flex: 1; text-align: center; min-width: 0; }
+  .wt-top-bar-title { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .wt-top-bar-btn { font-size: 0.8125rem; padding: 8px 18px; }
+  .wt-nav-inner { display: flex; overflow-x: auto; }
+  .wt-nav-link { padding: 12px 18px; font-size: 0.875rem; color: #555; text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; }
+  .wt-nav-link--active { color: var(--color-pepper-medium, #31473A); border-bottom-color: var(--color-pepper-medium, #31473A); font-weight: 600; }
+  .wt-main { padding: 3rem 0 5rem; }
+  .wt-content-col { max-width: 820px; }
+  .wt-section { padding: 2.25rem 0; }
+  .wt-divider { border: none; border-top: 1px solid #e5e5dc; margin: 0; }
+  .wt-section-title { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; color: #111; margin: 0 0 1.25rem; }
+  .wt-subhead { font-size: 1.0625rem; font-weight: 600; margin: 1.5rem 0 0.75rem; color: #111; }
+  .wt-body-text { font-size: 1rem; line-height: 1.7; color: #333; margin: 0 0 1rem; }
+  .wt-check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.625rem; }
+  .wt-check-list li { display: flex; gap: 10px; font-size: 0.9375rem; color: #333; }
+  .wt-check-icon { color: var(--color-pepper-medium, #31473A); font-weight: 700; }
+  .wt-outcomes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.875rem; }
+  .wt-outcome-row { display: flex; gap: 10px; padding: 0.875rem 1rem; background: #fff; border: 1px solid #e2e2da; border-radius: 6px; color: #000; font-size: 0.9375rem; text-decoration: none; }
+  a.wt-outcome-row:hover { border-color: var(--color-pepper-medium, #31473A); }
+  .wt-outcome-check { color: var(--color-pepper-medium, #31473A); font-weight: 700; }
+  .wt-outcome-text { margin: 0; color: #000; line-height: 1.6; }
+  .wt-build-list { display: flex; flex-direction: column; gap: 0.625rem; }
+  .wt-build-item { display: flex; gap: 1rem; padding: 0.875rem 1.25rem; background: #fff; border: 1px solid #e2e2da; border-left: 3px solid var(--color-pepper-medium, #31473A); border-radius: 0 6px 6px 0; }
+  .wt-build-num { font-size: 0.75rem; font-weight: 700; color: var(--color-pepper-dark, #7C8363); min-width: 24px; }
+  .wt-build-text { margin: 0; font-size: 0.9375rem; color: #222; }
+  .wt-tools-wrap { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .wt-tool-tag { padding: 6px 14px; background: #fff; border: 1px solid #d4d4cb; border-radius: 4px; font-size: 0.8125rem; }
+  .wt-details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem 1rem; margin-bottom: 1.5rem; }
+  .wt-detail-block { display: flex; flex-direction: column; gap: 3px; }
+  .wt-detail-label { font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #777; }
+  .wt-detail-val { font-weight: 600; color: #111; }
+  .wt-faq-stack { display: flex; flex-direction: column; border: 1px solid #e2e2da; border-radius: 8px; overflow: hidden; }
+  .wt-faq { border-bottom: 1px solid #e2e2da; }
+  .wt-faq:last-child { border-bottom: none; }
+  .wt-faq-q { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; cursor: pointer; font-weight: 600; background: #fff; list-style: none; }
+  .wt-faq-q::-webkit-details-marker { display: none; }
+  .wt-faq-a { padding: 0 1.25rem 1rem; background: #fafaf7; border-top: 1px solid #e8e8e0; }
+  .wt-faq-a p { color: #000; line-height: 1.65; margin: 0.75rem 0 0; font-size: 0.9375rem; }
+  .wt-final-cta { margin-top: 3rem; padding: 2rem 2.5rem; background: var(--color-pepper-medium, #31473A); border-radius: 12px; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .wt-final-cta-title { font-size: 1.375rem; color: #EDF4F2; margin: 0; }
+  .wt-final-cta-note { color: rgba(237,244,242,0.7); margin: 0; font-size: 0.875rem; }
+  .wt-mobile-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: var(--color-pepper-medium, #31473A); padding: 0.75rem 1rem; }
+  @media (max-width: 860px) { .wt-mobile-bar { display: block; } }
+  .wt-mobile-bar-inner { max-width: 600px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .wt-mobile-price { color: #EDF4F2; font-weight: 700; }
+  .wt-mobile-note { color: rgba(237,244,242,0.7); font-size: 0.6875rem; text-transform: uppercase; }
+</style>

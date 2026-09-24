@@ -1,0 +1,1886 @@
+---
+/**
+ * CircularArcDivisionsSection.astro
+ * 
+ * Signature Circular Arc Division Showcase matching the reference design:
+ * - SINGLE, continuous, full-height architectural circle arc glowing in rich cyan/blue gradient.
+ * - Starts from the VERY LEFT edge of the screen (viewport left: 0).
+ * - Nodes positioned via true circular trigonometry along the single arc line.
+ * - Strictly 3 menu nodes (01 Engineering, 02 Products, 03 Academy) spread generously apart.
+ * - ZERO OVERLAP: Content stage strictly positioned with ample clear gutter.
+ * - CURVED CLOCK MOTION: Editorial component texts move along a curved arc trajectory matching the circular arch!
+ * - Reversible in both scroll directions.
+ * - Bottom-right "SCROLL TO NEXT ——————— (↓)" action.
+ */
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+---
+
+<div class="circular-arc-scroll-realm" id="circular-arc-scroll-realm">
+  <!-- Navigation Anchor Targets -->
+  <div id="services" class="section-anchor-marker" style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></div>
+  <div id="products" class="section-anchor-marker" style="position: absolute; top: 33%; left: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></div>
+  <div id="academy" class="section-anchor-marker" style="position: absolute; top: 66%; left: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></div>
+  
+  <!-- Pinned 100vh Sticky Viewport Stage spanning full viewport -->
+  <section class="circular-arc-sticky-stage" id="ecosystem-divisions" aria-label="RoboDev Labs Core Divisions">
+    
+    <!-- Atmospheric Background Ambient Canvas -->
+    <div class="circular-backdrop" aria-hidden="true">
+      <div class="ambient-glow glow-blue"></div>
+      <div class="ambient-glow glow-cyan"></div>
+      <div class="grid-dust-overlay"></div>
+    </div>
+
+    <!-- =========================================================================
+         LEFT: SINGLE FULL-HEIGHT ARCHITECTURAL CIRCLE ARC & ORBITING NODES
+         Starts at very top-left (0,0), curves outwards to apex (240px), and finishes at (0, 100% height)
+         ========================================================================= -->
+    <aside class="arc-navigation-system" id="arc-nav-system" aria-label="Division Arc Dial">
+      <!-- Full-Height SVG Vector Canvas with Single Glowing Arc -->
+      <svg class="arc-full-svg" id="arc-full-svg" viewBox="0 0 360 1000" preserveAspectRatio="none" aria-hidden="true">
+        <!-- Single Continuous Arc Line with Vibrant Cyan/Blue Gradient and Neon Glow -->
+        <path 
+          id="base-full-arc" 
+          d="M 0,0 C 340,240 340,760 0,1000" 
+          fill="none" 
+          stroke="url(#cyanGlowGrad)" 
+          stroke-width="2.2"
+          filter="url(#neonFilter)"
+        />
+        
+        <defs>
+          <linearGradient id="cyanGlowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#2B2B2B" stop-opacity="0.3" />
+            <stop offset="25%" stop-color="#D4D4D4" stop-opacity="0.9" />
+            <stop offset="50%" stop-color="#FFFFFF" stop-opacity="1" />
+            <stop offset="75%" stop-color="#D4D4D4" stop-opacity="0.9" />
+            <stop offset="100%" stop-color="#2B2B2B" stop-opacity="0.3" />
+          </linearGradient>
+          <filter id="neonFilter" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="3.5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+      </svg>
+
+      <!-- Mathematically Positioned Nodes Along the Arc Line (Strictly 3 Menu Items) -->
+      <div class="arc-nodes-orbit" id="arc-nodes-orbit">
+        
+        <!-- Node 01: Engineering -->
+        <button 
+          class="arc-node-element active" 
+          id="node-btn-0" 
+          data-index="0" 
+          role="tab" 
+          aria-selected="true" 
+          aria-controls="content-panel-0"
+        >
+          <div class="node-bullet-target">
+            <span class="outer-glow-ring"></span>
+            <span class="center-core-dot"></span>
+          </div>
+          <div class="node-text-lockup">
+            <span class="node-seq">01</span>
+            <span class="node-title">Engineering</span>
+          </div>
+        </button>
+
+        <!-- Node 02: Products -->
+        <button 
+          class="arc-node-element" 
+          id="node-btn-1" 
+          data-index="1" 
+          role="tab" 
+          aria-selected="false" 
+          aria-controls="content-panel-1"
+        >
+          <div class="node-bullet-target">
+            <span class="outer-glow-ring"></span>
+            <span class="center-core-dot"></span>
+          </div>
+          <div class="node-text-lockup">
+            <span class="node-seq">02</span>
+            <span class="node-title">Products</span>
+          </div>
+        </button>
+
+        <!-- Node 03: Academy -->
+        <button 
+          class="arc-node-element" 
+          id="node-btn-2" 
+          data-index="2" 
+          role="tab" 
+          aria-selected="false" 
+          aria-controls="content-panel-2"
+        >
+          <div class="node-bullet-target">
+            <span class="outer-glow-ring"></span>
+            <span class="center-core-dot"></span>
+          </div>
+          <div class="node-text-lockup">
+            <span class="node-seq">03</span>
+            <span class="node-title">Academy</span>
+          </div>
+        </button>
+
+      </div>
+    </aside>
+
+    <!-- =========================================================================
+         CENTER: EDITORIAL CONTENT CLOCK-VIEWPORT
+         Safe horizontal clearance (left: clamp(450px, 31vw, 550px)) guarantees ZERO overlap!
+         Texts slide along a curved arc trajectory matching the circular arch.
+         ========================================================================= -->
+    <div class="division-narrative-stage">
+      <div class="editorial-clock-track">
+        
+        <!-- PANEL 0: ENGINEERING -->
+        <article 
+          class="division-editorial-panel active" 
+          id="content-panel-0" 
+          role="tabpanel" 
+          aria-labelledby="node-btn-0"
+        >
+          <header class="editorial-header">
+            <h2 class="editorial-main-title">
+              Engineering<br />Services
+            </h2>
+            <p class="editorial-lead">
+              We build scalable, high-performance software solutions that help businesses grow, innovate, and stay ahead.
+            </p>
+          </header>
+
+          <!-- 2-Column Clean Capabilities Grid with Minimal SVG Icons -->
+          <div class="capabilities-dual-grid">
+            <div class="cap-col">
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="code" size={17} /></span>
+                <span class="cap-txt">Web Applications</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="smartphone" size={17} /></span>
+                <span class="cap-txt">Mobile Applications</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="cloud" size={17} /></span>
+                <span class="cap-txt">SaaS Development</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="database" size={17} /></span>
+                <span class="cap-txt">Backend Development</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="link" size={17} /></span>
+                <span class="cap-txt">API Development</span>
+              </div>
+            </div>
+
+            <div class="cap-col">
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="cpu" size={17} /></span>
+                <span class="cap-txt">AI Solutions</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="cloud" size={17} /></span>
+                <span class="cap-txt">Cloud Solutions</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="layers" size={17} /></span>
+                <span class="cap-txt">UI/UX Implementation</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="users" size={17} /></span>
+                <span class="cap-txt">Software Consulting</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="sparkles" size={17} /></span>
+                <span class="cap-txt">Automation &amp; Integrations</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="editorial-action-row">
+            <Button variant="primary" size="md" href="/services" class="academy-explore-btn">
+              <span>Explore our services</span>
+              <Icon name="arrow-right" size={15} />
+            </Button>
+          </div>
+        </article>
+
+        <!-- PANEL 1: PRODUCTS -->
+        <article 
+          class="division-editorial-panel future" 
+          id="content-panel-1" 
+          role="tabpanel" 
+          aria-labelledby="node-btn-1"
+        >
+          <header class="editorial-header">
+            <h2 class="editorial-main-title">
+              Proprietary<br />Products
+            </h2>
+            <p class="editorial-lead">
+              We engineer our own technology ventures. Our flagship product, <strong>Busly</strong>, transforms public transit uncertainty into reliable, live-tracked mobility.
+            </p>
+          </header>
+
+          <div class="capabilities-dual-grid">
+            <div class="cap-col">
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="zap" size={17} /></span>
+                <span class="cap-txt">Busly Mobility OS</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="sparkles" size={17} /></span>
+                <span class="cap-txt">Live GPS Fleet Telemetry</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="layers" size={17} /></span>
+                <span class="cap-txt">Route Arrival Prediction</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="smartphone" size={17} /></span>
+                <span class="cap-txt">Offline-First Commuter App</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="database" size={17} /></span>
+                <span class="cap-txt">Transit Operator Console</span>
+              </div>
+            </div>
+
+            <div class="cap-col">
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="cpu" size={17} /></span>
+                <span class="cap-txt">Autonomous Dispatch Tools</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="cloud" size={17} /></span>
+                <span class="cap-txt">Edge Telemetry Relays</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="code" size={17} /></span>
+                <span class="cap-txt">Developer Acceleration SDKs</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="link" size={17} /></span>
+                <span class="cap-txt">Multi-Modal Transit APIs</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="users" size={17} /></span>
+                <span class="cap-txt">Scalable Venture Pipeline</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="editorial-action-row">
+            <Button variant="primary" size="md" href="/products" class="academy-explore-btn">
+              <span>Explore our Product</span>
+              <Icon name="arrow-right" size={15} />
+            </Button>
+          </div>
+        </article>
+
+        <!-- PANEL 2: ACADEMY -->
+        <article 
+          class="division-editorial-panel future" 
+          id="content-panel-2" 
+          role="tabpanel" 
+          aria-labelledby="node-btn-2"
+        >
+          <header class="editorial-header">
+            <h2 class="editorial-main-title">
+              Developer<br />Academy
+            </h2>
+            <p class="editorial-lead">
+              We bridge the gap between academic theory and real-world software through intensive engineering workshops, project mentorship, and production hackathons.
+            </p>
+          </header>
+
+          <div class="capabilities-dual-grid">
+            <div class="cap-col">
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="code" size={17} /></span>
+                <span class="cap-txt">Hands-On Code Workshops</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="users" size={17} /></span>
+                <span class="cap-txt">1-on-1 Senior Mentorship</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="layers" size={17} /></span>
+                <span class="cap-txt">Production PR &amp; Code Reviews</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="database" size={17} /></span>
+                <span class="cap-txt">System Architecture Coaching</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="link" size={17} /></span>
+                <span class="cap-txt">CI/CD &amp; Git Best Practices</span>
+              </div>
+            </div>
+
+            <div class="cap-col">
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="zap" size={17} /></span>
+                <span class="cap-txt">Competitive Hackathon Prep</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="cpu" size={17} /></span>
+                <span class="cap-txt">Practical AI API Integration</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="smartphone" size={17} /></span>
+                <span class="cap-txt">MVP Prototyping in 48 Hours</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="cloud" size={17} /></span>
+                <span class="cap-txt">Live Cloud Deployment</span>
+              </div>
+              <div class="cap-item">
+                <span class="cap-ico"><Icon name="sparkles" size={17} /></span>
+                <span class="cap-txt">Engineering Career Guidance</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="editorial-action-row">
+            <Button variant="primary" size="md" href="/academy" class="academy-explore-btn">
+              <span>Explore Academy Programs</span>
+              <Icon name="arrow-right" size={15} />
+            </Button>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         RIGHT: ISOMETRIC 3D FLOATING GLASS TECH COMPOSITION
+         Transitions with matching curved vertical motion
+         ========================================================================= -->
+    <div class="isometric-visual-stage" aria-hidden="true">
+      <div class="iso-visual-clock-track">
+        
+        <!-- VISUAL 0: ENGINEERING ISOMETRIC IDE & PERFORMANCE -->
+        <div class="iso-composition-scene active" id="iso-scene-0">
+          <div class="iso-perspective-box">
+            
+            <!-- Floating Background Glass IDE Window -->
+            <div class="iso-glass-window ide-window">
+              <div class="ide-window-topbar">
+                <div class="ide-traffic-lights">
+                  <span class="tl-dot red"></span>
+                  <span class="tl-dot yellow"></span>
+                  <span class="tl-dot green"></span>
+                </div>
+                <div class="ide-title-tab">robodev://services.ts</div>
+                <div class="ide-tag-badge">RELEASED</div>
+              </div>
+
+              <div class="ide-window-body">
+                <div class="ide-file-tree">
+                  <span class="tree-line active"></span>
+                  <span class="tree-line"></span>
+                  <span class="tree-line"></span>
+                  <span class="tree-line"></span>
+                  <span class="tree-line"></span>
+                  <span class="tree-line"></span>
+                </div>
+
+                <div class="ide-code-lines">
+                  <div class="code-row"><span class="syn-k">import</span> <span class="syn-v">&#123; createArchitecture &#125;</span> <span class="syn-k">from</span> <span class="syn-s">'@robodev/core'</span>;</div>
+                  <div class="code-row"><span class="syn-c">// High-throughput enterprise solution</span></div>
+                  <div class="code-row"><span class="syn-k">export const</span> <span class="syn-f">servicePipeline</span> = <span class="syn-k">async</span> () =&gt; &#123;</div>
+                  <div class="code-row ind-1"><span class="syn-k">const</span> system = <span class="syn-k">await</span> <span class="syn-f">initializeCluster</span>(&#123;</div>
+                  <div class="code-row ind-2">concurrency: <span class="syn-n">100000</span>,</div>
+                  <div class="code-row ind-2">latency: <span class="syn-s">'sub-10ms'</span>,</div>
+                  <div class="code-row ind-2">resilience: <span class="syn-b">true</span></div>
+                  <div class="code-row ind-1">&#125;);</div>
+                  <div class="code-row ind-1"><span class="syn-k">return</span> system.<span class="syn-f">deploy</span>();</div>
+                  <div class="code-row">&#125;;</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Foreground Floating Glass Card: Performance Graph Spline -->
+            <div class="iso-floating-card performance-card">
+              <div class="perf-card-header">
+                <span class="perf-status-beacon"></span>
+                <span class="perf-label">Performance</span>
+              </div>
+              <div class="perf-chart-wrap">
+                <svg viewBox="0 0 200 70" class="perf-spline-svg" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="chartLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#B3B3B3" />
+                      <stop offset="50%" stop-color="#D4D4D4" />
+                      <stop offset="100%" stop-color="#FFFFFF" />
+                    </linearGradient>
+                    <linearGradient id="chartAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.2)" />
+                      <stop offset="100%" stop-color="rgba(255, 255, 255, 0)" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M 0 50 Q 40 55, 70 30 T 140 20 T 200 10 L 200 70 L 0 70 Z" fill="url(#chartAreaGrad)" />
+                  <path d="M 0 50 Q 40 55, 70 30 T 140 20 T 200 10" fill="none" stroke="url(#chartLineGrad)" stroke-width="2.5" />
+                  <circle cx="200" cy="10" r="3.5" fill="#FFFFFF" filter="drop-shadow(0 0 6px rgba(255, 255, 255, 0.8))" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Foreground Floating Badge: Deployed • -->
+            <div class="iso-floating-badge deployed-badge">
+              <div class="badge-icon-cloud">
+                <Icon name="cloud" size={16} />
+              </div>
+              <div class="badge-text-cluster">
+                <span class="badge-status-line">
+                  <span>Deployed</span>
+                  <span class="badge-live-dot"></span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Constellation Micro-nodes -->
+            <div class="iso-wire-constellation">
+              <span class="const-node c-1"></span>
+              <span class="const-node c-2"></span>
+              <span class="const-node c-3"></span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- VISUAL 1: PRODUCTS ISOMETRIC BUSLY TRANSIT ENGINE -->
+        <div class="iso-composition-scene future" id="iso-scene-1">
+          <div class="iso-perspective-box">
+            
+            <div class="iso-glass-window busly-window">
+              <div class="ide-window-topbar">
+                <div class="ide-traffic-lights">
+                  <span class="tl-dot red"></span>
+                  <span class="tl-dot yellow"></span>
+                  <span class="tl-dot green"></span>
+                </div>
+                <div class="ide-title-tab">busly://fleet-telemetry</div>
+                <div class="ide-tag-badge cyan">LIVE GPS</div>
+              </div>
+
+              <div class="transit-radar-viewport">
+                <div class="radar-grid-lines"></div>
+                <svg class="transit-track-svg" viewBox="0 0 320 180">
+                  <path d="M 20 150 Q 80 120, 140 70 T 260 40 T 300 30" fill="none" stroke="rgba(255, 255, 255, 0.3)" stroke-width="2" stroke-dasharray="4 4" />
+                  <path d="M 20 150 Q 80 120, 140 70" fill="none" stroke="#D4D4D4" stroke-width="3" filter="drop-shadow(0 0 6px rgba(255, 255, 255, 0.5))" />
+                  <circle cx="140" cy="70" r="5" fill="#FFFFFF" />
+                  <circle cx="140" cy="70" r="10" fill="none" stroke="#D4D4D4" opacity="0.6" />
+                </svg>
+                <div class="bus-beacon-ping">
+                  <span class="ping-ring"></span>
+                  <span class="ping-dot"></span>
+                  <span class="ping-label">BUS #42 &bull; ETA 3m</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="iso-floating-card performance-card">
+              <div class="perf-card-header">
+                <span class="perf-status-beacon cyan"></span>
+                <span class="perf-label">Telemetry Stream</span>
+              </div>
+              <div class="telemetry-stat-row">
+                <div class="t-stat"><span class="t-num">&lt;15s</span><span class="t-lbl">GPS Latency</span></div>
+                <div class="t-stat"><span class="t-num">99.8%</span><span class="t-lbl">Accuracy</span></div>
+              </div>
+            </div>
+
+            <div class="iso-floating-badge deployed-badge">
+              <div class="badge-icon-cloud cyan">
+                <Icon name="zap" size={16} />
+              </div>
+              <div class="badge-text-cluster">
+                <span class="badge-status-line">
+                  <span>Busly OS</span>
+                  <span class="badge-live-dot cyan"></span>
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- VISUAL 2: ACADEMY ISOMETRIC DEV REVIEW TERMINAL -->
+        <div class="iso-composition-scene future" id="iso-scene-2">
+          <div class="iso-perspective-box">
+            
+            <div class="iso-glass-window academy-window">
+              <div class="ide-window-topbar">
+                <div class="ide-traffic-lights">
+                  <span class="tl-dot red"></span>
+                  <span class="tl-dot yellow"></span>
+                  <span class="tl-dot green"></span>
+                </div>
+                <div class="ide-title-tab">academy://pr-review#108</div>
+                <div class="ide-tag-badge purple">APPROVED</div>
+              </div>
+
+              <div class="academy-terminal-body">
+                <div class="terminal-git-row">
+                  <span class="git-icon"><Icon name="check" size={14} /></span>
+                  <span class="git-branch">main &larr; feature/production-auth</span>
+                </div>
+                <div class="terminal-status-list">
+                  <div class="t-item passed"><Icon name="check" size={13} /> Unit Tests: 42 passed</div>
+                  <div class="t-item passed"><Icon name="check" size={13} /> CI/CD Docker Build: OK</div>
+                  <div class="t-item passed"><Icon name="check" size={13} /> Senior Engineer Sign-off</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="iso-floating-card performance-card">
+              <div class="perf-card-header">
+                <span class="perf-status-beacon purple"></span>
+                <span class="perf-label">Skill Progression</span>
+              </div>
+              <div class="telemetry-stat-row">
+                <div class="t-stat"><span class="t-num">100%</span><span class="t-lbl">Hands-On Code</span></div>
+                <div class="t-stat"><span class="t-num">0</span><span class="t-lbl">Theory Slides</span></div>
+              </div>
+            </div>
+
+            <div class="iso-floating-badge deployed-badge">
+              <div class="badge-icon-cloud purple">
+                <Icon name="users" size={16} />
+              </div>
+              <div class="badge-text-cluster">
+                <span class="badge-status-line">
+                  <span>Mentorship</span>
+                  <span class="badge-live-dot purple"></span>
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         BOTTOM RIGHT: "SCROLL TO NEXT ——————— (↓)" ACTION
+         ========================================================================= -->
+    <div class="scroll-to-next-anchor">
+      <button class="scroll-next-btn" id="scroll-next-trigger" aria-label="Advance to Next Section">
+        <span class="scroll-next-caption">SCROLL TO NEXT</span>
+        <span class="scroll-next-dash"></span>
+        <div class="scroll-arrow-circle">
+          <Icon name="arrow-down" size={14} />
+        </div>
+      </button>
+    </div>
+
+  </section>
+</div>
+
+<script>
+  /**
+   * Signature Circular Arc Geometry & Curved Motion Clock Controller
+   * - SINGLE Arc path: starts at (x: 0, y: 0) and finishes at (x: 0, y: H)
+   * - Peak apex of arc is at x = X_MAX (approx 240px) at vertical center (y = H/2)
+   * - Nodes move along the parabolic curve: x(y) = X_MAX * (1 - ((y - H/2)/(H/2))^2)
+   * - Generously spread out node spacing (NODE_SPACING = 340px)
+   * - Strictly 3 menu nodes (01 Engineering, 02 Products, 03 Academy)
+   * - Editorial content slides along a CURVED trajectory matching the circular arc!
+   */
+  function initCircularArcSection() {
+    const realm = document.getElementById('circular-arc-scroll-realm');
+    const stage = document.getElementById('ecosystem-divisions');
+    const nodes = document.querySelectorAll<HTMLButtonElement>('.arc-node-element');
+    const panels = document.querySelectorAll<HTMLElement>('.division-editorial-panel');
+    const scenes = document.querySelectorAll<HTMLElement>('.iso-composition-scene');
+    const scrollNextBtn = document.getElementById('scroll-next-trigger');
+
+    if (!realm || !stage || !nodes.length || !panels.length) return;
+
+    let activeIndex = 0;
+    const X_MAX = 240;        // Apex X coordinate in pixels from left edge
+    const NODE_SPACING = 340; // Generously spread out menu node spacing along arc
+
+    function isMobileView(): boolean {
+      return window.innerWidth <= 768;
+    }
+
+    // Mathematical Parabolic/Circle Curve Function
+    function getArcX(y: number, H: number): number {
+      const u = (y - H / 2) / (H / 2);
+      const clampedU = Math.max(-1, Math.min(1, u));
+      return Math.max(0, X_MAX * (1 - clampedU * clampedU));
+    }
+
+    // Update positions and active visual states based on scroll progress (0.0 to 1.0)
+    function updateArcGeometry(progress: number) {
+      if (isMobileView()) {
+        // On mobile, nodes are in a clean top horizontal segment bar. Do NOT apply 3D transforms.
+        return;
+      }
+
+      const H = stage?.clientHeight || window.innerHeight;
+      const centerY = H / 2;
+
+      // Scroll offset moves nodes along the arc curve
+      const totalStages = 2; // 0 to 2
+      const scrollOffset = progress * totalStages * NODE_SPACING;
+
+      nodes.forEach((node, i) => {
+        const nodeY = centerY + (i * NODE_SPACING) - scrollOffset;
+        const nodeX = getArcX(nodeY, H);
+
+        node.style.transform = `translate3d(${nodeX}px, ${nodeY - 20}px, 0)`;
+
+        const distFromCenter = Math.abs(nodeY - centerY);
+        const nodeOpacity = Math.max(0.2, 1 - (distFromCenter / (H * 0.45)));
+        node.style.opacity = `${nodeOpacity}`;
+      });
+
+      // Determine active index based on scroll progress:
+      // 0.00 - 0.33 => 0 (Engineering)
+      // 0.33 - 0.66 => 1 (Products)
+      // 0.66 - 1.00 => 2 (Academy)
+      let newIndex = 0;
+      if (progress >= 0.66) {
+        newIndex = 2;
+      } else if (progress >= 0.33) {
+        newIndex = 1;
+      }
+
+      if (newIndex !== activeIndex) {
+        setActiveDivision(newIndex);
+      }
+    }
+
+    // Curved Motion Clock Roll: Content slides along a curved arc trajectory!
+    function setActiveDivision(newIndex: number) {
+      activeIndex = newIndex;
+
+      // Update node active state
+      nodes.forEach((node, i) => {
+        const isActive = i === newIndex;
+        node.classList.toggle('active', isActive);
+        node.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      // Update Editorial Content Panels
+      panels.forEach((panel, i) => {
+        panel.classList.remove('past', 'active', 'future');
+        if (i < newIndex) {
+          panel.classList.add('past');
+        } else if (i === newIndex) {
+          panel.classList.add('active');
+        } else {
+          panel.classList.add('future');
+        }
+      });
+
+      // Update Isometric 3D Visual Scenes with Matching Rolling States
+      scenes.forEach((scene, i) => {
+        scene.classList.remove('past', 'active', 'future');
+        if (i < newIndex) {
+          scene.classList.add('past');
+        } else if (i === newIndex) {
+          scene.classList.add('active');
+        } else {
+          scene.classList.add('future');
+        }
+      });
+    }
+
+    // Scroll listener for sticky 300vh runway (Desktop only)
+    function handleScroll() {
+      if (!realm) return;
+      if (isMobileView()) {
+        // On mobile, reset inline styles on nodes so CSS takes full control
+        nodes.forEach((node) => {
+          node.style.transform = '';
+          node.style.opacity = '';
+        });
+        return;
+      }
+
+      const rect = realm.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const scrollableDist = realm.offsetHeight - windowHeight;
+
+      if (scrollableDist <= 0) return;
+
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / scrollableDist));
+
+      updateArcGeometry(progress);
+    }
+
+    function handleResize() {
+      if (isMobileView()) {
+        nodes.forEach((node) => {
+          node.style.transform = '';
+          node.style.opacity = '';
+        });
+      } else {
+        handleScroll();
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    // Initial setup
+    handleScroll();
+
+    // Node click handlers:
+    // On mobile: instantly switch active panel
+    // On desktop: smoothly scroll through the 300vh pinned stage
+    nodes.forEach((node, index) => {
+      node.addEventListener('click', () => {
+        if (isMobileView()) {
+          setActiveDivision(index);
+          return;
+        }
+
+        if (!realm) return;
+        const scrollableDist = realm.offsetHeight - window.innerHeight;
+        const targetProgress = index === 0 ? 0.05 : index === 1 ? 0.50 : 0.95;
+        const targetScrollY = realm.offsetTop + (targetProgress * scrollableDist);
+        window.scrollTo({
+          top: targetScrollY,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // "SCROLL TO NEXT" button handler (Desktop only)
+    if (scrollNextBtn) {
+      scrollNextBtn.addEventListener('click', () => {
+        if (!realm) return;
+        const scrollableDist = realm.offsetHeight - window.innerHeight;
+        if (activeIndex < 2) {
+          const nextIndex = activeIndex + 1;
+          const targetProgress = nextIndex === 1 ? 0.50 : 0.95;
+          const targetScrollY = realm.offsetTop + (targetProgress * scrollableDist);
+          window.scrollTo({
+            top: targetScrollY,
+            behavior: 'smooth'
+          });
+        } else {
+          const targetScrollY = realm.offsetTop + realm.offsetHeight + 10;
+          window.scrollTo({
+            top: targetScrollY,
+            behavior: 'smooth'
+          });
+        }
+      });
+    }
+  }
+
+  // Lifecycle initialization
+  initCircularArcSection();
+  document.addEventListener('astro:page-load', initCircularArcSection);
+</script>
+
+<style>
+  /* =========================================================================
+     CIRCULAR ARC PINNED SCROLL REALM
+     ========================================================================= */
+  .circular-arc-scroll-realm {
+    position: relative;
+    width: 100%;
+    height: 300vh; /* Pinned interaction runway */
+    /* Dark green background */
+    background-color: var(--color-pepper-medium);
+    margin: 0;
+    padding: 0;
+  }
+
+  .circular-arc-sticky-stage {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
+    /* Dark green background */
+    background-color: var(--color-pepper-medium);
+  }
+
+  /* Atmospheric Background Ambient Glows */
+  .circular-backdrop {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .ambient-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.12;
+  }
+
+  .glow-blue {
+    top: 10%;
+    left: 20%;
+    width: 600px;
+    height: 600px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .glow-cyan {
+    bottom: 10%;
+    right: 15%;
+    width: 550px;
+    height: 550px;
+    background: rgba(212, 212, 212, 0.06);
+  }
+
+  .grid-dust-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* -------------------------------------------------------------------------
+     LEFT: SINGLE FULL-HEIGHT ARCHITECTURAL CIRCLE ARC & ORBITING NODES
+     Starts at very left of screen (left: 0, top: 0, bottom: 0)
+     ------------------------------------------------------------------------- */
+  .arc-navigation-system {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 380px;
+    pointer-events: none;
+    z-index: 20;
+  }
+
+  /* Single continuous SVG vector line */
+  .arc-full-svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 360px;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .arc-nodes-orbit {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Orbiting Navigation Node */
+  .arc-node-element {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    background: transparent;
+    border: none;
+    padding: 0.4rem;
+    cursor: pointer;
+    pointer-events: auto;
+    outline: none;
+    transition: opacity 0.25s ease;
+    will-change: transform, opacity;
+  }
+
+  /* Bullet Target Ring: Active vs Inactive */
+  .node-bullet-target {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .outer-glow-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1.5px solid transparent;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .center-core-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Active Node State */
+  .arc-node-element.active .outer-glow-ring {
+    border-color: var(--color-salt-white);
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.5), inset 0 0 8px rgba(255, 255, 255, 0.3);
+    animation: ringPulse 2.5s infinite ease-in-out;
+  }
+
+  @keyframes ringPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.75; }
+  }
+
+  .arc-node-element.active .center-core-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-salt-white);
+    box-shadow: 0 0 10px var(--color-salt-white);
+  }
+
+  /* Node Label Text Lockup */
+  .node-text-lockup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+    white-space: nowrap;
+  }
+
+  .node-seq {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.35);
+    transition: color 0.3s ease;
+  }
+
+  .arc-node-element.active .node-seq {
+    color: var(--color-salt-white);
+  }
+
+  .node-title {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: -0.01em;
+    transition: all 0.3s ease;
+  }
+
+  .arc-node-element.active .node-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+  }
+
+  .arc-node-element:hover .node-title {
+    color: #ffffff;
+  }
+
+  /* -------------------------------------------------------------------------
+     CENTER: EDITORIAL CONTENT CLOCK TRACK (ZERO OVERLAP!)
+     Safe clearance at left: clamp(450px, 31vw, 550px)
+     Curved transitions match the sweeping circular arc!
+     ------------------------------------------------------------------------- */
+  .division-narrative-stage {
+    position: absolute;
+    left: clamp(450px, 31vw, 550px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 500px;
+    max-width: 35vw;
+    z-index: 10;
+  }
+
+  .editorial-clock-track {
+    position: relative;
+    width: 100%;
+    height: 480px;
+  }
+
+  /* CURVED Clock Motion Transitions */
+  .division-editorial-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+    will-change: transform, opacity;
+  }
+
+  /* Past panel: curves UP and to the left following arc trajectory */
+  .division-editorial-panel.past {
+    transform: translate3d(-60px, -110%, 0) rotate(-5deg) scale(0.94);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Active panel: locked in center */
+  .division-editorial-panel.active {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Future panel: curves BELOW and to the left waiting to roll up */
+  .division-editorial-panel.future {
+    transform: translate3d(-60px, 110%, 0) rotate(5deg) scale(0.94);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Editorial Header */
+  .editorial-header {
+    margin-bottom: 2rem;
+  }
+
+  .eyebrow-accent-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .eyebrow-num {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-salt-white);
+  }
+
+  .eyebrow-slug {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--color-accent);
+  }
+
+  .eyebrow-dash {
+    width: 32px;
+    height: 1.5px;
+    background: var(--color-accent);
+    opacity: 0.7;
+  }
+
+  .editorial-main-title {
+    font-size: clamp(2.6rem, 3.8vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin: 0 0 1.2rem 0;
+  }
+
+  .editorial-lead {
+    font-size: 1.02rem;
+    color: var(--color-text-secondary);
+    line-height: 1.58;
+    max-width: 480px;
+    margin: 0;
+  }
+
+  /* Dual-Column Capabilities List */
+  .capabilities-dual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.2rem;
+  }
+
+  .cap-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .cap-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .cap-ico {
+    color: var(--color-salt-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .cap-txt {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    letter-spacing: -0.01em;
+  }
+
+  .editorial-action-row {
+    margin-top: 1.6rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .academy-explore-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .academy-explore-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  }
+
+  /* -------------------------------------------------------------------------
+     RIGHT: ISOMETRIC 3D FLOATING GLASS TECH COMPOSITION
+     ------------------------------------------------------------------------- */
+  .isometric-visual-stage {
+    position: absolute;
+    right: clamp(2rem, 5vw, 6rem);
+    top: 50%;
+    transform: translateY(-50%);
+    width: clamp(440px, 32vw, 560px);
+    height: 480px;
+    z-index: 15;
+  }
+
+  .iso-visual-clock-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .iso-composition-scene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+    will-change: transform, opacity;
+  }
+
+  .iso-composition-scene.past {
+    transform: translate3d(40px, -90px, 0) scale(0.94) rotate(-3deg);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .iso-composition-scene.active {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .iso-composition-scene.future {
+    transform: translate3d(40px, 90px, 0) scale(0.94) rotate(3deg);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Perspective Viewport Box */
+  .iso-perspective-box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    perspective: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Angled Glass IDE Window */
+  .iso-glass-window {
+    position: absolute;
+    width: 440px;
+    height: 300px;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.75) 0%, rgba(8, 14, 26, 0.92) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    backdrop-filter: blur(20px);
+    box-shadow: 
+      0 25px 60px rgba(0, 0, 0, 0.8),
+      0 0 35px rgba(6, 182, 212, 0.12),
+      inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    transform: rotateY(-14deg) rotateX(6deg) translateZ(0);
+    overflow: hidden;
+  }
+
+  .ide-window-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 1rem;
+    background: rgba(30, 41, 59, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .ide-traffic-lights {
+    display: flex;
+    gap: 5px;
+  }
+
+  .tl-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .tl-dot.red { background: #ef4444; }
+  .tl-dot.yellow { background: #f59e0b; }
+  .tl-dot.green { background: #10b981; }
+
+  .ide-title-tab {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    color: #94a3b8;
+  }
+
+  .ide-tag-badge {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.62rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    background: rgba(37, 99, 235, 0.2);
+    color: #93c5fd;
+    border: 1px solid rgba(37, 99, 235, 0.35);
+  }
+
+  .ide-tag-badge.cyan,
+  .ide-tag-badge.purple { 
+    background: var(--color-surface); 
+    color: var(--color-salt-white); 
+    border-color: var(--color-border); 
+  }
+
+  .ide-window-body {
+    display: flex;
+    height: calc(100% - 36px);
+  }
+
+  .ide-file-tree {
+    width: 48px;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 0.8rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .tree-line {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+  }
+
+  .tree-line.active {
+    background: var(--color-salt-white);
+    box-shadow: 0 0 6px var(--color-salt-white);
+  }
+
+  .ide-code-lines {
+    padding: 1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    line-height: 1.4;
+    overflow: hidden;
+  }
+
+  .code-row { color: var(--color-text-secondary); white-space: nowrap; }
+  .ind-1 { padding-left: 1.2rem; }
+  .ind-2 { padding-left: 2.2rem; }
+
+  .syn-k { color: var(--color-salt-white); font-weight: 600; }
+  .syn-v { color: var(--color-salt-light); }
+  .syn-f { color: var(--color-salt-white); }
+  .syn-s { color: var(--color-pepper-medium); }
+  .syn-n { color: var(--color-salt-light); }
+  .syn-b { color: var(--color-salt-white); }
+  .syn-c { color: var(--color-pepper-medium); font-style: italic; }
+
+  /* Floating Card: Performance Graph */
+  .iso-floating-card.performance-card {
+    position: absolute;
+    bottom: 45px;
+    left: 20px;
+    width: 250px;
+    background: linear-gradient(135deg, rgba(20, 29, 48, 0.88) 0%, rgba(10, 16, 28, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 16px;
+    padding: 1rem 1.2rem;
+    backdrop-filter: blur(24px);
+    box-shadow: 
+      0 20px 45px rgba(0, 0, 0, 0.85),
+      0 0 25px rgba(6, 182, 212, 0.15),
+      inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    transform: rotateY(-12deg) rotateX(4deg) translateZ(40px);
+    z-index: 10;
+  }
+
+  .perf-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .perf-status-beacon {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+  }
+
+  .perf-status-beacon.cyan { background: var(--color-salt-white); box-shadow: 0 0 8px var(--color-salt-white); }
+  .perf-status-beacon.purple { background: var(--color-salt-light); box-shadow: 0 0 8px var(--color-salt-light); }
+
+  .perf-label {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.04em;
+  }
+
+  .perf-chart-wrap {
+    width: 100%;
+    height: 55px;
+  }
+
+  .perf-spline-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Floating Badge: Deployed • */
+  .iso-floating-badge.deployed-badge {
+    position: absolute;
+    top: 50px;
+    right: 25px;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: linear-gradient(135deg, var(--color-pepper-alpha-85, rgba(43, 43, 43, 0.85)) 0%, var(--color-background-dark) 100%);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 0.65rem 1rem;
+    backdrop-filter: blur(20px);
+    box-shadow: 
+      0 16px 35px rgba(0, 0, 0, 0.7),
+      0 0 20px rgba(255, 255, 255, 0.08);
+    transform: rotateY(-10deg) translateZ(55px);
+    z-index: 12;
+  }
+
+  .badge-icon-cloud {
+    color: var(--color-salt-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .badge-icon-cloud.cyan { color: var(--color-salt-white); }
+  .badge-icon-cloud.purple { color: var(--color-salt-light); }
+
+  .badge-status-line {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  .badge-live-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-salt-white);
+    box-shadow: 0 0 6px var(--color-salt-white);
+  }
+
+  .badge-live-dot.purple { background: var(--color-salt-light); box-shadow: 0 0 6px var(--color-salt-light); }
+
+  /* Transit Radar Viewport (Products Scene) */
+  .transit-radar-viewport {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 36px);
+    background: radial-gradient(circle at 60% 40%, rgba(255, 255, 255, 0.06) 0%, transparent 65%);
+    overflow: hidden;
+  }
+
+  .radar-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .transit-track-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bus-beacon-ping {
+    position: absolute;
+    top: 55px;
+    left: 130px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .ping-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-salt-white);
+    box-shadow: 0 0 10px var(--color-salt-light);
+  }
+
+  .ping-label {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.68rem;
+    color: var(--color-salt-white);
+    background: var(--color-pepper-alpha-85, rgba(43, 43, 43, 0.85));
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+  }
+
+  .telemetry-stat-row {
+    display: flex;
+    gap: 1.5rem;
+    padding-top: 0.2rem;
+  }
+
+  .t-stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .t-num {
+    font-family: var(--font-mono, monospace);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .t-lbl {
+    font-size: 0.68rem;
+    color: #94a3b8;
+  }
+
+  /* Academy Terminal Body */
+  .academy-terminal-body {
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .terminal-git-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.78rem;
+    color: #c084fc;
+    background: rgba(168, 85, 247, 0.1);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    width: fit-content;
+  }
+
+  .terminal-status-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .t-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+  }
+
+  .t-item.passed {
+    color: #4ade80;
+  }
+
+  /* Constellation Lines & Micro-nodes */
+  .iso-wire-constellation {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .const-node {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-salt-white);
+    box-shadow: 0 0 6px var(--color-salt-white);
+  }
+
+  .c-1 { top: 30px; left: 10px; }
+  .c-2 { bottom: 20px; right: 80px; }
+  .c-3 { top: 180px; right: 0; }
+
+  /* -------------------------------------------------------------------------
+     BOTTOM RIGHT: "SCROLL TO NEXT ——————— (↓)"
+     ------------------------------------------------------------------------- */
+  .scroll-to-next-anchor {
+    position: absolute;
+    bottom: 2.8rem;
+    right: clamp(2rem, 5vw, 6rem);
+    z-index: 25;
+  }
+
+  .scroll-next-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem;
+    outline: none;
+    transition: transform 0.2s ease;
+  }
+
+  .scroll-next-btn:hover {
+    transform: translateY(2px);
+  }
+
+  .scroll-next-caption {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    color: rgba(255, 255, 255, 0.45);
+    transition: color 0.2s ease;
+  }
+
+  .scroll-next-btn:hover .scroll-next-caption {
+    color: #ffffff;
+  }
+
+  .scroll-next-dash {
+    width: 40px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .scroll-arrow-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cbd5e1;
+    transition: all 0.2s ease;
+  }
+
+  .scroll-next-btn:hover .scroll-arrow-circle {
+    border-color: var(--color-salt-white);
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+
+  /* -------------------------------------------------------------------------
+     RESPONSIVE ADAPTATIONS
+     ------------------------------------------------------------------------- */
+  @media (max-width: 1200px) {
+    .division-narrative-stage {
+      left: 360px;
+      max-width: 440px;
+    }
+    .isometric-visual-stage {
+      width: 420px;
+    }
+    .iso-glass-window {
+      width: 360px;
+      height: 250px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .isometric-visual-stage {
+      display: none; /* Hide 3D visual on tablets to prioritize readable layout */
+    }
+    .division-narrative-stage {
+      left: min(340px, 32vw);
+      max-width: min(580px, 60vw);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .circular-arc-scroll-realm {
+      height: auto;
+      /* Predefined dark green background on mobile */
+      background-color: var(--color-pepper-medium);
+    }
+
+    .circular-arc-sticky-stage {
+      position: relative;
+      height: auto;
+      min-height: auto;
+      padding: 3.5rem 1.25rem 3rem 1.25rem;
+    }
+
+    /* Hide desktop-only scroll to next prompt on mobile devices */
+    .scroll-to-next-anchor {
+      display: none !important;
+    }
+
+    /* Hide full height SVG arc line on mobile */
+    .arc-full-svg {
+      display: none !important;
+    }
+
+    /* Top Arch/Segment Navigation Bar for Mobile */
+    .arc-navigation-system {
+      position: static;
+      width: 100%;
+      height: auto;
+      margin-bottom: 1.75rem;
+      pointer-events: auto;
+      z-index: 10;
+    }
+
+    .arc-nodes-orbit {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 0.5rem;
+      /* Predefined dark green container */
+      background: #1e3328;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      padding: 0.35rem 0.5rem;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.5);
+    }
+
+    .arc-node-element {
+      position: static !important;
+      transform: none !important;
+      opacity: 1 !important;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.65rem;
+      border-radius: var(--radius-full);
+      background: transparent;
+      border: 1px solid transparent;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+
+    .arc-node-element:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .arc-node-element.active {
+      /* Predefined active pill style using salt white contrast */
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+    }
+
+    .node-bullet-target {
+      width: 14px;
+      height: 14px;
+    }
+
+    .outer-glow-ring {
+      display: none; /* Keep clean and minimal inside pill */
+    }
+
+    .center-core-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--color-salt-light);
+      opacity: 0.75;
+    }
+
+    .arc-node-element.active .center-core-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--color-salt-white);
+      box-shadow: 0 0 8px var(--color-salt-white);
+      opacity: 1;
+    }
+
+    .node-text-lockup {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .node-seq {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--color-salt-light);
+      opacity: 0.75;
+    }
+
+    .arc-node-element.active .node-seq {
+      color: var(--color-salt-white);
+      opacity: 1;
+    }
+
+    .node-title {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--color-salt-white);
+      opacity: 0.82;
+    }
+
+    .arc-node-element.active .node-title {
+      font-size: 0.84rem;
+      color: #ffffff;
+      opacity: 1;
+      text-shadow: none;
+    }
+
+    /* Content Stage: Clean Card View */
+    .division-narrative-stage {
+      position: static;
+      transform: none;
+      width: 100%;
+      max-width: 100%;
+      left: auto;
+      top: auto;
+    }
+
+    .editorial-clock-track {
+      height: auto;
+      position: static;
+    }
+
+    .division-editorial-panel {
+      position: static;
+      display: none;
+      transform: none !important;
+      opacity: 1 !important;
+      /* Predefined dark green card palette */
+      background: #1e3328;
+      border: 1px solid rgba(237, 244, 242, 0.15);
+      border-radius: 20px;
+      padding: 1.5rem 1.25rem;
+      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.5);
+    }
+
+    .division-editorial-panel.active {
+      display: flex;
+      animation: mobileFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes mobileFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .editorial-header {
+      margin-bottom: 1.25rem;
+    }
+
+    .editorial-main-title {
+      font-size: 1.75rem;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+      color: var(--color-salt-white);
+    }
+
+    .editorial-lead {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--color-salt-light);
+    }
+
+    .capabilities-dual-grid {
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+    }
+
+    .cap-item {
+      padding: 0.55rem 0.85rem;
+      font-size: 0.85rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+    }
+
+    .editorial-action-row {
+      margin-top: 1.25rem;
+      width: 100%;
+    }
+
+    .academy-explore-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .circular-arc-sticky-stage {
+      padding: 3rem 1rem 2.5rem 1rem;
+    }
+
+    .node-seq {
+      display: none; /* More breathing room on small phone screens */
+    }
+
+    .node-title {
+      font-size: 0.78rem;
+    }
+
+    .arc-node-element {
+      padding: 0.45rem 0.5rem;
+    }
+
+    .editorial-main-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>

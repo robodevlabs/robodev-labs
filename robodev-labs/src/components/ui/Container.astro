@@ -1,0 +1,27 @@
+---
+import { cn } from '../../lib/utils';
+
+export interface Props {
+  class?: string;
+  as?: string;
+  [key: string]: any;
+}
+
+const { class: className, as: Component = 'div', ...rest } = Astro.props;
+const Tag = Component as any;
+---
+
+<Tag class={cn('container-primitive', className)} {...rest}>
+  <slot />
+</Tag>
+
+<style>
+  .container-primitive {
+    width: 100%;
+    max-width: var(--container-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-padding-x);
+    padding-right: var(--container-padding-x);
+  }
+</style>

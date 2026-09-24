@@ -1,0 +1,64 @@
+---
+import type { HeadingLevel } from '../../types';
+import { cn } from '../../lib/utils';
+
+export interface Props {
+  level?: HeadingLevel;
+  size?: 'display' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  class?: string;
+  [key: string]: any;
+}
+
+const { level = 'h2', size, class: className, ...rest } = Astro.props;
+
+const Tag = level as any;
+const visualSize = size || level;
+---
+
+<Tag class={cn('heading-primitive', `size-${visualSize}`, className)} {...rest}>
+  <slot />
+</Tag>
+
+<style>
+  .heading-primitive {
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    line-height: var(--line-height-tight);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--letter-spacing-tight);
+  }
+
+  .size-display {
+    font-size: var(--font-size-display);
+    line-height: 1.1;
+    font-weight: var(--font-weight-extrabold);
+    letter-spacing: -0.04em;
+  }
+
+  .size-h1 {
+    font-size: var(--font-size-h1);
+    letter-spacing: -0.03em;
+  }
+
+  .size-h2 {
+    font-size: var(--font-size-h2);
+  }
+
+  .size-h3 {
+    font-size: var(--font-size-h3);
+  }
+
+  .size-h4 {
+    font-size: var(--font-size-h4);
+  }
+
+  .size-h5 {
+    font-size: var(--font-size-h5);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .size-h6 {
+    font-size: var(--font-size-h6);
+    font-weight: var(--font-weight-semibold);
+  }
+</style>

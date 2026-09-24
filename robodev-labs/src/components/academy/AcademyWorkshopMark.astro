@@ -1,0 +1,54 @@
+---
+/**
+ * AcademyWorkshopMark — subtle SVG motif derived from workshop index.
+ * 0 → circular / radial geometry
+ * 1 → grid / connection geometry
+ * 2 → layered rectangular geometry
+ * No hardcoded workshop names. Adding a workshop auto-gets a treatment.
+ */
+interface Props {
+  index: number;
+  class?: string;
+}
+const { index, class: className = '' } = Astro.props as Props;
+const variant = ((index % 3) + 3) % 3;
+---
+{variant === 0 && (
+  <svg class={`academy-mark ${className}`} viewBox="0 0 160 160" fill="none" aria-hidden="true" focusable="false">
+    <circle cx="80" cy="80" r="62" stroke="currentColor" stroke-width="1" opacity="0.4" stroke-dasharray="3 5" />
+    <circle cx="80" cy="80" r="42" stroke="currentColor" stroke-width="1" opacity="0.3" />
+    <circle cx="80" cy="80" r="22" stroke="currentColor" stroke-width="1" opacity="0.22" />
+    <circle cx="80" cy="80" r="3" fill="currentColor" opacity="0.8" />
+    <path d="M80 8 V24 M80 136 V152 M8 80 H24 M136 80 H152" stroke="currentColor" stroke-width="1" opacity="0.4" />
+    <path d="M32 32 L48 48 M112 112 L128 128 M128 32 L112 48 M48 112 L32 128" stroke="currentColor" stroke-width="1" opacity="0.22" />
+  </svg>
+)}
+{variant === 1 && (
+  <svg class={`academy-mark ${className}`} viewBox="0 0 160 160" fill="none" aria-hidden="true" focusable="false">
+    <rect x="30" y="30" width="100" height="100" stroke="currentColor" stroke-width="1" opacity="0.32" />
+    <path d="M30 60 H130 M30 90 H130 M30 115 H130 M60 30 V130 M90 30 V130 M115 30 V130" stroke="currentColor" stroke-width="1" opacity="0.16" />
+    <circle cx="60" cy="60" r="4" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.6" />
+    <circle cx="90" cy="90" r="3" fill="currentColor" opacity="0.7" />
+    <circle cx="115" cy="60" r="2.5" fill="currentColor" opacity="0.5" />
+    <path d="M60 60 L90 90 L115 60" stroke="currentColor" stroke-width="1" opacity="0.35" />
+  </svg>
+)}
+{variant === 2 && (
+  <svg class={`academy-mark ${className}`} viewBox="0 0 160 160" fill="none" aria-hidden="true" focusable="false">
+    <rect x="28" y="52" width="104" height="72" stroke="currentColor" stroke-width="1" opacity="0.32" />
+    <rect x="42" y="38" width="104" height="72" stroke="currentColor" stroke-width="1" opacity="0.22" stroke-dasharray="5 5" />
+    <rect x="56" y="24" width="76" height="40" stroke="currentColor" stroke-width="1" opacity="0.18" />
+    <circle cx="56" cy="24" r="3" fill="currentColor" opacity="0.55" />
+    <path d="M28 124 L56 124 M132 52 L146 52" stroke="currentColor" stroke-width="1" opacity="0.35" />
+  </svg>
+)}
+
+<style>
+  .academy-mark {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: rgba(181, 213, 173, 0.55);
+    transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms ease;
+  }
+</style>

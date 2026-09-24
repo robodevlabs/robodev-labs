@@ -1,0 +1,467 @@
+---
+import Container from '../ui/Container.astro';
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+
+const timelineWeeks = ['W1', 'W2', 'W3-4', 'W5-6', 'W7', 'W8+'];
+
+const ganttStages = [
+  {
+    title: 'Discovery & Goals',
+    description: 'Understanding your vision, business objectives, and project success criteria.',
+    deliverable: 'Project Plan & Roadmap',
+    startCol: 1,
+    spanCol: 1,
+    status: 'Alignment & Planning'
+  },
+  {
+    title: 'Design & Solution Plan',
+    description: 'User journeys, visual prototypes, and structured blueprint before building.',
+    deliverable: 'UI Concepts & System Blueprint',
+    startCol: 2,
+    spanCol: 1,
+    status: 'Design Approval'
+  },
+  {
+    title: 'Development & Build',
+    description: 'Active development with regular progress updates and working preview demos.',
+    deliverable: 'Functional Working Product',
+    startCol: 3,
+    spanCol: 2,
+    status: 'Core Development'
+  },
+  {
+    title: 'Testing & Quality Check',
+    description: 'Comprehensive reviews across devices, speed optimization, and security checks.',
+    deliverable: 'Tested & Polished System',
+    startCol: 4,
+    spanCol: 2,
+    status: 'Quality Assurance'
+  },
+  {
+    title: 'Launch & Go-Live',
+    description: 'Smooth rollout, domain setup, and live environment launch.',
+    deliverable: 'Live Production Setup',
+    startCol: 5,
+    spanCol: 1,
+    status: 'Official Launch'
+  },
+  {
+    title: 'Growth & Ongoing Support',
+    description: 'Performance monitoring, continuous improvements, and feature updates.',
+    deliverable: 'Ongoing Support & Optimization',
+    startCol: 6,
+    spanCol: 1,
+    status: 'Continuous Support'
+  }
+];
+---
+
+<section id="process" class="process-gantt-section" aria-label="Engineering Process Lifecycle">
+  <Container class="process-container">
+    <!-- Header Section -->
+    <div class="process-header">
+      <div class="header-left">
+        <Eyebrow class="process-eyebrow">Predictable Delivery</Eyebrow>
+        <h2 class="process-headline">
+          How we work: <span class="headline-dim">from discovery to continuous scale.</span>
+        </h2>
+      </div>
+      <p class="process-lead">
+        A structured, milestone-driven approach designed for clear communication, steady progress, and reliable delivery.
+      </p>
+    </div>
+
+    <!-- Clean Editorial Gantt Timeline Board -->
+    <div class="gantt-board-wrapper">
+      <div class="gantt-board">
+        <!-- Gantt Header Row: Phase Names / Time Intervals -->
+        <div class="gantt-header-row">
+          <div class="gantt-col-header info-col-header">Stage &amp; Deliverables</div>
+          <div class="gantt-timeline-header">
+            {timelineWeeks.map((week) => (
+              <div class="timeline-header-cell">
+                <span class="week-label">{week}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Gantt Rows -->
+        <div class="gantt-rows-container">
+          {ganttStages.map((stage) => (
+            <div class="gantt-row">
+              <!-- Left Info Column -->
+              <div class="stage-info-col">
+                <h3 class="stage-title">{stage.title}</h3>
+                <p class="stage-description">{stage.description}</p>
+                <div class="stage-deliverable-wrap">
+                  <span class="deliverable-label">Deliverable:</span>
+                  <span class="deliverable-value">{stage.deliverable}</span>
+                </div>
+              </div>
+
+              <!-- Right Gantt Bar Grid Column -->
+              <div class="stage-timeline-track">
+                <!-- Background Grid Lines -->
+                <div class="timeline-grid-guides" aria-hidden="true">
+                  <div class="guide-line"></div>
+                  <div class="guide-line"></div>
+                  <div class="guide-line"></div>
+                  <div class="guide-line"></div>
+                  <div class="guide-line"></div>
+                  <div class="guide-line"></div>
+                </div>
+
+                <!-- Active Gantt Bar -->
+                <div 
+                  class="gantt-bar"
+                  style={`grid-column: ${stage.startCol} / span ${stage.spanCol};`}
+                >
+                  <div class="bar-fill">
+                    <span class="bar-status-text">{stage.status}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ==========================================================================
+     CLEAN MINIMAL EDITORIAL GANTT PROCESS ENGINE SECTION
+     ========================================================================== */
+  .process-gantt-section {
+    position: relative;
+    padding: clamp(5rem, 8vw, 8rem) 0;
+    /* Medium green background */
+    background-color: var(--color-pepper-dark);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .process-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 clamp(1.25rem, 3.5vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  /* --------------------------------------------------------------------------
+     1. Editorial Section Header
+     -------------------------------------------------------------------------- */
+  .process-header {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: flex-end;
+  }
+
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .process-eyebrow {
+    margin-bottom: 0.2rem;
+  }
+
+  .process-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(2rem, 3.8vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    /* 10% accent — primary headline */
+    color: var(--color-salt-white);
+    margin: 0;
+  }
+
+  .headline-dim {
+    color: var(--color-salt-light);
+    font-weight: 400;
+  }
+
+  .process-lead {
+    font-family: var(--font-sans);
+    font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+    color: var(--color-salt-light);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* --------------------------------------------------------------------------
+     2. Gantt Chart Board Layout
+     -------------------------------------------------------------------------- */
+  .gantt-board-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    /* 30% dark green — Gantt board outer shell */
+    background-color: var(--color-pepper-medium);
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .gantt-board {
+    min-width: 860px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Gantt Header Row */
+  .gantt-header-row {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    /* 30% — slightly deeper dark green for header */
+    background-color: rgba(30, 51, 40, 0.8);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .info-col-header {
+    padding: 1.1rem 1.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-salt-white);
+    border-right: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+  }
+
+  .gantt-timeline-header {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .timeline-header-cell {
+    padding: 1.1rem 0.5rem;
+    text-align: center;
+    border-right: 1px solid var(--color-border-subtle);
+    /* subtle tint on header cells */
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .timeline-header-cell:last-child {
+    border-right: none;
+  }
+
+  .week-label {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+  }
+
+  /* Gantt Rows */
+  .gantt-rows-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gantt-row {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    border-bottom: 1px solid var(--color-border-subtle);
+    transition: background-color 0.15s ease;
+  }
+
+  .gantt-row:last-child {
+    border-bottom: none;
+  }
+
+  .gantt-row:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  /* Stage Info Column */
+  .stage-info-col {
+    padding: 1.35rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    border-right: 1px solid var(--color-border);
+    /* 30% — dark green stage info column */
+    background-color: var(--color-pepper-medium);
+    justify-content: center;
+  }
+
+  .stage-title {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-salt-white);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .stage-description {
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    color: var(--color-text-secondary);
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .stage-deliverable-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.2rem;
+    font-size: 0.78rem;
+  }
+
+  .deliverable-label {
+    font-family: var(--font-mono);
+    color: var(--color-salt-white);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .deliverable-value {
+    font-family: var(--font-sans);
+    color: var(--color-text-secondary);
+    font-weight: 500;
+  }
+
+  /* Right Timeline Track */
+  .stage-timeline-track {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    align-items: center;
+    padding: 1.1rem 0;
+    /* 30% — dark green timeline track */
+    background-color: var(--color-pepper-medium);
+  }
+
+  .timeline-grid-guides {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    pointer-events: none;
+    height: 100%;
+  }
+
+  .guide-line {
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    height: 100%;
+  }
+
+  .guide-line:last-child {
+    border-right: none;
+  }
+
+  /* Gantt Bar */
+  .gantt-bar {
+    position: relative;
+    z-index: 2;
+    padding: 0 0.6rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .bar-fill {
+    width: 100%;
+    padding: 0.65rem 1.1rem;
+    /* 30% — dark green bar fill, slightly lighter than track */
+    background: linear-gradient(135deg, rgba(49, 71, 58, 0.9) 0%, rgba(30, 51, 40, 0.98) 100%);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-salt-white);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .gantt-row:hover .bar-fill {
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, rgba(61, 87, 70, 0.95) 0%, rgba(45, 65, 52, 1) 100%);
+    border-color: var(--color-salt-light);
+    border-left-color: var(--color-salt-white);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  }
+
+  .bar-status-text {
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    /* 10% — salt white for bar label text */
+    color: var(--color-salt-white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* --------------------------------------------------------------------------
+     3. Bottom Action Bar
+     -------------------------------------------------------------------------- */
+  .process-bottom-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.25rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .action-caption {
+    font-family: var(--font-sans);
+    font-size: 0.98rem;
+    /* 10% — salt light for caption text */
+    color: var(--color-salt-light);
+    font-weight: 500;
+  }
+
+  .action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* --------------------------------------------------------------------------
+     Responsive Media Queries
+     -------------------------------------------------------------------------- */
+  @media (max-width: 960px) {
+    .process-header {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .process-bottom-action {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .action-buttons {
+      width: 100%;
+      flex-direction: column;
+    }
+
+    .action-buttons a {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
