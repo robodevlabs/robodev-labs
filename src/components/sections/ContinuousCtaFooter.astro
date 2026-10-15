@@ -171,7 +171,7 @@ const socialsList = [
      ========================================================================== */
   .continuous-footer-wrapper {
     position: relative;
-    /* Medium green outer wrapper */
+    /* Continuous footer wrapper */
     background-color: var(--color-pepper-dark);
     overflow-x: hidden;
     isolation: isolate;
@@ -219,10 +219,9 @@ const socialsList = [
   .cta-card-wrapper {
     position: relative;
     border-radius: 24px;
-    /* Dark green inner card */
-    background: linear-gradient(180deg, var(--color-pepper-medium) 0%, #1e3328 100%);
-    border: 1px solid var(--color-border);
-    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, #0056D2 0%, #003B99 50%, #002266 100%);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 25px 60px -15px rgba(0, 45, 120, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(20px);
     padding: clamp(2.5rem, 6vw, 4.25rem) clamp(1.5rem, 5vw, 3.5rem);
     text-align: center;
@@ -232,10 +231,10 @@ const socialsList = [
   .cta-card-glass-glow {
     position: absolute;
     top: 0;
-    left: 25%;
-    right: 25%;
+    left: 20%;
+    right: 20%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--color-salt-light), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
   }
 
   .cta-card-content {
@@ -257,13 +256,13 @@ const socialsList = [
     font-weight: 700;
     line-height: 1.15;
     letter-spacing: -0.035em;
-    color: var(--color-text);
+    color: #FFFFFF;
     margin: 0;
   }
 
   .cta-highlight-gradient {
-    color: var(--color-salt-light);
-    background: linear-gradient(135deg, var(--color-salt-white) 0%, var(--color-salt-light) 50%, var(--color-pepper-medium) 100%);
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #FFFFFF 0%, #E0EDFF 40%, #90C2FF 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -271,7 +270,7 @@ const socialsList = [
   .cta-subtext {
     font-family: var(--font-sans);
     font-size: clamp(1rem, 1.3vw, 1.125rem);
-    color: var(--color-text-secondary);
+    color: rgba(255, 255, 255, 0.92);
     line-height: 1.6;
     margin: 0;
     max-width: 580px;
@@ -293,14 +292,14 @@ const socialsList = [
     font-family: var(--font-sans);
     font-size: var(--font-size-body);
     font-weight: var(--font-weight-medium);
-    color: var(--color-text-secondary);
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     transition: color 200ms ease;
     cursor: pointer;
   }
 
   .cta-text-link:hover {
-    color: var(--color-salt-white);
+    color: #ffffff;
   }
 
   .cta-text-arrow {
@@ -320,9 +319,8 @@ const socialsList = [
     z-index: 2;
     padding-top: clamp(3rem, 5vw, 4.5rem);
     padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
-    /* Dark green footer */
-    background-color: var(--color-pepper-medium);
-    border-top: 1px solid var(--color-border);
+    background-color: #000000;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .footer-inner-container {
@@ -406,8 +404,8 @@ const socialsList = [
 
   .social-pill-btn:hover {
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.18);
-    border-color: rgba(255, 255, 255, 0.45);
+    background: #0056D2;
+    border-color: #0056D2;
     transform: translateY(-2px);
   }
 
@@ -510,12 +508,11 @@ const socialsList = [
     gap: 1rem;
   }
 
-  /* User requested: use medium green color for copyright, legal links, and craft badge */
   .copyright-text {
     font-family: var(--font-sans);
     font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--color-pepper-dark);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
     letter-spacing: 0.01em;
   }
 
@@ -528,28 +525,27 @@ const socialsList = [
   .legal-nav-link {
     font-family: var(--font-sans);
     font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--color-pepper-dark);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     transition: all 0.2s ease;
   }
 
   .legal-nav-link:hover {
-    color: var(--color-salt-white);
+    color: #FFFFFF;
     text-decoration: underline;
   }
 
   .legal-sep {
-    color: var(--color-pepper-dark);
+    color: rgba(255, 255, 255, 0.35);
     font-size: 0.75rem;
-    opacity: 0.8;
   }
 
   .craft-badge {
     font-family: var(--font-mono);
     font-size: 0.76rem;
-    font-weight: 600;
-    color: var(--color-pepper-dark);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
     letter-spacing: 0.03em;
   }
 

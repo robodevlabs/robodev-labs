@@ -93,9 +93,11 @@ import { siteConfig } from '../config/site';
       <div class="section-intro text-center model-header-center">
         <Eyebrow class="section-eyebrow">The RoboDev Labs Ecosystem</Eyebrow>
         <h2 class="model-big-display-title">
-          Built for Businesses,
-          <br />
-          <span class="text-gradient-brand">Institutions, and Learners</span>
+          <span class="text-gradient-brand">
+            Built for Businesses,
+            <br />
+            Institutions, and Learners
+          </span>
         </h2>
         <p class="section-subtitle">
           Select your segment below to see how our engineering divisions, mentorship academy, and venture studio align with your goals.
@@ -118,8 +120,11 @@ import { siteConfig } from '../config/site';
        HOW WE WORK: FROM DISCOVERY TO ITERATION (#process)
        Screen-height 100vh section with 6 engineering stages, sweeping wave path,
        directional arrows, and dual pill CTAs.
-       ========================================================================= -->
-  <ProcessEngineSection />
+       ========================================================================= 
+       we are removing this process section on landing page, it is shifted into our engineering page
+       <ProcessEngineSection />
+       -->
+  
 
   <Divider />
 
@@ -191,6 +196,7 @@ import { siteConfig } from '../config/site';
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
+    color: var(--color-salt-white);
   }
 
   .hero-brand-eyebrow::before,
@@ -199,7 +205,7 @@ import { siteConfig } from '../config/site';
     display: inline-block;
     width: 14px;
     height: 1.5px;
-    background-color: var(--color-pepper-medium);
+    background-color: var(--color-salt-white);
     opacity: 0.8;
   }
 
@@ -247,13 +253,13 @@ import { siteConfig } from '../config/site';
   .cta-arrow-symbol {
     font-size: 1rem;
     display: inline-block;
-    color: var(--color-text-inverse);
+    color: #000000;
     transition: transform var(--duration-fast) var(--ease-standard);
   }
 
   .hero-primary-pill:hover .cta-arrow-symbol {
     transform: translateX(4px);
-    color: var(--color-text-inverse);
+    color: #000000;
   }
 
   /* ------------------------------------------------------------------------
@@ -282,14 +288,13 @@ import { siteConfig } from '../config/site';
     font-size: var(--font-size-caption);
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    /* User requested: use medium green color for explore */
-    color: var(--color-pepper-dark);
+    color: #FFFFFF;
     font-weight: 700;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-    background: rgba(49, 71, 58, 0.45);
+    background: rgba(0, 40, 110, 0.45);
     padding: 0.25rem 0.65rem;
     border-radius: 4px;
-    border: 1px solid rgba(124, 131, 99, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.25);
   }
 
   .scroll-arrow-container {
@@ -302,8 +307,7 @@ import { siteConfig } from '../config/site';
   .custom-scroll-arrow {
     width: 16px;
     height: 26px;
-    /* User requested: medium green color for arrow */
-    color: var(--color-pepper-dark);
+    color: #FFFFFF;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
     stroke-width: 2.2;
     /* Very slow vertical movement, 6-10px travel, smooth ease-in-out */
@@ -339,13 +343,13 @@ import { siteConfig } from '../config/site';
   }
 
   .section-title {
-    color: var(--color-text);
+    color: #0F172A;
     margin-bottom: var(--space-3);
   }
 
   .section-subtitle {
     font-size: var(--font-size-body-large);
-    color: var(--color-text-secondary);
+    color: #334155;
     line-height: var(--line-height-relaxed);
   }
 
@@ -358,7 +362,7 @@ import { siteConfig } from '../config/site';
     font-weight: 800;
     line-height: 1.15;
     letter-spacing: -0.03em;
-    color: var(--color-text);
+    color: #0F172A;
     margin: var(--space-3) 0 var(--space-4) 0;
   }
 
