@@ -91,14 +91,14 @@ const jsonLd = {
         </div>
         <svg class="studio-hero__geometry studio-hero__geometry--back" viewBox="0 0 1200 600" fill="none" preserveAspectRatio="xMidYMid slice" data-parallax="0.12">
           <circle cx="950" cy="180" r="320" stroke="rgba(212, 212, 212, 0.08)" stroke-width="1" stroke-dasharray="6 6" />
-          <circle cx="950" cy="180" r="210" stroke="rgba(181, 213, 173, 0.12)" stroke-width="1.5" />
+          <circle cx="950" cy="180" r="210" stroke="rgba(96, 165, 250, 0.12)" stroke-width="1.5" />
           <circle cx="950" cy="180" r="90" stroke="rgba(212, 212, 212, 0.1)" stroke-width="1" />
           <path d="M600,0 L950,180 L1200,60" stroke="rgba(212, 212, 212, 0.06)" stroke-width="1" />
-          <path d="M820,380 L950,180 L1120,340" stroke="rgba(181, 213, 173, 0.08)" stroke-width="1" />
+          <path d="M820,380 L950,180 L1120,340" stroke="rgba(96, 165, 250, 0.08)" stroke-width="1" />
         </svg>
         <svg class="studio-hero__geometry studio-hero__geometry--front" viewBox="0 0 1200 600" fill="none" preserveAspectRatio="xMidYMid slice" data-parallax="0.2">
           <!-- Technical Crosshairs & Node points -->
-          <circle cx="950" cy="180" r="4" fill="#b5d5ad" />
+          <circle cx="950" cy="180" r="4" fill="#60A5FA" />
           <circle cx="820" cy="380" r="3" fill="rgba(237, 244, 242, 0.5)" />
           <circle cx="1120" cy="340" r="3" fill="rgba(237, 244, 242, 0.5)" />
           <line x1="930" y1="180" x2="970" y2="180" stroke="rgba(237, 244, 242, 0.4)" stroke-width="1" />
@@ -158,9 +158,9 @@ const jsonLd = {
         <!-- Elevated background technical accent geometry + parallax depth -->
         <div class="studio-featured__bg-accents" aria-hidden="true">
           <svg class="studio-featured__corner-svg" viewBox="0 0 400 400" fill="none" data-parallax="0.08">
-            <path d="M0,80 L80,80 L80,0" stroke="rgba(181, 213, 173, 0.18)" stroke-width="1.5" />
+            <path d="M0,80 L80,80 L80,0" stroke="rgba(96, 165, 250, 0.18)" stroke-width="1.5" />
             <path d="M20,100 L100,100 L100,20" stroke="rgba(212, 212, 212, 0.08)" stroke-width="1" stroke-dasharray="4 4" />
-            <circle cx="80" cy="80" r="3" fill="#b5d5ad" />
+            <circle cx="80" cy="80" r="3" fill="#60A5FA" />
           </svg>
           <div class="academy-line-art academy-line-art--featured" data-parallax="0.12" aria-hidden="true">
             <AcademyGrid />
@@ -413,8 +413,8 @@ const jsonLd = {
             <div class="studio-pillar-card__top">
               <span class="studio-pillar-num">01</span>
               <svg class="studio-pillar-decor" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-                <rect x="4" y="4" width="24" height="24" stroke="rgba(181, 213, 173, 0.3)" stroke-width="1.5" />
-                <circle cx="16" cy="16" r="4" fill="#b5d5ad" />
+                <rect x="4" y="4" width="24" height="24" stroke="rgba(96, 165, 250, 0.3)" stroke-width="1.5" />
+                <circle cx="16" cy="16" r="4" fill="#60A5FA" />
               </svg>
             </div>
             <h3 class="studio-pillar-title">Build a real project</h3>
@@ -428,7 +428,7 @@ const jsonLd = {
             <div class="studio-pillar-card__top">
               <span class="studio-pillar-num">02</span>
               <svg class="studio-pillar-decor" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-                <circle cx="16" cy="16" r="12" stroke="rgba(181, 213, 173, 0.3)" stroke-width="1.5" stroke-dasharray="3 3" />
+                <circle cx="16" cy="16" r="12" stroke="rgba(96, 165, 250, 0.3)" stroke-width="1.5" stroke-dasharray="3 3" />
                 <path d="M16,8 L16,24 M8,16 L24,16" stroke="rgba(212, 212, 212, 0.3)" stroke-width="1" />
               </svg>
             </div>
@@ -443,8 +443,8 @@ const jsonLd = {
             <div class="studio-pillar-card__top">
               <span class="studio-pillar-num">03</span>
               <svg class="studio-pillar-decor" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-                <path d="M8,24 L16,8 L24,24 Z" stroke="rgba(181, 213, 173, 0.3)" stroke-width="1.5" />
-                <circle cx="16" cy="18" r="3" fill="#b5d5ad" />
+                <path d="M8,24 L16,8 L24,24 Z" stroke="rgba(96, 165, 250, 0.3)" stroke-width="1.5" />
+                <circle cx="16" cy="18" r="3" fill="#60A5FA" />
               </svg>
             </div>
             <h3 class="studio-pillar-title">Keep and continue building</h3>
@@ -633,8 +633,8 @@ const jsonLd = {
             <span class="studio-eyebrow">QUESTIONS</span>
             <h2 class="studio-faq__title" id="faq-heading">Frequently asked questions</h2>
             <p class="studio-faq__lead">
-              Need more details before booking? Email us anytime at
-              <a href={`mailto:${siteConfig.email}?subject=RoboDev%20Academy%20Inquiry`} class="studio-text-link">
+              Need more details before booking? Email us anytime at 
+              <a href={`mailto:${siteConfig.email}?subject=RoboDev%20Academy%20Inquiry`} class="studio-text-link" style="color:var(--color-pepper-medium);">
                 {siteConfig.email}
               </a>.
             </p>
@@ -945,15 +945,15 @@ const jsonLd = {
   /* =========================================================================
      RoboDev Academy — Editorial Workshop Studio
      Color Palette:
-       --color-pepper-dark:   #7C8363
-       --color-pepper-medium: #31473A
+       --color-pepper-dark:   #FFFFFF
+       --color-pepper-medium: #0056D2
        --color-salt-white:    #EDF4F2
        --color-salt-light:    #D4D4D4
      ========================================================================= */
 
   .studio-page {
-    background-color: var(--color-pepper-dark, #7C8363);
-    color: var(--color-salt-white, #EDF4F2);
+    background-color: var(--color-pepper-dark, #FFFFFF);
+    color: #0F172A;
     min-height: 100vh;
   }
 
@@ -1033,7 +1033,7 @@ const jsonLd = {
      ========================================================================= */
   .studio-hero {
     position: relative;
-    background-color: var(--color-pepper-medium, #31473A);
+    background-color: var(--color-pepper-medium, #0056D2);
     padding-top: clamp(6.5rem, 13vh, 9.5rem);
     padding-bottom: clamp(4.5rem, 9vh, 7rem);
     border-bottom: 1px solid rgba(212, 212, 212, 0.15);
@@ -1053,7 +1053,7 @@ const jsonLd = {
     right: -10%;
     width: 650px;
     height: 650px;
-    background: radial-gradient(circle, rgba(181, 213, 173, 0.12) 0%, rgba(49, 71, 58, 0) 70%);
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.12) 0%, rgba(0, 86, 210, 0) 70%);
     filter: blur(40px);
   }
 
@@ -1104,9 +1104,9 @@ const jsonLd = {
     font-family: var(--font-mono, monospace);
     font-size: 0.68rem;
     letter-spacing: 0.08em;
-    color: #b5d5ad;
-    background: rgba(181, 213, 173, 0.08);
-    border: 1px solid rgba(181, 213, 173, 0.2);
+    color: #60A5FA;
+    background: rgba(96, 165, 250, 0.08);
+    border: 1px solid rgba(96, 165, 250, 0.2);
     border-radius: 9999px;
     padding: 0.2rem 0.65rem;
   }
@@ -1153,7 +1153,7 @@ const jsonLd = {
      ========================================================================= */
   .studio-featured {
     position: relative;
-    background-color: var(--color-pepper-dark, #7C8363);
+    background-color: var(--color-pepper-dark, #FFFFFF);
     padding: clamp(4rem, 8vw, 6.5rem) 0;
     overflow: hidden;
   }
@@ -1189,7 +1189,7 @@ const jsonLd = {
     font-family: var(--font-mono, monospace);
     font-size: 0.75rem;
     color: var(--color-salt-white, #EDF4F2);
-    background: rgba(49, 71, 58, 0.75);
+    background: rgba(0, 86, 210, 0.75);
     border: 1px solid rgba(212, 212, 212, 0.28);
     border-radius: 9999px;
     padding: 0.25rem 0.85rem;
@@ -1200,14 +1200,14 @@ const jsonLd = {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: #b5d5ad;
-    box-shadow: 0 0 8px #b5d5ad;
+    background-color: #60A5FA;
+    box-shadow: 0 0 8px #60A5FA;
     animation: pulseGlow 2.5s infinite ease-in-out;
   }
 
   @keyframes pulseGlow {
     0%, 100% { opacity: 0.65; transform: scale(0.95); }
-    50% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 12px #b5d5ad; }
+    50% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 12px #60A5FA; }
   }
 
   .studio-featured__grid {
@@ -1241,7 +1241,7 @@ const jsonLd = {
   }
 
   .studio-tag--cert {
-    color: #b5d5ad;
+    color: #60A5FA;
     font-weight: 600;
   }
 
@@ -1250,25 +1250,29 @@ const jsonLd = {
     margin: 0 9px;
   }
 
+  .studio-featured .studio-eyebrow {
+    color: #0056D2;
+  }
+
   .studio-featured__title {
     font-family: var(--font-display, 'Space Grotesk', sans-serif);
     font-size: clamp(2rem, 3.8vw, 3.15rem);
     font-weight: 700;
     line-height: 1.15;
     letter-spacing: -0.025em;
-    color: var(--color-salt-white, #EDF4F2);
+    color: #0F172A;
     margin: 0 0 1rem;
   }
 
   .studio-featured__tagline {
     font-size: 1.125rem;
     line-height: 1.6;
-    color: rgba(237, 244, 242, 0.88);
+    color: #334155;
     margin: 0 0 2rem;
   }
 
   .studio-featured__outcomes-block {
-    border-top: 1px solid rgba(212, 212, 212, 0.18);
+    border-top: 1px solid #E2E8F0;
     padding-top: 1.5rem;
     margin-bottom: 2rem;
   }
@@ -1288,11 +1292,11 @@ const jsonLd = {
     gap: 10px;
     font-size: 0.9375rem;
     line-height: 1.5;
-    color: rgba(237, 244, 242, 0.92);
+    color: #1E293B;
   }
 
   .studio-outcome-check {
-    color: #b5d5ad;
+    color: #0056D2;
     font-weight: 700;
     flex-shrink: 0;
   }
@@ -1303,16 +1307,16 @@ const jsonLd = {
     gap: 8px;
     font-size: 0.9375rem;
     font-weight: 600;
-    color: var(--color-salt-white, #EDF4F2);
+    color: #0056D2;
     text-decoration: underline;
     text-underline-offset: 4px;
-    text-decoration-color: rgba(212, 212, 212, 0.4);
+    text-decoration-color: rgba(0, 86, 210, 0.4);
     transition: color 150ms ease, text-decoration-color 150ms ease, transform 150ms ease;
   }
 
   .studio-link-arrow:hover {
-    color: #ffffff;
-    text-decoration-color: #ffffff;
+    color: #003B99;
+    text-decoration-color: #003B99;
   }
 
   .studio-link-arrow:hover .studio-arrow {
@@ -1322,7 +1326,7 @@ const jsonLd = {
   /* Aside card */
   .studio-aside-card {
     position: relative;
-    background: var(--color-pepper-medium, #31473A);
+    background: var(--color-pepper-medium, #0056D2);
     border: 1px solid rgba(212, 212, 212, 0.25);
     border-radius: 12px;
     padding: 2.25rem;
@@ -1335,8 +1339,8 @@ const jsonLd = {
 
   .studio-aside-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(181, 213, 173, 0.2) inset;
-    border-color: rgba(181, 213, 173, 0.4);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(96, 165, 250, 0.2) inset;
+    border-color: rgba(96, 165, 250, 0.4);
   }
 
   .studio-aside-card__badge {
@@ -1345,7 +1349,7 @@ const jsonLd = {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: #b5d5ad;
+    color: #60A5FA;
   }
 
   .studio-aside-card__price-wrap {
@@ -1430,7 +1434,7 @@ const jsonLd = {
      3. WORKSHOP DISCOVERY
      ========================================================================= */
   .studio-discovery {
-    background-color: var(--color-pepper-medium, #31473A);
+    background-color: var(--color-pepper-medium, #0056D2);
     padding: clamp(4rem, 8vw, 6.5rem) 0;
     position: relative;
   }
@@ -1480,7 +1484,7 @@ const jsonLd = {
   .studio-card:hover {
     transform: translateY(-3px);
     background: rgba(255, 255, 255, 0.075);
-    border-color: rgba(181, 213, 173, 0.35);
+    border-color: rgba(96, 165, 250, 0.35);
     box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
   }
 
@@ -1526,7 +1530,7 @@ const jsonLd = {
   }
 
   .studio-card:hover .studio-card__index {
-    color: #b5d5ad;
+    color: #60A5FA;
   }
 
   .studio-card__index-bar {
@@ -1537,7 +1541,7 @@ const jsonLd = {
   }
 
   .studio-card:hover .studio-card__index-bar {
-    background: #b5d5ad;
+    background: #60A5FA;
     height: 32px;
   }
 
@@ -1586,8 +1590,8 @@ const jsonLd = {
   }
 
   .studio-pill--cert {
-    color: #b5d5ad;
-    border-color: rgba(181, 213, 173, 0.4);
+    color: #60A5FA;
+    border-color: rgba(96, 165, 250, 0.4);
   }
 
   .studio-pill--open {
@@ -1608,7 +1612,7 @@ const jsonLd = {
 
   .studio-price-free {
     background-color: var(--color-salt-white, #EDF4F2);
-    color: var(--color-pepper-medium, #31473A);
+    color: var(--color-pepper-medium, #0056D2);
     padding: 0.18rem 0.65rem;
     border-radius: 9999px;
     text-transform: uppercase;
@@ -1655,7 +1659,7 @@ const jsonLd = {
   }
 
   .studio-outcome-bullet {
-    color: #b5d5ad;
+    color: #60A5FA;
     font-weight: 700;
   }
 
@@ -1683,7 +1687,7 @@ const jsonLd = {
 
   .studio-explore-btn:hover {
     background: var(--color-salt-white, #EDF4F2);
-    color: var(--color-pepper-medium, #31473A);
+    color: var(--color-pepper-medium, #0056D2);
     border-color: var(--color-salt-white, #EDF4F2);
   }
 
@@ -1695,7 +1699,7 @@ const jsonLd = {
      4. OUTCOMES — "LEAVE WITH SOMETHING YOU BUILT."
      ========================================================================= */
   .studio-outcomes {
-    background-color: var(--color-pepper-dark, #7C8363);
+    background-color: var(--color-pepper-dark, #FFFFFF);
     padding: clamp(4rem, 8vw, 6.5rem) 0;
   }
 
@@ -1704,20 +1708,24 @@ const jsonLd = {
     margin-bottom: 3.5rem;
   }
 
+  .studio-outcomes .studio-eyebrow {
+    color: #0056D2;
+  }
+
   .studio-outcomes__title {
     font-family: var(--font-display, 'Space Grotesk', sans-serif);
     font-size: clamp(2.25rem, 4.5vw, 3.5rem);
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.03em;
-    color: var(--color-salt-white, #EDF4F2);
+    color: #0F172A;
     margin: 0.75rem 0 1rem;
   }
 
   .studio-outcomes__lead {
     font-size: clamp(1rem, 1.5vw, 1.15rem);
     line-height: 1.6;
-    color: rgba(237, 244, 242, 0.85);
+    color: #334155;
     margin: 0;
   }
 
@@ -1729,20 +1737,21 @@ const jsonLd = {
   }
 
   .studio-pillar-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(212, 212, 212, 0.16);
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
     border-radius: 10px;
     padding: 2.25rem 2rem;
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
-    transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+    transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
   }
 
   .studio-pillar-card:hover {
     transform: translateY(-4px);
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(181, 213, 173, 0.35);
+    border-color: #0056D2;
+    box-shadow: 0 14px 34px rgba(0, 86, 210, 0.12);
   }
 
   .studio-pillar-card__top {
@@ -1756,7 +1765,7 @@ const jsonLd = {
     font-family: var(--font-mono, monospace);
     font-size: 0.85rem;
     font-weight: 700;
-    color: rgba(212, 212, 212, 0.4);
+    color: #0056D2;
     letter-spacing: 0.05em;
   }
 
@@ -1769,19 +1778,19 @@ const jsonLd = {
     font-family: var(--font-display, 'Space Grotesk', sans-serif);
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--color-salt-white, #EDF4F2);
+    color: #0F172A;
     margin: 0;
   }
 
   .studio-pillar-desc {
     font-size: 0.9375rem;
     line-height: 1.6;
-    color: rgba(237, 244, 242, 0.8);
+    color: #475569;
     margin: 0;
   }
 
   .studio-outcomes__samples {
-    border-top: 1px solid rgba(212, 212, 212, 0.16);
+    border-top: 1px solid #E2E8F0;
     padding-top: 2rem;
   }
 
@@ -1797,11 +1806,11 @@ const jsonLd = {
     gap: 10px;
     font-size: 0.9375rem;
     line-height: 1.5;
-    color: rgba(237, 244, 242, 0.85);
+    color: #1E293B;
   }
 
   .studio-sample-dash {
-    color: #b5d5ad;
+    color: #60A5FA;
     font-weight: 700;
     flex-shrink: 0;
   }
@@ -1811,7 +1820,7 @@ const jsonLd = {
      ========================================================================= */
   .studio-why {
     position: relative;
-    background-color: var(--color-pepper-medium, #31473A);
+    background-color: var(--color-pepper-medium, #0056D2);
     padding: clamp(4rem, 8vw, 6.5rem) 0;
     overflow: hidden;
   }
@@ -1868,14 +1877,14 @@ const jsonLd = {
   }
 
   .studio-value-block {
-    border-left: 2px solid rgba(181, 213, 173, 0.4);
+    border-left: 2px solid rgba(96, 165, 250, 0.4);
     padding-left: 1.5rem;
     transition: transform 200ms ease, border-color 200ms ease;
   }
 
   .studio-value-block:hover {
     transform: translateX(4px);
-    border-left-color: #b5d5ad;
+    border-left-color: #60A5FA;
   }
 
   .studio-value-title {
@@ -1897,7 +1906,7 @@ const jsonLd = {
      6. HOW IT WORKS
      ========================================================================= */
   .studio-steps {
-    background-color: var(--color-pepper-dark, #7C8363);
+    background-color: var(--color-pepper-dark, #FFFFFF);
     padding: clamp(4rem, 8vw, 6rem) 0;
   }
 
@@ -1905,11 +1914,15 @@ const jsonLd = {
     margin-bottom: 2.5rem;
   }
 
+  .studio-steps .studio-eyebrow {
+    color: #0056D2;
+  }
+
   .studio-steps__title {
     font-family: var(--font-display, 'Space Grotesk', sans-serif);
     font-size: clamp(2rem, 3.8vw, 3rem);
     font-weight: 800;
-    color: var(--color-salt-white, #EDF4F2);
+    color: #0F172A;
     margin: 0.75rem 0 0;
   }
 
@@ -1937,7 +1950,7 @@ const jsonLd = {
   }
 
   .studio-step-item {
-    border-top: 1px solid rgba(212, 212, 212, 0.22);
+    border-top: 1px solid #E2E8F0;
     padding-top: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -1955,21 +1968,21 @@ const jsonLd = {
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #b5d5ad;
+    color: #0056D2;
   }
 
   .studio-step-headline {
     font-family: var(--font-display, 'Space Grotesk', sans-serif);
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--color-salt-white, #EDF4F2);
+    color: #0F172A;
     margin: 0;
   }
 
   .studio-step-text {
     font-size: 0.9375rem;
     line-height: 1.6;
-    color: rgba(237, 244, 242, 0.8);
+    color: #475569;
     margin: 0;
   }
 
@@ -1977,7 +1990,7 @@ const jsonLd = {
      7. INSTRUCTOR / FOUNDER
      ========================================================================= */
   .studio-instructor {
-    background-color: var(--color-pepper-medium, #31473A);
+    background-color: var(--color-pepper-medium, #0056D2);
     padding: clamp(4rem, 8vw, 6rem) 0;
   }
 
@@ -2039,7 +2052,7 @@ const jsonLd = {
   .studio-instructor__frame-border {
     position: absolute;
     inset: 0;
-    border: 1px solid rgba(181, 213, 173, 0.3);
+    border: 1px solid rgba(96, 165, 250, 0.3);
     border-radius: 12px;
     pointer-events: none;
   }
@@ -2050,8 +2063,8 @@ const jsonLd = {
     right: -6px;
     width: 16px;
     height: 16px;
-    border-bottom: 2px solid #b5d5ad;
-    border-right: 2px solid #b5d5ad;
+    border-bottom: 2px solid #60A5FA;
+    border-right: 2px solid #60A5FA;
     pointer-events: none;
   }
 
@@ -2072,7 +2085,7 @@ const jsonLd = {
   .studio-instructor__role {
     font-size: 0.875rem;
     font-weight: 500;
-    color: #b5d5ad;
+    color: #60A5FA;
     margin: 0 0 0.5rem;
     letter-spacing: 0.02em;
   }
@@ -2088,7 +2101,7 @@ const jsonLd = {
      8. FAQ
      ========================================================================= */
   .studio-faq {
-    background-color: var(--color-pepper-dark, #7C8363);
+    background-color: var(--color-pepper-dark, #FFFFFF);
     padding: clamp(4rem, 8vw, 6.5rem) 0;
   }
 
@@ -2105,35 +2118,39 @@ const jsonLd = {
     }
   }
 
+  .studio-faq .studio-eyebrow {
+    color: #0056D2;
+  }
+
   .studio-faq__title {
     font-family: var(--font-display, 'Space Grotesk', sans-serif);
     font-size: clamp(2rem, 3.8vw, 3rem);
     font-weight: 800;
     line-height: 1.15;
-    color: var(--color-salt-white, #EDF4F2);
+    color: #0F172A;
     margin: 0.75rem 0 1rem;
   }
 
   .studio-faq__lead {
     font-size: 0.9375rem;
     line-height: 1.6;
-    color: rgba(237, 244, 242, 0.82);
+    color: #475569;
     margin: 0;
   }
 
   .studio-faq-stack {
     display: flex;
     flex-direction: column;
-    border-top: 1px solid rgba(212, 212, 212, 0.2);
+    border-top: 1px solid #E2E8F0;
   }
 
   .studio-faq-item {
-    border-bottom: 1px solid rgba(212, 212, 212, 0.2);
+    border-bottom: 1px solid #E2E8F0;
     transition: background-color 200ms ease;
   }
 
   .studio-faq-item[open] {
-    background-color: rgba(255, 255, 255, 0.035);
+    background-color: #F8FAFC;
   }
 
   .studio-faq-summary {
@@ -2148,12 +2165,12 @@ const jsonLd = {
     font-family: var(--font-display, 'Space Grotesk', sans-serif);
     font-size: 1.0625rem;
     font-weight: 600;
-    color: var(--color-salt-white, #EDF4F2);
+    color: #0F172A;
     transition: color 150ms ease, padding-left 150ms ease;
   }
 
   .studio-faq-summary:hover {
-    color: #ffffff;
+    color: #0056D2;
     padding-left: 0.25rem;
   }
 
@@ -2162,7 +2179,7 @@ const jsonLd = {
   }
 
   .studio-faq-chevron {
-    color: rgba(212, 212, 212, 0.6);
+    color: #64748B;
     display: flex;
     align-items: center;
     transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1), color 200ms ease;
@@ -2171,7 +2188,7 @@ const jsonLd = {
 
   .studio-faq-item[open] .studio-faq-chevron {
     transform: rotate(90deg);
-    color: #b5d5ad;
+    color: #0056D2;
   }
 
   .studio-faq-answer {
@@ -2181,7 +2198,7 @@ const jsonLd = {
   .studio-faq-answer p {
     font-size: 0.9375rem;
     line-height: 1.65;
-    color: rgba(237, 244, 242, 0.88);
+    color: #475569;
     margin: 0;
   }
 
@@ -2202,13 +2219,13 @@ const jsonLd = {
 
   .studio-marquee {
     position: relative;
-    background-color: var(--color-pepper-medium, #31473A);
+    background-color: var(--color-pepper-medium, #0056D2);
     border-top: 1px solid rgba(212, 212, 212, 0.1);
     /* Subtle gradient bridge toward footer */
     background-image: linear-gradient(
       to bottom,
-      var(--color-pepper-medium, #31473A) 0%,
-      rgba(49, 71, 58, 0.92) 100%
+      var(--color-pepper-medium, #0056D2) 0%,
+      rgba(0, 86, 210, 0.92) 100%
     );
     overflow: hidden;
     padding: 3.5rem 0 3.75rem;
@@ -2229,12 +2246,12 @@ const jsonLd = {
 
   .studio-marquee__edge--left {
     left: 0;
-    background: linear-gradient(to right, var(--color-pepper-medium, #31473A), transparent);
+    background: linear-gradient(to right, var(--color-pepper-medium, #0056D2), transparent);
   }
 
   .studio-marquee__edge--right {
     right: 0;
-    background: linear-gradient(to left, var(--color-pepper-medium, #31473A), transparent);
+    background: linear-gradient(to left, var(--color-pepper-medium, #0056D2), transparent);
   }
 
   /* Each row is a viewport-wide overflow-hidden strip */
@@ -2317,11 +2334,11 @@ const jsonLd = {
 
   /* Accent — green highlight keywords */
   .mq-item--accent {
-    color: rgba(181, 213, 173, 0.55);
+    color: rgba(96, 165, 250, 0.55);
   }
 
   .mq-item--accent:hover {
-    color: #b5d5ad;
+    color: #60A5FA;
   }
 
   /* Icon variant sizing */
@@ -2419,14 +2436,14 @@ const jsonLd = {
   .academy-float { position: relative; z-index: 2; }
   .studio-aside-card__halo {
     position: absolute; inset: -1px; border-radius: 14px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.12), transparent 40%, rgba(181,213,173,0.14));
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), transparent 40%, rgba(96, 165, 250,0.14));
     filter: blur(0.5px); pointer-events: none;
   }
   .studio-aside-card {
     position: relative;
     background:
-      radial-gradient(120% 90% at 80% 0%, rgba(181,213,173,0.08), transparent 55%),
-      var(--color-pepper-medium, #31473A);
+      radial-gradient(120% 90% at 80% 0%, rgba(96, 165, 250,0.08), transparent 55%),
+      var(--color-pepper-medium, #0056D2);
   }
   .studio-aside-card::before {
     content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
@@ -2486,7 +2503,7 @@ const jsonLd = {
   .studio-step-item { position: relative; }
   .studio-step-item::before {
     content: ''; position: absolute; top: -7px; left: 0; width: 10px; height: 10px;
-    border-radius: 50%; background: #b5d5ad; box-shadow: 0 0 0 5px rgba(181,213,173,0.12);
+    border-radius: 50%; background: #60A5FA; box-shadow: 0 0 0 5px rgba(96, 165, 250,0.12);
   }
 
   /* ---- INSTRUCTOR editorial ---- */
@@ -2501,17 +2518,17 @@ const jsonLd = {
   .studio-instructor__frame--large .studio-instructor__img { height: 100% !important; }
   .studio-instructor__offset-layer {
     position: absolute; inset: 14px -14px -14px 14px; border-radius: 18px;
-    border: 1px solid rgba(181,213,173,0.28); pointer-events: none; z-index: -1;
+    border: 1px solid rgba(96, 165, 250,0.28); pointer-events: none; z-index: -1;
   }
   .studio-instructor__portrait-wrap { z-index: 0; }
 
   /* ---- FAQ depth ---- */
   .studio-faq__ambient { position: absolute; right: 0; top: 0; width: 480px; opacity: 0.22; }
   .studio-faq-item { position: relative; border-left: 1px solid transparent; transition: background-color 220ms ease, border-color 220ms ease; }
-  .studio-faq-item:hover { border-left-color: rgba(181,213,173,0.4); }
+  .studio-faq-item:hover { border-left-color: rgba(96, 165, 250,0.4); }
   .studio-faq-item[open]::before {
     content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
-    background: linear-gradient(#b5d5ad, rgba(181,213,173,0));
+    background: linear-gradient(#60A5FA, rgba(96, 165, 250,0));
   }
   .studio-faq-item[open] .studio-faq-chevron { transform: rotate(90deg) scale(1.08); }
 

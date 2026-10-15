@@ -661,9 +661,9 @@ const jsonLd = [
   /* =========================================================================
      RoboDev Academy — Workshop Template
      Coursera information architecture with RoboDev branding:
-     - Hero: Dark Green (#31473A)
+     - Hero: Royal Blue (#0056D2)
      - Surfaces: Clean White & Off-white (#fafaf8)
-     - Accents: Sage Green (#7C8363)
+     - Accents: White (#FFFFFF)
      - Text: Dark (#111111) and Subdued (#555555)
      ========================================================================= */
 
@@ -681,7 +681,7 @@ const jsonLd = [
 
   /* ── 1. HERO SECTION ── */
   .wt-hero {
-    background-color: var(--color-pepper-medium, #31473A);
+    background-color: var(--color-pepper-medium, #0056D2);
     color: #EDF4F2;
     padding-top: clamp(6.5rem, 13vh, 8.5rem);
     padding-bottom: clamp(2.5rem, 5vw, 4rem);
@@ -777,7 +777,7 @@ const jsonLd = [
   }
 
   .wt-fact-cert {
-    color: #b5d5ad;
+    color: #90C2FF;
     font-weight: 500;
   }
 
@@ -794,7 +794,7 @@ const jsonLd = [
   .wt-hero-seats {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #b5d5ad;
+    color: #60A5FA;
     margin: 0.25rem 0 0;
   }
 
@@ -840,7 +840,7 @@ const jsonLd = [
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-pepper-dark, #7C8363);
+    color: var(--color-pepper-medium, #0056D2);
   }
 
   .wt-card-status {
@@ -848,7 +848,7 @@ const jsonLd = [
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--color-pepper-medium, #31473A);
+    color: var(--color-pepper-medium, #0056D2);
   }
 
   .wt-card-price {
@@ -862,7 +862,7 @@ const jsonLd = [
     font-size: 2.25rem;
     font-weight: 700;
     line-height: 1;
-    color: var(--color-pepper-medium, #31473A);
+    color: var(--color-pepper-medium, #0056D2);
   }
 
   .wt-price-note {
@@ -885,7 +885,7 @@ const jsonLd = [
     gap: 6px;
     font-size: 0.8125rem;
     font-weight: 600;
-    color: var(--color-pepper-medium, #31473A);
+    color: var(--color-pepper-medium, #0056D2);
     background: #edf3ed;
     padding: 6px 10px;
     border-radius: 6px;
@@ -893,7 +893,7 @@ const jsonLd = [
 
   .wt-card-cert-icon {
     flex-shrink: 0;
-    color: var(--color-pepper-medium, #31473A);
+    color: var(--color-pepper-medium, #0056D2);
   }
 
   .wt-card-includes {
@@ -927,7 +927,7 @@ const jsonLd = [
   }
 
   .wt-check-icon {
-    color: var(--color-pepper-medium, #31473A);
+    color: var(--color-pepper-medium, #0056D2);
     font-weight: 700;
     flex-shrink: 0;
     font-size: 0.75rem;
@@ -966,7 +966,7 @@ const jsonLd = [
     align-items: center;
     justify-content: center;
     gap: 6px;
-    background-color: var(--color-pepper-medium, #31473A);
+    background-color: var(--color-pepper-medium, #0056D2);
     color: #EDF4F2;
     font-family: var(--font-display, 'Space Grotesk', sans-serif);
     font-size: 0.9375rem;
@@ -980,9 +980,9 @@ const jsonLd = [
   }
 
   .wt-btn-primary:hover {
-    background-color: var(--color-pepper-dark, #7C8363);
+    background-color: #003B99;
     transform: translateY(-1px);
-    color: #ffffff;
+    color: #FFFFFF;
   }
 
   .wt-btn-full {
@@ -998,6 +998,18 @@ const jsonLd = [
   .wt-btn-lg {
     padding: 14px 28px;
     font-size: 1rem;
+  }
+
+  .wt-final-cta .wt-btn-primary,
+  .wt-mobile-bar .wt-btn-primary {
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+
+  .wt-final-cta .wt-btn-primary:hover,
+  .wt-mobile-bar .wt-btn-primary:hover {
+    background-color: #F1F5F9;
+    color: #000000;
   }
 
   /* ── 2. HORIZONTAL DETAILS STRIP (Prominent Card Component) ── */
@@ -1187,14 +1199,14 @@ const jsonLd = [
     padding: 8px 18px;
     border-radius: 6px;
     line-height: 1.2;
-    background-color: var(--color-pepper-medium, #31473A);
+    background-color: var(--color-pepper-medium, #0056D2);
     color: #EDF4F2;
-    box-shadow: 0 2px 8px rgba(49, 71, 58, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 86, 210, 0.2);
     text-decoration: none;
   }
 
   .wt-top-bar-btn:hover {
-    background-color: var(--color-pepper-dark, #7C8363);
+    background-color: #003B99;
     color: #ffffff;
   }
 
@@ -1245,12 +1257,12 @@ const jsonLd = [
   }
 
   .wt-nav-link:hover {
-    color: var(--color-pepper-medium, #31473A);
+    color: var(--color-pepper-medium, #0056D2);
   }
 
   .wt-nav-link--active {
-    color: var(--color-pepper-medium, #31473A);
-    border-bottom-color: var(--color-pepper-medium, #31473A);
+    color: var(--color-pepper-medium, #0056D2);
+    border-bottom-color: var(--color-pepper-medium, #0056D2);
     font-weight: 600;
   }
 
@@ -1278,7 +1290,7 @@ const jsonLd = [
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-pepper-dark, #7C8363);
+    color: var(--color-pepper-medium, #0056D2);
     margin: 0 0 0.25rem;
   }
 
@@ -1314,7 +1326,7 @@ const jsonLd = [
   .wt-read-more-trigger {
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--color-pepper-medium, #31473A);
+    color: var(--color-pepper-medium, #0056D2);
     cursor: pointer;
     list-style: none;
     user-select: none;
@@ -1385,7 +1397,7 @@ const jsonLd = [
   }
 
   .wt-outcome-check {
-    color: var(--color-pepper-medium, #31473A);
+    color: var(--color-pepper-medium, #0056D2);
     font-weight: 700;
     font-size: 0.875rem;
     flex-shrink: 0;
@@ -1415,19 +1427,19 @@ const jsonLd = [
     align-items: baseline;
     gap: 1rem;
     padding: 0.875rem 1.25rem;
-    border-left: 3px solid var(--color-pepper-medium, #31473A);
+    border-left: 3px solid var(--color-pepper-medium, #0056D2);
     background: #ffffff;
     border-radius: 0 6px 6px 0;
     border: 1px solid #e2e2da;
     border-left-width: 3px;
-    border-left-color: var(--color-pepper-medium, #31473A);
+    border-left-color: var(--color-pepper-medium, #0056D2);
   }
 
   .wt-build-num {
     font-family: var(--font-display, 'Space Grotesk', sans-serif);
     font-size: 0.75rem;
     font-weight: 700;
-    color: var(--color-pepper-dark, #7C8363);
+    color: var(--color-pepper-medium, #0056D2);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     flex-shrink: 0;
@@ -1452,12 +1464,12 @@ const jsonLd = [
   .wt-skill-tag {
     display: inline-block;
     padding: 6px 14px;
-    background: #edf3ed;
-    color: var(--color-pepper-medium, #31473A);
+    background: #EFF6FF;
+    color: var(--color-pepper-medium, #0056D2);
     font-size: 0.8125rem;
     font-weight: 600;
     border-radius: 4px;
-    border: 1px solid #d3e2d3;
+    border: 1px solid #BFDBFE;
   }
 
   .wt-tool-tag {
@@ -1509,7 +1521,7 @@ const jsonLd = [
     background: #ffffff;
     border: 1px solid #e2e2da;
     border-radius: 6px;
-    border-left: 3px solid var(--color-pepper-medium, #31473A);
+    border-left: 3px solid var(--color-pepper-medium, #0056D2);
   }
 
   .wt-cert-icon {
@@ -1518,8 +1530,8 @@ const jsonLd = [
     justify-content: center;
     width: 36px;
     height: 36px;
-    background: #edf3ed;
-    color: var(--color-pepper-medium, #31473A);
+    background: #EFF6FF;
+    color: var(--color-pepper-medium, #0056D2);
     border-radius: 6px;
     flex-shrink: 0;
   }
@@ -1602,7 +1614,7 @@ const jsonLd = [
   .wt-module-num {
     font-size: 0.75rem;
     font-weight: 700;
-    color: var(--color-pepper-dark, #7C8363);
+    color: var(--color-pepper-medium, #0056D2);
     font-family: var(--font-display, 'Space Grotesk', sans-serif);
   }
 
@@ -1689,7 +1701,7 @@ const jsonLd = [
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: var(--color-pepper-medium, #31473A);
+    background: var(--color-pepper-medium, #0056D2);
     color: #EDF4F2;
     display: flex;
     align-items: center;
@@ -1827,7 +1839,7 @@ const jsonLd = [
   .wt-final-cta {
     margin-top: 3rem;
     padding: 2rem 2.5rem;
-    background: var(--color-pepper-medium, #31473A);
+    background: var(--color-pepper-medium, #0056D2);
     border-radius: 12px;
     display: flex;
     justify-content: space-between;
@@ -1864,7 +1876,7 @@ const jsonLd = [
     left: 0;
     right: 0;
     z-index: 50;
-    background: var(--color-pepper-medium, #31473A);
+    background: var(--color-pepper-medium, #0056D2);
     border-top: 1px solid rgba(237, 244, 242, 0.15);
     padding: 0.75rem 1rem;
     padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
