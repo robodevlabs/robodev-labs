@@ -19,8 +19,14 @@
   --color-salt-light: #d4d4d4;
   /* --color-pepper-medium: #b3b3b3; */
   /* --color-pepper-dark: #2b2b2b; */
-  --color-pepper-medium: #31473A;
-  --color-pepper-dark: #7C8363;
+
+  /* new color royal blueish design */
+  --color-pepper-medium: #0056D2;
+  --color-pepper-dark: #FFFFFF;
+
+  /* orignal color */
+  /* --color-pepper-medium: #31473A; */
+  /* --color-pepper-dark: #7C8363; */
 
   /* 2. Semantic Color System strictly mapped to Combination 56 */
   --color-brand: var(--color-salt-white);
@@ -220,7 +226,7 @@ a {
 }
 
 .text-gradient-brand {
-  background: linear-gradient(135deg, var(--color-salt-white) 0%, var(--color-salt-light) 50%, var(--color-pepper-medium) 100%);
+  background: linear-gradient(135deg, #001B44 0%, #0056D2 55%, #003B99 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
