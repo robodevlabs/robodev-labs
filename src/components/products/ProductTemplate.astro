@@ -9,6 +9,7 @@ import Container from '../ui/Container.astro';
 import Logo from '../common/Logo.astro';
 import AcademyGrid from '../academy/AcademyGrid.astro';
 import { getRelatedProducts, type Product } from '../../data/products';
+import { formsConfig } from '../../data/forms';
 import { siteConfig } from '../../config/site';
 
 export interface Props {
@@ -19,7 +20,7 @@ const { product } = Astro.props as Props;
 const related = getRelatedProducts(product.relatedSlugs);
 
 const pageUrl = `${siteConfig.url}/products/${product.slug}`;
-const contactHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent(`About ${product.title}`)}`;
+const contactHref = formsConfig.generalContact;
 
 const jsonLd = [
   {
@@ -72,7 +73,7 @@ const jsonLd = [
             </div>
             <img src={product.images[0]} alt={`${product.title} product screenshot`} class="prod-card-img" loading="lazy" />
             <p class="wt-price-note">{product.description}</p>
-            <a href={contactHref} class="wt-btn-primary wt-btn-full"><span>Contact about this product</span></a>
+            <a href={contactHref} target="_blank" rel="noopener noreferrer" class="wt-btn-primary wt-btn-full"><span>Contact about this product</span></a>
           </aside>
         </div>
       </Container>
@@ -211,7 +212,7 @@ const jsonLd = [
               <h2 class="wt-final-cta-title">{product.title}</h2>
               <p class="wt-final-cta-note">{product.details}</p>
             </div>
-            <a href={contactHref} class="wt-btn-primary wt-btn-lg">Contact us</a>
+            <a href={contactHref} target="_blank" rel="noopener noreferrer" class="wt-btn-primary wt-btn-lg">Contact us</a>
           </div>
         </div>
       </Container>

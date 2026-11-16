@@ -4,6 +4,7 @@ import Logo from '../common/Logo.astro';
 import Icon from '../ui/Icon.astro';
 import Button from '../ui/Button.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
+import { formsConfig } from '../../data/forms';
 import { siteConfig } from '../../config/site';
 
 const currentYear = new Date().getFullYear();
@@ -49,7 +50,9 @@ const socialsList = [
             <Button
               variant="primary"
               size="md"
-              href={`mailto:${siteConfig.email}?subject=Project%20Inquiry%20-%20RoboDev%20Labs`}
+              href={formsConfig.generalContact}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <span>Start a conversation</span>
             </Button>
@@ -123,8 +126,8 @@ const socialsList = [
             <li><a href="#leadership" class="footer-nav-link">Founders & Leadership</a></li>
             <li><a href="#pillars" class="footer-nav-link">Company Ecosystem</a></li>
             <li><a href="#process" class="footer-nav-link">How We Work</a></li>
-            <li><a href={`mailto:${siteConfig.email}?subject=Career%20Inquiry%20-%20RoboDev%20Labs`} class="footer-nav-link">Careers & Fellowships</a></li>
-            <li><a href={`mailto:${siteConfig.email}?subject=Media%20Inquiry`} class="footer-nav-link">Press & Media</a></li>
+            <li><a href="/career" class="footer-nav-link">Careers & Fellowships</a></li>
+            <li><a href={formsConfig.generalContact} target="_blank" rel="noopener noreferrer" class="footer-nav-link">Press & Media</a></li>
           </ul>
         </div>
 

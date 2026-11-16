@@ -20,10 +20,11 @@ export interface Props {
 const { career } = Astro.props as Props;
 
 const pageUrl = `${siteConfig.url}/careers/${career.slug}`;
-const applyHref = `mailto:${career.applicationEmail}?subject=${encodeURIComponent(career.applicationSubject)}`;
+const applyHref = career.applicationUrl ?? `mailto:${career.applicationEmail}?subject=${encodeURIComponent(career.applicationSubject)}`;
+const isExternal = Boolean(career.applicationUrl);
 
 const statusLabel = career.status === 'Open' ? 'Applications Open' : career.status === 'Upcoming' ? 'Opening Soon' : 'Closed';
-const ctaLabel = career.status === 'Open' ? 'Apply via Email' : 'Contact Us';
+const ctaLabel = career.status === 'Open' ? (career.applicationUrl ? 'Apply Now' : 'Apply via Email') : 'Contact Us';
 
 const jsonLd = [
   {
@@ -74,7 +75,7 @@ const jsonLd = [
             </div>
             <p class="wt-hero-seats">{career.location} · {career.department}</p>
             <div class="wt-hero-mobile-cta">
-              <a href={applyHref} class="wt-btn-primary wt-btn-full">{ctaLabel}</a>
+              <a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-btn-full">{ctaLabel}</a>
             </div>
           </div>
           <aside class="wt-enroll-card" aria-label="Application card">
@@ -86,8 +87,8 @@ const jsonLd = [
               <span class="wt-price-main">{career.shortTitle ?? career.title}</span>
               <span class="wt-price-note">{career.department} · {career.location}</span>
             </div>
-            <a href={applyHref} class="wt-btn-primary wt-btn-full wt-btn-card"><span>{ctaLabel}</span></a>
-            <p class="wt-card-seats-note">{career.applicationEmail}</p>
+            <a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-btn-full wt-btn-card"><span>{ctaLabel}</span></a>
+            <p class="wt-card-seats-note">{career.applicationUrl ? 'Online application' : career.applicationEmail}</p>
             <div class="wt-card-meta">
               <div class="wt-card-meta-row"><span class="wt-card-meta-key">Location</span><span class="wt-card-meta-val">{career.location}</span></div>
               <div class="wt-card-meta-row"><span class="wt-card-meta-key">Work mode</span><span class="wt-card-meta-val">{career.workMode}</span></div>
@@ -119,7 +120,7 @@ const jsonLd = [
           <div class="wt-top-bar-inner">
             <div class="wt-top-bar-left"><a href="/" class="wt-top-bar-logo" aria-label="RoboDev Labs Home"><Logo height={28} /></a></div>
             <div class="wt-top-bar-center"><span class="wt-top-bar-title" title={career.title}>{career.title}</span></div>
-            <div class="wt-top-bar-right"><a href={applyHref} class="wt-btn-primary wt-top-bar-btn"><span>{ctaLabel}</span></a></div>
+            <div class="wt-top-bar-right"><a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-top-bar-btn"><span>{ctaLabel}</span></a></div>
           </div>
         </Container>
       </div>
@@ -213,14 +214,20 @@ const jsonLd = [
           <section id="apply" class="wt-section" aria-labelledby="apply-heading">
             <h2 id="apply-heading" class="wt-section-title">How to apply</h2>
             <p class="wt-body-text">{career.applicationInstructions}</p>
-            <p class="wt-body-text">Send your application to {career.applicationEmail} with subject “{career.applicationSubject}”.</p>
+            {career.applicationUrl ? (
+              <p class="wt-body-text">
+                Submit through our <a href={career.applicationUrl} target="_blank" rel="noopener noreferrer" style="color:var(--color-pepper-medium,#31473a); font-weight:600; text-decoration:underline;">online application form</a>. For questions or support, you can also reach us at {career.applicationEmail}.
+              </p>
+            ) : (
+              <p class="wt-body-text">Send your application to {career.applicationEmail} with subject “{career.applicationSubject}”.</p>
+            )}
           </section>
           <div class="wt-final-cta">
             <div class="wt-final-cta-content">
               <h2 class="wt-final-cta-title">Interested in this role?</h2>
               <p class="wt-final-cta-note">{career.title} · {career.employmentType} · {career.location}</p>
             </div>
-            <a href={applyHref} class="wt-btn-primary wt-btn-lg">{ctaLabel}</a>
+            <a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-btn-lg">{ctaLabel}</a>
           </div>
         </div>
       </Container>
@@ -232,7 +239,7 @@ const jsonLd = [
           <span class="wt-mobile-price">{career.shortTitle ?? career.title}</span>
           <span class="wt-mobile-note">{career.status} · {career.employmentType}</span>
         </div>
-        <a href={applyHref} class="wt-btn-primary wt-btn-sm">{ctaLabel}</a>
+        <a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-btn-sm">{ctaLabel}</a>
       </div>
     </div>
   </div>

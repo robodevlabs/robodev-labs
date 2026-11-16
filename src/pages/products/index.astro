@@ -12,9 +12,10 @@ import AcademyNodes from '../../components/academy/AcademyNodes.astro';
 import AcademyBlueprint from '../../components/academy/AcademyBlueprint.astro';
 import AcademyOrbit from '../../components/academy/AcademyOrbit.astro';
 import { productsData, studioPage } from '../../data/products';
+import { formsConfig } from '../../data/forms';
 import { siteConfig } from '../../config/site';
 
-const contactHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent('Product Studio inquiry')}`;
+const contactHref = formsConfig.generalContact;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
@@ -45,7 +46,7 @@ const jsonLd = {
             <p class="studio-hero__intro">{studioPage.intro}</p>
             <div class="studio-hero__actions">
               <Button variant="primary" size="lg" href="#portfolio"><span>{studioPage.ctaPrimaryLabel}</span></Button>
-              <a class="studio-link" href={contactHref}>{studioPage.ctaSecondaryLabel}</a>
+              <a class="studio-link" href={contactHref} target="_blank" rel="noopener noreferrer">{studioPage.ctaSecondaryLabel}</a>
             </div>
           </div>
           <div class="studio-hero__visual" aria-hidden="true" data-parallax="0.1">
@@ -91,7 +92,7 @@ const jsonLd = {
           <div class="studio-empty reveal-fade-up">
             <h3 class="studio-empty__title">{studioPage.emptyTitle}</h3>
             <p class="studio-empty__body">{studioPage.emptyDescription}</p>
-            <Button variant="secondary" size="md" href={contactHref}><span>{studioPage.emptyCtaLabel}</span></Button>
+            <Button variant="secondary" size="md" href={contactHref} target="_blank" rel="noopener noreferrer"><span>{studioPage.emptyCtaLabel}</span></Button>
           </div>
         )}
       </Container>
@@ -140,7 +141,7 @@ const jsonLd = {
           </div>
           <div class="studio-cta__actions">
             <Button variant="primary" size="lg" href="#portfolio"><span>{studioPage.ctaPrimaryLabel}</span><Icon name="arrow-right" size={16} /></Button>
-            <Button variant="ghost" size="lg" href={contactHref}><span>{studioPage.ctaSecondaryLabel}</span></Button>
+            <Button variant="ghost" size="lg" href={contactHref} target="_blank" rel="noopener noreferrer"><span>{studioPage.ctaSecondaryLabel}</span></Button>
           </div>
         </div>
       </Container>

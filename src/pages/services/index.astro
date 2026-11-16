@@ -12,9 +12,10 @@ import AcademyBlueprint from '../../components/academy/AcademyBlueprint.astro';
 import ProcessEngineSection from '../../components/sections/ProcessEngineSection.astro';
 import { engineeringServices, engineeringPage } from '../../data/engineering';
 import { productsData } from '../../data/products';
+import { formsConfig } from '../../data/forms';
 import { siteConfig } from '../../config/site';
 
-const contactHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent('Project inquiry: Engineering Services')}`;
+const contactHref = formsConfig.generalContact;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
@@ -44,7 +45,7 @@ const jsonLd = {
             <h1 class="eng-hero__title">{engineeringPage.headline}</h1>
             <p class="eng-hero__intro">{engineeringPage.intro}</p>
             <div class="eng-hero__actions">
-              <Button variant="primary" size="lg" href={contactHref}><span>{engineeringPage.primaryCtaLabel}</span></Button>
+              <Button variant="primary" size="lg" href={contactHref} target="_blank" rel="noopener noreferrer"><span>{engineeringPage.primaryCtaLabel}</span></Button>
               <a class="eng-link" href="#services-offerings"><span>{engineeringPage.secondaryCtaLabel}</span><span class="eng-link__arrow" aria-hidden="true">→</span></a>
             </div>
           </div>
@@ -136,7 +137,7 @@ const jsonLd = {
             <p class="eng-cta__body">{engineeringPage.ctaDescription}</p>
           </div>
           <div class="eng-cta__actions">
-            <Button variant="primary" size="lg" href={contactHref}><span>{engineeringPage.ctaPrimaryLabel}</span></Button>
+            <Button variant="primary" size="lg" href={contactHref} target="_blank" rel="noopener noreferrer"><span>{engineeringPage.ctaPrimaryLabel}</span></Button>
             <Button variant="ghost" size="lg" href="#services-offerings" class="eng-cta__ghost"><span>{engineeringPage.ctaSecondaryLabel}</span><span class="eng-cta__arrow" aria-hidden="true">→</span></Button>
           </div>
         </div>

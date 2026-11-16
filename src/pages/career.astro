@@ -12,6 +12,7 @@ import AcademyNodes from '../components/academy/AcademyNodes.astro';
 import AcademyBlueprint from '../components/academy/AcademyBlueprint.astro';
 import AcademyOrbit from '../components/academy/AcademyOrbit.astro';
 import { careersData, careersPage, getOpenCareers } from '../data/careers';
+import { formsConfig } from '../data/forms';
 import { siteConfig } from '../config/site';
 
 const openCareers = getOpenCareers();
@@ -64,7 +65,7 @@ const jsonLd = {
                 <span>{careersPage.ctaPrimaryLabel}</span>
                 <Icon name="arrow-right" size={16} />
               </Button>
-              <a class="careers-text-link" href={`mailto:${siteConfig.email}?subject=Careers%20at%20RoboDev%20Labs`}>
+              <a class="careers-text-link" href={formsConfig.generalContact} target="_blank" rel="noopener noreferrer">
                 {careersPage.ctaSecondaryLabel}
               </a>
             </div>
@@ -122,7 +123,9 @@ const jsonLd = {
             <Button
               variant="secondary"
               size="md"
-              href={`mailto:${siteConfig.email}?subject=Future%20roles%20at%20RoboDev%20Labs`}
+              href={formsConfig.generalContact}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <span>{careersPage.emptyCtaLabel}</span>
             </Button>
@@ -191,7 +194,9 @@ const jsonLd = {
             <Button
               variant="secondary"
               size="lg"
-              href={`mailto:${siteConfig.email}?subject=Careers%20at%20RoboDev%20Labs`}
+              href={formsConfig.generalContact}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <span>{careersPage.ctaSecondaryLabel}</span>
             </Button>

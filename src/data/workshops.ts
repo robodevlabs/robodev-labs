@@ -4,6 +4,8 @@
    Individual course pages import their own slice; the catalog imports all.
    ========================================================================== */
 
+import { formsConfig } from './forms';
+
 export interface CurriculumLesson {
   title: string;
   duration?: string;
@@ -205,7 +207,7 @@ export const workshopsData: Workshop[] = [
 
     language: 'English',
 
-    registrationUrl: 'https://forms.gle/robodev-ai-workshop',
+    registrationUrl: formsConfig.freeWorkshopRegistration,
   },
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -332,7 +334,7 @@ export const workshopsData: Workshop[] = [
 
     language: 'English',
 
-    registrationUrl: 'https://forms.gle/robodev-uiux-workshop',
+    registrationUrl: formsConfig.paidWorkshopEnrollment,
   },
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -462,7 +464,7 @@ export const workshopsData: Workshop[] = [
 
     language: 'English',
 
-    registrationUrl: 'https://forms.gle/robodev-seo-workshop',
+    registrationUrl: formsConfig.paidWorkshopEnrollment,
   },
 ];
 

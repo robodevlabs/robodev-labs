@@ -8,6 +8,7 @@
    ========================================================================== */
 
 import { siteConfig } from '../config/site';
+import { formsConfig } from './forms';
 
 export type CareerStatus = 'Open' | 'Closed' | 'Upcoming';
 
@@ -33,6 +34,7 @@ export interface Career {
   applicationEmail: string;
   applicationSubject: string;
   applicationInstructions: string;
+  applicationUrl?: string;
 }
 
 export interface CareersValue {
@@ -113,9 +115,9 @@ export const careersPage: CareersPageContent = {
   steps: [
     {
       index: '01',
-      title: 'Apply by email',
+      title: 'Apply online',
       description:
-        'Send your background, relevant work, and the role you are applying for to our hiring inbox.',
+        'Submit your background, relevant work, and links through our online application form.',
     },
     {
       index: '02',
@@ -197,8 +199,9 @@ export const careersData: Career[] = [
     ],
     applicationEmail: siteConfig.email,
     applicationSubject: 'Application: Frontend Development Intern',
+    applicationUrl: formsConfig.internshipApplication,
     applicationInstructions:
-      'Email your CV, a short introduction, and links to any frontend work such as GitHub repositories or deployed pages. Mention your availability and current learning focus.',
+      'Submit your CV, a short introduction, and links to any frontend work such as GitHub repositories or deployed pages through our online application form. Mention your availability and current learning focus.',
   },
   {
     slug: 'junior-backend-developer',
@@ -248,8 +251,9 @@ export const careersData: Career[] = [
     ],
     applicationEmail: siteConfig.email,
     applicationSubject: 'Application: Junior Backend Developer',
+    applicationUrl: formsConfig.jobEngineeringApplication,
     applicationInstructions:
-      'Email your CV, a summary of your backend experience, and links to relevant code or projects. Include the technologies you have used and describe one backend feature you built end to end.',
+      'Submit your CV, a summary of your backend experience, and links to relevant code or projects through our online application form. Describe your technologies and any backend features you have built.',
   },
 ];
 

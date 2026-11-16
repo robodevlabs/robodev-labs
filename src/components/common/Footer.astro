@@ -4,6 +4,7 @@ import Container from '../ui/Container.astro';
 import Text from '../ui/Text.astro';
 import Divider from '../ui/Divider.astro';
 import Icon from '../ui/Icon.astro';
+import { formsConfig } from '../../data/forms';
 import { siteConfig } from '../../config/site';
 
 const currentYear = new Date().getFullYear();
@@ -74,7 +75,7 @@ const socialsList = [
               </a>
             </li>
             <li><a href="#products" class="footer-link">Upcoming Products</a></li>
-            <li><a href="#contact" class="footer-link">Co-Build With Us</a></li>
+            <li><a href={formsConfig.generalContact} target="_blank" rel="noopener noreferrer" class="footer-link">Co-Build With Us</a></li>
           </ul>
         </div>
 

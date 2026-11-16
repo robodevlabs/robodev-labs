@@ -16,6 +16,7 @@ import AcademyBlueprint from '../components/academy/AcademyBlueprint.astro';
 import AcademyPath from '../components/academy/AcademyPath.astro';
 import AcademyWorkshopMark from '../components/academy/AcademyWorkshopMark.astro';
 import { workshopsData } from '../data/workshops';
+import { formsConfig } from '../data/forms';
 import { siteConfig } from '../config/site';
 import ceoPhoto from '../assets/images/CEO Photo.png';
 
@@ -707,7 +708,7 @@ const jsonLd = {
                 </summary>
                 <div class="studio-faq-answer">
                   <p>
-                    Yes. We collaborate with student societies, computing clubs, and university groups to conduct tailored hands-on sessions. Email us directly at <a href={`mailto:${siteConfig.email}?subject=Host%20a%20RoboDev%20Workshop`} class="studio-text-link">{siteConfig.email}</a> to coordinate dates.
+                    Yes. We collaborate with student societies, computing clubs, and university groups to conduct tailored hands-on sessions. Submit an inquiry through our <a href={formsConfig.generalContact} target="_blank" rel="noopener noreferrer" class="studio-text-link">online form</a> or email us directly at <a href={`mailto:${siteConfig.email}?subject=Host%20a%20RoboDev%20Workshop`} class="studio-text-link">{siteConfig.email}</a> to coordinate dates.
                   </p>
                 </div>
               </details>

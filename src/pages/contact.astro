@@ -8,6 +8,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/ui/Container.astro';
 import Button from '../components/ui/Button.astro';
 import Icon from '../components/ui/Icon.astro';
+import { formsConfig } from '../data/forms';
 import { siteConfig } from '../config/site';
 
 const inbox = siteConfig.email;
@@ -104,7 +105,15 @@ const jsonLd = {
             Tell us about a project, workshop, partnership, or anything you'd like to discuss.
           </p>
 
-          <form id="contact-form" class="contact-form" novalidate>
+          <div class="contact-form-notice">
+            <span>Prefer submitting via Google Forms?</span>
+            <a href={formsConfig.generalContact} target="_blank" rel="noopener noreferrer" class="contact-form-notice__link">
+              <span>Open Google Form</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <form id="contact-form" class="contact-form" data-form-url={formsConfig.generalContact} novalidate>
             <div class="form-row">
               <div class="form-field">
                 <label for="cf-name">Full name *</label>
@@ -236,7 +245,9 @@ const jsonLd = {
               <span class="contact-submit__arrow" aria-hidden="true">→</span>
             </Button>
             <p class="contact-status" id="contact-status" role="status" aria-live="polite" hidden></p>
-            <p class="contact-privacy">Your information stays with this message — it only goes to our team inbox at {inbox}.</p>
+            <p class="contact-privacy">
+              Inquiries are processed directly through our <a href={formsConfig.generalContact} target="_blank" rel="noopener noreferrer" style="color:var(--color-pepper-medium,#31473a); text-decoration:underline; font-weight:600;">Google Form</a>. Direct inbox: <a href={`mailto:${inbox}`} style="text-decoration:underline;">{inbox}</a>.
+            </p>
           </form>
         </div>
       </div>
@@ -339,9 +350,10 @@ const jsonLd = {
             file.files.length ? `\n(Note: sender selected a file "${file.files[0].name}" — attach it in your email app.)` : '',
           ].filter(Boolean).join('\n');
 
-          window.location.href = `mailto:${inbox}?subject=${encodeURIComponent(`[${topic.value}] ${subject}`)}&body=${encodeURIComponent(lines)}`;
+          const targetUrl = form.getAttribute('data-form-url');
+          if (targetUrl) window.open(targetUrl, '_blank');
           status.hidden = false;
-          status.textContent = 'Your email app is opening with your message pre-addressed — just press send there to reach us.';
+          status.innerHTML = 'Opening our official Google Form in a new tab. You can also reach our team inbox directly at <a href="mailto:' + inbox + '" style="text-decoration:underline; font-weight:600;">' + inbox + '</a>.';
         });
 
         /* Clear errors on input */
@@ -440,7 +452,18 @@ const jsonLd = {
     padding: clamp(2rem, 3.5vw, 3rem);
   }
   .contact-panel__title { font-size: clamp(1.6rem, 2.6vw, 2.1rem); font-weight: 800; letter-spacing: -0.025em; margin: 0 0 0.6rem; color: #101c15; text-wrap: balance; }
-  .contact-panel__sub { font-size: 0.95rem; line-height: 1.65; color: #3c4a42; margin: 0 0 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #dde3dc; }
+  .contact-panel__sub { font-size: 0.95rem; line-height: 1.65; color: #3c4a42; margin: 0 0 1rem; }
+  .contact-form-notice {
+    display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+    padding: 0.65rem 0.95rem; margin-bottom: 1.5rem;
+    background: rgba(49,71,58,0.07); border: 1px solid rgba(49,71,58,0.18);
+    border-radius: 10px; font-size: 0.85rem; color: #1c3329;
+  }
+  .contact-form-notice__link {
+    display: inline-flex; align-items: center; gap: 0.25rem; font-weight: 650;
+    color: var(--color-pepper-medium, #31473a); text-decoration: underline; text-underline-offset: 2px;
+  }
+  .contact-form-notice__link:hover { color: #17261f; }
 
   .contact-form { display: flex; flex-direction: column; gap: 1.3rem; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; }
