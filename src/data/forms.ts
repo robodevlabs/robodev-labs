@@ -18,11 +18,11 @@ export const formsConfig: FormConfig = {
   paidWorkshopEnrollment:
     'https://docs.google.com/forms/d/e/1FAIpQLSc17XxHtKPAyQfsMqXJZCmJfrmQ4dGlSawYm9gHAXBHy8WlAQ/viewform?usp=dialog',
   internshipApplication:
-    'https://docs.google.com/forms/d/e/1FAIpQLSf1Me28g-Jqmwow0f1EqtVL63AZDDMyNyHD4DNg8BpC7OxMtQ/viewform?usp=dialog',
+    'https://docs.google.com/forms/d/e/1FAIpQLScWg3PD6M8_j4TmKNpIXW3_iuQSAD_5R3WZcaghzDsNH_XTZw/viewform?usp=dialog',
   jobEngineeringApplication:
-    'https://docs.google.com/forms/d/e/1FAIpQLSdJopb5J8T7shh-MpGD8HhUwVj04bCJk1BwcN8-Gqd25aWYTQ/viewform?usp=dialog',
+    'https://docs.google.com/forms/d/e/1FAIpQLScWg3PD6M8_j4TmKNpIXW3_iuQSAD_5R3WZcaghzDsNH_XTZw/viewform?usp=dialog',
   generalContact:
-    'https://docs.google.com/forms/d/e/1FAIpQLSfxFJhqwV9V08iAAoXB97ndqSjY7lVvFT87UY0trhsLZdo2LQ/viewform?usp=dialog',
+    'https://docs.google.com/forms/d/e/1FAIpQLSdAim1ecdpi2kSFqydna_OrOYuu-yFPLcUaMfePLErWsCATig/viewform?usp=dialog',
 } as const;
 
 export type FormKey = keyof FormConfig;
