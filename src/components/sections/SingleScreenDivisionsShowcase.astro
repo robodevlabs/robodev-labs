@@ -13,7 +13,6 @@
  */
 import Icon from '../ui/Icon.astro';
 import { servicesData } from '../../data/services';
-import { productsData } from '../../data/products';
 import { academyData } from '../../data/academy';
 ---
 
@@ -386,6 +385,7 @@ import { academyData } from '../../data/academy';
 
     // Reveal navbar smoothly when scrolling into this section
     function checkVisibility() {
+      if (!section || !sideNav) return;
       const rect = section.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 

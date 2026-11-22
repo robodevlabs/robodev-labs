@@ -303,6 +303,7 @@
     }
 
     function updateFrame() {
+      if (!portal || !bridgeRig) return;
       const rect = portal.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       const totalScrollable = rect.height - windowHeight;

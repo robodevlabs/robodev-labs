@@ -43,7 +43,7 @@ const jsonLd = [
 
 <BaseLayout title={`${service.title} — Engineering Services`} description={service.summary}>
   {jsonLd.map((schema) => (
-    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
   ))}
 
   <div class="wt-page">
@@ -251,7 +251,7 @@ const jsonLd = [
   const nav = document.getElementById('wt-section-nav');
   const hero = document.querySelector('.wt-hero');
   if (nav && hero) {
-    const updateNavState = (isPastHero) => {
+    const updateNavState = (isPastHero: boolean) => {
       nav.classList.toggle('wt-nav--scrolled', isPastHero);
       nav.classList.toggle('wt-nav--active', isPastHero);
     };

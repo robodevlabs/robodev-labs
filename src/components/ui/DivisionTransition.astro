@@ -30,7 +30,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<div class={`division-transition-band theme-${accentColor}`} aria-hidden="true">
+<div class={`division-transition-band theme-${accentColor}`} data-from={fromDivision} data-to={toDivision} aria-hidden="true">
   <!-- Glowing Horizontal Conduit Line -->
   <div class="conduit-line-wrapper">
     <div class="conduit-glow"></div>

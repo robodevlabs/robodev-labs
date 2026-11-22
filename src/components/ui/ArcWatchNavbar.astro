@@ -108,6 +108,7 @@ import Icon from '../ui/Icon.astro';
     if (!navbar) return;
 
     function handleScroll() {
+      if (!navbar) return;
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       

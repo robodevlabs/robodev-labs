@@ -40,7 +40,7 @@ const jsonLd = {
 ---
 
 <BaseLayout title={`Careers — ${siteConfig.name}`} description={careersPage.intro}>
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
   <div class="careers-page">
     <!-- HERO -->

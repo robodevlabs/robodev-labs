@@ -1,13 +1,12 @@
 ---
-import type { ProductItem } from '../../data/products';
+import type { Product } from '../../data/products';
 import Heading from '../ui/Heading.astro';
 import Text from '../ui/Text.astro';
 import Icon from '../ui/Icon.astro';
 import Button from '../ui/Button.astro';
-import Divider from '../ui/Divider.astro';
 
 export interface Props {
-  product: ProductItem;
+  product: Product & { metrics?: { value: string; label: string }[] };
 }
 
 const { product } = Astro.props;

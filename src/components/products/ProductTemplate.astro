@@ -6,7 +6,6 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Container from '../ui/Container.astro';
-import Logo from '../common/Logo.astro';
 import AcademyGrid from '../academy/AcademyGrid.astro';
 import { getRelatedProducts, type Product } from '../../data/products';
 import { formsConfig } from '../../data/forms';
@@ -44,7 +43,7 @@ const jsonLd = [
 
 <BaseLayout title={`${product.title} — Product Studio`} description={product.details}>
   {jsonLd.map((schema) => (
-    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
   ))}
 
   <div class="wt-page prod-detail">

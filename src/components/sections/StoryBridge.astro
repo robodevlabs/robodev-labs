@@ -1,7 +1,4 @@
 ---
-import Container from '../ui/Container.astro';
-import Heading from '../ui/Heading.astro';
-import Icon from '../ui/Icon.astro';
 ---
 
 <section class="story-bridge-section" id="ecosystem-bridge">
@@ -192,6 +189,7 @@ import Icon from '../ui/Icon.astro';
     if (!section || !bridgeLeft || !bridgeRight) return;
 
     function handleScroll() {
+      if (!section || !bridgeLeft || !bridgeRight) return;
       const rect = section.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 

@@ -38,7 +38,7 @@ export const academyData: AcademyProgram[] = [
       'Open-source contribution guidance and engineering trade-offs',
     ],
     format: 'Dedicated weekly mentorship & async feedback',
-    keyTakeaway: 'Clear technical direction and the confidence to crack engineering roles.',
+    keyTakeaway: 'Clear technical direction and the practical skills required for professional engineering roles.',
   },
   {
     id: 'hackathons',

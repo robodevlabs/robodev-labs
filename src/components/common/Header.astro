@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import logoImage from '../../assets/images/robodevlabs.png';
-import Icon from '../ui/Icon.astro';
 import Button from '../ui/Button.astro';
 import { formsConfig } from '../../data/forms';
 
@@ -61,7 +60,7 @@ const navItems = [
               href={item.href} 
               class="island-nav-link" 
               data-section={item.sectionId}
-              title={item.title || item.name}
+              title={item.name}
             >
               <span class="link-label">{item.name}</span>
               <span class="active-indicator-dot"></span>
@@ -142,6 +141,7 @@ const navItems = [
     // 1. Page Progress Indicator & Scroll-Aware Directional Morphing
     // ------------------------------------------------------------------------
     function updateScrollState() {
+      if (!capsule || !progressBar) return;
       const currentScrollY = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       
@@ -256,6 +256,7 @@ const navItems = [
     // 3. Dynamic Island Mobile Morphing Interaction
     // ------------------------------------------------------------------------
     function toggleMobileMorph() {
+      if (!capsule) return;
       const isExpanded = capsule.classList.contains('is-expanded');
       if (isExpanded) {
         closeMobileMorph();
@@ -265,6 +266,7 @@ const navItems = [
     }
 
     function openMobileMorph() {
+      if (!capsule) return;
       capsule.classList.add('is-expanded');
       trigger?.classList.add('is-active');
       trigger?.setAttribute('aria-expanded', 'true');
@@ -274,6 +276,7 @@ const navItems = [
     }
 
     function closeMobileMorph() {
+      if (!capsule) return;
       capsule.classList.remove('is-expanded');
       trigger?.classList.remove('is-active');
       trigger?.setAttribute('aria-expanded', 'false');

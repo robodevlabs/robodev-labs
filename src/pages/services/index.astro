@@ -31,7 +31,7 @@ const jsonLd = {
 ---
 
 <BaseLayout title={`Engineering Services — ${siteConfig.name}`} description={engineeringPage.intro}>
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <div class="eng-page">
     <header class="eng-hero">
       <div class="eng-hero__bg" aria-hidden="true">

@@ -67,10 +67,19 @@ export const legalDocuments: LegalDocument[] = [
         ],
       },
       {
+        heading: 'External registrations and submissions',
+        paragraphs: [
+          'Some workshop registrations, internship applications, engineering job applications, and general contact inquiries are handled through externally hosted Google Forms.',
+          'When you click an application, registration, or contact link pointing to a Google Form, you are directed to a Google-hosted form. Information submitted through those forms is processed using Google’s infrastructure and services.',
+          'Google operates under its own policies and data handling practices. You can review Google’s official Privacy Policy at https://policies.google.com/privacy.',
+          'RoboDev Labs accesses responses submitted to those forms solely for the purpose associated with the relevant submission, such as managing workshop enrollments, answering project inquiries, or reviewing candidates for engineering roles.',
+        ],
+      },
+      {
         heading: 'Academy and workshop information',
         paragraphs: [
-          'RoboDev Academy pages may invite visitors to register for workshops, training, mentorship, bootcamps, or other educational programs. In the current website implementation, Academy registration links point to external Google Forms URLs.',
-          'If you use an external registration form, the information you submit is handled by that third-party form provider as well as by RoboDev Labs for the purpose of managing the program, communicating with participants, and providing relevant workshop information.',
+          'RoboDev Academy pages invite visitors to explore and enroll in technical workshops, mentorship, and training programs. In the current implementation, Academy registration and enrollment links point to official Google Forms.',
+          'Information submitted through external registration forms is handled by Google as the form provider and accessed by RoboDev Labs to manage cohorts, communicate schedule details, and provide workshop materials.',
         ],
       },
       {
@@ -359,8 +368,9 @@ export const legalDocuments: LegalDocument[] = [
       {
         heading: 'Cookies used by this website',
         paragraphs: [
-          'Based on the current repository, the RoboDev Labs website itself does not set first-party cookies through application code.',
-          'The website also does not include Google Analytics, advertising cookies, Meta Pixel, tracking pixels, newsletter tracking, authentication cookies, or payment cookies in the current implementation.',
+          'RoboDev Labs does not use advertising cookies or advertising pixels on this website.',
+          'The website itself does not set first-party tracking cookies through application code, nor does it include advertising pixels, behavioral tracking networks, or marketing cookies in its current implementation.',
+          'This is distinct from cookies or similar technologies that may be used by third-party services—such as Google when visitors access externally hosted Google Forms, or external social platforms when following external links. Third-party cookie practices are governed by their respective policies.',
         ],
       },
       {

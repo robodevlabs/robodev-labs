@@ -31,7 +31,7 @@ const jsonLd = {
 ---
 
 <BaseLayout title={`Product Studio — ${siteConfig.name}`} description={studioPage.intro}>
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <div class="studio-page">
     <header class="studio-hero">
       <div class="studio-hero__bg" aria-hidden="true">
