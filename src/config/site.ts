@@ -10,12 +10,12 @@ export const siteConfig: SiteConfig = {
   email: 'robodevlabs.team@gmail.com',
   socials: {
     github: 'https://github.com/RoboDevLabs',
-    linkedin: 'https://linkedin.com/company/robodevlabs',
-    instagram: 'https://instagram.com/robodevlabs',
-    youtube: 'https://youtube.com/@robodevlabs',
+    linkedin: 'https://www.linkedin.com/company/robodev-labs/',
+    instagram: 'https://www.instagram.com/bhattarairobert/',
+    youtube: 'https://www.youtube.com/@_learnwithrobert',
     facebook: 'https://facebook.com/robodevlabs',
-    x: 'https://x.com/robodevlabs',
-    tiktok: 'https://tiktok.com/@robodevlabs',
+    x: 'https://x.com/RobodevLab',
+    tiktok: 'https://www.tiktok.com/@robobhattarai',
   },
   divisions: [
     {
