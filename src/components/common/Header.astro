@@ -7,12 +7,12 @@ import { formsConfig } from '../../data/forms';
 // Canonical navigation items including all sections
 const navItems = [
   { name: 'Ecosystem', href: '/#pillars', sectionId: 'pillars' },
-  { name: 'Services', href: '/#services', sectionId: 'services' },
-  { name: 'Product Studio', href: '/#products', sectionId: 'products' },
-  { name: 'Academy', href: '/#academy', sectionId: 'academy' },
+  { name: 'Services', href: '/services', sectionId: 'services' },
+  { name: 'Product Studio', href: '/products/', sectionId: 'products' },
+  { name: 'Academy', href: '/academy', sectionId: 'academy' },
   // how we work section is removed
   { name: 'Leadership', href: '/#leadership', sectionId: 'leadership' },
-  { name: 'Careers', href: '/career', sectionId: 'careers' },
+  { name: 'Careers', href: '/career/', sectionId: 'careers' },
 ];
 ---
 
@@ -215,7 +215,26 @@ const navItems = [
       if (el) observedElements.push({ el, name: def.name, sectionId: def.id });
     });
 
-    if ('IntersectionObserver' in window && observedElements.length > 0) {
+    // Subpage path-based active highlighting vs homepage scroll-spy
+    const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+    const isHomePage = currentPath === '/';
+
+    if (!isHomePage) {
+      navLinks.forEach((link) => {
+        const href = (link.getAttribute('href') || '').replace(/\/$/, '');
+        if (href && !href.includes('#') && (href === currentPath || currentPath.startsWith(href))) {
+          link.classList.add('is-active');
+          if (activeLabel) {
+            const labelSpan = link.querySelector('.link-label');
+            if (labelSpan && labelSpan.textContent) {
+              activeLabel.textContent = labelSpan.textContent;
+            }
+          }
+        } else {
+          link.classList.remove('is-active');
+        }
+      });
+    } else if ('IntersectionObserver' in window && observedElements.length > 0) {
       const sectionObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
