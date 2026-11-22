@@ -97,7 +97,7 @@ const jsonLd = {
                   <div class="career-card__top">
                     <span class={`career-status career-status--${career.status.toLowerCase()}`}>
                       <span class="career-status__dot" aria-hidden="true"></span>
-                      {career.status}
+                      {career.status === 'Upcoming' ? 'Opening Soon' : career.status}
                     </span>
                     <span class="career-card__meta">{career.department} · {career.employmentType}</span>
                   </div>
@@ -280,6 +280,7 @@ const jsonLd = {
   .career-card:hover { transform: translateY(-3px); border-color: #0056D2; box-shadow: 0 16px 36px rgba(0, 86, 210, 0.12); }
   .career-card__top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 0.9rem; }
   .career-status { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono,monospace); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: #0056D2; border: 1px solid rgba(0, 86, 210, 0.3); background: rgba(0, 86, 210, 0.08); border-radius: 999px; padding: 0.25rem 0.75rem; }
+  .career-status--upcoming { color: #D97706; border-color: rgba(217, 119, 6, 0.35); background: rgba(217, 119, 6, 0.08); }
   .career-status__dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
   .career-card__meta { font-size: 0.82rem; color: #64748B; }
   .career-card__title { font-size: clamp(1.4rem,2.4vw,1.9rem); font-weight: 750; letter-spacing: -0.02em; margin: 0 0 0.7rem; color: #0F172A; }

@@ -155,7 +155,7 @@ export const careersData: Career[] = [
     slug: 'frontend-development-intern',
     title: 'Frontend Development Intern',
     shortTitle: 'Frontend Intern',
-    status: 'Open',
+    status: 'Upcoming',
     employmentType: 'Internship',
     department: 'Engineering',
     location: 'Nepal',
@@ -207,7 +207,7 @@ export const careersData: Career[] = [
     slug: 'junior-backend-developer',
     title: 'Junior Backend Developer',
     shortTitle: 'Junior Backend Developer',
-    status: 'Open',
+    status: 'Upcoming',
     employmentType: 'Full-time · Junior',
     department: 'Engineering',
     location: 'Nepal',
@@ -263,7 +263,7 @@ export function getCareerBySlug(slug: string): Career | undefined {
 }
 
 export function getOpenCareers(): Career[] {
-  return careersData.filter((c) => c.status === 'Open');
+  return careersData.filter((c) => c.status === 'Open' || c.status === 'Upcoming');
 }
 
 export function getAllCareerSlugs(): string[] {

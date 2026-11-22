@@ -23,8 +23,10 @@ const pageUrl = `${siteConfig.url}/careers/${career.slug}`;
 const applyHref = career.applicationUrl ?? `mailto:${career.applicationEmail}?subject=${encodeURIComponent(career.applicationSubject)}`;
 const isExternal = Boolean(career.applicationUrl);
 
+const isApplyDisabled = career.status === 'Upcoming' || career.status === 'Closed';
 const statusLabel = career.status === 'Open' ? 'Applications Open' : career.status === 'Upcoming' ? 'Opening Soon' : 'Closed';
-const ctaLabel = career.status === 'Open' ? (career.applicationUrl ? 'Apply Now' : 'Apply via Email') : 'Contact Us';
+const ctaLabel = 'Apply Now';
+const topBarCtaLabel = isApplyDisabled ? 'Opening Soon' : ctaLabel;
 
 const jsonLd = [
   {
@@ -75,7 +77,18 @@ const jsonLd = [
             </div>
             <p class="wt-hero-seats">{career.location} · {career.department}</p>
             <div class="wt-hero-mobile-cta">
-              <a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-btn-full">{ctaLabel}</a>
+              {isApplyDisabled ? (
+                <button
+                  type="button"
+                  disabled
+                  class="wt-btn-primary wt-btn-full wt-btn-disabled"
+                  aria-disabled="true"
+                >
+                  {ctaLabel}
+                </button>
+              ) : (
+                <a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-btn-full">{ctaLabel}</a>
+              )}
             </div>
           </div>
           <aside class="wt-enroll-card" aria-label="Application card">
@@ -87,8 +100,19 @@ const jsonLd = [
               <span class="wt-price-main">{career.shortTitle ?? career.title}</span>
               <span class="wt-price-note">{career.department} · {career.location}</span>
             </div>
-            <a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-btn-full wt-btn-card"><span>{ctaLabel}</span></a>
-            <p class="wt-card-seats-note">{career.applicationUrl ? 'Online application' : career.applicationEmail}</p>
+            {isApplyDisabled ? (
+              <button
+                type="button"
+                disabled
+                class="wt-btn-primary wt-btn-full wt-btn-card wt-btn-disabled"
+                aria-disabled="true"
+              >
+                <span>{ctaLabel}</span>
+              </button>
+            ) : (
+              <a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-btn-full wt-btn-card"><span>{ctaLabel}</span></a>
+            )}
+            <p class="wt-card-seats-note">{isApplyDisabled ? 'Applications open at company launch' : (career.applicationUrl ? 'Online application' : career.applicationEmail)}</p>
             <div class="wt-card-meta">
               <div class="wt-card-meta-row"><span class="wt-card-meta-key">Location</span><span class="wt-card-meta-val">{career.location}</span></div>
               <div class="wt-card-meta-row"><span class="wt-card-meta-key">Work mode</span><span class="wt-card-meta-val">{career.workMode}</span></div>
@@ -120,7 +144,20 @@ const jsonLd = [
           <div class="wt-top-bar-inner">
             <div class="wt-top-bar-left"><a href="/" class="wt-top-bar-logo" aria-label="RoboDev Labs Home"><Logo height={28} /></a></div>
             <div class="wt-top-bar-center"><span class="wt-top-bar-title" title={career.title}>{career.title}</span></div>
-            <div class="wt-top-bar-right"><a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-top-bar-btn"><span>{ctaLabel}</span></a></div>
+            <div class="wt-top-bar-right">
+              {isApplyDisabled ? (
+                <button
+                  type="button"
+                  disabled
+                  class="wt-btn-primary wt-top-bar-btn wt-btn-disabled"
+                  aria-disabled="true"
+                >
+                  <span>{topBarCtaLabel}</span>
+                </button>
+              ) : (
+                <a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-top-bar-btn"><span>{ctaLabel}</span></a>
+              )}
+            </div>
           </div>
         </Container>
       </div>
@@ -213,13 +250,21 @@ const jsonLd = [
           <hr class="wt-divider" />
           <section id="apply" class="wt-section" aria-labelledby="apply-heading">
             <h2 id="apply-heading" class="wt-section-title">How to apply</h2>
-            <p class="wt-body-text">{career.applicationInstructions}</p>
-            {career.applicationUrl ? (
+            {isApplyDisabled ? (
               <p class="wt-body-text">
-                Submit through our <a href={career.applicationUrl} target="_blank" rel="noopener noreferrer" style="color:var(--color-pepper-medium,#31473a); font-weight:600; text-decoration:underline;">online application form</a>. For questions or support, you can also reach us at {career.applicationEmail}.
+                Applications for this role will officially open once RoboDev Labs launches. You are welcome to review the responsibilities and prepare your resume and work samples in advance. For questions or early inquiries, reach us at <a href={`mailto:${career.applicationEmail}`} style="color:var(--color-pepper-medium,#0056D2); font-weight:600; text-decoration:underline;">{career.applicationEmail}</a>.
               </p>
             ) : (
-              <p class="wt-body-text">Send your application to {career.applicationEmail} with subject “{career.applicationSubject}”.</p>
+              <>
+                <p class="wt-body-text">{career.applicationInstructions}</p>
+                {career.applicationUrl ? (
+                  <p class="wt-body-text">
+                    Submit through our <a href={career.applicationUrl} target="_blank" rel="noopener noreferrer" style="color:var(--color-pepper-medium,#31473a); font-weight:600; text-decoration:underline;">online application form</a>. For questions or support, you can also reach us at {career.applicationEmail}.
+                  </p>
+                ) : (
+                  <p class="wt-body-text">Send your application to {career.applicationEmail} with subject “{career.applicationSubject}”.</p>
+                )}
+              </>
             )}
           </section>
           <div class="wt-final-cta">
@@ -227,7 +272,18 @@ const jsonLd = [
               <h2 class="wt-final-cta-title">Interested in this role?</h2>
               <p class="wt-final-cta-note">{career.title} · {career.employmentType} · {career.location}</p>
             </div>
-            <a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-btn-lg">{ctaLabel}</a>
+            {isApplyDisabled ? (
+              <button
+                type="button"
+                disabled
+                class="wt-btn-primary wt-btn-lg wt-btn-disabled"
+                aria-disabled="true"
+              >
+                <span>{ctaLabel}</span>
+              </button>
+            ) : (
+              <a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-btn-lg">{ctaLabel}</a>
+            )}
           </div>
         </div>
       </Container>
@@ -237,9 +293,20 @@ const jsonLd = [
       <div class="wt-mobile-bar-inner">
         <div class="wt-mobile-bar-text">
           <span class="wt-mobile-price">{career.shortTitle ?? career.title}</span>
-          <span class="wt-mobile-note">{career.status} · {career.employmentType}</span>
+          <span class="wt-mobile-note">{statusLabel} · {career.employmentType}</span>
         </div>
-        <a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-btn-sm">{ctaLabel}</a>
+        {isApplyDisabled ? (
+          <button
+            type="button"
+            disabled
+            class="wt-btn-primary wt-btn-sm wt-btn-disabled"
+            aria-disabled="true"
+          >
+            <span>{ctaLabel}</span>
+          </button>
+        ) : (
+          <a href={applyHref} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} class="wt-btn-primary wt-btn-sm">{ctaLabel}</a>
+        )}
       </div>
     </div>
   </div>
@@ -318,6 +385,28 @@ const jsonLd = [
   .wt-mobile-bar .wt-btn-primary { background-color: #FFFFFF; color: #000000; }
   .wt-final-cta .wt-btn-primary:hover,
   .wt-mobile-bar .wt-btn-primary:hover { background-color: #F1F5F9; color: #000000; }
+  button.wt-btn-primary:disabled,
+  .wt-btn-primary.wt-btn-disabled {
+    opacity: 0.55;
+    cursor: not-allowed !important;
+    pointer-events: auto !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+  button.wt-btn-primary:disabled:hover,
+  .wt-btn-primary.wt-btn-disabled:hover {
+    background-color: var(--color-pepper-medium, #0056D2) !important;
+    color: #EDF4F2 !important;
+    transform: none !important;
+  }
+  .wt-final-cta button.wt-btn-primary:disabled,
+  .wt-final-cta .wt-btn-primary.wt-btn-disabled,
+  .wt-mobile-bar button.wt-btn-primary:disabled,
+  .wt-mobile-bar .wt-btn-primary.wt-btn-disabled {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    opacity: 0.55;
+  }
   .wt-details-strip { background: transparent; padding: 2rem 0; }
   .wt-strip-card { background: #ffffff; border: 1px solid #dfded7; border-radius: 12px; box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04); padding: 1.75rem 2rem; position: relative; z-index: 10; }
   .wt-strip-grid { display: flex; align-items: center; justify-content: center; gap: 0; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }

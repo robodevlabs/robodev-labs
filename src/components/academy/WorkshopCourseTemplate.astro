@@ -30,6 +30,9 @@ const registrationLabel =
 
 const ctaLabel = course.isFree ? 'Enroll for Free' : 'Book a Seat →';
 
+/* ── Determine if registration is coming soon / temporarily disabled ── */
+const isComingSoon = !course.isFree && course.price.toLowerCase().includes('coming soon');
+
 /* ── Sticky navbar enroll CTA button text ── */
 const stickyEnrollPrice = course.price.replace(/^NPR\s*/i, '').trim();
 const stickyEnrollButtonText = course.isFree
@@ -156,9 +159,20 @@ const jsonLd = [
 
             <!-- Mobile CTA in hero -->
             <div class="wt-hero-mobile-cta">
-              <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="wt-btn-primary wt-btn-full">
-                {ctaLabel}
-              </a>
+              {isComingSoon ? (
+                <button
+                  type="button"
+                  disabled
+                  class="wt-btn-primary wt-btn-full wt-btn-disabled"
+                  aria-disabled="true"
+                >
+                  {ctaLabel}
+                </button>
+              ) : (
+                <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="wt-btn-primary wt-btn-full">
+                  {ctaLabel}
+                </a>
+              )}
             </div>
           </div>
 
@@ -174,15 +188,27 @@ const jsonLd = [
               <span class="wt-price-note">{course.isFree ? '100% Free · No payment required' : 'One-time registration'}</span>
             </div>
 
-            <a
-              href={bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="wt-btn-primary wt-btn-full wt-btn-card"
-              id="hero-enroll-cta"
-            >
-              <span>{ctaLabel}</span>
-            </a>
+            {isComingSoon ? (
+              <button
+                type="button"
+                disabled
+                class="wt-btn-primary wt-btn-full wt-btn-card wt-btn-disabled"
+                id="hero-enroll-cta"
+                aria-disabled="true"
+              >
+                <span>{ctaLabel}</span>
+              </button>
+            ) : (
+              <a
+                href={bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="wt-btn-primary wt-btn-full wt-btn-card"
+                id="hero-enroll-cta"
+              >
+                <span>{ctaLabel}</span>
+              </a>
+            )}
 
             <p class="wt-card-seats-note">Limited seats available</p>
 
@@ -282,15 +308,27 @@ const jsonLd = [
               <span class="wt-top-bar-title" title={course.title}>{course.title}</span>
             </div>
             <div class="wt-top-bar-right">
-              <a
-                href={bookingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="wt-btn-primary wt-top-bar-btn"
-                id="sticky-top-enroll-cta"
-              >
-                <span>{stickyEnrollButtonText}</span>
-              </a>
+              {isComingSoon ? (
+                <button
+                  type="button"
+                  disabled
+                  class="wt-btn-primary wt-top-bar-btn wt-btn-disabled"
+                  id="sticky-top-enroll-cta"
+                  aria-disabled="true"
+                >
+                  <span>{stickyEnrollButtonText}</span>
+                </button>
+              ) : (
+                <a
+                  href={bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="wt-btn-primary wt-top-bar-btn"
+                  id="sticky-top-enroll-cta"
+                >
+                  <span>{stickyEnrollButtonText}</span>
+                </a>
+              )}
             </div>
           </div>
         </Container>
@@ -586,9 +624,21 @@ const jsonLd = [
               <h2 class="wt-final-cta-title">Ready to join this workshop?</h2>
               <p class="wt-final-cta-note">Limited seats available · {course.isFree ? '100% Free registration' : course.price}</p>
             </div>
-            <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="wt-btn-primary wt-btn-lg" id="bottom-enroll-cta">
-              {ctaLabel}
-            </a>
+            {isComingSoon ? (
+              <button
+                type="button"
+                disabled
+                class="wt-btn-primary wt-btn-lg wt-btn-disabled"
+                id="bottom-enroll-cta"
+                aria-disabled="true"
+              >
+                {ctaLabel}
+              </button>
+            ) : (
+              <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="wt-btn-primary wt-btn-lg" id="bottom-enroll-cta">
+                {ctaLabel}
+              </a>
+            )}
           </div>
 
         </div>
@@ -604,9 +654,21 @@ const jsonLd = [
           <span class="wt-mobile-price">{course.isFree ? 'Free' : course.price}</span>
           <span class="wt-mobile-note">{course.hasCertificate ? 'Free certificate included' : 'Interactive workshop'}</span>
         </div>
-        <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="wt-btn-primary wt-btn-sm" id="mobile-enroll-cta">
-          {ctaLabel}
-        </a>
+        {isComingSoon ? (
+          <button
+            type="button"
+            disabled
+            class="wt-btn-primary wt-btn-sm wt-btn-disabled"
+            id="mobile-enroll-cta"
+            aria-disabled="true"
+          >
+            {ctaLabel}
+          </button>
+        ) : (
+          <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="wt-btn-primary wt-btn-sm" id="mobile-enroll-cta">
+            {ctaLabel}
+          </a>
+        )}
       </div>
     </div>
   </div>
@@ -1010,6 +1072,60 @@ const jsonLd = [
   .wt-mobile-bar .wt-btn-primary:hover {
     background-color: #F1F5F9;
     color: #000000;
+  }
+
+  /* ── Disabled Button State (Coming Soon) ── */
+  button.wt-btn-primary:disabled,
+  .wt-btn-primary.wt-btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+
+  button.wt-btn-primary:disabled:hover,
+  .wt-btn-primary.wt-btn-disabled:hover {
+    background-color: var(--color-pepper-medium, #0056D2) !important;
+    color: #EDF4F2 !important;
+    transform: none !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+  }
+
+  button.wt-top-bar-btn:disabled,
+  .wt-top-bar-btn.wt-btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  button.wt-top-bar-btn:disabled:hover,
+  .wt-top-bar-btn.wt-btn-disabled:hover {
+    background-color: var(--color-pepper-medium, #0056D2) !important;
+    color: #EDF4F2 !important;
+    transform: none !important;
+  }
+
+  .wt-final-cta button.wt-btn-primary:disabled,
+  .wt-mobile-bar button.wt-btn-primary:disabled,
+  .wt-final-cta .wt-btn-primary.wt-btn-disabled,
+  .wt-mobile-bar .wt-btn-primary.wt-btn-disabled {
+    opacity: 0.5;
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+  }
+
+  .wt-final-cta button.wt-btn-primary:disabled:hover,
+  .wt-mobile-bar button.wt-btn-primary:disabled:hover,
+  .wt-final-cta .wt-btn-primary.wt-btn-disabled:hover,
+  .wt-mobile-bar .wt-btn-primary.wt-btn-disabled:hover {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    transform: none !important;
   }
 
   /* ── 2. HORIZONTAL DETAILS STRIP (Prominent Card Component) ── */

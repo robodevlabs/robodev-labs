@@ -22,6 +22,7 @@ import ceoPhoto from '../assets/images/CEO Photo.png';
 
 /* ── Dynamic Workshop Derivations ── */
 const featured = workshopsData.find((w) => w.isFeatured) ?? workshopsData[0];
+const featuredIsComingSoon = !featured.isFree && featured.price.toLowerCase().includes('coming soon');
 const allWorkshops = workshopsData;
 
 /* Collect representative real outcomes from workshopsData */
@@ -270,9 +271,10 @@ const jsonLd = {
                   <Button
                     variant="primary"
                     size="lg"
-                    href={featured.paymentUrl ?? featured.registrationUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={featuredIsComingSoon ? undefined : (featured.paymentUrl ?? featured.registrationUrl)}
+                    target={featuredIsComingSoon ? undefined : "_blank"}
+                    rel={featuredIsComingSoon ? undefined : "noopener noreferrer"}
+                    disabled={featuredIsComingSoon}
                     class="studio-aside-btn"
                     id="featured-enroll-cta"
                   >
