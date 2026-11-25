@@ -1,8 +1,8 @@
 ---
 /**
  * Contact / Start a Project — /contact
- * Business inquiry page. No backend exists in this project, so the form
- * composes an email to the team inbox (no fake success states).
+ * Business inquiry page. Submits inquiries directly from the browser to
+ * Supabase (`project_inquiries`), with Google Form and email fallbacks.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/ui/Container.astro';
@@ -37,7 +37,7 @@ const jsonLd = {
 ---
 
 <BaseLayout title={`Contact — Start a Project | ${siteConfig.name}`} description="Tell RoboDev Labs about your software project, Academy workshop, partnership, or product idea. We work with businesses, organizations, and educational institutions.">
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
   <div class="contact-page">
     <!-- ATMOSPHERE: tonal washes + one signature R-bowl arc, cropped left -->
@@ -113,16 +113,21 @@ const jsonLd = {
             </a>
           </div>
 
-          <form id="contact-form" class="contact-form" data-form-url={formsConfig.generalContact} novalidate>
+          <form id="contact-form" class="contact-form" data-form-url={formsConfig.generalContact} data-inbox={inbox} novalidate>
+            <div class="form-honeypot" aria-hidden="true">
+              <label for="cf-hp">Leave this field blank</label>
+              <input id="cf-hp" name="contact_hp" type="text" tabindex="-1" autocomplete="off" />
+            </div>
+
             <div class="form-row">
               <div class="form-field">
                 <label for="cf-name">Full name *</label>
-                <input id="cf-name" name="name" type="text" autocomplete="name" required placeholder="Your full name" aria-describedby="cf-name-error" />
+                <input id="cf-name" name="name" type="text" autocomplete="name" required maxlength="120" placeholder="Your full name" aria-describedby="cf-name-error" />
                 <p class="form-error" id="cf-name-error" hidden>Please enter your name.</p>
               </div>
               <div class="form-field">
                 <label for="cf-email">Email address *</label>
-                <input id="cf-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" aria-describedby="cf-email-error" />
+                <input id="cf-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com" aria-describedby="cf-email-error" />
                 <p class="form-error" id="cf-email-error" hidden>Please enter a valid email address.</p>
               </div>
             </div>
@@ -130,22 +135,22 @@ const jsonLd = {
             <div class="form-row">
               <div class="form-field">
                 <label for="cf-org">Company / Organization</label>
-                <input id="cf-org" name="organization" type="text" autocomplete="organization" placeholder="Company or school name" />
+                <input id="cf-org" name="organization" type="text" autocomplete="organization" maxlength="160" placeholder="Company or school name" />
               </div>
               <div class="form-field">
                 <label for="cf-role">Your role</label>
-                <input id="cf-role" name="role" type="text" autocomplete="organization-title" placeholder="e.g. Founder, Teacher, Student" />
+                <input id="cf-role" name="role" type="text" autocomplete="organization-title" maxlength="120" placeholder="e.g. Founder, Teacher, Student" />
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-field">
                 <label for="cf-phone">Phone <span class="form-optional">(optional)</span></label>
-                <input id="cf-phone" name="phone" type="tel" autocomplete="tel" placeholder="+977 …, +1 …" />
+                <input id="cf-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" placeholder="+977 …, +1 …" />
               </div>
               <div class="form-field">
                 <label for="cf-location">Country / Location <span class="form-optional">(optional)</span></label>
-                <input id="cf-location" name="location" type="text" autocomplete="country-name" placeholder="Where are you based?" />
+                <input id="cf-location" name="location" type="text" autocomplete="country-name" maxlength="120" placeholder="Where are you based?" />
               </div>
             </div>
 
@@ -164,16 +169,16 @@ const jsonLd = {
               <div class="form-row">
                 <div class="form-field">
                   <label for="cf-projtype">Project type</label>
-                  <input id="cf-projtype" name="projectType" type="text" placeholder="e.g. Web app, internal tool, MVP" />
+                  <input id="cf-projtype" name="projectType" type="text" maxlength="160" placeholder="e.g. Web app, internal tool, MVP" />
                 </div>
                 <div class="form-field">
                   <label for="cf-timeline">Estimated timeline</label>
-                  <input id="cf-timeline" name="timeline" type="text" placeholder="e.g. 2–3 months" />
+                  <input id="cf-timeline" name="timeline" type="text" maxlength="120" placeholder="e.g. 2–3 months" />
                 </div>
               </div>
               <div class="form-field">
                 <label for="cf-budget">Budget range <span class="form-optional">(optional)</span></label>
-                <input id="cf-budget" name="budget" type="text" placeholder="e.g. Rough range, if known" />
+                <input id="cf-budget" name="budget" type="text" maxlength="120" placeholder="e.g. Rough range, if known" />
               </div>
             </fieldset>
 
@@ -183,21 +188,21 @@ const jsonLd = {
               <div class="form-row">
                 <div class="form-field">
                   <label for="cf-institution">Institution / organization</label>
-                  <input id="cf-institution" name="institution" type="text" placeholder="School, university, or club" />
+                  <input id="cf-institution" name="institution" type="text" maxlength="160" placeholder="School, university, or club" />
                 </div>
                 <div class="form-field">
                   <label for="cf-workshop">Workshop / topic</label>
-                  <input id="cf-workshop" name="workshop" type="text" placeholder="e.g. AI automation, UI/UX" />
+                  <input id="cf-workshop" name="workshop" type="text" maxlength="160" placeholder="e.g. AI automation, UI/UX" />
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-field">
                   <label for="cf-participants">Approximate participants</label>
-                  <input id="cf-participants" name="participants" type="text" inputmode="numeric" placeholder="e.g. 30" />
+                  <input id="cf-participants" name="participants" type="text" inputmode="numeric" maxlength="60" placeholder="e.g. 30" />
                 </div>
                 <div class="form-field">
                   <label for="cf-prefdate">Preferred date <span class="form-optional">(optional)</span></label>
-                  <input id="cf-prefdate" name="preferredDate" type="text" placeholder="e.g. Mid-October" />
+                  <input id="cf-prefdate" name="preferredDate" type="text" maxlength="120" placeholder="e.g. Mid-October" />
                 </div>
               </div>
             </fieldset>
@@ -207,17 +212,17 @@ const jsonLd = {
               <legend>Collaboration context</legend>
               <div class="form-field">
                 <label for="cf-partner-org">Organization</label>
-                <input id="cf-partner-org" name="partnerOrg" type="text" placeholder="Your organization" />
+                <input id="cf-partner-org" name="partnerOrg" type="text" maxlength="160" placeholder="Your organization" />
               </div>
               <div class="form-field">
                 <label for="cf-collab">Collaboration idea</label>
-                <input id="cf-collab" name="collaboration" type="text" placeholder="Briefly, what do you have in mind?" />
+                <input id="cf-collab" name="collaboration" type="text" maxlength="500" placeholder="Briefly, what do you have in mind?" />
               </div>
             </fieldset>
 
             <div class="form-field">
               <label for="cf-subject">Subject *</label>
-              <input id="cf-subject" name="subject" type="text" required placeholder="What would you like to discuss?" aria-describedby="cf-subject-error" />
+              <input id="cf-subject" name="subject" type="text" required maxlength="200" placeholder="What would you like to discuss?" aria-describedby="cf-subject-error" />
               <p class="form-error" id="cf-subject-error" hidden>Please add a subject.</p>
             </div>
 
@@ -228,6 +233,7 @@ const jsonLd = {
                 name="message"
                 rows="6"
                 required
+                maxlength="5000"
                 aria-describedby="cf-message-error"
                 placeholder="What are you trying to build? What problem are you solving? What do you need, and any useful context — timeline, users, or constraints."
               ></textarea>
@@ -235,137 +241,34 @@ const jsonLd = {
             </div>
 
             <div class="form-field">
-              <label for="cf-file">Attachment <span class="form-optional">(optional)</span></label>
-              <input id="cf-file" name="attachment" type="file" class="form-file" aria-describedby="cf-file-note" />
-              <p class="form-file-note" id="cf-file-note">Briefs, sketches, or documents. Files attach in your email app in the next step.</p>
+              <span class="form-label-heading">Attachments <span class="form-optional">(via email)</span></span>
+              <p class="form-file-note" id="cf-file-note">
+                Have briefs, sketches, or supporting documents? Please send them separately to
+                <a href={`mailto:${inbox}`} class="form-file-note__link">{inbox}</a> after submitting this inquiry.
+              </p>
             </div>
 
-            <Button variant="primary" size="lg" type="submit" class="contact-submit">
-              <span>Start the conversation</span>
+            <Button variant="primary" size="lg" type="submit" class="contact-submit" id="cf-submit-btn">
+              <span id="cf-submit-text">Send inquiry</span>
               <span class="contact-submit__arrow" aria-hidden="true">→</span>
             </Button>
             <p class="contact-status" id="contact-status" role="status" aria-live="polite" hidden></p>
             <p class="contact-privacy">
-              Inquiries are processed directly through our <a href={formsConfig.generalContact} target="_blank" rel="noopener noreferrer" style="color:var(--color-pepper-medium,#31473a); text-decoration:underline; font-weight:600;">Google Form</a>. Direct inbox: <a href={`mailto:${inbox}`} style="text-decoration:underline;">{inbox}</a>.
+              Inquiries are stored securely for review by our team. Also reachable via <a href={formsConfig.generalContact} target="_blank" rel="noopener noreferrer" style="color:var(--color-pepper-medium,#31473a); text-decoration:underline; font-weight:600;">Google Form</a> or inbox <a href={`mailto:${inbox}`} style="text-decoration:underline;">{inbox}</a>.
             </p>
           </form>
         </div>
       </div>
     </Container>
 
-    <script is:inline data-contact-script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    <script>
+      import { initContactForm } from '../scripts/contactForm';
 
-        /* Reveal */
-        const els = document.querySelectorAll('.contact-page .reveal-fade-up');
-        if ('IntersectionObserver' in window && !reduce) {
-          const io = new IntersectionObserver((es) => {
-            es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
-          }, { threshold: 0.12 });
-          els.forEach((el) => io.observe(el));
-        } else { els.forEach((el) => el.classList.add('is-visible')); }
-
-        /* Conditional contextual fields */
-        const topic = document.getElementById('cf-topic');
-        const groups = {
-          engineering: ['Software Engineering', 'AI Automation', 'SaaS / Product Development', 'Website / Web Application', 'Custom Business Software'],
-          academy: ['RoboDev Academy / Workshop', 'University / Student Organization'],
-          partnership: ['Product Collaboration', 'Partnership'],
-        };
-        const contexts = Array.from(document.querySelectorAll('[data-context]'));
-        const syncContexts = () => {
-          const v = topic.value;
-          const show = v ? Object.keys(groups).find((k) => groups[k].includes(v)) : null;
-          contexts.forEach((fs) => { fs.hidden = fs.getAttribute('data-context') !== show; });
-        };
-        topic.addEventListener('change', syncContexts);
-        syncContexts();
-
-        /* File name feedback */
-        const file = document.getElementById('cf-file');
-        const fileNote = document.getElementById('cf-file-note');
-        const fileDefault = fileNote.textContent;
-        file.addEventListener('change', () => {
-          fileNote.textContent = file.files.length
-            ? `Selected: ${file.files[0].name} — please re-attach it in your email app after it opens.`
-            : fileDefault;
-        });
-
-        /* Validation + honest mailto handoff (no backend, no fake success) */
-        const form = document.getElementById('contact-form');
-        const status = document.getElementById('contact-status');
-        const inbox = 'robodevlabs.team@gmail.com';
-        const setError = (inputId, errorId, bad) => {
-          const input = document.getElementById(inputId);
-          const err = document.getElementById(errorId);
-          input.setAttribute('aria-invalid', bad ? 'true' : 'false');
-          err.hidden = !bad;
-          input.classList.toggle('is-invalid', bad);
-          return !bad;
-        };
-        form.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const name = document.getElementById('cf-name').value.trim();
-          const email = document.getElementById('cf-email').value.trim();
-          const subject = document.getElementById('cf-subject').value.trim();
-          const message = document.getElementById('cf-message').value.trim();
-          const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-          const checks = [
-            setError('cf-name', 'cf-name-error', !name),
-            setError('cf-email', 'cf-email-error', !emailOk),
-            setError('cf-topic', 'cf-topic-error', !topic.value),
-            setError('cf-subject', 'cf-subject-error', !subject),
-            setError('cf-message', 'cf-message-error', message.length < 20),
-          ];
-          if (checks.includes(false)) {
-            const firstBad = form.querySelector('.is-invalid');
-            if (firstBad) firstBad.focus();
-            status.hidden = false;
-            status.textContent = 'Please review the highlighted fields before continuing.';
-            return;
-          }
-
-          const get = (id) => document.getElementById(id).value.trim();
-          const lines = [
-            `Name: ${name}`,
-            `Email: ${email}`,
-            get('cf-org') && `Organization: ${get('cf-org')}`,
-            get('cf-role') && `Role: ${get('cf-role')}`,
-            get('cf-phone') && `Phone: ${get('cf-phone')}`,
-            get('cf-location') && `Location: ${get('cf-location')}`,
-            `Topic: ${topic.value}`,
-            get('cf-projtype') && `Project type: ${get('cf-projtype')}`,
-            get('cf-timeline') && `Timeline: ${get('cf-timeline')}`,
-            get('cf-budget') && `Budget: ${get('cf-budget')}`,
-            get('cf-institution') && `Institution: ${get('cf-institution')}`,
-            get('cf-workshop') && `Workshop: ${get('cf-workshop')}`,
-            get('cf-participants') && `Participants: ${get('cf-participants')}`,
-            get('cf-prefdate') && `Preferred date: ${get('cf-prefdate')}`,
-            get('cf-partner-org') && `Partner org: ${get('cf-partner-org')}`,
-            get('cf-collab') && `Collaboration: ${get('cf-collab')}`,
-            '',
-            message,
-            file.files.length ? `\n(Note: sender selected a file "${file.files[0].name}" — attach it in your email app.)` : '',
-          ].filter(Boolean).join('\n');
-
-          const targetUrl = form.getAttribute('data-form-url');
-          if (targetUrl) window.open(targetUrl, '_blank');
-          status.hidden = false;
-          status.innerHTML = 'Opening our official Google Form in a new tab. You can also reach our team inbox directly at <a href="mailto:' + inbox + '" style="text-decoration:underline; font-weight:600;">' + inbox + '</a>.';
-        });
-
-        /* Clear errors on input */
-        form.querySelectorAll('input, select, textarea').forEach((el) => {
-          el.addEventListener('input', () => {
-            el.classList.remove('is-invalid');
-            el.removeAttribute('aria-invalid');
-            const err = el.parentElement.querySelector('.form-error');
-            if (err) err.hidden = true;
-          });
-        });
-      });
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initContactForm);
+      } else {
+        initContactForm();
+      }
     </script>
   </div>
 </BaseLayout>
@@ -507,32 +410,48 @@ const jsonLd = {
   .form-context:not([hidden]) { animation: contextIn 300ms cubic-bezier(0.16,1,0.3,1); }
   @keyframes contextIn { from { opacity: 0; translate: 0 10px; } to { opacity: 1; translate: 0 0; } }
   .form-context legend { font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #31473a; padding: 0; margin-bottom: 0.15rem; }
-  .form-file {
-    background: #fbfdfb; border: 1px dashed #b9c4bc; border-radius: 12px;
-    padding: 0.85rem 1rem; cursor: pointer; font-size: 0.88rem; color: #3c4a42;
-    transition: border-color 250ms ease, background 250ms ease;
+  .form-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
   }
-  .form-file:hover { border-color: #7e9684; background: #fff; }
-  .form-file::file-selector-button {
-    border: none; background: var(--color-pepper-medium, #31473a); border-radius: 8px;
-    padding: 0.5rem 1rem; font-size: 0.83rem; font-weight: 650; color: #edf4f2;
-    margin-right: 0.75rem; cursor: pointer; transition: opacity 200ms ease;
-  }
-  .form-file::file-selector-button:hover { opacity: 0.88; }
+  .form-label-heading { font-size: 0.82rem; font-weight: 600; color: #1f2b24; }
   .form-file-note {
-    display: flex; gap: 0.55rem; align-items: flex-start;
     background: rgba(49,71,58,0.06); border: 1px solid rgba(49,71,58,0.16);
-    border-radius: 10px; padding: 0.65rem 0.85rem;
-    font-size: 0.8rem; line-height: 1.55; color: #3c4a42; margin: 0;
+    border-radius: 10px; padding: 0.75rem 0.95rem;
+    font-size: 0.82rem; line-height: 1.55; color: #3c4a42; margin: 0;
+  }
+  .form-file-note__link {
+    color: var(--color-pepper-medium, #31473a);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
   .contact-submit { width: 100%; justify-content: center; font-size: 1.02rem !important; padding: 1.05rem !important; margin-top: 0.35rem; }
+  .contact-submit:disabled { opacity: 0.72; cursor: wait; }
   .contact-submit__arrow { display: inline-block; transition: transform 250ms cubic-bezier(0.16,1,0.3,1); }
-  .contact-submit:hover .contact-submit__arrow { transform: translateX(6px); }
+  .contact-submit:hover:not(:disabled) .contact-submit__arrow { transform: translateX(6px); }
   .contact-status {
     font-size: 0.88rem; line-height: 1.6; color: #1c3329; font-weight: 550;
     background: rgba(49,71,58,0.07); border: 1px solid rgba(49,71,58,0.28); border-left: 3px solid var(--color-pepper-medium, #31473a);
     border-radius: 10px; padding: 0.85rem 1rem; margin: 0;
+  }
+  .contact-status--success {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.35);
+    border-left: 3px solid #16a34a;
+    color: #14532d;
+  }
+  .contact-status--error {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.35);
+    border-left: 3px solid #dc2626;
+    color: #7f1d1d;
   }
   .contact-status:not([hidden]) { animation: contextIn 280ms cubic-bezier(0.16,1,0.3,1); }
   .contact-privacy { font-size: 0.78rem; color: #6b7a71; text-align: center; margin: 0; }

@@ -43,3 +43,9 @@ pnpm-debug.log*
 
 # Coverage
 /coverage
+
+# Supabase CLI local state (never commit — contains local DB credentials and ephemeral config)
+supabase/.branches/
+supabase/.temp/
+supabase/config.toml
+# Keep supabase/migrations/ committed — it is the source of truth for the schema

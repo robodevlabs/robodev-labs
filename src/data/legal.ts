@@ -29,13 +29,13 @@ export const legalDocuments: LegalDocument[] = [
     title: 'Privacy Policy',
     shortDescription:
       'How RoboDev Labs handles information from website visitors, prospective clients, students, workshop participants, job applicants, partners, and collaborators.',
-    lastUpdated,
+    lastUpdated: 'November 25, 2026',
     sections: [
       {
         heading: 'Introduction',
         paragraphs: [
           'This Privacy Policy explains how RoboDev Labs handles personal information in connection with this website and related communications for Engineering Services, RoboDev Academy, Product Studio, Careers, and Contact inquiries.',
-          'This policy is written for the current website implementation. The site is primarily informational. The contact form prepares an email message to our team inbox, Academy registration buttons may link to Google Forms, and career applications are submitted by email. Where applicable, we handle personal information in accordance with relevant privacy requirements.',
+          'This policy is written for the current website implementation. Contact and project inquiries submitted through the /contact page are collected and stored using Supabase, while Academy workshop registrations, recruitment, internship applications, and fallback external contact links use Google Forms (or direct email where specified). Where applicable, we handle personal information in accordance with relevant privacy requirements.',
         ],
       },
       {
@@ -49,14 +49,15 @@ export const legalDocuments: LegalDocument[] = [
           'Project, partnership, workshop, product, or collaboration details.',
           'Messages, questions, preferences, timelines, budgets, participant estimates, and similar context you decide to share.',
           'Career application materials, such as CVs, links to work, project examples, GitHub repositories, portfolios, and availability.',
-          'Attachments you choose to send through your own email application.',
+          'Attachments you choose to send separately through your own email application.',
         ],
       },
       {
         heading: 'Contact and inquiry information',
         paragraphs: [
-          'The website contact form does not submit information to a custom backend in this repository. It validates your entries in the browser and opens your email application with a pre-addressed message to RoboDev Labs. You must send the email from your email application for us to receive it.',
-          'If you select an attachment in the contact form, the website does not upload that file to RoboDev Labs. The page only notes the selected file name and asks you to attach the file in your email application if you want to send it.',
+          'When you submit the website contact and project inquiry form, your entries are validated in the browser and sent directly to our project inquiry database on Supabase so our team can review and respond to your inquiry.',
+          'The website contact form does not accept file uploads. If you want to share briefs, sketches, or supporting documents, please send them separately to our team email inbox.',
+          'We also provide an optional link to our general contact Google Form and direct email address if you prefer an alternative way to reach us.',
         ],
       },
       {
@@ -69,7 +70,7 @@ export const legalDocuments: LegalDocument[] = [
       {
         heading: 'External registrations and submissions',
         paragraphs: [
-          'Some workshop registrations, internship applications, engineering job applications, and general contact inquiries are handled through externally hosted Google Forms.',
+          'Workshop registrations, Academy enrollments, internship applications, engineering job applications, and optional external contact links continue to use externally hosted Google Forms.',
           'When you click an application, registration, or contact link pointing to a Google Form, you are directed to a Google-hosted form. Information submitted through those forms is processed using Google’s infrastructure and services.',
           'Google operates under its own policies and data handling practices. You can review Google’s official Privacy Policy at https://policies.google.com/privacy.',
           'RoboDev Labs accesses responses submitted to those forms solely for the purpose associated with the relevant submission, such as managing workshop enrollments, answering project inquiries, or reviewing candidates for engineering roles.',
@@ -93,7 +94,7 @@ export const legalDocuments: LegalDocument[] = [
         heading: 'Technical information',
         paragraphs: [
           'When you visit the website, standard technical information may be processed by browsers, hosting infrastructure, and security systems involved in delivering the site. This may include IP address, browser type, device information, requested pages, dates and times of access, and similar log data.',
-          'The repository does not show a custom analytics provider, advertising pixel, user account system, payment checkout, database-backed contact submission, or authentication system for this website.',
+          'The repository does not show a custom analytics provider, advertising pixel, user account system, payment checkout, or visitor authentication system for this website.',
         ],
       },
       {
@@ -123,7 +124,7 @@ export const legalDocuments: LegalDocument[] = [
         heading: 'Service providers and information sharing',
         paragraphs: [
           'We may use service providers and third-party platforms that help operate the website, deliver email, host forms, provide fonts, or support normal business communications. These providers may process information according to their own terms and privacy practices.',
-          'Based on the current repository, relevant third-party touchpoints include Google Fonts for font delivery, Google Forms for some Academy registration links, external social links, and users\' own email providers when they send messages to RoboDev Labs.',
+          'Based on the current repository, relevant third-party touchpoints include Supabase for storing website contact and project inquiries, Google Forms for Academy registrations, recruitment, internships, and optional contact submissions, Google Fonts for font delivery, external social links, and users\' own email providers when they send messages to RoboDev Labs.',
         ],
       },
       {
@@ -404,7 +405,7 @@ export const legalDocuments: LegalDocument[] = [
       {
         heading: 'Email and attachments',
         paragraphs: [
-          'The contact form opens your email application instead of storing a submission in a website backend. Any information you send by email is handled by your email provider and by RoboDev Labs inbox systems according to their respective practices.',
+          'The website contact form stores project and general inquiries in Supabase without setting first-party advertising or tracking cookies. Any information or attachments you choose to send separately by email are handled by your email provider and by RoboDev Labs inbox systems according to their respective practices.',
           'If you attach a file in your email application, that file is sent through email infrastructure rather than through a cookie or website upload system.',
         ],
       },
