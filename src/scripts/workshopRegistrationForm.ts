@@ -1,29 +1,24 @@
 import { supabase } from '../db/supabase';
-import { updateWorkshopCountdown } from './workshopCountdown';
+import { openSuccessModal } from './formSuccessModal';
 
 export interface WorkshopSummary {
   slug: string;
   title: string;
   shortTitle?: string;
-  description: string;
   tagline?: string;
-  level: string;
+  description: string;
   format: string;
   duration: string;
   date?: string;
-  startsAt?: string;
   price: string;
   isFree: boolean;
   status: 'upcoming' | 'open' | 'completed';
   isOpen: boolean;
   isComingSoon: boolean;
-  hasCertificate?: boolean;
-  instructor?: string;
-  language?: string;
   hasPaymentUrl?: boolean;
 }
 
-type StatusVariant = 'info' | 'success' | 'warning' | 'error';
+type StatusVariant = 'warning' | 'error';
 
 function getTrimmedValue(id: string): string {
   const el = document.getElementById(id);
@@ -78,6 +73,10 @@ function getAvailabilityLabel(workshop: WorkshopSummary): string {
   return 'Unavailable';
 }
 
+function isValidEmail(email: string): boolean {
+  return email.length >= 3 && email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 function isValidInternationalPhone(raw: string): boolean {
   if (raw.length < 6 || raw.length > 40) return false;
   if (!/^[+0-9()\s.-]{6,40}$/.test(raw)) return false;
@@ -86,8 +85,8 @@ function isValidInternationalPhone(raw: string): boolean {
 }
 
 /**
- * Initializes URL workshop resolution, dynamic summary updates, validation,
- * and direct browser-to-Supabase submission for /academy/register.
+ * Initializes URL workshop resolution, real-time field validation,
+ * submit button gating, Supabase insertion, and accessible success modal.
  */
 export function initWorkshopRegistrationForm(): void {
   const workshops = parseWorkshopsCatalog();
@@ -117,21 +116,18 @@ export function initWorkshopRegistrationForm(): void {
   const honeypot = honeypotEl instanceof HTMLInputElement ? honeypotEl : null;
   const inbox = form.getAttribute('data-inbox') || 'robodevlabs.team@gmail.com';
 
-  const STATUS_ICONS: Record<StatusVariant, string> = {
-    info: '↻',
-    success: '✓',
-    warning: '!',
-    error: '✕',
-  };
+  let isSubmitting = false;
 
-  const setStatus = (variant: StatusVariant, title: string, populate: (body: HTMLElement) => void): void => {
+  const setStatus = (
+    variant: StatusVariant,
+    title: string,
+    populate: (body: HTMLElement) => void
+  ): void => {
     status.replaceChildren();
     status.hidden = false;
     status.className = `wr-status wr-status--${variant}`;
-    status.setAttribute('data-icon', STATUS_ICONS[variant]);
 
     const content = document.createElement('div');
-
     const titleEl = document.createElement('span');
     titleEl.className = 'wr-status-title';
     titleEl.textContent = title;
@@ -149,13 +145,9 @@ export function initWorkshopRegistrationForm(): void {
     status.replaceChildren();
     status.hidden = true;
     status.className = 'wr-status';
-    status.removeAttribute('data-icon');
   };
 
-  const setBanner = (
-    variant: 'unavailable' | 'paid-note' | null,
-    message = ''
-  ): void => {
+  const setBanner = (variant: 'unavailable' | 'paid-note' | null, message = ''): void => {
     if (!noticeBannerEl || !noticeBannerTextEl) return;
     if (!variant) {
       noticeBannerEl.hidden = true;
@@ -168,17 +160,89 @@ export function initWorkshopRegistrationForm(): void {
     noticeBannerTextEl.textContent = message;
   };
 
+  const getSelectedOpenWorkshop = (): WorkshopSummary | null => {
+    const slug = workshopSelect.value.trim();
+    return openWorkshops.find((w) => w.slug === slug) ?? null;
+  };
+
+  const isFormReady = (): boolean => {
+    if (isSubmitting) return false;
+    const workshop = getSelectedOpenWorkshop();
+    if (!workshop) return false;
+
+    const fullName = getTrimmedValue('wr-name');
+    const email = getTrimmedValue('wr-email');
+    const phone = getTrimmedValue('wr-phone');
+    const institution = normalizeOptional('wr-institution');
+    const role = normalizeOptional('wr-role');
+    const notes = normalizeOptional('wr-notes');
+
+    return (
+      fullName.length >= 1 &&
+      fullName.length <= 120 &&
+      isValidEmail(email) &&
+      isValidInternationalPhone(phone) &&
+      (institution === null || institution.length <= 160) &&
+      (role === null || role.length <= 120) &&
+      (notes === null || notes.length <= 2000)
+    );
+  };
+
+  const syncSubmitState = (): void => {
+    if (!submitBtn) return;
+    const ready = isFormReady();
+    submitBtn.disabled = !ready;
+    submitBtn.classList.toggle('is-disabled', !ready);
+    submitBtn.setAttribute('aria-disabled', ready ? 'false' : 'true');
+  };
+
   const setFormEnabled = (enabled: boolean): void => {
-    const controls = form.querySelectorAll('input, textarea, button[type="submit"]');
+    const controls = form.querySelectorAll('input, textarea');
     controls.forEach((ctrl) => {
       if (ctrl instanceof HTMLInputElement || ctrl instanceof HTMLTextAreaElement) {
         if (ctrl.id !== 'wr-hp') {
           ctrl.disabled = !enabled;
         }
-      } else if (ctrl instanceof HTMLButtonElement) {
-        ctrl.disabled = !enabled;
       }
     });
+    syncSubmitState();
+  };
+
+  const validateSingleField = (fieldId: string): boolean => {
+    switch (fieldId) {
+      case 'wr-workshop':
+        return setFieldError('wr-workshop', 'wr-workshop-error', !getSelectedOpenWorkshop());
+      case 'wr-name': {
+        const val = getTrimmedValue('wr-name');
+        return setFieldError('wr-name', 'wr-name-error', val.length < 1 || val.length > 120);
+      }
+      case 'wr-email':
+        return setFieldError('wr-email', 'wr-email-error', !isValidEmail(getTrimmedValue('wr-email')));
+      case 'wr-phone':
+        return setFieldError(
+          'wr-phone',
+          'wr-phone-error',
+          !isValidInternationalPhone(getTrimmedValue('wr-phone'))
+        );
+      case 'wr-institution': {
+        const val = normalizeOptional('wr-institution');
+        return setFieldError(
+          'wr-institution',
+          'wr-institution-error',
+          val !== null && val.length > 160
+        );
+      }
+      case 'wr-role': {
+        const val = normalizeOptional('wr-role');
+        return setFieldError('wr-role', 'wr-role-error', val !== null && val.length > 120);
+      }
+      case 'wr-notes': {
+        const val = normalizeOptional('wr-notes');
+        return setFieldError('wr-notes', 'wr-notes-error', val !== null && val.length > 2000);
+      }
+      default:
+        return true;
+    }
   };
 
   const renderWorkshopDetails = (workshop: WorkshopSummary | null, missingSlug?: string): void => {
@@ -190,27 +254,10 @@ export function initWorkshopRegistrationForm(): void {
           ? `We could not find an active workshop matching "${missingSlug}".`
           : 'No workshops are currently open for registration.'
       );
-      setText('wr-hero-price-pill', 'Unavailable');
-      setText('wr-hero-status-pill', 'Unavailable');
-      setText('wr-hero-duration-pill', '—');
-      setText('wr-hero-format-pill', 'RoboDev Academy');
-
       setText('wr-detail-tuition', '—');
       setText('wr-detail-status', 'Unavailable');
       setText('wr-detail-date', '—');
-      setText('wr-detail-duration', '—');
       setText('wr-detail-format', '—');
-      setText('wr-detail-level', '—');
-      setText('wr-detail-language', '—');
-      setText('wr-detail-cert', '—');
-
-      const syllabusLink = document.getElementById('wr-syllabus-link');
-      if (syllabusLink instanceof HTMLAnchorElement) {
-        syllabusLink.href = '/academy#workshops';
-        syllabusLink.textContent = 'Browse all workshops';
-      }
-
-      updateWorkshopCountdown('wr-countdown', null, 'Date to be announced', 'upcoming');
 
       if (openWorkshops.length > 0) {
         setBanner(
@@ -231,38 +278,14 @@ export function initWorkshopRegistrationForm(): void {
 
     const availability = getAvailabilityLabel(workshop);
     const tuitionText = workshop.isFree ? 'Free' : workshop.price;
+    const formatText = [workshop.format, workshop.duration].filter(Boolean).join(' · ');
 
     setText('wr-hero-title', workshop.title);
     setText('wr-hero-desc', workshop.tagline ?? workshop.description);
-    setText('wr-hero-price-pill', tuitionText);
-    setText('wr-hero-status-pill', availability);
-    setText('wr-hero-duration-pill', workshop.duration);
-    setText('wr-hero-format-pill', workshop.format);
-
     setText('wr-detail-tuition', tuitionText);
     setText('wr-detail-status', availability);
     setText('wr-detail-date', workshop.date ?? 'Date to be announced');
-    setText('wr-detail-duration', workshop.duration);
-    setText('wr-detail-format', workshop.format);
-    setText('wr-detail-level', workshop.level);
-    setText('wr-detail-language', workshop.language ?? 'English');
-    setText(
-      'wr-detail-cert',
-      workshop.hasCertificate ? 'Free certificate included' : 'Not specified'
-    );
-
-    const syllabusLink = document.getElementById('wr-syllabus-link');
-    if (syllabusLink instanceof HTMLAnchorElement) {
-      syllabusLink.href = `/academy/courses/${workshop.slug}`;
-      syllabusLink.textContent = 'View full syllabus & details';
-    }
-
-    updateWorkshopCountdown(
-      'wr-countdown',
-      workshop.startsAt ?? workshop.date,
-      workshop.date ?? 'Date to be announced',
-      workshop.status
-    );
+    setText('wr-detail-format', formatText || '—');
 
     if (!workshop.isOpen) {
       const reason =
@@ -270,7 +293,7 @@ export function initWorkshopRegistrationForm(): void {
           ? 'This workshop has already been completed and is closed for registration.'
           : 'Registration is not open yet for this workshop (Coming Soon).';
       const switchHint =
-        openWorkshops.length > 0 ? ' You can select an open workshop above to register.' : '';
+        openWorkshops.length > 0 ? ' You can select an open workshop below to register.' : '';
       setBanner('unavailable', `${reason}${switchHint}`);
       setFormEnabled(false);
       return;
@@ -317,6 +340,8 @@ export function initWorkshopRegistrationForm(): void {
     const slug = workshopSelect.value.trim();
     const selected = workshops.find((w) => w.slug === slug) ?? null;
     renderWorkshopDetails(selected);
+    validateSingleField('wr-workshop');
+    syncSubmitState();
 
     const url = new URL(window.location.href);
     if (selected) {
@@ -325,6 +350,46 @@ export function initWorkshopRegistrationForm(): void {
       url.searchParams.delete('workshop');
     }
     window.history.replaceState(null, '', url.toString());
+  });
+
+  // Real-time input validation, button gating, and blur validation
+  const fieldIds = [
+    'wr-name',
+    'wr-email',
+    'wr-phone',
+    'wr-institution',
+    'wr-role',
+    'wr-notes',
+  ];
+
+  fieldIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    el.addEventListener('input', () => {
+      if (el.classList.contains('is-invalid')) {
+        validateSingleField(id);
+      }
+      clearStatus();
+      syncSubmitState();
+    });
+
+    el.addEventListener('change', () => {
+      syncSubmitState();
+    });
+
+    el.addEventListener('blur', () => {
+      if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
+        const trimmed = el.value.trim();
+        if (el.value !== trimmed) {
+          el.value = trimmed;
+        }
+        if (trimmed.length > 0 || el.classList.contains('is-invalid')) {
+          validateSingleField(id);
+        }
+      }
+      syncSubmitState();
+    });
   });
 
   const showSubmissionError = (): void => {
@@ -343,8 +408,6 @@ export function initWorkshopRegistrationForm(): void {
     });
   };
 
-  let isSubmitting = false;
-
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (isSubmitting) return;
@@ -352,15 +415,16 @@ export function initWorkshopRegistrationForm(): void {
     // Lightweight honeypot check
     if (honeypot && honeypot.value.trim() !== '') {
       form.reset();
-      setStatus('success', 'Registration received', (el) => {
-        el.textContent = 'Thank you. Your registration has been received.';
+      syncSubmitState();
+      openSuccessModal({
+        modalId: 'wr-success-modal',
+        title: 'Registration received',
+        message: 'Thank you. Your registration has been received.',
       });
       return;
     }
 
-    const selectedSlug = workshopSelect.value.trim();
-    const selectedWorkshop = openWorkshops.find((w) => w.slug === selectedSlug) ?? null;
-
+    const selectedWorkshop = getSelectedOpenWorkshop();
     const fullName = getTrimmedValue('wr-name');
     const email = getTrimmedValue('wr-email');
     const phone = getTrimmedValue('wr-phone');
@@ -368,27 +432,14 @@ export function initWorkshopRegistrationForm(): void {
     const role = normalizeOptional('wr-role');
     const additionalNotes = normalizeOptional('wr-notes');
 
-    const emailOk =
-      email.length >= 3 &&
-      email.length <= 254 &&
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
     const checks = [
-      setFieldError('wr-workshop', 'wr-workshop-error', !selectedWorkshop),
-      setFieldError('wr-name', 'wr-name-error', fullName.length < 1 || fullName.length > 120),
-      setFieldError('wr-email', 'wr-email-error', !emailOk),
-      setFieldError('wr-phone', 'wr-phone-error', !isValidInternationalPhone(phone)),
-      setFieldError(
-        'wr-institution',
-        'wr-institution-error',
-        institution !== null && institution.length > 160
-      ),
-      setFieldError('wr-role', 'wr-role-error', role !== null && role.length > 120),
-      setFieldError(
-        'wr-notes',
-        'wr-notes-error',
-        additionalNotes !== null && additionalNotes.length > 2000
-      ),
+      validateSingleField('wr-workshop'),
+      validateSingleField('wr-name'),
+      validateSingleField('wr-email'),
+      validateSingleField('wr-phone'),
+      validateSingleField('wr-institution'),
+      validateSingleField('wr-role'),
+      validateSingleField('wr-notes'),
     ];
 
     if (checks.includes(false) || !selectedWorkshop) {
@@ -399,6 +450,7 @@ export function initWorkshopRegistrationForm(): void {
           ? 'Please review the highlighted fields before submitting.'
           : 'Please select an available workshop to register.';
       });
+      syncSubmitState();
       return;
     }
 
@@ -408,7 +460,6 @@ export function initWorkshopRegistrationForm(): void {
       return;
     }
 
-    // Strict allowlisted payload matching public.workshop_registrations insertable columns
     const payload = {
       workshop_slug: selectedWorkshop.slug,
       workshop_title: selectedWorkshop.title,
@@ -421,20 +472,18 @@ export function initWorkshopRegistrationForm(): void {
     };
 
     isSubmitting = true;
+    clearStatus();
     if (submitBtn) {
       submitBtn.disabled = true;
+      submitBtn.classList.add('is-disabled');
       submitBtn.setAttribute('aria-busy', 'true');
     }
-    if (submitTextEl) submitTextEl.textContent = 'Submitting registration...';
-    setStatus('info', 'Submitting…', (el) => {
-      el.textContent = 'Sending your registration to RoboDev Academy.';
-    });
+    if (submitTextEl) submitTextEl.textContent = 'Submitting registration…';
 
     try {
       const { error } = await supabase.from('workshop_registrations').insert(payload);
 
       if (error) {
-        // 23505 = unique_violation (same email already registered for this workshop)
         if (error.code === '23505') {
           setStatus('warning', 'Already registered', (el) => {
             el.appendChild(
@@ -460,13 +509,6 @@ export function initWorkshopRegistrationForm(): void {
         return;
       }
 
-      setStatus('success', 'Registration received', (el) => {
-        el.textContent = selectedWorkshop.isFree
-          ? `We have recorded your registration for ${selectedWorkshop.title}. Session details will be sent to ${email}.`
-          : `We have recorded your registration request for ${selectedWorkshop.title}. Payment and confirmation instructions will be sent to ${email}.`;
-      });
-
-      // Reset form fields while preserving the selected workshop context
       const activeSlug = selectedWorkshop.slug;
       form.reset();
       workshopSelect.value = activeSlug;
@@ -477,6 +519,14 @@ export function initWorkshopRegistrationForm(): void {
       form.querySelectorAll('.form-error').forEach((errEl) => {
         if (errEl instanceof HTMLElement) errEl.hidden = true;
       });
+
+      openSuccessModal({
+        modalId: 'wr-success-modal',
+        title: selectedWorkshop.isFree ? 'Registration received' : 'Registration request received',
+        message: selectedWorkshop.isFree
+          ? `We have recorded your registration for ${selectedWorkshop.title}. Session details will be sent to ${email}.`
+          : `We have recorded your registration request for ${selectedWorkshop.title}. Payment and confirmation instructions will be sent to ${email}.`,
+      });
     } catch (err) {
       console.error(
         'Unexpected workshop registration failure.',
@@ -486,20 +536,13 @@ export function initWorkshopRegistrationForm(): void {
     } finally {
       isSubmitting = false;
       if (submitBtn) {
-        submitBtn.disabled = !selectedWorkshop.isOpen;
         submitBtn.removeAttribute('aria-busy');
       }
       if (submitTextEl) submitTextEl.textContent = 'Submit registration';
+      syncSubmitState();
     }
   });
 
-  /* Clear field errors on input */
-  form.querySelectorAll('input, select, textarea').forEach((el) => {
-    el.addEventListener('input', () => {
-      el.classList.remove('is-invalid');
-      el.removeAttribute('aria-invalid');
-      const err = el.parentElement?.querySelector('.form-error');
-      if (err instanceof HTMLElement) err.hidden = true;
-    });
-  });
+  // Initial button state sync
+  syncSubmitState();
 }

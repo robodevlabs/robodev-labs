@@ -1,0 +1,254 @@
+---
+/**
+ * Accessible full-screen confirmation modal for form submissions.
+ * Controlled via src/scripts/formSuccessModal.ts.
+ */
+import Icon from './Icon.astro';
+
+export interface Props {
+  id: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+}
+
+const { id, secondaryHref, secondaryLabel } = Astro.props as Props;
+---
+
+<div
+  class="fs-modal-backdrop"
+  id={id}
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby={`${id}-title`}
+  aria-describedby={`${id}-desc`}
+  hidden
+>
+  <div class="fs-modal-dialog" role="document">
+    <button
+      type="button"
+      class="fs-modal-close"
+      data-modal-close
+      aria-label="Close confirmation dialog"
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M18 6L6 18M6 6l12 12"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+
+    <div class="fs-modal-badge" aria-hidden="true">
+      <Icon name="check" size={22} />
+    </div>
+
+    <h2 class="fs-modal-title" id={`${id}-title`}>Submission received</h2>
+    <p class="fs-modal-desc" id={`${id}-desc`}></p>
+
+    <div class="fs-modal-actions">
+      <button type="button" class="fs-modal-primary" data-modal-primary>
+        Done
+      </button>
+      {secondaryHref && secondaryLabel && (
+        <a href={secondaryHref} class="fs-modal-secondary">
+          {secondaryLabel}
+        </a>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  .fs-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: rgba(15, 23, 42, 0.56);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: fsBackdropIn 180ms ease-out;
+  }
+
+  .fs-modal-backdrop[hidden] {
+    display: none;
+  }
+
+  @keyframes fsBackdropIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .fs-modal-dialog {
+    position: relative;
+    width: 100%;
+    max-width: 28rem;
+    background: #ffffff;
+    color: #0f172a;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 2.25rem 2rem 2rem;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.24);
+    text-align: left;
+    animation: fsDialogIn 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes fsDialogIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .fs-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: #64748b;
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+
+  .fs-modal-close:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+  }
+
+  .fs-modal-close:focus-visible {
+    outline: 2px solid var(--color-pepper-medium, #0056d2);
+    outline-offset: 2px;
+  }
+
+  .fs-modal-badge {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 86, 210, 0.08);
+    color: var(--color-pepper-medium, #0056d2);
+    border: 1px solid rgba(0, 86, 210, 0.16);
+    margin-bottom: 1.25rem;
+  }
+
+  .fs-modal-title {
+    font-family: var(--font-sans);
+    font-size: 1.375rem;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: #0f172a;
+    margin: 0 0 0.6rem;
+  }
+
+  .fs-modal-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #475569;
+    margin: 0 0 1.75rem;
+  }
+
+  .fs-modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .fs-modal-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.72rem 1.5rem;
+    border-radius: 9999px;
+    border: 1px solid var(--color-pepper-medium, #0056d2);
+    background: var(--color-pepper-medium, #0056d2);
+    color: #ffffff;
+    font-family: var(--font-sans);
+    font-size: 0.925rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 160ms ease, transform 160ms ease;
+  }
+
+  .fs-modal-primary:hover {
+    background: #0045ab;
+  }
+
+  .fs-modal-primary:focus-visible {
+    outline: 2px solid var(--color-pepper-medium, #0056d2);
+    outline-offset: 3px;
+  }
+
+  .fs-modal-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.72rem 1.15rem;
+    border-radius: 9999px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #1e293b;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 160ms ease, border-color 160ms ease;
+  }
+
+  .fs-modal-secondary:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+  }
+
+  .fs-modal-secondary:focus-visible {
+    outline: 2px solid var(--color-pepper-medium, #0056d2);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 480px) {
+    .fs-modal-dialog {
+      padding: 1.75rem 1.35rem 1.5rem;
+    }
+
+    .fs-modal-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .fs-modal-primary,
+    .fs-modal-secondary {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fs-modal-backdrop,
+    .fs-modal-dialog {
+      animation: none;
+    }
+  }
+</style>

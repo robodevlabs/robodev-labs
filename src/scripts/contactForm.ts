@@ -1,4 +1,5 @@
 import { supabase } from '../db/supabase';
+import { openSuccessModal } from './formSuccessModal';
 
 const TOPIC_CONTEXT_GROUPS: Record<'engineering' | 'academy' | 'partnership', string[]> = {
   engineering: [
@@ -13,13 +14,6 @@ const TOPIC_CONTEXT_GROUPS: Record<'engineering' | 'academy' | 'partnership', st
 };
 
 type ContextKey = keyof typeof TOPIC_CONTEXT_GROUPS;
-type StatusVariant = 'info' | 'success' | 'error';
-
-const STATUS_ICONS: Record<StatusVariant, string> = {
-  info: '↻',
-  success: '✓',
-  error: '✕',
-};
 
 function getActiveContext(selectedTopic: string): ContextKey | null {
   if (!selectedTopic) return null;
@@ -57,9 +51,13 @@ function setFieldError(inputId: string, errorId: string, invalid: boolean): bool
   return !invalid;
 }
 
+function isValidEmail(email: string): boolean {
+  return email.length >= 3 && email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 /**
- * Initializes scroll reveals, conditional contextual sections, validation,
- * and direct browser-to-Supabase submission for the /contact page form.
+ * Initializes scroll reveals, conditional contextual sections, real-time validation,
+ * submit button gating, Supabase insertion, and accessible success modal for /contact.
  */
 export function initContactForm(): void {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -111,6 +109,12 @@ export function initContactForm(): void {
     (node): node is HTMLElement => node instanceof HTMLElement
   );
 
+  const allowedTopics = Array.from(topic.options)
+    .map((opt) => opt.value)
+    .filter(Boolean);
+
+  let isSubmitting = false;
+
   const syncContexts = (): void => {
     const active = getActiveContext(topic.value);
     contexts.forEach((fs) => {
@@ -118,22 +122,12 @@ export function initContactForm(): void {
     });
   };
 
-  topic.addEventListener('change', syncContexts);
-  syncContexts();
-
-  const setStatus = (variant: StatusVariant, title: string, populate: (body: HTMLElement) => void): void => {
+  const setErrorStatus = (title: string, populate: (body: HTMLElement) => void): void => {
     status.replaceChildren();
     status.hidden = false;
-    status.className =
-      variant === 'success'
-        ? 'contact-status contact-status--success'
-        : variant === 'error'
-          ? 'contact-status contact-status--error'
-          : 'contact-status';
-    status.setAttribute('data-icon', STATUS_ICONS[variant]);
+    status.className = 'contact-status contact-status--error';
 
     const content = document.createElement('div');
-
     const titleEl = document.createElement('span');
     titleEl.className = 'contact-status-title';
     titleEl.textContent = title;
@@ -147,8 +141,121 @@ export function initContactForm(): void {
     status.appendChild(content);
   };
 
+  const clearStatus = (): void => {
+    status.replaceChildren();
+    status.hidden = true;
+    status.className = 'contact-status';
+  };
+
+  const isFormReady = (): boolean => {
+    if (isSubmitting) return false;
+
+    const name = getTrimmedValue('cf-name');
+    const email = getTrimmedValue('cf-email');
+    const selectedTopic = topic.value.trim();
+    const subject = getTrimmedValue('cf-subject');
+    const message = getTrimmedValue('cf-message');
+
+    return (
+      name.length >= 1 &&
+      name.length <= 120 &&
+      isValidEmail(email) &&
+      Boolean(selectedTopic && allowedTopics.includes(selectedTopic)) &&
+      subject.length >= 1 &&
+      subject.length <= 200 &&
+      message.length >= 20 &&
+      message.length <= 5000
+    );
+  };
+
+  const syncSubmitState = (): void => {
+    if (!submitBtn) return;
+    const ready = isFormReady();
+    submitBtn.disabled = !ready;
+    submitBtn.classList.toggle('is-disabled', !ready);
+    submitBtn.setAttribute('aria-disabled', ready ? 'false' : 'true');
+  };
+
+  const validateSingleField = (fieldId: string): boolean => {
+    switch (fieldId) {
+      case 'cf-name': {
+        const name = getTrimmedValue('cf-name');
+        return setFieldError('cf-name', 'cf-name-error', name.length < 1 || name.length > 120);
+      }
+      case 'cf-email':
+        return setFieldError('cf-email', 'cf-email-error', !isValidEmail(getTrimmedValue('cf-email')));
+      case 'cf-topic': {
+        const selected = topic.value.trim();
+        return setFieldError(
+          'cf-topic',
+          'cf-topic-error',
+          !selected || !allowedTopics.includes(selected)
+        );
+      }
+      case 'cf-subject': {
+        const subject = getTrimmedValue('cf-subject');
+        return setFieldError(
+          'cf-subject',
+          'cf-subject-error',
+          subject.length < 1 || subject.length > 200
+        );
+      }
+      case 'cf-message': {
+        const message = getTrimmedValue('cf-message');
+        return setFieldError(
+          'cf-message',
+          'cf-message-error',
+          message.length < 20 || message.length > 5000
+        );
+      }
+      default:
+        return true;
+    }
+  };
+
+  topic.addEventListener('change', () => {
+    syncContexts();
+    if (topic.classList.contains('is-invalid')) {
+      validateSingleField('cf-topic');
+    }
+    clearStatus();
+    syncSubmitState();
+  });
+  syncContexts();
+
+  const requiredFieldIds = ['cf-name', 'cf-email', 'cf-subject', 'cf-message'];
+  requiredFieldIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    el.addEventListener('input', () => {
+      if (el.classList.contains('is-invalid')) {
+        validateSingleField(id);
+      }
+      clearStatus();
+      syncSubmitState();
+    });
+
+    el.addEventListener('change', () => {
+      syncSubmitState();
+    });
+
+    el.addEventListener('blur', () => {
+      if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
+        const trimmed = el.value.trim();
+        if (el.value !== trimmed) {
+          el.value = trimmed;
+        }
+        if (trimmed.length > 0 || el.classList.contains('is-invalid')) {
+          validateSingleField(id);
+        }
+      }
+      syncSubmitState();
+    });
+  });
+
   const showFallbackError = (): void => {
-    setStatus('error', (el) => {
+    setErrorStatus('Submission failed', (el) => {
       el.appendChild(
         document.createTextNode(
           "We couldn't submit your inquiry right now. Your details are still in the form — please try again, or reach us directly via "
@@ -175,8 +282,6 @@ export function initContactForm(): void {
     });
   };
 
-  let isSubmitting = false;
-
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (isSubmitting) return;
@@ -185,8 +290,11 @@ export function initContactForm(): void {
     if (honeypot && honeypot.value.trim() !== '') {
       form.reset();
       syncContexts();
-      setStatus('success', (el) => {
-        el.textContent = 'Thank you. Your submission has been received.';
+      syncSubmitState();
+      openSuccessModal({
+        modalId: 'contact-success-modal',
+        title: 'Inquiry sent',
+        message: 'Thank you. Your submission has been received.',
       });
       return;
     }
@@ -197,27 +305,21 @@ export function initContactForm(): void {
     const subject = getTrimmedValue('cf-subject');
     const message = getTrimmedValue('cf-message');
 
-    const allowedTopics = Array.from(topic.options)
-      .map((opt) => opt.value)
-      .filter(Boolean);
-
-    const emailOk = email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const topicOk = Boolean(selectedTopic && allowedTopics.includes(selectedTopic));
-
     const checks = [
-      setFieldError('cf-name', 'cf-name-error', name.length < 1 || name.length > 120),
-      setFieldError('cf-email', 'cf-email-error', !emailOk),
-      setFieldError('cf-topic', 'cf-topic-error', !topicOk),
-      setFieldError('cf-subject', 'cf-subject-error', subject.length < 1 || subject.length > 200),
-      setFieldError('cf-message', 'cf-message-error', message.length < 20 || message.length > 5000),
+      validateSingleField('cf-name'),
+      validateSingleField('cf-email'),
+      validateSingleField('cf-topic'),
+      validateSingleField('cf-subject'),
+      validateSingleField('cf-message'),
     ];
 
     if (checks.includes(false)) {
       const firstBad = form.querySelector('.is-invalid');
       if (firstBad instanceof HTMLElement) firstBad.focus();
-      setStatus('error', (el) => {
+      setErrorStatus('Check your details', (el) => {
         el.textContent = 'Please review the highlighted fields before submitting.';
       });
+      syncSubmitState();
       return;
     }
 
@@ -229,7 +331,6 @@ export function initContactForm(): void {
 
     const activeContext = getActiveContext(selectedTopic);
 
-    // Strict allowlisted payload matching public.project_inquiries insertable columns
     const payload = {
       name,
       email,
@@ -252,14 +353,13 @@ export function initContactForm(): void {
     };
 
     isSubmitting = true;
+    clearStatus();
     if (submitBtn) {
       submitBtn.disabled = true;
+      submitBtn.classList.add('is-disabled');
       submitBtn.setAttribute('aria-busy', 'true');
     }
-    if (submitTextEl) submitTextEl.textContent = 'Sending inquiry...';
-    setStatus('info', (el) => {
-      el.textContent = 'Sending your inquiry to RoboDev Labs...';
-    });
+    if (submitTextEl) submitTextEl.textContent = 'Sending inquiry…';
 
     try {
       const { error } = await supabase.from('project_inquiries').insert(payload);
@@ -272,17 +372,6 @@ export function initContactForm(): void {
         return;
       }
 
-      setStatus('success', (el) => {
-        const title = document.createElement('strong');
-        title.textContent = 'Inquiry sent! ';
-        el.appendChild(title);
-        el.appendChild(
-          document.createTextNode(
-            'Thank you for reaching out to RoboDev Labs. Our team has received your inquiry and will reply by email.'
-          )
-        );
-      });
-
       form.reset();
       syncContexts();
       form.querySelectorAll('.is-invalid').forEach((node) => {
@@ -291,6 +380,12 @@ export function initContactForm(): void {
       });
       form.querySelectorAll('.form-error').forEach((errEl) => {
         if (errEl instanceof HTMLElement) errEl.hidden = true;
+      });
+
+      openSuccessModal({
+        modalId: 'contact-success-modal',
+        title: 'Inquiry sent',
+        message: `Thank you for reaching out to RoboDev Labs. Our team has received your inquiry and will reply to ${email}.`,
       });
     } catch (err) {
       console.error(
@@ -301,20 +396,13 @@ export function initContactForm(): void {
     } finally {
       isSubmitting = false;
       if (submitBtn) {
-        submitBtn.disabled = false;
         submitBtn.removeAttribute('aria-busy');
       }
       if (submitTextEl) submitTextEl.textContent = 'Send inquiry';
+      syncSubmitState();
     }
   });
 
-  /* Clear field errors on input */
-  form.querySelectorAll('input, select, textarea').forEach((el) => {
-    el.addEventListener('input', () => {
-      el.classList.remove('is-invalid');
-      el.removeAttribute('aria-invalid');
-      const err = el.parentElement?.querySelector('.form-error');
-      if (err instanceof HTMLElement) err.hidden = true;
-    });
-  });
+  // Initial button state sync
+  syncSubmitState();
 }

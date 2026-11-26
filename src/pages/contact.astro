@@ -8,6 +8,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/ui/Container.astro';
 import Button from '../components/ui/Button.astro';
 import Icon from '../components/ui/Icon.astro';
+import FormSuccessModal from '../components/ui/FormSuccessModal.astro';
 import { formsConfig } from '../data/forms';
 import { siteConfig } from '../config/site';
 
@@ -127,7 +128,7 @@ const jsonLd = {
               </div>
               <div class="form-field">
                 <label for="cf-email">Email address *</label>
-                <input id="cf-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com" aria-describedby="cf-email-error" />
+                <input id="cf-email" name="email" type="email" inputmode="email" autocomplete="email" required maxlength="254" placeholder="you@example.com" aria-describedby="cf-email-error" />
                 <p class="form-error" id="cf-email-error" hidden>Please enter a valid email address.</p>
               </div>
             </div>
@@ -146,7 +147,7 @@ const jsonLd = {
             <div class="form-row">
               <div class="form-field">
                 <label for="cf-phone">Phone <span class="form-optional">(optional)</span></label>
-                <input id="cf-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" placeholder="+977 …, +1 …" />
+                <input id="cf-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="40" placeholder="+977 …, +1 …" />
               </div>
               <div class="form-field">
                 <label for="cf-location">Country / Location <span class="form-optional">(optional)</span></label>
@@ -248,11 +249,12 @@ const jsonLd = {
               </p>
             </div>
 
-            <Button variant="primary" size="lg" type="submit" class="contact-submit" id="cf-submit-btn">
+            <Button variant="primary" size="lg" type="submit" disabled class="contact-submit" id="cf-submit-btn">
+              <span class="contact-submit__spinner" aria-hidden="true"></span>
               <span id="cf-submit-text">Send inquiry</span>
               <span class="contact-submit__arrow" aria-hidden="true">→</span>
             </Button>
-            <p class="contact-status" id="contact-status" role="status" aria-live="polite" hidden></p>
+            <div class="contact-status" id="contact-status" role="status" aria-live="polite" hidden></div>
             <p class="contact-privacy">
               Inquiries are stored securely for review by our team. Also reachable via <a href={formsConfig.generalContact} target="_blank" rel="noopener noreferrer" style="color:var(--color-pepper-medium,#31473a); text-decoration:underline; font-weight:600;">Google Form</a> or inbox <a href={`mailto:${inbox}`} style="text-decoration:underline;">{inbox}</a>.
             </p>
@@ -260,6 +262,8 @@ const jsonLd = {
         </div>
       </div>
     </Container>
+
+    <FormSuccessModal id="contact-success-modal" />
 
     <script>
       import { initContactForm } from '../scripts/contactForm';
@@ -432,67 +436,79 @@ const jsonLd = {
     text-underline-offset: 2px;
   }
 
-  .contact-submit { width: 100%; justify-content: center; font-size: 1.02rem !important; padding: 1.05rem !important; margin-top: 0.35rem; }
-  .contact-submit:disabled { opacity: 0.72; cursor: wait; }
+  .contact-submit {
+    width: 100%; justify-content: center; font-size: 1.02rem !important; padding: 1.05rem !important; margin-top: 0.35rem;
+    background-color: var(--color-pepper-medium, #0056d2) !important;
+    border-color: var(--color-pepper-medium, #0056d2) !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(0, 86, 210, 0.22) !important;
+  }
+  .contact-submit :global(span) { color: #ffffff !important; }
+  .contact-submit:hover:not(:disabled) {
+    background-color: #0045ab !important;
+    border-color: #0045ab !important;
+  }
+  .contact-submit:disabled,
+  .contact-submit.is-disabled {
+    background-color: #94a3b8 !important;
+    border-color: #94a3b8 !important;
+    color: #f8fafc !important;
+    opacity: 0.72 !important;
+    cursor: not-allowed !important;
+    pointer-events: auto !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+  .contact-submit[aria-busy='true']:disabled {
+    background-color: var(--color-pepper-medium, #0056d2) !important;
+    border-color: var(--color-pepper-medium, #0056d2) !important;
+    opacity: 0.88 !important;
+    cursor: wait !important;
+  }
+  .contact-submit__spinner {
+    display: none;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: contactSpin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+  .contact-submit[aria-busy='true'] .contact-submit__spinner { display: inline-block; }
+  .contact-submit[aria-busy='true'] .contact-submit__arrow { display: none; }
+  @keyframes contactSpin { to { transform: rotate(360deg); } }
   .contact-submit__arrow { display: inline-block; transition: transform 250ms cubic-bezier(0.16,1,0.3,1); }
   .contact-submit:hover:not(:disabled) .contact-submit__arrow { transform: translateX(6px); }
 
   /* ── STATUS BANNER ── */
   .contact-status {
-    display: grid;
-    grid-template-columns: 2rem 1fr;
-    gap: 0 0.875rem;
-    align-items: start;
-    padding: 1rem 1.1rem;
-    border-radius: 10px;
-    border: 1px solid rgba(49, 71, 58, 0.22);
-    background: rgba(49, 71, 58, 0.06);
-    color: #1a2b1f;
-    margin: 0;
-    animation: contactStatusIn 240ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  @keyframes contactStatusIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .contact-status::before {
-    content: attr(data-icon);
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    font-size: 0.95rem;
-    flex-shrink: 0;
-    margin-top: 0.05rem;
-    background: rgba(49, 71, 58, 0.10);
-    color: #31473a;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #0f172a;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    margin: 0;
   }
-
-  .contact-status--success {
-    background: #f0fdf6;
-    border-color: #bbf7d0;
-    color: #0f4c2a;
-  }
-  .contact-status--success::before {
-    background: rgba(22, 163, 74, 0.12);
-    color: #16a34a;
-  }
-
+  .contact-status[hidden] { display: none; }
   .contact-status--error {
-    background: #fff5f5;
-    border-color: #fed7d7;
-    color: #6b1a1a;
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #7f1d1d;
   }
-  .contact-status--error::before {
-    background: rgba(220, 38, 38, 0.10);
-    color: #dc2626;
+  :global(.contact-status-title) {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
   }
-
-  .contact-status:not([hidden]) { animation: contactStatusIn 240ms cubic-bezier(0.16,1,0.3,1); }
+  :global(.contact-status-body) {
+    display: block;
+  }
   .contact-privacy { font-size: 0.78rem; color: #6b7a71; text-align: center; margin: 0; }
 
   @media (max-width: 1024px) {
