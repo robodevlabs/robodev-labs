@@ -4,8 +4,6 @@
    Individual course pages import their own slice; the catalog imports all.
    ========================================================================== */
 
-import { formsConfig } from './forms';
-
 export interface CurriculumLesson {
   title: string;
   duration?: string;
@@ -35,6 +33,7 @@ export interface Workshop {
   format: string;
   duration: string;
   date?: string;
+  startsAt?: string;
 
   /* ─── Pricing / access ─── */
   price: string;
@@ -207,7 +206,7 @@ export const workshopsData: Workshop[] = [
 
     language: 'English',
 
-    registrationUrl: formsConfig.freeWorkshopRegistration,
+    registrationUrl: '/academy/register?workshop=ai-automation',
   },
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -334,7 +333,7 @@ export const workshopsData: Workshop[] = [
 
     language: 'English',
 
-    registrationUrl: formsConfig.paidWorkshopEnrollment,
+    registrationUrl: '/academy/register?workshop=ui-ux-design-figma',
   },
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -464,7 +463,7 @@ export const workshopsData: Workshop[] = [
 
     language: 'English',
 
-    registrationUrl: formsConfig.paidWorkshopEnrollment,
+    registrationUrl: '/academy/register?workshop=seo-fundamentals',
   },
 ];
 
@@ -481,4 +480,16 @@ export function getRelatedWorkshops(ids: string[]): Workshop[] {
   return ids
     .map((id) => getWorkshopById(id))
     .filter((w): w is Workshop => w !== undefined);
+}
+
+export function isWorkshopComingSoon(workshop: Workshop): boolean {
+  return !workshop.isFree && workshop.price.toLowerCase().includes('coming soon');
+}
+
+export function isWorkshopRegistrationOpen(workshop: Workshop): boolean {
+  return workshop.status !== 'completed' && !isWorkshopComingSoon(workshop);
+}
+
+export function getWorkshopRegisterHref(workshop: Workshop): string {
+  return `/academy/register?workshop=${encodeURIComponent(workshop.slug)}`;
 }

@@ -8,7 +8,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Container from '../../components/ui/Container.astro';
 import Icon from '../../components/ui/Icon.astro';
 import Logo from '../../components/common/Logo.astro';
+import WorkshopCountdown from './WorkshopCountdown.astro';
 import type { Workshop } from '../../data/workshops';
+import {
+  isWorkshopRegistrationOpen,
+  getWorkshopRegisterHref,
+} from '../../data/workshops';
 import { siteConfig } from '../../config/site';
 
 export interface Props {
@@ -18,7 +23,10 @@ export interface Props {
 const { course } = Astro.props;
 
 const pageUrl = `${siteConfig.url}/academy/courses/${course.slug}`;
-const bookingUrl = course.paymentUrl ?? course.registrationUrl;
+const bookingUrl = course.paymentUrl ?? getWorkshopRegisterHref(course);
+const isExternalBooking = Boolean(course.paymentUrl && /^https?:\/\//i.test(course.paymentUrl));
+const bookingTarget = isExternalBooking ? '_blank' : undefined;
+const bookingRel = isExternalBooking ? 'noopener noreferrer' : undefined;
 
 /* ── Derive dynamic registration status from course.status ── */
 const registrationLabel =
@@ -30,8 +38,8 @@ const registrationLabel =
 
 const ctaLabel = course.isFree ? 'Enroll for Free' : 'Book a Seat →';
 
-/* ── Determine if registration is coming soon / temporarily disabled ── */
-const isComingSoon = !course.isFree && course.price.toLowerCase().includes('coming soon');
+/* ── Determine if registration is coming soon / unavailable ── */
+const isComingSoon = !isWorkshopRegistrationOpen(course);
 
 /* ── Sticky navbar enroll CTA button text ── */
 const stickyEnrollPrice = course.price.replace(/^NPR\s*/i, '').trim();
@@ -93,7 +101,7 @@ const jsonLd = [
       price: course.isFree ? '0' : (course.price.replace(/[^0-9.]/g, '') || '0'),
       priceCurrency: 'USD',
       availability: 'https://schema.org/InStock',
-      url: bookingUrl,
+      url: isExternalBooking ? bookingUrl : `${siteConfig.url}${bookingUrl}`,
     },
     teaches: course.outcomes ?? [],
   },
@@ -169,7 +177,7 @@ const jsonLd = [
                   {ctaLabel}
                 </button>
               ) : (
-                <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="wt-btn-primary wt-btn-full">
+                <a href={bookingUrl} target={bookingTarget} rel={bookingRel} class="wt-btn-primary wt-btn-full">
                   {ctaLabel}
                 </a>
               )}
@@ -201,8 +209,8 @@ const jsonLd = [
             ) : (
               <a
                 href={bookingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={bookingTarget}
+                rel={bookingRel}
                 class="wt-btn-primary wt-btn-full wt-btn-card"
                 id="hero-enroll-cta"
               >
@@ -211,6 +219,13 @@ const jsonLd = [
             )}
 
             <p class="wt-card-seats-note">Limited seats available</p>
+
+            <WorkshopCountdown
+              targetDate={course.startsAt ?? course.date}
+              scheduleLabel={course.date ?? 'Date to be announced'}
+              status={course.status}
+              variant="card"
+            />
 
             {course.hasCertificate && (
               <div class="wt-card-cert-row">
@@ -321,8 +336,8 @@ const jsonLd = [
               ) : (
                 <a
                   href={bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={bookingTarget}
+                  rel={bookingRel}
                   class="wt-btn-primary wt-top-bar-btn"
                   id="sticky-top-enroll-cta"
                 >
@@ -635,7 +650,7 @@ const jsonLd = [
                 {ctaLabel}
               </button>
             ) : (
-              <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="wt-btn-primary wt-btn-lg" id="bottom-enroll-cta">
+              <a href={bookingUrl} target={bookingTarget} rel={bookingRel} class="wt-btn-primary wt-btn-lg" id="bottom-enroll-cta">
                 {ctaLabel}
               </a>
             )}
@@ -665,7 +680,7 @@ const jsonLd = [
             {ctaLabel}
           </button>
         ) : (
-          <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="wt-btn-primary wt-btn-sm" id="mobile-enroll-cta">
+          <a href={bookingUrl} target={bookingTarget} rel={bookingRel} class="wt-btn-primary wt-btn-sm" id="mobile-enroll-cta">
             {ctaLabel}
           </a>
         )}

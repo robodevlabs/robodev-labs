@@ -29,13 +29,13 @@ export const legalDocuments: LegalDocument[] = [
     title: 'Privacy Policy',
     shortDescription:
       'How RoboDev Labs handles information from website visitors, prospective clients, students, workshop participants, job applicants, partners, and collaborators.',
-    lastUpdated: 'November 25, 2026',
+    lastUpdated: 'November 26, 2026',
     sections: [
       {
         heading: 'Introduction',
         paragraphs: [
           'This Privacy Policy explains how RoboDev Labs handles personal information in connection with this website and related communications for Engineering Services, RoboDev Academy, Product Studio, Careers, and Contact inquiries.',
-          'This policy is written for the current website implementation. Contact and project inquiries submitted through the /contact page are collected and stored using Supabase, while Academy workshop registrations, recruitment, internship applications, and fallback external contact links use Google Forms (or direct email where specified). Where applicable, we handle personal information in accordance with relevant privacy requirements.',
+          'This policy is written for the current website implementation. Contact and project inquiries submitted through the /contact page and Academy workshop registrations submitted through /academy/register are collected and stored using Supabase, while recruitment, internship applications, and fallback external contact links use Google Forms (or direct email where specified). Where applicable, we handle personal information in accordance with relevant privacy requirements.',
         ],
       },
       {
@@ -70,17 +70,17 @@ export const legalDocuments: LegalDocument[] = [
       {
         heading: 'External registrations and submissions',
         paragraphs: [
-          'Workshop registrations, Academy enrollments, internship applications, engineering job applications, and optional external contact links continue to use externally hosted Google Forms.',
-          'When you click an application, registration, or contact link pointing to a Google Form, you are directed to a Google-hosted form. Information submitted through those forms is processed using Google’s infrastructure and services.',
+          'Internship applications, engineering job applications, and optional external contact links continue to use externally hosted Google Forms.',
+          'When you click an application or contact link pointing to a Google Form, you are directed to a Google-hosted form. Information submitted through those forms is processed using Google’s infrastructure and services.',
           'Google operates under its own policies and data handling practices. You can review Google’s official Privacy Policy at https://policies.google.com/privacy.',
-          'RoboDev Labs accesses responses submitted to those forms solely for the purpose associated with the relevant submission, such as managing workshop enrollments, answering project inquiries, or reviewing candidates for engineering roles.',
+          'RoboDev Labs accesses responses submitted to those forms solely for the purpose associated with the relevant submission, such as answering project inquiries or reviewing candidates for engineering roles.',
         ],
       },
       {
         heading: 'Academy and workshop information',
         paragraphs: [
-          'RoboDev Academy pages invite visitors to explore and enroll in technical workshops, mentorship, and training programs. In the current implementation, Academy registration and enrollment links point to official Google Forms.',
-          'Information submitted through external registration forms is handled by Google as the form provider and accessed by RoboDev Labs to manage cohorts, communicate schedule details, and provide workshop materials.',
+          'RoboDev Academy pages invite visitors to explore and register for technical workshops, mentorship, and training programs. Workshop registrations submitted through /academy/register are validated in the browser and sent directly to our workshop registration database on Supabase.',
+          'RoboDev Labs accesses workshop registration information to manage cohorts, communicate schedule details, send joining or payment instructions where applicable, and provide workshop materials.',
         ],
       },
       {
@@ -124,7 +124,7 @@ export const legalDocuments: LegalDocument[] = [
         heading: 'Service providers and information sharing',
         paragraphs: [
           'We may use service providers and third-party platforms that help operate the website, deliver email, host forms, provide fonts, or support normal business communications. These providers may process information according to their own terms and privacy practices.',
-          'Based on the current repository, relevant third-party touchpoints include Supabase for storing website contact and project inquiries, Google Forms for Academy registrations, recruitment, internships, and optional contact submissions, Google Fonts for font delivery, external social links, and users\' own email providers when they send messages to RoboDev Labs.',
+          'Based on the current repository, relevant third-party touchpoints include Supabase for storing website contact inquiries and Academy workshop registrations, Google Forms for recruitment, internships, and optional contact submissions, Google Fonts for font delivery, external social links, and users\' own email providers when they send messages to RoboDev Labs.',
         ],
       },
       {

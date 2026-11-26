@@ -1,0 +1,143 @@
+---
+export interface Props {
+  id?: string;
+  targetDate?: string;
+  scheduleLabel?: string;
+  status?: 'upcoming' | 'open' | 'completed';
+  variant?: 'light' | 'card';
+}
+
+const {
+  id,
+  targetDate,
+  scheduleLabel = 'Date to be announced',
+  status = 'upcoming',
+  variant = 'light',
+} = Astro.props;
+
+const rawTarget = targetDate || scheduleLabel;
+const parsedMs =
+  rawTarget && !/to be announced|tba|coming soon/i.test(rawTarget)
+    ? Date.parse(rawTarget)
+    : Number.NaN;
+const hasFutureTarget =
+  status !== 'completed' && !Number.isNaN(parsedMs) && parsedMs > Date.now();
+---
+
+<div
+  id={id}
+  class={`wc-box wc-box--${variant}`}
+  data-workshop-countdown
+  data-target-date={rawTarget}
+  data-schedule-label={scheduleLabel}
+  data-workshop-status={status}
+>
+  <p class="wc-label">SESSION COUNTDOWN</p>
+
+  <div class="wc-grid" data-cd-grid hidden={!hasFutureTarget} aria-live="off">
+    <div class="wc-unit">
+      <span class="wc-num" data-cd-days>00</span>
+      <span class="wc-key">Days</span>
+    </div>
+    <div class="wc-unit">
+      <span class="wc-num" data-cd-hours>00</span>
+      <span class="wc-key">Hrs</span>
+    </div>
+    <div class="wc-unit">
+      <span class="wc-num" data-cd-mins>00</span>
+      <span class="wc-key">Min</span>
+    </div>
+    <div class="wc-unit">
+      <span class="wc-num" data-cd-secs>00</span>
+      <span class="wc-key">Sec</span>
+    </div>
+  </div>
+
+  <p class="wc-fallback" data-cd-fallback hidden={hasFutureTarget}>
+    {status === 'completed'
+      ? 'Workshop completed'
+      : `${scheduleLabel} · Countdown starts once scheduled`}
+  </p>
+</div>
+
+<script>
+  import { initWorkshopCountdowns } from '../../scripts/workshopCountdown';
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWorkshopCountdowns);
+  } else {
+    initWorkshopCountdowns();
+  }
+</script>
+
+<style>
+  .wc-box {
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+  }
+
+  .wc-box--light {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #0f172a;
+  }
+
+  .wc-box--card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #0f172a;
+    margin-bottom: 1rem;
+  }
+
+  .wc-label {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin: 0 0 0.55rem;
+  }
+
+  .wc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .wc-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.45rem 0.25rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+  }
+
+  .wc-num {
+    font-family: var(--font-mono, monospace);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--color-pepper-medium, #0056d2);
+  }
+
+  .wc-key {
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 0.15rem;
+  }
+
+  .wc-fallback {
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: #475569;
+    margin: 0;
+    line-height: 1.45;
+  }
+</style>

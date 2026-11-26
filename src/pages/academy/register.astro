@@ -1,0 +1,909 @@
+---
+/**
+ * RoboDev Academy — Workshop Registration (/academy/register)
+ * Reusable static registration page for all published Academy workshops.
+ * Reads ?workshop=<slug> on load and submits directly to Supabase
+ * (`workshop_registrations`).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import Button from '../../components/ui/Button.astro';
+import Icon from '../../components/ui/Icon.astro';
+import WorkshopCountdown from '../../components/academy/WorkshopCountdown.astro';
+import {
+  workshopsData,
+  isWorkshopComingSoon,
+  isWorkshopRegistrationOpen,
+} from '../../data/workshops';
+import { siteConfig } from '../../config/site';
+
+const inbox = siteConfig.email;
+
+const serializedWorkshops = workshopsData.map((w) => ({
+  slug: w.slug,
+  title: w.title,
+  shortTitle: w.shortTitle,
+  description: w.description,
+  tagline: w.tagline,
+  level: w.level,
+  format: w.format,
+  duration: w.duration,
+  date: w.date,
+  startsAt: w.startsAt,
+  price: w.price,
+  isFree: w.isFree,
+  status: w.status,
+  isOpen: isWorkshopRegistrationOpen(w),
+  isComingSoon: isWorkshopComingSoon(w),
+  hasCertificate: w.hasCertificate,
+  instructor: w.instructor,
+  language: w.language,
+  hasPaymentUrl: Boolean(w.paymentUrl),
+}));
+
+const openWorkshops = serializedWorkshops.filter((w) => w.isOpen);
+const initialWorkshop = openWorkshops[0] ?? serializedWorkshops[0] ?? null;
+const initialTuition = initialWorkshop
+  ? initialWorkshop.isFree
+    ? 'Free'
+    : initialWorkshop.price
+  : '—';
+const initialAvailability = initialWorkshop
+  ? initialWorkshop.isOpen
+    ? 'Registration Open'
+    : initialWorkshop.isComingSoon
+      ? 'Coming Soon'
+      : 'Completed'
+  : 'Unavailable';
+---
+
+<BaseLayout
+  title={`Workshop Registration — RoboDev Academy | ${siteConfig.name}`}
+  description="Register for an upcoming RoboDev Academy hands-on workshop."
+>
+  <script
+    is:inline
+    type="application/json"
+    id="academy-workshops-data"
+    set:html={JSON.stringify(serializedWorkshops)}
+  />
+
+  <div class="wr-page">
+    <!-- ================================================================
+         1. WORKSHOP INTRODUCTION (Royal Blue #0056D2 Hero Band)
+         ================================================================ -->
+    <header class="wr-hero">
+      <Container>
+        <div class="wr-hero-inner">
+          <a href="/academy" class="wr-back-link">
+            <span aria-hidden="true">←</span>
+            <span>RoboDev Academy</span>
+          </a>
+
+          <p class="wr-eyebrow">ROBODEV ACADEMY · WORKSHOP REGISTRATION</p>
+
+          <h1 class="wr-title" id="wr-hero-title">
+            {initialWorkshop ? initialWorkshop.title : 'Workshop Registration'}
+          </h1>
+
+          <p class="wr-lead" id="wr-hero-desc">
+            {initialWorkshop
+              ? initialWorkshop.tagline ?? initialWorkshop.description
+              : 'Select an available RoboDev Academy workshop below to submit your registration.'}
+          </p>
+
+          <div class="wr-hero-meta" aria-label="Workshop highlights">
+            <span class="wr-meta-pill wr-meta-pill--accent" id="wr-hero-price-pill">
+              {initialTuition}
+            </span>
+            <span class="wr-meta-pill" id="wr-hero-status-pill">
+              {initialAvailability}
+            </span>
+            <span class="wr-meta-sep" aria-hidden="true">·</span>
+            <span class="wr-meta-text" id="wr-hero-duration-pill">
+              {initialWorkshop ? initialWorkshop.duration : '—'}
+            </span>
+            <span class="wr-meta-sep" aria-hidden="true">·</span>
+            <span class="wr-meta-text" id="wr-hero-format-pill">
+              {initialWorkshop ? initialWorkshop.format : 'Live Online'}
+            </span>
+          </div>
+        </div>
+      </Container>
+    </header>
+
+    <!-- ================================================================
+         2. MAIN REGISTRATION WORKSPACE (2-Column Editorial Layout)
+         ================================================================ -->
+    <main class="wr-main">
+      <Container>
+        <div class="wr-grid">
+          <!-- LEFT: Workshop Summary Rail -->
+          <aside class="wr-summary" aria-label="Selected workshop details">
+            <div class="wr-summary-box">
+              <p class="wr-section-label">WORKSHOP DETAILS</p>
+
+              <div class="wr-countdown-wrap">
+                <WorkshopCountdown
+                  id="wr-countdown"
+                  targetDate={initialWorkshop?.startsAt ?? initialWorkshop?.date}
+                  scheduleLabel={initialWorkshop?.date ?? 'Date to be announced'}
+                  status={initialWorkshop?.status ?? 'upcoming'}
+                  variant="light"
+                />
+              </div>
+
+              <dl class="wr-dl">
+                <div class="wr-dl-row">
+                  <dt>Tuition</dt>
+                  <dd id="wr-detail-tuition">{initialTuition}</dd>
+                </div>
+                <div class="wr-dl-row">
+                  <dt>Availability</dt>
+                  <dd id="wr-detail-status">{initialAvailability}</dd>
+                </div>
+                <div class="wr-dl-row">
+                  <dt>Schedule</dt>
+                  <dd id="wr-detail-date">{initialWorkshop?.date ?? 'Date to be announced'}</dd>
+                </div>
+                <div class="wr-dl-row">
+                  <dt>Duration</dt>
+                  <dd id="wr-detail-duration">{initialWorkshop?.duration ?? '—'}</dd>
+                </div>
+                <div class="wr-dl-row">
+                  <dt>Delivery</dt>
+                  <dd id="wr-detail-format">{initialWorkshop?.format ?? '—'}</dd>
+                </div>
+                <div class="wr-dl-row">
+                  <dt>Level</dt>
+                  <dd id="wr-detail-level">{initialWorkshop?.level ?? '—'}</dd>
+                </div>
+                <div class="wr-dl-row">
+                  <dt>Language</dt>
+                  <dd id="wr-detail-language">{initialWorkshop?.language ?? 'English'}</dd>
+                </div>
+                <div class="wr-dl-row">
+                  <dt>Certificate</dt>
+                  <dd id="wr-detail-cert">
+                    {initialWorkshop?.hasCertificate ? 'Free certificate included' : 'Not specified'}
+                  </dd>
+                </div>
+              </dl>
+
+              <div class="wr-summary-footer">
+                <a
+                  href={initialWorkshop ? `/academy/courses/${initialWorkshop.slug}` : '/academy#workshops'}
+                  class="wr-syllabus-link"
+                  id="wr-syllabus-link"
+                >
+                  <span>View full syllabus & details</span>
+                  <Icon name="arrow-right" size={14} />
+                </a>
+              </div>
+            </div>
+
+            <p class="wr-support-note">
+              Questions before registering? Email us at{' '}
+              <a href={`mailto:${inbox}?subject=RoboDev%20Academy%20Workshop%20Question`}>{inbox}</a>.
+            </p>
+          </aside>
+
+          <!-- RIGHT: Focused Registration Form -->
+          <section class="wr-form-panel" aria-labelledby="wr-form-heading">
+            <div class="wr-form-header">
+              <h2 class="wr-form-heading" id="wr-form-heading">Participant registration</h2>
+              <p class="wr-form-sub">
+                Fields marked with <span aria-hidden="true">*</span><span class="sr-only">an asterisk</span> are required.
+              </p>
+            </div>
+
+            <div class="wr-banner" id="wr-availability-banner" role="note" hidden>
+              <p id="wr-availability-text"></p>
+            </div>
+
+            <form
+              id="workshop-register-form"
+              class="wr-form"
+              data-inbox={inbox}
+              novalidate
+            >
+              <div class="wr-honeypot" aria-hidden="true">
+                <label for="wr-hp">Leave this field blank</label>
+                <input id="wr-hp" name="website" type="text" tabindex="-1" autocomplete="off" />
+              </div>
+
+              <div class="wr-field">
+                <label for="wr-workshop">Selected workshop <span class="wr-req">*</span></label>
+                <select id="wr-workshop" name="workshop" required aria-describedby="wr-workshop-error">
+                  {openWorkshops.length === 0 ? (
+                    <option value="">No workshops currently open</option>
+                  ) : (
+                    <>
+                      <option value="">Select an open workshop</option>
+                      {openWorkshops.map((w) => (
+                        <option value={w.slug} selected={initialWorkshop?.slug === w.slug}>
+                          {w.title} ({w.isFree ? 'Free' : w.price})
+                        </option>
+                      ))}
+                    </>
+                  )}
+                </select>
+                <p class="form-error" id="wr-workshop-error" hidden>
+                  Please select an open workshop.
+                </p>
+              </div>
+
+              <div class="wr-field">
+                <label for="wr-name">Full name <span class="wr-req">*</span></label>
+                <input
+                  id="wr-name"
+                  name="full_name"
+                  type="text"
+                  autocomplete="name"
+                  required
+                  maxlength="120"
+                  placeholder="Your full name"
+                  aria-describedby="wr-name-error"
+                />
+                <p class="form-error" id="wr-name-error" hidden>
+                  Please enter your full name.
+                </p>
+              </div>
+
+              <div class="wr-row">
+                <div class="wr-field">
+                  <label for="wr-email">Email address <span class="wr-req">*</span></label>
+                  <input
+                    id="wr-email"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    required
+                    maxlength="254"
+                    placeholder="you@example.com"
+                    aria-describedby="wr-email-error"
+                  />
+                  <p class="form-error" id="wr-email-error" hidden>
+                    Please enter a valid email address.
+                  </p>
+                </div>
+
+                <div class="wr-field">
+                  <label for="wr-phone">Phone number <span class="wr-req">*</span></label>
+                  <input
+                    id="wr-phone"
+                    name="phone"
+                    type="tel"
+                    autocomplete="tel"
+                    required
+                    maxlength="40"
+                    placeholder="+977 98…, +1 …"
+                    aria-describedby="wr-phone-error"
+                  />
+                  <p class="form-error" id="wr-phone-error" hidden>
+                    Please enter a valid phone number (with country code if outside Nepal).
+                  </p>
+                </div>
+              </div>
+
+              <div class="wr-row">
+                <div class="wr-field">
+                  <label for="wr-institution">
+                    Institution / organization <span class="wr-opt">(optional)</span>
+                  </label>
+                  <input
+                    id="wr-institution"
+                    name="institution"
+                    type="text"
+                    autocomplete="organization"
+                    maxlength="160"
+                    placeholder="University, school, or company"
+                    aria-describedby="wr-institution-error"
+                  />
+                  <p class="form-error" id="wr-institution-error" hidden>
+                    Please keep this under 160 characters.
+                  </p>
+                </div>
+
+                <div class="wr-field">
+                  <label for="wr-role">
+                    Current role or background <span class="wr-opt">(optional)</span>
+                  </label>
+                  <input
+                    id="wr-role"
+                    name="role"
+                    type="text"
+                    autocomplete="organization-title"
+                    maxlength="120"
+                    placeholder="e.g. CS Student, Junior Developer"
+                    aria-describedby="wr-role-error"
+                  />
+                  <p class="form-error" id="wr-role-error" hidden>
+                    Please keep this under 120 characters.
+                  </p>
+                </div>
+              </div>
+
+              <div class="wr-field">
+                <label for="wr-notes">
+                  Additional information or questions <span class="wr-opt">(optional)</span>
+                </label>
+                <textarea
+                  id="wr-notes"
+                  name="additional_notes"
+                  rows="3"
+                  maxlength="2000"
+                  placeholder="Anything you'd like the instructor to know, or questions about the session"
+                  aria-describedby="wr-notes-error"
+                ></textarea>
+                <p class="form-error" id="wr-notes-error" hidden>
+                  Please keep additional notes under 2,000 characters.
+                </p>
+              </div>
+
+              <Button
+                variant="primary"
+                size="lg"
+                type="submit"
+                class="wr-submit-btn"
+                id="wr-submit-btn"
+              >
+                <span id="wr-submit-text">Submit registration</span>
+                <span class="wr-submit-btn__arrow" aria-hidden="true">→</span>
+              </Button>
+
+              <p class="wr-status" id="wr-status" role="status" aria-live="polite" hidden></p>
+
+              <p class="wr-privacy-note">
+                Your registration details are stored securely via Supabase and used solely to manage workshop communication. See our{' '}
+                <a href="/privacy-policy">Privacy Policy</a>.
+              </p>
+            </form>
+          </section>
+        </div>
+      </Container>
+    </main>
+
+    <script>
+      import { initWorkshopRegistrationForm } from '../../scripts/workshopRegistrationForm';
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initWorkshopRegistrationForm);
+      } else {
+        initWorkshopRegistrationForm();
+      }
+    </script>
+  </div>
+</BaseLayout>
+
+<style>
+  /* =========================================================================
+     RoboDev Academy — Workshop Registration
+     Restrained editorial hierarchy using RoboDev Labs brand palette:
+     - Royal Blue: #0056D2 (var(--color-pepper-medium))
+     - Clean Neutral Surface: #fafaf8 / #ffffff
+     - Dark Ink: #0f172a / #334155
+     ========================================================================= */
+
+  .wr-page {
+    background-color: #fafaf8;
+    color: #0f172a;
+    min-height: 100vh;
+  }
+
+  /* ── 1. HERO BAND ── */
+  .wr-hero {
+    background-color: var(--color-pepper-medium, #0056d2);
+    color: var(--color-salt-white, #edf4f2);
+    padding-top: clamp(6.5rem, 12vh, 8.5rem);
+    padding-bottom: clamp(2.5rem, 4.5vw, 3.5rem);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .wr-hero-inner {
+    max-width: 52rem;
+  }
+
+  .wr-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(237, 244, 242, 0.85);
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    transition: color 150ms ease;
+  }
+
+  .wr-back-link:hover {
+    color: #ffffff;
+  }
+
+  .wr-eyebrow {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(237, 244, 242, 0.78);
+    margin: 0 0 0.75rem;
+  }
+
+  .wr-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+    color: #ffffff;
+    margin: 0 0 0.9rem;
+    text-wrap: balance;
+  }
+
+  .wr-lead {
+    font-size: clamp(1rem, 1.35vw, 1.125rem);
+    line-height: 1.6;
+    color: rgba(237, 244, 242, 0.9);
+    margin: 0 0 1.5rem;
+    max-width: 46rem;
+  }
+
+  .wr-hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .wr-meta-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+  }
+
+  .wr-meta-pill--accent {
+    background: #ffffff;
+    color: #0a0a0a;
+    border-color: #ffffff;
+  }
+
+  .wr-meta-sep {
+    color: rgba(237, 244, 242, 0.45);
+  }
+
+  .wr-meta-text {
+    color: rgba(237, 244, 242, 0.9);
+    font-weight: 500;
+  }
+
+  /* ── 2. MAIN WORKSPACE ── */
+  .wr-main {
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(3.5rem, 7vw, 5.5rem);
+  }
+
+  .wr-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  /* Left Summary Rail */
+  .wr-summary-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1.5rem;
+  }
+
+  .wr-section-label {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #475569;
+    margin: 0 0 1rem;
+  }
+
+  .wr-countdown-wrap {
+    margin-bottom: 1rem;
+  }
+
+  .wr-dl {
+    margin: 0;
+  }
+
+  .wr-dl-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-top: 1px solid #f1f5f9;
+    font-size: 0.9rem;
+  }
+
+  .wr-dl-row dt {
+    color: #64748b;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .wr-dl-row dd {
+    margin: 0;
+    color: #0f172a;
+    font-weight: 600;
+    text-align: right;
+  }
+
+  .wr-summary-footer {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .wr-syllabus-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-pepper-medium, #0056d2);
+    text-decoration: none;
+  }
+
+  .wr-syllabus-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .wr-support-note {
+    margin: 1rem 0 0;
+    font-size: 0.84rem;
+    line-height: 1.55;
+    color: #475569;
+  }
+
+  .wr-support-note a {
+    color: #0f172a;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* Right Form Panel */
+  .wr-form-panel {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: clamp(1.5rem, 3.2vw, 2.5rem);
+  }
+
+  .wr-form-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .wr-form-heading {
+    font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #0f172a;
+    margin: 0 0 0.35rem;
+  }
+
+  .wr-form-sub {
+    font-size: 0.875rem;
+    color: #475569;
+    margin: 0;
+  }
+
+  .wr-banner {
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .wr-banner p {
+    margin: 0;
+  }
+
+  .wr-banner--unavailable {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #7f1d1d;
+  }
+
+  .wr-banner--paid-note {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e3a8a;
+  }
+
+  .wr-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .wr-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.2rem;
+  }
+
+  .wr-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .wr-field label {
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .wr-req {
+    color: var(--color-pepper-medium, #0056d2);
+  }
+
+  .wr-opt {
+    font-weight: 400;
+    color: #64748b;
+  }
+
+  .wr-field input,
+  .wr-field select,
+  .wr-field textarea {
+    width: 100%;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    color: #0f172a;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.72rem 0.9rem;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .wr-field input:hover:not(:disabled),
+  .wr-field select:hover:not(:disabled),
+  .wr-field textarea:hover:not(:disabled) {
+    border-color: #94a3b8;
+  }
+
+  .wr-field input:focus-visible,
+  .wr-field select:focus-visible,
+  .wr-field textarea:focus-visible {
+    outline: none;
+    border-color: var(--color-pepper-medium, #0056d2);
+    box-shadow: 0 0 0 3px rgba(0, 86, 210, 0.14);
+  }
+
+  .wr-field input:disabled,
+  .wr-field textarea:disabled {
+    background: #f8fafc;
+    color: #64748b;
+    cursor: not-allowed;
+  }
+
+  .wr-field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23334155' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    padding-right: 2.4rem;
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  .wr-field textarea {
+    resize: vertical;
+    min-height: 96px;
+    line-height: 1.55;
+  }
+
+  .wr-field input::placeholder,
+  .wr-field textarea::placeholder {
+    color: #94a3b8;
+  }
+
+  .wr-field input.is-invalid,
+  .wr-field select.is-invalid,
+  .wr-field textarea.is-invalid {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+  }
+
+  .form-error {
+    font-size: 0.8rem;
+    color: #b91c1c;
+    margin: 0;
+  }
+
+  .wr-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .wr-submit-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 1.02rem !important;
+    padding: 1.05rem !important;
+    margin-top: 0.35rem;
+  }
+
+  .wr-submit-btn:disabled {
+    opacity: 0.72;
+    cursor: not-allowed;
+  }
+
+  .wr-submit-btn[aria-busy="true"]:disabled {
+    cursor: wait;
+  }
+
+  .wr-submit-btn__arrow {
+    display: inline-block;
+    transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .wr-submit-btn:hover:not(:disabled) .wr-submit-btn__arrow {
+    transform: translateX(6px);
+  }
+
+  /* ── STATUS BANNER ── */
+  .wr-status {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 0 0.875rem;
+    align-items: start;
+    padding: 1rem 1.1rem;
+    border-radius: 10px;
+    margin: 0;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    color: #0f172a;
+    animation: wrStatusIn 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes wrStatusIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Icon glyph column — rendered by JS as a data-icon attribute on the el */
+  .wr-status::before {
+    content: attr(data-icon);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+    background: rgba(0,0,0,0.05);
+    color: #475569;
+  }
+
+  .wr-status--info {
+    background: #f0f7ff;
+    border-color: #c7deff;
+    color: #1e3a8a;
+  }
+  .wr-status--info::before {
+    background: rgba(0, 86, 210, 0.10);
+    color: var(--color-pepper-medium, #0056d2);
+  }
+
+  .wr-status--success {
+    background: #f0fdf6;
+    border-color: #bbf7d0;
+    color: #0f4c2a;
+  }
+  .wr-status--success::before {
+    background: rgba(22, 163, 74, 0.12);
+    color: #16a34a;
+  }
+
+  .wr-status--warning {
+    background: #fdfaf0;
+    border-color: #f9e8a4;
+    color: #6b3a00;
+  }
+  .wr-status--warning::before {
+    background: rgba(217, 119, 6, 0.12);
+    color: #b45309;
+  }
+
+  .wr-status--error {
+    background: #fff5f5;
+    border-color: #fed7d7;
+    color: #6b1a1a;
+  }
+  .wr-status--error::before {
+    background: rgba(220, 38, 38, 0.10);
+    color: #dc2626;
+  }
+
+  :global(.wr-status-title) {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.2rem;
+    line-height: 1.3;
+  }
+
+  :global(.wr-status-body) {
+    display: block;
+    font-size: 0.84rem;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  :global(.wr-status__link) {
+    color: inherit;
+    font-weight: 650;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .wr-privacy-note {
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: #64748b;
+    margin: 0;
+  }
+
+  .wr-privacy-note a {
+    color: #334155;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 960px) {
+    .wr-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .wr-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

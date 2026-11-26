@@ -15,6 +15,12 @@ const TOPIC_CONTEXT_GROUPS: Record<'engineering' | 'academy' | 'partnership', st
 type ContextKey = keyof typeof TOPIC_CONTEXT_GROUPS;
 type StatusVariant = 'info' | 'success' | 'error';
 
+const STATUS_ICONS: Record<StatusVariant, string> = {
+  info: '↻',
+  success: '✓',
+  error: '✕',
+};
+
 function getActiveContext(selectedTopic: string): ContextKey | null {
   if (!selectedTopic) return null;
   const keys = Object.keys(TOPIC_CONTEXT_GROUPS) as ContextKey[];
@@ -115,7 +121,7 @@ export function initContactForm(): void {
   topic.addEventListener('change', syncContexts);
   syncContexts();
 
-  const setStatus = (variant: StatusVariant, populate: (el: HTMLElement) => void): void => {
+  const setStatus = (variant: StatusVariant, title: string, populate: (body: HTMLElement) => void): void => {
     status.replaceChildren();
     status.hidden = false;
     status.className =
@@ -124,7 +130,21 @@ export function initContactForm(): void {
         : variant === 'error'
           ? 'contact-status contact-status--error'
           : 'contact-status';
-    populate(status);
+    status.setAttribute('data-icon', STATUS_ICONS[variant]);
+
+    const content = document.createElement('div');
+
+    const titleEl = document.createElement('span');
+    titleEl.className = 'contact-status-title';
+    titleEl.textContent = title;
+    content.appendChild(titleEl);
+
+    const bodyEl = document.createElement('span');
+    bodyEl.className = 'contact-status-body';
+    populate(bodyEl);
+    content.appendChild(bodyEl);
+
+    status.appendChild(content);
   };
 
   const showFallbackError = (): void => {
